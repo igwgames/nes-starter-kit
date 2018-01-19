@@ -1,0 +1,6 @@
+tools/*
+!tools/README.md
+!tools/cc65_config
+rom/*.nes
+temp/*
+!temp/empty

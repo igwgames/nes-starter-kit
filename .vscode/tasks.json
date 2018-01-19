@@ -1,0 +1,7 @@
+{
+    "version": "0.1.0",
+    "command": "make",
+    "isShellCommand": true,
+    "args": ["clean", "build", "run"],
+    "showOutput": "always"
+}
