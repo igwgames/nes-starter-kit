@@ -283,11 +283,11 @@ detectNTSC:
 
 .segment "CHR_0"
 
-	.incbin "tools/neslib_famitracker/tileset.chr"
+	.incbin "graphics/ascii.chr"
 
 .segment "CHR_1"
 
-	.incbin "tools/neslib_famitracker/tileset.chr"
+	.incbin "graphics/ascii.chr"
 
 ; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
 .repeat $07, I

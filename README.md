@@ -4,10 +4,11 @@
 ## **Work in progress!!** 
 
 Fair warning, this project is extremely work in progress. This readme tries to outline the end product, but please be
-warned **this is not anywhere near a finished product yet**. 
+warned **this is not anywhere near a finished project yet**. Imagine this like the "Under Construction" pages on
+Tripod and Geocities back in the day ;)
 
-That said, if you decide to check this out and have thoughts, feel free to share. It probably won't even do anything
-yet, but if you have specific desires around it, share away.
+That said, if you decide to check this out and have thoughts, please share them. You are welcome to open an issue or PR, 
+or even just send me a Tweet/DM. You can help shape the outcome of this project.
 
 ## What is this?
 
@@ -24,6 +25,22 @@ very least, find out what a "hello world" program is, and write+run one successf
 
 TODO: Find a good tutorial that uses a decent modern compiler. Don't let this scare people away!!
 
+
+## Related projects
+
+There are a few other projects worth knowing about that might be a better fit for your task.
+
+First off, there's the upcoming NESMaker project. This has not yet been released, but it is a full-blown
+gui for building games. Check out the [NESMaker website](http://www.thenew8bitheroes.com/)! This project is 
+a good fit if you don't quite want to get your hands dirty with code.
+
+In a similar vein, if you'd like a way to do that with Gameboy games, look into my ClassicGB project. It's a 
+code-free web-based game builder. It also exports C source code, in case you want to extend it yourself! Check
+that out on [the ClassicGB website}(http://game-builder.cpprograms.net)!
+
+Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"j
+project that you can use for more of a blank page. That project is elsewhere 
+[on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
 
 # Table of Contents
 
@@ -71,6 +88,18 @@ need these things for most games, but if you do, this is a place to learn!_
 34. Getting finer control over graphics with chr ram
 35. Writing Assembly Subroutines
 
+# Credits
+
+[NESLib](https://shiru.untergrund.net/software.shtml) by [Shiru](http://shiru.untergrund.net/)
+
+[Who's Cuter Font](https://forums.nesdev.com/viewtopic.php?f=21&t=10284&start=0) by [Damian Yerrick (Tepples)](http://pineight.com)
+
+**Please credit these wonderful people in your own creations, too!**
+
+# Contributing
+
+I don't have any set rules around this right now. If you've got something you'd like to add, just send over a pull 
+request, and I'm sure we can get something together.
 
 
 # Rough notes for my use
@@ -78,3 +107,8 @@ need these things for most games, but if you do, this is a place to learn!_
 - Should probably target windows explicitly - need to either not require GOW, or make it very explicit. The simpler the 
   better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
+- Improve the banking script to actually have the cache
+- Add an error screen, and use it from banking script. (More places?)
+- Pretty fade in/out methods
+- Add music early.
+- Add contact info to title && error screen (error screen, include developer name too)?

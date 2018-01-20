@@ -1,9 +1,19 @@
 // Contains functions to help with working with multle PRG/CHR banks
 
+// Maximum level of recursion to allow with banked_call and similar functions. 
+// Note that each one of these is a byte of ram from zeropage!
+#define MAX_BANK_DEPTH 10
+
 // Switch to another bank and call this function.
 // Note: Using banked_call to call a second function from within another banked_call is safe. This will break if you nest
 // more than 10 calls deep. 
 void banked_call(unsigned char bankId, void (*method)(void));
+
+// Switch to the given bank, and keep track of the current bank, so that we may jump back to it as needed.
+void bank_push(unsigned char bankId);
+
+// Go back to the last bank pushed on using bank_push.
+void bank_pop();
 
 
 // ===== nes-c-boilerplate code start
@@ -51,6 +61,14 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
     _Pragma("bssseg (pop)") \
     _Pragma("dataseg (pop)")
 
+#define ZEROPAGE_ARRAY_DEF(defa, defb, defArr) \
+    _Pragma("bssseg (push,\"ZEROPAGE\")") \
+    _Pragma("dataseg (push, \"ZEROPAGE\")") \
+    defa defb[defArr]; \
+    _Pragma("bssseg (pop)") \
+    _Pragma("dataseg (pop)")
+
+
 // Mark a variable referenced in a header file as being a zeropage symbol.
 // Any time you set a variable as a ZEROPAGE_DEF, you will want to also update any header files referencing it
 // with this function.
@@ -58,4 +76,7 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
 #define ZEROPAGE_EXTERN(defa, defb) extern defa defb; _Pragma("zpsym (\"" STR(defb) "\")")
 
 // Set the PRG bank to put the code in the current file into.
-#define CODE_BANK(id) _Pragma("rodataseg (\"ROM_0" STR(id) "\")") _Pragma("codeseg (\"ROM_0" STR(id) "\")")
+#define CODE_BANK(id) _Pragma("rodataseg (push, \"ROM_0" STR(id) "\")") _Pragma("codeseg (push, \"ROM_0" STR(id) "\")")
+
+// Reverse the actions of the CODE_BANK function, if you need to go back to the default bank.
+#define CODE_BANK_POP() _Pragma("rodataseg (pop)") _Pragma("codeseg (pop)")
