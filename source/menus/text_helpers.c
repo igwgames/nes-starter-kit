@@ -9,6 +9,7 @@ void put_str(unsigned int adr, const char *str) {
 	}
 }
 
+// Blank the screen - uses the 'space' character 
 void clear_screen() {
 	vram_adr(0x2000);
 	vram_fill(' ' - 0x20, 0x0400);

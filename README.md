@@ -44,17 +44,35 @@ project that you can use for more of a blank page. That project is elsewhere
 
 # Table of Contents
 
+This guide is broken into 4 main chapters: 
+
+1. Getting Started
+2. Making it Your Own
+3. Polish
+4. Advanced topics.
+
+The suggested approach is to follow along with all of part 1 in order to get yourself familiar with
+the console/tools/etc. After that, feel free to jump around to whatever chapters interest you. 
+
+The second part mainly focuses on core things you will want to change to make your own game. Art, music
+gameplay and more!
+
+The third part focuses on more cosmetic things - don't be afraid to get into this chapter early; 
+sometimes adding a little bit of polish can really help encourage you to continue working on the game.
+
+The fourth part deals with more advanced topics - for most simple games you should not need to get into
+the topics in this section. That said, these topics are here if you need them, or for that matter if they
+interest you.
+
 TODO: Links once these exist
 
 ### Part 1: Getting started
 
 1. Setting up your tools
-2. Building the game
-2. Playing the game
-3. Your first change
-4. Understanding the size of your game (A brief introduction to bank switching)
+2. Building your game
+3. Playing your game
+4. Making Your first change
 5. FAQ
-6. How to play on a real NES.
 
 ### Part 2: Making it your Own
 
@@ -74,7 +92,8 @@ TODO: Links once these exist
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
 21. Making the title screen prettier
     (Note: Probably means showing how to replace the text title screen with something prettier)
-22. Making a "real" cartridge
+22. Playing your game on a real NES
+23. Making a "real" cartridge
 
 ### Part 4: Advanced Topics
 
@@ -82,7 +101,7 @@ _Things in this section are somewhat complicated, and require a good knowledge o
 need these things for most games, but if you do, this is a place to learn!_
 
 30. Understanding and tweaking the build tools
-31. Understanding the size of your ROM.
+31. Understanding and adjusting the size of your game
 32. Expanding available graphics using CHR banking
 33. Making room for more code using PRG banking
 34. Getting finer control over graphics with chr ram

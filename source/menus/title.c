@@ -20,8 +20,8 @@ void draw_title_screen() {
 	pal_spr(titlePalette);
     
     put_str(NTADR_A(5, 5), gameName);
-	put_str(NTADR_A(5, 18), "Created by ");
-	put_str(NTADR_A(5, 19), gameAuthor);
+	put_str(NTADR_A(5, 18), "Created by:");
+	put_str(NTADR_A(5, 20), gameAuthor);
 	put_str(NTADR_A(9, 24), "Press Start!");
 	ppu_on_all();
 
@@ -33,4 +33,3 @@ void handle_title_input() {
 		gameState = GAME_STATE_POST_TITLE;
 	}
 }
-
