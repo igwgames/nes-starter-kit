@@ -13,16 +13,23 @@ const unsigned char titlePalette[16]={ 0x0f,0x21,0x11,0x31,0x0f,0x11,0x21,0x31,0
 // The name of your game :)
 const unsigned char gameName[] = "Quirk's Adventure";
 const unsigned char gameAuthor[] = "YOU!";
+const unsigned char gameAuthorContact[] = "Tweet at us! @your_twitter";
+const unsigned char currentYear[] = "2018";
 
 void draw_title_screen() {
     ppu_off();
 	pal_bg(titlePalette);
 	pal_spr(titlePalette);
     
-    put_str(NTADR_A(5, 5), gameName);
-	put_str(NTADR_A(5, 18), "Created by:");
-	put_str(NTADR_A(5, 20), gameAuthor);
-	put_str(NTADR_A(9, 24), "Press Start!");
+    put_str(NTADR_A(7, 5), gameName);
+	
+	put_str(NTADR_A(2, 26), gameAuthorContact);
+	
+	put_str(NTADR_A(2, 28), "Copyright");
+	put_str(NTADR_A(12, 28), currentYear);
+	put_str(NTADR_A(17, 28), gameAuthor);
+
+	put_str(NTADR_A(10, 16), "Press Start!");
 	ppu_on_all();
 
 	gameState = GAME_STATE_TITLE_INPUT;

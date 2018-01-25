@@ -21,8 +21,13 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 MAIN_COMPILER=./tools/cc65/bin/cc65
 MAIN_ASM_COMPILER=./tools/cc65/bin/ca65
 MAIN_LINKER=./tools/cc65/bin/ld65
+MAP_PARSER=./tools/tmx2c/tmx2c 
 SPACE_CHECKER=tools/nessc/nessc
 SOUND_BANK=0
+
+# FIXME: Unused, questionably useful.
+SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
+SOURCE_LEVELS_C=$(patsubst levels/, temp/, $(patsubst %.tmx, %.c, $(SOURCE_LEVELS_TMX)))
 
 SOURCE_C=$(strip $(call rwildcard, source/, *.c))
 SOURCE_S=$(patsubst source/, temp/, $(patsubst %.c, %.s, $(SOURCE_C)))

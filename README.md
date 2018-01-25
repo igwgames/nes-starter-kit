@@ -102,14 +102,18 @@ need these things for most games, but if you do, this is a place to learn!_
 
 30. Understanding and tweaking the build tools
 31. Understanding and adjusting the size of your game
-32. Expanding available graphics using CHR banking
-33. Making room for more code using PRG banking
-34. Getting finer control over graphics with chr ram
-35. Writing Assembly Subroutines
+32. ROM Data Map
+33. Expanding available graphics using CHR banking
+34. Making room for more code using PRG banking
+35. Getting finer control over graphics with chr ram
+36. Writing Assembly Subroutines
 
 # Credits
 
 [NESLib](https://shiru.untergrund.net/software.shtml) by [Shiru](http://shiru.untergrund.net/)
+
+[Early 90's Arcade Pixel Art](https://opengameart.org/content/early-80s-arcade-pixel-art-dungeonsslimes-walls-power-ups-etc) 
+by [Refresh Games](https://refreshgames.co.uk/)
 
 [Who's Cuter Font](https://forums.nesdev.com/viewtopic.php?f=21&t=10284&start=0) by [Damian Yerrick (Tepples)](http://pineight.com)
 
@@ -131,3 +135,5 @@ request, and I'm sure we can get something together.
 - Pretty fade in/out methods
 - Add music early.
 - Add contact info to title && error screen (error screen, include developer name too)?
+- Stretch: Take chr, take palettes, combine into the 4-tile tall png we know and love and/or individuals.
+- How can we map which tiles are solid vs not? Needs to be super obvious and user-editable...

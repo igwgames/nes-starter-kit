@@ -287,7 +287,7 @@ detectNTSC:
 
 .segment "CHR_1"
 
-	.incbin "graphics/ascii.chr"
+	.incbin "graphics/main.chr"
 
 ; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
 .repeat $07, I
