@@ -17,11 +17,6 @@ This has the main loop for the game, which is then used to call out to other cod
 // Note: If you are using a variable as a global, you also need to change it in `globals.h`!
 ZEROPAGE_DEF(unsigned char, gameState);
 
-// TODO: Find a home for this. Level loading, perhaps?
-// TODO: Better yet, is there a good way to use this, raw, from C?
-const unsigned char gamePalette[16]={ 0x0f,0x00,0x10,0x30,0x0f,0x01,0x21,0x31,0x0f,0x06,0x16,0x26,0x0f,0x09,0x19,0x29 };
-
-
 void main() {
     gameState = GAME_STATE_SYSTEM_INIT;
 

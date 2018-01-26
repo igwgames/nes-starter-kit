@@ -271,6 +271,7 @@ detectNTSC:
 	.include "source/neslib_asm/ft_drv/driver.s"
     .include "source/library/bank_helpers.asm"
 	.include "source/neslib_asm/neslib.asm"
+	.include "source/graphics/palettes.asm"
 	
 
 ; Not used; we have the STUB_PRG bit instead which has some reset code in addition to vector stuff

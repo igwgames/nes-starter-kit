@@ -3,6 +3,7 @@
 #include "source/menus/text_helpers.h"
 #include "source/library/itoa.h"
 #include "source/menus/error.h"
+#include "source/graphics/palettes.h"
 
 // Store most of our data in the given bank.
 CODE_BANK(PRG_BANK_ERROR);
@@ -12,9 +13,6 @@ const char* ERR_UNKNOWN_GAME_STATE = "Unknown Game State";
 const char* ERR_UNKNOWN_GAME_STATE_EXPLANATION = "gameState set to a value that the main loop does not recognize.";
 const char* ERR_RECURSION_DEPTH = "Bank Recursion Depth Error";
 const char* ERR_RECURSION_DEPTH_EXPLANATION = "Too many requests were made to bank_call from other requests. Only up to " STR(MAX_RECURSION_DEPTH) " calls can be made.";
-
-// TODO: Nicer palette. Make it super obvious stuff's gone wrong.
-const unsigned char errorPalette[16]={ 0x0f,0x21,0x11,0x31,0x0f,0x11,0x21,0x31,0x0f,0x05,0x25,0x35,0x0f,0x00,0x10,0x30 };
 
 ZEROPAGE_ARRAY_DEF(char, buffer, 10);
 

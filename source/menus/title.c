@@ -3,12 +3,9 @@
 #include "source/globals.h"
 #include "source/configuration/game_states.h"
 #include "source/menus/text_helpers.h"
+#include "source/graphics/palettes.h"
 
 CODE_BANK(PRG_BANK_TITLE);
-
-// Array of 16 colors that make up the palette for the title screen. You can generate this by using NESst, and choosing
-// "put to clipboard -> c data" from the "palettes" menu.
-const unsigned char titlePalette[16]={ 0x0f,0x21,0x11,0x31,0x0f,0x11,0x21,0x31,0x0f,0x05,0x25,0x35,0x0f,0x00,0x10,0x30 };
 
 // The name of your game :)
 const unsigned char gameName[] = "Quirk's Adventure";
