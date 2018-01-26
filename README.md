@@ -32,7 +32,8 @@ There are a few other projects worth knowing about that might be a better fit fo
 
 First off, there's the upcoming NESMaker project. This has not yet been released, but it is a full-blown
 gui for building games. Check out the [NESMaker website](http://www.thenew8bitheroes.com/)! This project is 
-a good fit if you don't quite want to get your hands dirty with code.
+a good fit if you don't quite want to get your hands dirty with code. You may be able to edit the resulting
+code, but it will likely be in assembly language, and a little harder to pick up if that is new to you.
 
 In a similar vein, if you'd like a way to do that with Gameboy games, look into my ClassicGB project. It's a 
 code-free web-based game builder. It also exports C source code, in case you want to extend it yourself! Check
@@ -41,6 +42,26 @@ that out on [the ClassicGB website}(http://game-builder.cpprograms.net)!
 Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"j
 project that you can use for more of a blank page. That project is elsewhere 
 [on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
+
+## Feature Comparison
+
+| Feature Name           | nes-c-starter-kit  | NESMaker           | gameboy-bootstrap  |
+|------------------------|--------------------|--------------------|--------------------|
+| Language               | C                  | 6502 Assembly      | C                  |
+| Gui Editing            | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Game Style             | Adventure only     | Many               | Adventure only     |
+| Graphics editor        | external - nesst   | Built-in           | Built-in           |
+| Map Editor             | external -tiled    | Built-in           | Built-in           |
+| Music Editor           | ext - famitracker  | ext - famitracker  | Not available      |
+| Sound Editor           | ext - famitracker  | ext - famitracker  | Not available      |
+| Works on console       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Source available       | Yes, you write it! | _Unknown_          | Yes                |
+| Source easily editable | Yes, built for it  | _Unknown_          | No                 |
+| Code Editor available  | Yes, VS Code       |_Unknown_ (unlikely)| No                 |
+| Programming required   | Yes                | No                 | No                 |
+
+**Note**: NESMaker was not available at the time of this writing, so some of these details are based on
+          speculation. If something's wrong, submit a PR!
 
 # Table of Contents
 
@@ -76,14 +97,15 @@ TODO: Links once these exist
 
 ### Part 2: Making it your Own
 
-6. Changing the overworld map
-6. Adding new map tiles
-7. Changing the sprite art
-8. Adding new enemies
-9. Adding collectible sprites
-10. Adding/changing music
-11. Adding/changing sound effects
-15. Changing movement
+10. Changing the overworld map
+11. Understanding art on the NES
+12. Adding new map tiles
+13. Changing the sprite art
+14. Adding new enemies
+15. Adding collectible sprites
+16. Adding/changing music
+17. Adding/changing sound effects
+18. Changing movement
 
 
 ### Part 3: Polish and more!
