@@ -2,6 +2,7 @@
 #include "source/menus/title.h"
 #include "source/globals.h"
 #include "source/configuration/game_states.h"
+#include "source/configuration/system_constants.h"
 #include "source/menus/text_helpers.h"
 #include "source/graphics/palettes.h"
 
@@ -17,6 +18,10 @@ void draw_title_screen() {
     ppu_off();
 	pal_bg(titlePalette);
 	pal_spr(titlePalette);
+
+	set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_1(CHR_BANK_MENU+1);
+
     
     put_str(NTADR_A(7, 5), gameName);
 	

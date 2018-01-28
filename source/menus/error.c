@@ -4,6 +4,7 @@
 #include "source/library/itoa.h"
 #include "source/menus/error.h"
 #include "source/graphics/palettes.h"
+#include "source/configuration/system_constants.h"
 
 // Store most of our data in the given bank.
 CODE_BANK(PRG_BANK_ERROR);
@@ -21,6 +22,8 @@ void crash_error_internal(const char *errorId, const char *errorDescription, con
     
     ppu_wait_frame();
     ppu_off();
+    set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_1(CHR_BANK_MENU+1);
     pal_bg(errorPalette);
     pal_spr(errorPalette);
     scroll(0, 0);

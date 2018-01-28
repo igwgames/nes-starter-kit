@@ -119,7 +119,7 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                         mapData += "\n";
                     }
                     var pos = (x * SCREEN_WIDTH) + (y * (roomsWide*SCREEN_WIDTH)*SCREEN_HEIGHT) + (yy * width) + xx;
-                    mapData += data[pos].id - 1;
+                    mapData += data[pos].id;
 
                     if (spriteData[pos]) {
                         roomSpriteData.push(yy*SCREEN_WIDTH+xx);
@@ -146,6 +146,12 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
             for (var i = 16; i < 31; i++)
                 mapData += roomSpriteData[i] + ', ';
             mapData += roomSpriteData[31]+ ",\n";
+
+            // Lastly, we want things to line up perfectly so we have 256 per map tile (makes math easier)
+            // So, add some padding. (Note: If you wanna add your own data, this is the spot!)
+            mapData += '// add a little padding - we want each map screen to take up exactly 256 bytes to make math easier.\n';
+            mapData += '0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n';
+            mapData += '0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n\n';
 
         }
     }

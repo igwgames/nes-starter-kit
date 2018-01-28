@@ -64,8 +64,9 @@ temp/%.s: temp/%.c
 	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
 temp/level_%.c: levels/%.tmx
-# FIXME: Replace node with our pkg binary
-	node tools/tmx2c/src/index.js 3 overworld $< $(patsubst %.c, %, $@)
+	tools/tmx2c/tmx2c 3 overworld $< $(patsubst %.c, %, $@)
+# If you're actively changing tmx2c using node, toss it in here to use it directly.
+#	node tools/tmx2c/src/index.js 3 overworld $< $(patsubst %.c, %, $@)
 
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)

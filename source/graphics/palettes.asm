@@ -7,7 +7,13 @@ _titlePalette:
 _errorPalette: 
     .incbin "graphics/palettes/error.pal"
 
+_mainBgPalette:
+    .incbin "graphics/palettes/main_bg.pal"
+    
+_mainSpritePalette: 
+    .incbin "graphics/palettes/main_sprite.pal"
+
 ; The .export command tells our assembler that these are meant to be available to C. So does the name...
 ; both do that. There's more complex details, but if I'm honest I don't know them myself, so I can't document
 ; them here.
-.export _titlePalette, _errorPalette
+.export _titlePalette, _errorPalette, _mainBgPalette, _mainSpritePalette

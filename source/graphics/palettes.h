@@ -3,3 +3,5 @@
 // Add an entry here, then add an entry to palettes.asm. (Don't forget to update the .export line!)
 extern const unsigned char titlePalette[16];
 extern const unsigned char errorPalette[16];
+extern const unsigned char mainBgPalette[16];
+extern const unsigned char mainSpritePalette[16];

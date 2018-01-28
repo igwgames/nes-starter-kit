@@ -74,6 +74,7 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
 // with this function.
 // (Usage; ZEROPAGE_EXTERN(type, variableName); eg ZEROPAGE_EXTERN(int, myInt))
 #define ZEROPAGE_EXTERN(defa, defb) extern defa defb; _Pragma("zpsym (\"" STR(defb) "\")")
+#define ZEROPAGE_ARRAY_EXTERN(defa, defb, defArr) extern defa defb[defArr]; _Pragma("zpsym (\"" STR(defb) "\")")
 
 // Set the PRG bank to put the code in the current file into.
 #define CODE_BANK(id) _Pragma("rodataseg (push, \"ROM_0" STR(id) "\")") _Pragma("codeseg (push, \"ROM_0" STR(id) "\")")

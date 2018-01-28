@@ -7,7 +7,6 @@ ZEROPAGE_ARRAY_DEF(unsigned char, bankBuffer, MAX_BANK_DEPTH);
 void banked_call(unsigned char bankId, void (*method)(void)) {
     bank_push(bankId);
 
-    set_prg_bank(bankId);
     (*method)();
 
     bank_pop();
@@ -20,6 +19,7 @@ void bank_push(unsigned char bankId) {
     if (bankLevel > MAX_BANK_DEPTH) {
         crash_error(ERR_RECURSION_DEPTH, ERR_RECURSION_DEPTH_EXPLANATION, "MAX_BANK_DEPTH", MAX_BANK_DEPTH);
     }
+    set_prg_bank(bankId);
 }
 
 // Go back to the last bank pushed on using bank_push.
