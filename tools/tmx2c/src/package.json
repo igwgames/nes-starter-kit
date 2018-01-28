@@ -1,0 +1,14 @@
+{
+  "name": "tmx2c",
+  "version": "1.0.0",
+  "description": "Converts tmx files to C code for use with nes-starter-kit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests. Better panic.\""
+  },
+  "author": "cppchriscpp (admin@cpprograms.net)",
+  "license": "MIT",
+  "dependencies": {
+    "tmx-parser": "^1.5.0"
+  }
+}

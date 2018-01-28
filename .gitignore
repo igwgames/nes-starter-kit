@@ -1,6 +1,9 @@
 tools/*
 !tools/README.md
 !tools/cc65_config
+!tools/tmx2c
+tools/tmx2c/*.exe
+tools/tmx2c/src/node_modules
 rom/*.nes
 temp/*
 !temp/empty

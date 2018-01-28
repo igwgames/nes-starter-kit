@@ -152,10 +152,10 @@ request, and I'm sure we can get something together.
 - Should probably target windows explicitly - need to either not require GOW, or make it very explicit. The simpler the 
   better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
-- Improve the banking script to actually have the cache
 - Add an error screen, and use it from banking script. (More places?)
 - Pretty fade in/out methods
 - Add music early.
 - Add contact info to title && error screen (error screen, include developer name too)?
 - Stretch: Take chr, take palettes, combine into the 4-tile tall png we know and love and/or individuals.
 - How can we map which tiles are solid vs not? Needs to be super obvious and user-editable...
+- Better document how doing a fork works, and more importantly how to upgrade

@@ -25,14 +25,14 @@ MAP_PARSER=./tools/tmx2c/tmx2c
 SPACE_CHECKER=tools/nessc/nessc
 SOUND_BANK=0
 
-# FIXME: Unused, questionably useful.
 SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
-SOURCE_LEVELS_C=$(patsubst levels/, temp/, $(patsubst %.tmx, %.c, $(SOURCE_LEVELS_TMX)))
+SOURCE_LEVELS_C=$(subst levels/, temp/level_, $(patsubst %.tmx, %.c, $(SOURCE_LEVELS_TMX)))
+$(info $(SOURCE_LEVELS_C))
 
-SOURCE_C=$(strip $(call rwildcard, source/, *.c))
+SOURCE_C=$(SOURCE_LEVELS_C) $(strip $(call rwildcard, source/, *.c))
 SOURCE_S=$(patsubst source/, temp/, $(patsubst %.c, %.s, $(SOURCE_C)))
 SOURCE_O=$(addprefix temp/, $(notdir $(patsubst %.s, %.o, $(SOURCE_S))))
-SOURCE_DIRS=$(sort $(dir $(call rwildcard, source, %)))
+SOURCE_DIRS=$(sort $(dir $(call rwildcard, source, %))) temp
 VPATH=$(SOURCE_DIRS)
 # Uses the windows command line to open your rom, 
 # which effectively does the same thing as double-clicking the rom in explorer.
@@ -44,6 +44,11 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 # ===== Actual makefile logic starts here =====
 # You really shouldn't need to edit anything below this line if you're not doing advanced stuff.
 
+# Cancelling a couple implicit rules that confuse us greatly
+%.o : %.s
+%.o : %.c
+%.s : %.c
+
 build: rom/$(ROM_NAME).nes
 
 temp/crt0.o: source/neslib_asm/crt0.asm
@@ -51,8 +56,16 @@ temp/crt0.o: source/neslib_asm/crt0.asm
 
 temp/%.s: %.c
 	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
+
 temp/%.o: temp/%.s
 	$(MAIN_ASM_COMPILER) $< 
+
+temp/%.s: temp/%.c
+	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
+
+temp/level_%.c: levels/%.tmx
+# FIXME: Replace node with our pkg binary
+	node tools/tmx2c/src/index.js 3 overworld $< $(patsubst %.c, %, $@)
 
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
@@ -60,8 +73,10 @@ rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 
 clean:
 	-rm -f rom/*.nes
+	-rm -f temp/levels/*
 	-rm -f temp/*
 	touch temp/empty
+	touch temp/levels/empty
 
 run:
 	$(MAIN_EMULATOR) rom/$(ROM_NAME).nes
