@@ -25,6 +25,7 @@ banks into them by changing their associated `PRG_BANK_TYPE` define in the heade
 - Title screen
 - Various menus
 - Level drawing logic
+- Hud logic
 
 ## ROM_03
 - Level data
