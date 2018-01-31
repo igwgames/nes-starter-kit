@@ -7,3 +7,10 @@
 // If you create variables as ZEROPAGE using the ZEROPAGE_DEF method, be sure to also set them as
 // externs using the ZEROPAGE_EXTERN method below. This replaces the regular extern format.
 ZEROPAGE_EXTERN(unsigned char, gameState);
+
+ZEROPAGE_EXTERN(unsigned char, i);
+ZEROPAGE_EXTERN(unsigned char, j);
+ZEROPAGE_EXTERN(unsigned char, playerHealth);
+ZEROPAGE_EXTERN(unsigned char, playerMaxHealth);
+
+ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x30);

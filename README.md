@@ -101,11 +101,12 @@ TODO: Links once these exist
 11. Understanding art on the NES
 12. Adding new map tiles
 13. Changing the sprite art
-14. Adding new enemies
-15. Adding collectible sprites
-16. Adding/changing music
-17. Adding/changing sound effects
-18. Changing movement
+14. Changing the HUD (top bar)
+15. Adding new enemies
+16. Adding collectible sprites
+17. Adding/changing music
+18. Adding/changing sound effects
+19. Changing movement
 
 
 ### Part 3: Polish and more!

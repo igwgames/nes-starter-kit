@@ -3,14 +3,13 @@
 #include "source/library/bank_helpers.h"
 #include "source/configuration/game_states.h"
 #include "source/globals.h"
-#include "source/configuration/common_variables.h"
 #include "source/configuration/system_constants.h"
 #include "source/graphics/palettes.h"
+#include "source/graphics/hud.h"
 
 CODE_BANK(PRG_BANK_MAP_LOGIC);
 
 ZEROPAGE_DEF(unsigned char, playerOverworldPosition);
-ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x30);
 
 unsigned char currentMap[256];
 
@@ -93,6 +92,8 @@ void draw_current_map() {
     // Draw the palette that we built up above.
     vram_adr(NAMETABLE_A + 0x3c0);
     vram_write(screenBuffer, 0x30);
+
+    banked_call(PRG_BANK_HUD, draw_hud);
     
     // Map drawing is complete; let the player play the game!
     gameState = GAME_STATE_RUNNING;

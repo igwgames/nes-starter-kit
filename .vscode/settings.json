@@ -2,6 +2,9 @@
     "terminal.integrated.shell.windows": "C:\\cygwin64\\bin\\bash.exe",
     "files.associations": {
         "neslib.h": "c",
-        "game_states.h": "c"
+        "game_states.h": "c",
+        "globals.h": "c",
+        "palettes.h": "c",
+        "system_constants.h": "c"
     }
 }
