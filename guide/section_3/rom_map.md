@@ -26,6 +26,7 @@ banks into them by changing their associated `PRG_BANK_TYPE` define in the heade
 - Various menus
 - Level drawing logic
 - Hud logic
+- Player sprite/movement logic
 
 ## ROM_03
 - Level data

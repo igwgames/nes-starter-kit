@@ -13,8 +13,11 @@ ZEROPAGE_DEF(unsigned char, playerOverworldPosition);
 
 unsigned char currentMap[256];
 
+unsigned char assetTable[0x30];
+
 ZEROPAGE_DEF(static int, currentValue);
 ZEROPAGE_DEF(static int, currentMemoryLocation);
+ZEROPAGE_DEF(static int, bufferIndex);
 
 void draw_current_map() {
 
@@ -34,9 +37,9 @@ void draw_current_map() {
     vram_inc(0);
     set_vram_update(NULL);
 
-    // Loop over screenBuffer to clear it out. 
-    for (i = 0; i != sizeof(screenBuffer); ++i) {
-        screenBuffer[i] = 0;
+    // Loop over assetTable to clear it out. 
+    for (i = 0; i != sizeof(assetTable); ++i) {
+        assetTable[i] = 0;
     }
     j = -1;
     for (i = 0; i != 192; ++i) {
@@ -87,11 +90,12 @@ void draw_current_map() {
 				currentValue >>= 0;
 			}
 		}
-        screenBuffer[j] += currentValue;
+        assetTable[j] += currentValue;
+        ++bufferIndex;
     }
     // Draw the palette that we built up above.
     vram_adr(NAMETABLE_A + 0x3c0);
-    vram_write(screenBuffer, 0x30);
+    vram_write(assetTable, 0x30);
 
     banked_call(PRG_BANK_HUD, draw_hud);
     

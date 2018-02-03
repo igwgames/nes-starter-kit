@@ -12,12 +12,17 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/map/load_map.h"
 #include "source/map/map.h"
 #include "source/graphics/hud.h"
+#include "source/sprites/player.h"
 
 
 void initialize_variables() {
     playerOverworldPosition = 1;
     playerHealth = 5;
     playerMaxHealth = 8;
+    
+    // Little bit of generic initialization below this point - we need to set
+    // The system up to use a different hardware bank for sprites vs backgrounds.
+    bank_spr(1);
 }
 
 void main() {
@@ -43,8 +48,9 @@ void main() {
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map);
                 ppu_on_all();
             case GAME_STATE_RUNNING:
-                // TODO: Only do this on update
+                // TODO: Only do this on update?
                 banked_call(PRG_BANK_HUD, update_hud);
+                banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
                 break;
 
             default: 
