@@ -4,8 +4,8 @@
 
 CODE_BANK(PRG_BANK_HUD);
 
-void draw_hud() {
-    vram_adr(HUD_POSITION_START);
+void draw_hud_to_nametable(unsigned int nametableAdr) {
+    vram_adr(nametableAdr + HUD_POSITION_START);
     for (i = 0; i != 160; ++i) {
         vram_put(HUD_TILE_BLANK);
     }
@@ -15,10 +15,18 @@ void draw_hud() {
     }
     vram_put(HUD_TILE_BORDER_BR);
 
-    vram_adr(0x23f0);
+    vram_adr(nametableAdr + 0x3f0);
     for (i = 0; i != 16; ++i) {
         vram_put(0xff);
     }
+}
+
+
+void draw_hud() {
+    // We draw the hud to both active nametables to hide glitches if the timing for ppu scrolling isn't perfect -
+    // otherwise the last few pixels of the hud will start jumping around.
+    draw_hud_to_nametable(NAMETABLE_A);
+    draw_hud_to_nametable(NAMETABLE_D);
 }
 
 void update_hud() {

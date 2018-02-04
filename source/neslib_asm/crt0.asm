@@ -21,6 +21,8 @@ FT_SFX_STREAMS			= 4			;number of sound effects played at once, 1..4
 	.import NES_MAPPER,NES_PRG_BANKS,NES_CHR_BANKS,NES_MIRRORING
     .include "tools/cc65/asminc/zeropage.inc"
 
+	.export _frameCount
+
 
 
 FT_BASE_ADR=$0100			;page in RAM, should be $xx00
@@ -51,6 +53,7 @@ PAL_BUF		=$01c0
 .segment "ZEROPAGE"
 
 NTSC_MODE: 			.res 1
+_frameCount: ; By doing this, I make it available to C code with an extern
 FRAME_CNT1: 		.res 1
 FRAME_CNT2: 		.res 1
 VRAM_UPDATE: 		.res 1

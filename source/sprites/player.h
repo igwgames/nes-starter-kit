@@ -15,6 +15,10 @@ ZEROPAGE_EXTERN(int, playerXPosition);
 ZEROPAGE_EXTERN(int, playerYPosition);
 ZEROPAGE_EXTERN(int, playerXVelocity);
 ZEROPAGE_EXTERN(int, playerYVelocity);
+ZEROPAGE_EXTERN(unsigned char, playerDirection);
+
+// Move the player around, and otherwise deal with controller input. (NOTE: Pause/etc are handled here too)
+void handle_player_movement();
 
 // Update the player's sprite, and put it onto the screen as necessary
 void update_player_sprite();

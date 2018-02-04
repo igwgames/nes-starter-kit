@@ -1,7 +1,7 @@
 // Some defines for the elements in the HUD
 #define PRG_BANK_HUD 2
 
-#define HUD_POSITION_START 0x2300
+#define HUD_POSITION_START 0x300
 #define HUD_HEART_START 0x2361
 
 #define HUD_TILE_HEART 0xe7
@@ -13,6 +13,8 @@
 #define HUD_TILE_BORDER_BR 0xed
 #define HUD_TILE_BORDER_HORIZONTAL 0xef
 #define HUD_TILE_BORDER_VERTICAL 0xee
+
+#define HUD_SPRITE_ZERO_TILE_ID 0xfb
 
 // Draw the HUD
 void draw_hud();

@@ -21,3 +21,24 @@
 
 #define NES_SPRITE_WIDTH 8
 #define NES_SPRITE_HEIGHT 8
+
+// Sprite direction definitions
+// NOTE: These values are specifically chosen such that if you add direction
+// to the top-left sprite in the "down" animation, you'll get the first animation 
+// for that direction. It simplifies some logic.
+#define SPRITE_DIRECTION_STATIONARY 0x02
+#define SPRITE_DIRECTION_LEFT 0x24
+#define SPRITE_DIRECTION_RIGHT 0x20
+#define SPRITE_DIRECTION_UP 0x04
+#define SPRITE_DIRECTION_DOWN 0x00
+
+// Change this to change how fast sprites animate; values are from 0-6. 0 is fast. 6 is slow.
+#define SPRITE_ANIMATION_SPEED_DIVISOR 3
+
+#define SCREEN_EDGE_LEFT 24
+#define SCREEN_EDGE_RIGHT 240
+#define SCREEN_EDGE_TOP 24 + HUD_PIXEL_HEIGHT
+#define SCREEN_EDGE_BOTTOM 220
+
+// Data included before a nametable update if done mid-frame.
+#define NAMETABLE_UPDATE_PREFIX_LENGTH 3

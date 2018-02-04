@@ -13,4 +13,11 @@ ZEROPAGE_EXTERN(unsigned char, j);
 ZEROPAGE_EXTERN(unsigned char, playerHealth);
 ZEROPAGE_EXTERN(unsigned char, playerMaxHealth);
 
-ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x30);
+ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x45);
+
+ZEROPAGE_EXTERN(unsigned char, controllerState);
+ZEROPAGE_EXTERN(unsigned char, lastControllerState);
+
+// Bit of a special case - this is exported from assembly in crt0.asm - it's the number of frames since the system started.
+// Note: DO NOT try to alter this with your code; you will almost certainly cause unusual behavior.
+ZEROPAGE_EXTERN(unsigned int, frameCount);

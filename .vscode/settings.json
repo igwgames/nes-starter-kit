@@ -5,6 +5,7 @@
         "game_states.h": "c",
         "globals.h": "c",
         "palettes.h": "c",
-        "system_constants.h": "c"
+        "system_constants.h": "c",
+        "bank_helpers.h": "c"
     }
 }
