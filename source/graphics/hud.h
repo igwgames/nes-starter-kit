@@ -6,7 +6,7 @@
 
 #define HUD_TILE_HEART 0xe7
 #define HUD_TILE_HEART_EMPTY 0xe9
-#define HUD_TILE_BLANK 0xf0
+#define HUD_TILE_BLANK 0xf2
 #define HUD_TILE_BORDER_TL 0xea
 #define HUD_TILE_BORDER_TR 0xeb
 #define HUD_TILE_BORDER_BL 0xec
