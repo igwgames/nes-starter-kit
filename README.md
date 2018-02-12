@@ -78,28 +78,33 @@ the console/tools/etc. After that, feel free to jump around to whatever chapters
 The second part mainly focuses on core things you will want to change to make your own game. Art, music
 gameplay and more!
 
-The third part focuses on more cosmetic things - don't be afraid to get into this chapter early; 
+The third part focuses on how you can extend the game further. Want to give the main character a weapon?
+Add some new features to the start menu? Do something else unique? This has guides and pointers on how to
+do it!
+
+The fourth part focuses on more cosmetic things - don't be afraid to get into this chapter early; 
 sometimes adding a little bit of polish can really help encourage you to continue working on the game.
 
-The fourth part deals with more advanced topics - for most simple games you should not need to get into
-the topics in this section. That said, these topics are here if you need them, or for that matter if they
+The final part deals with more advanced topics - for most simple games you should not need to get into
+this chapter. It gets into depth on details of how the library itself works, as well as the system, and how
+the rom is organized. That said, these topics are here if you need them, or for that matter if they
 interest you.
 
 TODO: Links once these exist
 
 ### Part 1: Getting started
 
-1. Setting up your tools
-2. Building your game
-3. Playing your game
-4. Making Your first change
-5. FAQ
+1. [Setting up your tools](./guide/section_1/setting_up_your_tools.md)
+2. [Building your game](./guide/section_1/building_your_game.md)
+3. [Playing your game](./guide/section_1/playing_your_game.md)
+4. [Making Your first change](./guide/section_1/your_first_change.md)
+5. [FAQ](./guide/section_1/faq.md)
 
 ### Part 2: Making it your Own
 
-10. Changing the overworld map
+10. [Changing the world](./guide/section_2/changing_the_world.md)
 11. Understanding art on the NES
-12. Adding new map tiles
+12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
 13. Changing the sprite art
 14. Changing the HUD (top bar)
 15. Adding new enemies
@@ -108,28 +113,38 @@ TODO: Links once these exist
 18. Adding/changing sound effects
 19. Changing movement
 
+### Part 3: Adding new features
 
-### Part 3: Polish and more!
+_(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
+20. Giving your main character a sword
+21. Adding more features to the pause menu
+22. Adding a second map
+23. Making the main character grow or shrink
+24. Adding objects that attract or repel the player
+25. Adding an enemy that mimics player behavior
 
-20. Ways to improve performance 
+### Part 4: Polish and more!
+
+30. Ways to improve performance 
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
-21. Making the title screen prettier
+31. Making the title screen prettier
     (Note: Probably means showing how to replace the text title screen with something prettier)
-22. Playing your game on a real NES
-23. Making a "real" cartridge
+32. Animating background tiles
+33. Playing your game on a real NES
+34. Making a "real" cartridge
 
-### Part 4: Advanced Topics
+### Part 5: Advanced Topics
 
-_Things in this section are somewhat complicated, and require a good knowledge of how the NES works. You shouldn't
+_Things in this section are somewhat complicated, and go into how the engine works. You shouldn't
 need these things for most games, but if you do, this is a place to learn!_
 
-30. Understanding and tweaking the build tools
-31. Understanding and adjusting the size of your game
-32. ROM Data Map
-33. Expanding available graphics using CHR banking
-34. Making room for more code using PRG banking
-35. Getting finer control over graphics with chr ram
-36. Writing Assembly Subroutines
+40. Understanding and tweaking the build tools
+41. Understanding and adjusting the size of your game
+42. [ROM Data Map](./guide/section_5/rom_map.md)
+43. Expanding available graphics using CHR banking
+44. Making room for more code using PRG banking
+45. Getting finer control over graphics with chr ram
+46. Writing Functions in Assembly
 
 # Credits
 
@@ -160,3 +175,5 @@ request, and I'm sure we can get something together.
 - Stretch: Take chr, take palettes, combine into the 4-tile tall png we know and love and/or individuals.
 - How can we map which tiles are solid vs not? Needs to be super obvious and user-editable...
 - Better document how doing a fork works, and more importantly how to upgrade
+- Can we make a tool to export chr -> bmp, then tile them into the big ol png tiled uses? 
+-- If we do this, update the sections in chapter 2 that give manual steps
