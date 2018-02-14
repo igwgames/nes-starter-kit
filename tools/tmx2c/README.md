@@ -10,8 +10,24 @@ in that context.
 
 In short, pass in a tmx file, get a C file with the data in response.
 
-TODO: Document this way better
-TODO: Package this and distribute with nes-starter-kit binaries.
-TODO: Is it worth adding this to the makefile? We can call cmd from bash if we need to...
+## Command
 
-Building: `pkg -d --public tools/tmx2c/src/index.js --output tools/tmx2c/tmx2c.exe -t node6-windows-x64`
+Run the command as follows:
+
+```
+ tmx2c [bank number] [variable name] [file to convert] [file to save output to, no extension]
+
+ tmx2c 4 overworld levels/overworld.tmx test
+ ```
+
+## Packaging for nes-starter-kit
+
+We package it using a node module called `pkg`, which is installed globally. (`npm install -g pkg`)
+
+Use the following command to build a release exe:
+
+```
+pkg -d --public tools/tmx2c/src/index.js --output tools/tmx2c/tmx2c.exe -t node6-windows-x64
+```
+
+Note: This must be run from the root nes-starter-kit folder.

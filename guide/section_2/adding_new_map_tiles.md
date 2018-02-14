@@ -43,22 +43,13 @@ If you changed palette colors, don't forget to save those from the `palettes` me
 
 ## Exporting for Tiled
 
-**NOTE**: This next step may go away at some point; I'd like to make an automatic way to do this.
-
 After you make changes to your palettes or tiles, you may notice that they do not show up in 
 `Tiled` automatically. Tiled unfortunately has no idea what our tiles are, so it needs regular
-images to display in its ui. You will need an image editor, such as Gimp, or MS Paint. 
+images to display in its ui. 
 
-Create a new image in the program that is 128 pixels wide, and 512 pixels tall. Next, from NESST,
-select a color from the first palette, then go to `Export` and choose `Tileset as BMP File`. Save
-this to a known location. (I use `graphics/generated/`) Select the second palette, and repeat
-these steps. Do this again with 3 and 4. 
+There is a helper script built into our makefile for exactly this purpose! You can update the
+Tiled image by either typing `make build-tiles` into your terminal, or just building your game
+like you usually do. This works off a program called `chr2img`, which is installed in the 
+tools folder.
 
-Next, open each of these images one-by-one in your image editing program, then paste them into
-the new 128x512 pixel image you created, one on top of the next, starting with the first palette.
-The end result should look like this: 
-
-![tiles.png](../images/tiles_example.png)
-
-Save this to `graphics/generated/tiles.png`. Now, if you look at Tiled, your new tiles
-should be available!
+After you do this, you should be able to see your new tiles in Tiled immediately!

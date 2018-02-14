@@ -4,6 +4,11 @@ tools/*
 !tools/tmx2c
 tools/tmx2c/*.exe
 tools/tmx2c/src/node_modules
+!tools/chr2img
+tools/chr2img/*.exe
+tools/chr2img/src/node_modules
+graphics/generated/*.png
+graphics/generated/*.bmp
 rom/*.nes
 temp/*
 !temp/empty

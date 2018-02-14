@@ -27,7 +27,6 @@ SOUND_BANK=0
 
 SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
 SOURCE_LEVELS_C=$(subst levels/, temp/level_, $(patsubst %.tmx, %.c, $(SOURCE_LEVELS_TMX)))
-$(info $(SOURCE_LEVELS_C))
 
 SOURCE_C=$(SOURCE_LEVELS_C) $(strip $(call rwildcard, source/, *.c))
 SOURCE_S=$(patsubst source/, temp/, $(patsubst %.c, %.s, $(SOURCE_C)))
@@ -49,7 +48,9 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 %.o : %.c
 %.s : %.c
 
-build: rom/$(ROM_NAME).nes
+build-tiles: graphics/generated/tiles.png
+
+build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
 
 temp/crt0.o: source/neslib_asm/crt0.asm
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
@@ -67,6 +68,11 @@ temp/level_%.c: levels/%.tmx
 	tools/tmx2c/tmx2c 3 overworld $< $(patsubst %.c, %, $@)
 # If you're actively changing tmx2c using node, toss it in here to use it directly.
 #	node tools/tmx2c/src/index.js 3 overworld $< $(patsubst %.c, %, $@)
+
+graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
+	tools/chr2img/chr2img graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
+# If you're actively changing chr2img using node, toss it in here to use it directly.
+#	node tools/chr2img/src/index.js graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
