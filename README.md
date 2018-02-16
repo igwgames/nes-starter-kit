@@ -144,7 +144,7 @@ need these things for most games, but if you do, this is a place to learn!_
 43. Expanding available graphics using CHR banking
 44. Making room for more code using PRG banking
 45. Getting finer control over graphics with chr ram
-46. Writing Functions in Assembly
+46. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
 
 # Credits
 
