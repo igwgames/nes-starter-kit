@@ -104,9 +104,23 @@ installed cygwin.
 
 This is already set up for you too! You can change how this works by editing `nes-starter-kit/.vscode/tasks.json`.
 
-#### Error highlighting
+#### Suggested VS Code Extensions
 
-TODO: Is this easy enough? I seem to recall doing it before
+These extensions aren't required at all, but add features that could make development more pleasant. 
+Check out the storage pages, then make the call for yourself!
+
+##### C/C++ (Miscrosoft)
+
+This provides C and C++ syntax highlighting for VS Code. You probably want this one! To note, the application will suggest
+installing this automatically when you open a `.c` or `.h.` file for the first time. You don't need to find this one
+manually if you don't want to.
+
+##### MADS (Jaromir Obr)
+
+This is a 6502 assembly language support extension. You probably don't need it for most nes-starter-kit projects.
+It will provide syntax highlighting for the raw assembly language in neslib, and some of our custom extensions.
+You want this if you're planning on modifying or extending the guts of `nes-starter-kit`. If you'd prefer stick with C,
+you can avoid this.
 
 ### Personal notes and junk 
 TODO: Remove these
