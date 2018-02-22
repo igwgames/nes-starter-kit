@@ -32,6 +32,9 @@ SOURCE_C=$(SOURCE_LEVELS_C) $(strip $(call rwildcard, source/, *.c))
 SOURCE_S=$(patsubst source/, temp/, $(patsubst %.c, %.s, $(SOURCE_C)))
 SOURCE_O=$(addprefix temp/, $(notdir $(patsubst %.s, %.o, $(SOURCE_S))))
 SOURCE_DIRS=$(sort $(dir $(call rwildcard, source, %))) temp
+SOURCE_CRT0_ASM=$(strip $(call rwildcard, source/, *.asm))
+SOURCE_CRT0_GRAPHICS=$(strip $(call rwildcard, graphics/, *.pal)) $(strip $(call rwildcard, graphics/, *.chr)) 
+
 VPATH=$(SOURCE_DIRS)
 # Uses the windows command line to open your rom, 
 # which effectively does the same thing as double-clicking the rom in explorer.
@@ -52,7 +55,7 @@ build-tiles: graphics/generated/tiles.png
 
 build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
 
-temp/crt0.o: source/neslib_asm/crt0.asm
+temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS)
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
 temp/%.s: %.c

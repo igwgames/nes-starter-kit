@@ -2,6 +2,6 @@
     "version": "0.1.0",
     "command": "make",
     "isShellCommand": true,
-    "args": ["clean", "build", "run"],
+    "args": ["build", "run"],
     "showOutput": "always"
 }
