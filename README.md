@@ -155,7 +155,11 @@ by [Refresh Games](https://refreshgames.co.uk/)
 
 [Who's Cuter Font](https://forums.nesdev.com/viewtopic.php?f=21&t=10284&start=0) by [Damian Yerrick (Tepples)](http://pineight.com)
 
-**Please credit these wonderful people in your own creations, too!**
+[8-Bit Victory Loop](https://opengameart.org/content/8-bit-victory-loop) by [Wolfgang](https://opengameart.org/users/wolfgang)
+[8-Bit Forest Theme](https://opengameart.org/content/8-bit-forest-theme) by [Wolfgang](https://opengameart.org/users/wolfgang)
+
+**Please credit these wonderful people in your own creations, too!** Technically all of the art and music is licensed
+as public domain, (CC0) but it'd be really nice to give them credit if you don't replace it.
 
 # Contributing
 
@@ -168,12 +172,8 @@ request, and I'm sure we can get something together.
 - Should probably target windows explicitly - need to either not require GOW, or make it very explicit. The simpler the 
   better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
-- Add an error screen, and use it from banking script. (More places?)
 - Pretty fade in/out methods
-- Add music early.
 - Add contact info to title && error screen (error screen, include developer name too)?
-- Stretch: Take chr, take palettes, combine into the 4-tile tall png we know and love and/or individuals.
-- How can we map which tiles are solid vs not? Needs to be super obvious and user-editable...
 - Better document how doing a fork works, and more importantly how to upgrade
 - Can we make a tool to export chr -> bmp, then tile them into the big ol png tiled uses? 
 -- If we do this, update the sections in chapter 2 that give manual steps
