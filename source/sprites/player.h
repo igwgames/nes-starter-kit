@@ -7,6 +7,11 @@
 // The id of the first sprite in the 4 sprites comprising the player. (out of 64 total sprites)
 #define PLAYER_SPRITE_INDEX 0x10
 
+// This is the width and height of player as used in collisions. This is shifty by 4 to allow for sub-pixel
+// sizes. (And smoother acceleration/deceleration.) A 16px wide sprite is 256 units here.
+#define PLAYER_WIDTH_EXTENDED 256
+#define PLAYER_HEIGHT_EXTENDED 256
+
 // We store extra detail about the player's position to make movement smoother. This is how much to shift
 // by to get to the real location. (Think about this as dividing by (this number) * 2)
 #define PLAYER_POSITION_SHIFT 4
@@ -22,3 +27,6 @@ void handle_player_movement();
 
 // Update the player's sprite, and put it onto the screen as necessary
 void update_player_sprite();
+
+// Tests if the player is about to collide with any solid tiles, and adjusts the player's velocity to zero if found.
+void test_player_tile_collision();

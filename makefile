@@ -33,7 +33,8 @@ SOURCE_S=$(patsubst source/, temp/, $(patsubst %.c, %.s, $(SOURCE_C)))
 SOURCE_O=$(addprefix temp/, $(notdir $(patsubst %.s, %.o, $(SOURCE_S))))
 SOURCE_DIRS=$(sort $(dir $(call rwildcard, source, %))) temp
 SOURCE_CRT0_ASM=$(strip $(call rwildcard, source/, *.asm))
-SOURCE_CRT0_GRAPHICS=$(strip $(call rwildcard, graphics/, *.pal)) $(strip $(call rwildcard, graphics/, *.chr)) 
+SOURCE_CRT0_GRAPHICS=$(strip $(call rwildcard, graphics/, *.pal)) $(strip $(call rwildcard, graphics/, *.chr))
+SOURCE_HEADERS=$(strip $(call rwildcard, source/, *.h))
 
 VPATH=$(SOURCE_DIRS)
 # Uses the windows command line to open your rom, 
@@ -58,7 +59,10 @@ build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
 temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS)
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
-temp/%.s: %.c
+# This bit is a little cheap... any time a header file changes, just recompile all C files. There might
+# be some trickery we could do to find all C files that actually care, but this compiles fast enough that 
+# it shouldn't be a huge deal.
+temp/%.s: %.c $(SOURCE_HEADERS)
 	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
 temp/%.o: temp/%.s
