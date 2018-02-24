@@ -68,6 +68,7 @@ void handle_player_movement() {
         playerYVelocity = -16;
     } else if (controllerState & PAD_DOWN) {
         playerYVelocity = 16;
+    } else { 
         playerYVelocity = 0;
     }
 
@@ -96,14 +97,14 @@ void test_player_tile_collision() {
         // TODO: Do we need to do clever clamping with collisionTempY here like we do with X below? Need to see how it behaves when we add vertical scrolling
 		if (playerYVelocity < 0) {
             // We're going up - test the top left, and top right
-			if (test_collision(currentMap[(collisionTempX>>4)+((((collisionTempY)>>4))<<4)], 1) || test_collision(currentMap[(collisionTempXRight>>4)+((((collisionTempY)>>4))<<4)], 1)) {
+			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1)) {
                 playerYVelocity = 0;
                 playerVelocityLockTime = 0;
             }
             playerDirection = SPRITE_DIRECTION_UP;
 		} else {
             // Okay, we're going down - test the bottom left and bottom right
-			if (test_collision(currentMap[((collisionTempX)>>4)+((((collisionTempYBottom)>>4))<<4)], 1) || test_collision(currentMap[((collisionTempXRight)>>4)+((((collisionTempYBottom)>>4))<<4)], 1)) {
+			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
                 playerYVelocity = 0;
                 playerVelocityLockTime = 0;
 
@@ -124,7 +125,7 @@ void test_player_tile_collision() {
         if (collisionTempX > 2 && collisionTempX < 238) {
             if (playerXVelocity < 0) {
                 // Okay, we're moving left. Need to test the top-left and bottom-left
-                if (test_collision(currentMap[(collisionTempX>>4)+((((collisionTempY)>>4))<<4)], 1) || test_collision(currentMap[(collisionTempX>>4)+((((collisionTempYBottom)>>4))<<4)], 1)) {
+                if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1)) {
                     playerXVelocity = 0;
                     playerVelocityLockTime = 0;
 
@@ -132,7 +133,7 @@ void test_player_tile_collision() {
                 playerDirection = SPRITE_DIRECTION_LEFT;
             } else {
                 // Going right - need to test top-right and bottom-right
-                if (test_collision(currentMap[((collisionTempXRight)>>4)+(((collisionTempY>>4))<<4)], 1) || test_collision(currentMap[((collisionTempXRight)>>4)+(((collisionTempYBottom>>4))<<4)], 1)) {
+                if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
                     playerXVelocity = 0;
                     playerVelocityLockTime = 0;
 
