@@ -4,6 +4,7 @@
 
 ; NOTE: Edits by cppchriscpp: 
 ; - Added mmc1 bank swapping
+; - Made the nmi and music_play methods support swapping to a set SOUND_BANK before reading data.
 
 ;modified to work with the FamiTracker music driver
 
@@ -985,8 +986,8 @@ _split:
 
 	rts
 
-
-
+	
+	
 ;void __fastcall__ bank_spr(unsigned char n);
 
 _bank_spr:
@@ -1106,6 +1107,18 @@ _vram_write:
 
 _music_play:
 
+	; @cppchriscpp Edit - forcing a swap to the music bank
+	; Need to temporarily swap banks to pull this off. 
+	tax ; Put our song into x for a moment...
+	; Being extra careful and setting BP_BANK to ours in case an nmi fires while we're doing this.
+	lda BP_BANK
+	pha
+	lda SOUND_BANK
+	sta BP_BANK
+	mmc1_register_write MMC1_PRG
+	txa ; bring back the song number!
+
+
 	ldx #<music_data
 	stx <ft_music_addr+0
 	ldx #>music_data
@@ -1116,6 +1129,12 @@ _music_play:
 	
 	lda #1
 	sta <MUSIC_PLAY
+
+	; Remember when we stored the old bank into BP_BANK and swapped? Time to roll back.
+	pla
+	sta BP_BANK
+	mmc1_register_write MMC1_PRG
+
 	rts
 
 

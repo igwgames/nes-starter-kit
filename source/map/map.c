@@ -1,6 +1,6 @@
 #include "source/map/map.h"
 #include "source/map/load_map.h"
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/library/bank_helpers.h"
 #include "source/configuration/game_states.h"
 #include "source/globals.h"

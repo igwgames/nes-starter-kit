@@ -1,5 +1,5 @@
 #include "source/configuration/system_constants.h"
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/library/bank_helpers.h"
 #include "source/map/map.h"
 

@@ -1,4 +1,4 @@
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/sprites/player.h"
 #include "source/library/bank_helpers.h"
 #include "source/globals.h"

@@ -1,4 +1,4 @@
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/menus/title.h"
 #include "source/globals.h"
 #include "source/configuration/game_states.h"

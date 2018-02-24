@@ -44,3 +44,7 @@
 
 // Data included before a nametable update if done mid-frame.
 #define NAMETABLE_UPDATE_PREFIX_LENGTH 3
+
+// Constants for songs we play in the game
+#define SONG_TITLE 0
+#define SONG_OVERWORLD 1

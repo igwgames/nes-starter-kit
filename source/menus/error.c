@@ -1,4 +1,4 @@
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/library/bank_helpers.h"
 #include "source/menus/text_helpers.h"
 #include "source/library/itoa.h"

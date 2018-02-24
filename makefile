@@ -52,11 +52,11 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 %.o : %.c
 %.s : %.c
 
-build-tiles: graphics/generated/tiles.png
-
 build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
 
-temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS)
+build-tiles: graphics/generated/tiles.png
+
+temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin 
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
 # This bit is a little cheap... any time a header file changes, just recompile all C files. There might

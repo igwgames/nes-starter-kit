@@ -316,7 +316,7 @@ resetstub_in "STUB_PRG"
 
 music_data:
 
-	.incbin "tools/neslib_famitracker/music.bin"
+	.incbin "sound/music/music.bin"
 	
 music_dummy_data:
 

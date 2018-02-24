@@ -3,7 +3,7 @@ main.c is the entrypoint of your game. Everything starts from here.
 This has the main loop for the game, which is then used to call out to other code.
 */
 
-#include "tools/neslib_famitracker/neslib.h"
+#include "source/neslib_asm/neslib.h"
 #include "source/library/bank_helpers.h"
 #include "source/configuration/game_states.h"
 #include "source/menus/title.h"
@@ -19,7 +19,7 @@ This has the main loop for the game, which is then used to call out to other cod
 // Note that if variables aren't set in this method, they will start at 0 on NES startup.
 void initialize_variables() {
 
-    playerOverworldPosition = 1; // Which tile on the overworld to start with; 0-62
+    playerOverworldPosition = 0; // Which tile on the overworld to start with; 0-62
     playerHealth = 5; // Player's starting health - how many hearts to show on the HUD.
     playerMaxHealth = 8; // Player's max health - how many hearts to let the player collect before it doesn't count.
     playerXPosition = (128 << PLAYER_POSITION_SHIFT); // X position on the screen to start (increasing numbers as you go left to right. Just change the number)
@@ -44,12 +44,14 @@ void main() {
 
             case GAME_STATE_TITLE_DRAW:
                 banked_call(PRG_BANK_TITLE, draw_title_screen);
+                music_play(SONG_TITLE);
                 break;
             case GAME_STATE_TITLE_INPUT:
                 banked_call(PRG_BANK_TITLE, handle_title_input);
                 break;
             case GAME_STATE_POST_TITLE:
                 // TODO: Add a nice fade animation so you're not watching this load (as cool as it looks)
+                music_stop();
                 load_map();
                 banked_call(PRG_BANK_MAP_LOGIC, init_map);
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
@@ -57,6 +59,7 @@ void main() {
                 banked_call(PRG_BANK_HUD, draw_hud);
                 ppu_on_all();
                 // Map drawing is complete; let the player play the game!
+                music_play(SONG_OVERWORLD);
                 gameState = GAME_STATE_RUNNING;
 
             case GAME_STATE_RUNNING:
