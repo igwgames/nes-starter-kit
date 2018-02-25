@@ -173,6 +173,7 @@ request, and I'm sure we can get something together.
   better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
 - Pretty fade in/out methods
+- Add some famitracker sfx
 - Add contact info to title && error screen (error screen, include developer name too)?
 - Better document how doing a fork works, and more importantly how to upgrade
 - Can we make a tool to export chr -> bmp, then tile them into the big ol png tiled uses? 
