@@ -36,11 +36,12 @@ These are some tools usually available on unix-based systems for building things
 You won't use this directly at all, but it is needed to build your NES rom.
 
 To install this, go to the tools folder, and double-click `install_cygwin.bat`. This will download and launch the installer
-for cygwin. You will need to go through the entire process. Pick any url for the mirror; it does not matter.
+for cygwin. You will need to go through the entire wizard - it just pre-selects some packages for you. Pick any url for the 
+mirror when you get to that step; it does not matter.
 
 **NOTE**: _The script isn't strictly necessary, but it selects the packages we need automatically, in addition to the defaults.
 It is provided merely as a convenience. If you have cygwin installed already, make sure you have `make`, `wget` `chere`, and `curl`
-installed._
+installed._ Alternatively, the `install_cygwin.bat` script won't delete/change your existing packages, so you can just use that.
 
 ## FCEUX (Or another NES Emulator)
 
