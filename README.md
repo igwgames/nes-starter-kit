@@ -178,3 +178,6 @@ request, and I'm sure we can get something together.
 - Better document how doing a fork works, and more importantly how to upgrade
 - Can we make a tool to export chr -> bmp, then tile them into the big ol png tiled uses? 
 -- If we do this, update the sections in chapter 2 that give manual steps
+- Pause menu (duh)
+- accelerated movement
+- better character hitbox

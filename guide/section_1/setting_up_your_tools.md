@@ -39,7 +39,7 @@ To install this, go to the tools folder, and double-click `install_cygwin.bat`. 
 for cygwin. You will need to go through the entire process. Pick any url for the mirror; it does not matter.
 
 **NOTE**: _The script isn't strictly necessary, but it selects the packages we need automatically, in addition to the defaults.
-It is provided merely as a convenience. If you have cygwin installed already, make sure you have `make`, `wget` and `curl`
+It is provided merely as a convenience. If you have cygwin installed already, make sure you have `make`, `wget` `chere`, and `curl`
 installed._
 
 ## FCEUX (Or another NES Emulator)
@@ -98,16 +98,17 @@ If you have installed cygwin with the built-in script, this should just work.
 
 If you used a 32 bit cygwin, or did not install it in the default directory, you will have to tweak things slightly. 
 Open `nes-starter-kit/.vscode/settings.json`, and change the setting `terminal.integrated.shell.windows` to wherever you 
-installed cygwin.
+installed cygwin. You will then have to also edit `nes-starter-kit/.vscode/tasks.json` to change the path used for 
+`bash.exe`.
 
-#### Compile and run on pressing f6
+#### Compile and run on pressing ctrl+shift+b
 
 This is already set up for you too! You can change how this works by editing `nes-starter-kit/.vscode/tasks.json`.
 
 #### Suggested VS Code Extensions
 
 These extensions aren't required at all, but add features that could make development more pleasant. 
-Check out the storage pages, then make the call for yourself!
+Check out the store pages, then make the call for yourself!
 
 ##### C/C++ (Miscrosoft)
 
