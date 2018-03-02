@@ -66,6 +66,8 @@ SCROLL_X: 			.res 1
 SCROLL_Y: 			.res 1
 SCROLL_X1: 			.res 1
 SCROLL_Y1: 			.res 1
+WRITE1:             .res 1   
+WRITE2:             .res 2      ; For extra X/Y split data.
 PAD_STATE: 			.res 2		;one byte per controller
 PAD_STATEP: 		.res 2
 PAD_STATET: 		.res 2

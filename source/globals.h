@@ -13,7 +13,7 @@ ZEROPAGE_EXTERN(unsigned char, j);
 ZEROPAGE_EXTERN(unsigned char, playerHealth);
 ZEROPAGE_EXTERN(unsigned char, playerMaxHealth);
 
-ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x45);
+ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x55);
 
 ZEROPAGE_EXTERN(unsigned char, controllerState);
 ZEROPAGE_EXTERN(unsigned char, lastControllerState);

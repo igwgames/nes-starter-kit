@@ -23,10 +23,7 @@ void draw_hud_to_nametable(unsigned int nametableAdr) {
 
 
 void draw_hud() {
-    // We draw the hud to both active nametables to hide glitches if the timing for ppu scrolling isn't perfect -
-    // otherwise the last few pixels of the hud will start jumping around.
     draw_hud_to_nametable(NAMETABLE_A);
-    draw_hud_to_nametable(NAMETABLE_D);
 }
 
 void update_hud() {

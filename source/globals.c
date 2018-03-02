@@ -12,7 +12,7 @@ ZEROPAGE_DEF(unsigned char, playerHealth);
 ZEROPAGE_DEF(unsigned char, playerMaxHealth);
 ZEROPAGE_DEF(unsigned char, gameState);
 
-ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x45);
+ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x55);
 
 ZEROPAGE_DEF(unsigned char, controllerState);
 ZEROPAGE_DEF(unsigned char, lastControllerState);

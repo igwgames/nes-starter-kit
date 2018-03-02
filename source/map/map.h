@@ -15,6 +15,7 @@ void init_map();
 void draw_current_map_to_a();
 void draw_current_map_to_b();
 void draw_current_map_to_c();
+void draw_current_map_to_d();
 
 // Take the value of playerOverworldPosition, draw the new map on the 2nd or 3rd nametable, then orchestrate a scroll.
 void do_screen_scroll();
