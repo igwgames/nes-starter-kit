@@ -159,7 +159,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
 // the change behind the HUD while continuing to use vertical mirroring.
 // This basically is the draw_current_map_to_nametable logic, but it stops after 32. 
 // NOTE: i and j MUST be maintained between calls to this method.
-void draw_individual_row(int nametableAdr, int attributeTableAdr) {
+void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange) {
     while(1) {
          // The top 2 bytes of map data are palette data. Skip that for now.
         currentValue = currentMap[i] & 0x3f;
@@ -213,6 +213,7 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr) {
         if (bufferIndex == 8) {
             ppu_wait_nmi();
             if (xScrollPosition != -1) {
+                otherLoopIndex += oliChange;
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 + 32 + otherLoopIndex);
             }
@@ -317,14 +318,15 @@ void do_screen_scroll() {
         i = 0; 
         j = -1;
         xScrollPosition = 256;
-        for (otherLoopIndex = 0; otherLoopIndex != 242 - HUD_PIXEL_HEIGHT; otherLoopIndex+=2) {
-            scroll(0, 240 - HUD_PIXEL_HEIGHT);
-            split_y(256, 240 + 32 + otherLoopIndex);
+        for (otherLoopIndex = 0; otherLoopIndex < 243 - HUD_PIXEL_HEIGHT; otherLoopIndex+=2) {
             if (otherLoopIndex % 32 == 0 && otherLoopIndex < 224) {
                 bufferIndex = 0; // TODO: Needed?
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0);
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0, 2);
+            } else {
+                ppu_wait_nmi();
+                scroll(0, 240 - HUD_PIXEL_HEIGHT);
+                split_y(256, 240 + 32 + otherLoopIndex);
             }
-            ppu_wait_nmi();
         }
 
         xScrollPosition = 256;
@@ -338,15 +340,18 @@ void do_screen_scroll() {
         i = 0; 
         j = -1;
         xScrollPosition = 256;
-        for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex != 0; otherLoopIndex-=2) {
-            scroll(0, 240 - HUD_PIXEL_HEIGHT);
-            split_y(256, 240 + 32 + otherLoopIndex);
+        // NOTE: For the case here, we test against < 242, because all valid scroll positions are below 242. 
+        // Since we're using an unsigned char, 0-1 = 255, so as soon as we get below zero the loop terminates.
+        for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex < 242; otherLoopIndex-=2) {
             if (otherLoopIndex % 32 == 0 && otherLoopIndex != 0) {
                 bufferIndex = 0; // TODO: Needed?
                 // TODO: Need to figure out how to make this work in reverse order. (Mess with i and j, I assume)
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0);
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0, -2);
+            } else {
+                ppu_wait_nmi();
+                scroll(0, 240 - HUD_PIXEL_HEIGHT);
+                split_y(256, 240 + 32 + otherLoopIndex);
             }
-            ppu_wait_nmi();
         }
 
         xScrollPosition = 256;
