@@ -267,25 +267,25 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
 void draw_current_map_to_a() {
     clear_asset_table(1);
     xScrollPosition = -1;
-    draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A + 0x3c0, 0);
+    draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
 }
 
 void draw_current_map_to_b() {
     clear_asset_table(0);
     xScrollPosition = -1;
-    draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B + 0x3c0, 0);
+    draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
 }
 
 void draw_current_map_to_c() {
     clear_asset_table(0);
     xScrollPosition = -1;
-    draw_current_map_to_nametable(NAMETABLE_C, NAMETABLE_C + 0x3c0, 0);
+    draw_current_map_to_nametable(NAMETABLE_C, NAMETABLE_C_ATTRS, 0);
 }
 
 void draw_current_map_to_d() {
     clear_asset_table(0);
     xScrollPosition = -1;
-    draw_current_map_to_nametable(NAMETABLE_D, NAMETABLE_D + 0x3c0, 0);
+    draw_current_map_to_nametable(NAMETABLE_D, NAMETABLE_D_ATTRS, 0);
 }
 
 
@@ -301,7 +301,7 @@ void do_screen_scroll() {
         load_map();
 
         clear_asset_table(1);
-        draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B + 0x3c0, 0);
+        draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         // TODO: Move and animate player sprite somehow
         for (i = 0; i != 254; i+=2) {
             scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -313,7 +313,7 @@ void do_screen_scroll() {
         load_map();
 
         clear_asset_table(1);
-        draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B + 0x3c0, 0);
+        draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         // TODO: Move and animate player sprite somehow
         for (i = 0; i != 254; i+=2) { // we depend on i being an 8 bit integer here (values from 0-255), so 0 rolls over to 254.
             scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -324,7 +324,7 @@ void do_screen_scroll() {
     } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
         // First draw original map to the other nametable
         clear_asset_table(0);
-        draw_current_map_to_nametable(NAMETABLE_B + (SCREEN_WIDTH_TILES*6), NAMETABLE_B + 0x3c0 + 8, 1);
+        draw_current_map_to_nametable(NAMETABLE_B + (SCREEN_WIDTH_TILES*6), NAMETABLE_B_ATTRS + 8, 1);
         
         load_map();
         // Loop over the screen, drawing the map in the space taken up by the hud every time we go 32 lines (2 tiles)
@@ -335,7 +335,7 @@ void do_screen_scroll() {
         xScrollPosition = 256;
         for (otherLoopIndex = 0; otherLoopIndex < 243 - HUD_PIXEL_HEIGHT; otherLoopIndex+=2) {
             if (otherLoopIndex % 32 == 0 && otherLoopIndex < 224) {
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0, 2);
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, 2);
             } else {
                 ppu_wait_nmi();
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -347,7 +347,7 @@ void do_screen_scroll() {
     } else if (playerDirection == SPRITE_DIRECTION_UP) {
         // First draw original map to the other nametable
         clear_asset_table(0);
-        draw_current_map_to_nametable(NAMETABLE_B + (SCREEN_WIDTH_TILES*6), NAMETABLE_B + 0x3c0 + 8, 1);
+        draw_current_map_to_nametable(NAMETABLE_B + (SCREEN_WIDTH_TILES*6), NAMETABLE_B_ATTRS + 8, 1);
         load_map();
         // Loop over the screen, drawing the map in the space taken up by the hud every time we go 32 lines (2 tiles)
         // NOTE: We use both i and j in the loop inside one of the functions we're calling, so we needed another variable.
@@ -360,7 +360,7 @@ void do_screen_scroll() {
         for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex < 242; otherLoopIndex-=2) {
             if (otherLoopIndex % 32 == 0 && otherLoopIndex != 0) {
                 // TODO: Need to figure out how to make this work in reverse order. (Mess with i and j, I assume)
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B + 0x3c0, -2);
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, -2);
             } else {
                 ppu_wait_nmi();
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -377,7 +377,7 @@ void do_screen_scroll() {
 
     // Now, draw back to our original nametable...
     clear_asset_table(1);
-    draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A + 0x3c0, 0);
+    draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
 
     // and bump the player back to the first screen now that we're done.
     scroll(0, 240 - HUD_PIXEL_HEIGHT);
