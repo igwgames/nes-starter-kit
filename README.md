@@ -175,8 +175,6 @@ request, and I'm sure we can get something together. Just try to follow the exis
 - Add some famitracker sfx
 - Add contact info to title && error screen (error screen, include developer name too)?
 - Better document how doing a fork works, and more importantly how to upgrade
-- Can we make a tool to export chr -> bmp, then tile them into the big ol png tiled uses? 
--- If we do this, update the sections in chapter 2 that give manual steps
-- Pause menu (duh)
+- Slightly nicer pause menu?
 - accelerated movement
 - better character hitbox

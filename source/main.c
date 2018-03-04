@@ -14,6 +14,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/graphics/hud.h"
 #include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
+#include "source/menus/pause.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -79,6 +80,25 @@ void main() {
                 break;
             case GAME_STATE_SCREEN_SCROLL:
                 banked_call(PRG_BANK_MAP_LOGIC, do_screen_scroll);
+                break;
+            case GAME_STATE_PAUSED:
+                fade_out();
+                banked_call(PRG_BANK_PAUSE_MENU, draw_pause_screen);
+                fade_in();
+                banked_call(PRG_BANK_PAUSE_MENU, handle_pause_input);
+
+                // When we get here, the player has unpaused. 
+                // Pause has its own mini main loop in handle_input to make logic easier.
+                fade_out();
+                banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
+                banked_call(PRG_BANK_MAP_LOGIC, init_map);
+                
+                // The draw map methods handle turning the ppu on/off, but we weren't quite done yet. Turn it back off.
+                ppu_off();
+                banked_call(PRG_BANK_HUD, draw_hud);
+                ppu_on_all();
+                fade_in();
+
                 break;
             default: 
                 crash_error(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);

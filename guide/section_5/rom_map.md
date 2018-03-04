@@ -24,6 +24,7 @@ banks into them by changing their associated `PRG_BANK_TYPE` define in the heade
 ## ROM_02
 - Title screen
 - Various menus
+- Pause Menu
 - Level drawing logic
 - Hud logic
 - Player sprite/movement logic
