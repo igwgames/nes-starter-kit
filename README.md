@@ -172,7 +172,6 @@ request, and I'm sure we can get something together.
 - Should probably target windows explicitly - need to either not require GOW, or make it very explicit. The simpler the 
   better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
-- Pretty fade in/out methods
 - Add some famitracker sfx
 - Add contact info to title && error screen (error screen, include developer name too)?
 - Better document how doing a fork works, and more importantly how to upgrade

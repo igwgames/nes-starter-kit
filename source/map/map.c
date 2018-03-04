@@ -37,7 +37,6 @@ void init_map() {
     // Do some trickery to make the HUD show up at the top of the screen, with the map slightly below.
     scroll(0, 240-HUD_PIXEL_HEIGHT);
     set_mirroring(MIRROR_MODE_VERTICAL);
-    xScrollPosition = -1;
 }
 
 // Clears the asset table. Set containsHud to 1 to set the HUD bytes to use palette 4 (will break the coloring logic if you use the
@@ -267,21 +266,25 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
 
 void draw_current_map_to_a() {
     clear_asset_table(1);
+    xScrollPosition = -1;
     draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A + 0x3c0, 0);
 }
 
 void draw_current_map_to_b() {
     clear_asset_table(0);
+    xScrollPosition = -1;
     draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B + 0x3c0, 0);
 }
 
 void draw_current_map_to_c() {
     clear_asset_table(0);
+    xScrollPosition = -1;
     draw_current_map_to_nametable(NAMETABLE_C, NAMETABLE_C + 0x3c0, 0);
 }
 
 void draw_current_map_to_d() {
     clear_asset_table(0);
+    xScrollPosition = -1;
     draw_current_map_to_nametable(NAMETABLE_D, NAMETABLE_D + 0x3c0, 0);
 }
 

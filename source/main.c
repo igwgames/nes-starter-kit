@@ -12,6 +12,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/map/load_map.h"
 #include "source/map/map.h"
 #include "source/graphics/hud.h"
+#include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
 
 
@@ -32,6 +33,7 @@ void initialize_variables() {
 }
 
 void main() {
+    fade_out_instant();
     gameState = GAME_STATE_SYSTEM_INIT;
 
     while (1) {
@@ -45,21 +47,28 @@ void main() {
             case GAME_STATE_TITLE_DRAW:
                 banked_call(PRG_BANK_TITLE, draw_title_screen);
                 music_play(SONG_TITLE);
+                fade_in();
                 break;
             case GAME_STATE_TITLE_INPUT:
                 banked_call(PRG_BANK_TITLE, handle_title_input);
                 break;
             case GAME_STATE_POST_TITLE:
-                // TODO: Add a nice fade animation so you're not watching this load (as cool as it looks)
+
                 music_stop();
+                fade_out();
                 load_map();
-                banked_call(PRG_BANK_MAP_LOGIC, init_map);
+
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
+                banked_call(PRG_BANK_MAP_LOGIC, init_map);
+                
+                // The draw map methods handle turning the ppu on/off, but we weren't quite done yet. Turn it back off.
                 ppu_off();
                 banked_call(PRG_BANK_HUD, draw_hud);
                 ppu_on_all();
+                
                 // Map drawing is complete; let the player play the game!
                 music_play(SONG_OVERWORLD);
+                fade_in();
                 gameState = GAME_STATE_RUNNING;
 
             case GAME_STATE_RUNNING:
