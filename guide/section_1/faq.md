@@ -85,3 +85,11 @@ the size of your game."
 In short, it means you tried to fit too much data/code into the area given. Check out the chapter titled
 "Understanding and adjusting the size of your game" in section 4. 
 
+#### Why are the tools for flashing my NES cartridge not included in the tool zip?
+
+There are two reasons why these tools were excluded. The first one is that, simply, not everyone 
+needs the same tools. This depends on which path you go with your game. As such, I did not want
+to include unnecessary tools and make the tool list harder to understand.
+
+The second is that playing games on hardware isn't a main focus of this project. The idea is to 
+give you the tools to make your own game - past that point you can do whatever you want with it.
