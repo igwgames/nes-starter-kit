@@ -176,5 +176,4 @@ request, and I'm sure we can get something together. Just try to follow the exis
    with their first change!
 - Better document how doing a fork works, and more importantly how to upgrade
 - Slightly nicer pause menu?
-- accelerated movement
 - better character hitbox

@@ -37,9 +37,9 @@
 // Change this to change how fast sprites animate; values are from 0-6. 0 is fast. 6 is slow.
 #define SPRITE_ANIMATION_SPEED_DIVISOR 3
 
-#define SCREEN_EDGE_LEFT 8
+#define SCREEN_EDGE_LEFT 4
 #define SCREEN_EDGE_RIGHT 240
-#define SCREEN_EDGE_TOP 8 + HUD_PIXEL_HEIGHT
+#define SCREEN_EDGE_TOP 4 + HUD_PIXEL_HEIGHT
 #define SCREEN_EDGE_BOTTOM 220
 
 // Data included before a nametable update if done mid-frame.

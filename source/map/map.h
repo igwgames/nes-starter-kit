@@ -2,6 +2,11 @@
 
 #define PRG_BANK_MAP_LOGIC 2
 
+// We need to push the player a little bit over each frame when we do a screen scroll, or they will stay offscreen 
+// when the scroll is done, and trigger a new one. Plus it looks kinda crummy if they stay put. This is added to the
+// player's position with each frame.
+#define SCREEN_SCROLL_NUDGE 2
+
 // The current map; usable for collisions/etc
 extern unsigned char currentMap[256];
 
