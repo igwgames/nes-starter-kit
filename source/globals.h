@@ -21,3 +21,7 @@ ZEROPAGE_EXTERN(unsigned char, lastControllerState);
 // Bit of a special case - this is exported from assembly in crt0.asm - it's the number of frames since the system started.
 // Note: DO NOT try to alter this with your code; you will almost certainly cause unusual behavior.
 ZEROPAGE_EXTERN(unsigned int, frameCount);
+
+// TODO: There might be a nicer home for these
+// Get the absolute value of a number, the lazy person's way.
+#define ABS(x) (x > 0 ? x : 0-x)

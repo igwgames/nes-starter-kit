@@ -16,6 +16,12 @@
 // by to get to the real location. (Think about this as dividing by (this number) * 2)
 #define PLAYER_POSITION_SHIFT 4
 
+// Handles player movement - we start slow and accelerate/decelerate up to a max speed. As a player,
+// you probably won't notice this outright, but it feels a lot more natural like this.
+// NOTE: The max velocity needs to be evenly divided by the acceleration. (Eg 20/4 = 5)
+#define PLAYER_MAX_VELOCITY 20 // Max speed of the player; we won't let you go past this.
+#define PLAYER_VELOCITY_ACCEL 4 // How quickly do we get up to max velocity? 
+
 ZEROPAGE_EXTERN(int, playerXPosition);
 ZEROPAGE_EXTERN(int, playerYPosition);
 ZEROPAGE_EXTERN(int, playerXVelocity);

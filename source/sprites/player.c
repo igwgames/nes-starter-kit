@@ -44,6 +44,9 @@ void update_player_sprite() {
 }
 
 void handle_player_movement() {
+    // Using a variable, so we can change the velocity based on pressing a button, having a special item,
+    // or whatever you like!
+    int maxVelocity = PLAYER_MAX_VELOCITY;
     lastControllerState = controllerState;
     controllerState = pad_poll(0);
 
@@ -53,23 +56,49 @@ void handle_player_movement() {
         return;
     }
 
-    // FIXME: Do nicer calculations with velocity and acceleration, like in ld38/etc
-    playerXVelocity = 0;
-    if (controllerState & PAD_LEFT) {
-        playerXVelocity = -16;
-    } else if (controllerState & PAD_RIGHT) {
-        playerXVelocity = 16;
-    } else {
-        playerXVelocity = 0;
+    if (controllerState & PAD_RIGHT && playerXVelocity >= 0) {
+        // If you're moving right, and you're not at max, speed up.
+        if (playerXVelocity < maxVelocity) {
+            playerXVelocity += PLAYER_VELOCITY_ACCEL;
+        // If you're over max somehow, we'll slow you down a little.
+        } else if (playerXVelocity > maxVelocity) {
+            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+        }
+    } else if (controllerState & PAD_LEFT && playerXVelocity <= 0) {
+        // If you're moving left, and you're not at max, speed up.
+        if (ABS(playerXVelocity) < maxVelocity) {
+            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+        // If you're over max, slow you down a little...
+        } else if (ABS(playerXVelocity) > maxVelocity) { 
+            playerXVelocity += PLAYER_VELOCITY_ACCEL;
+        }
+    } else if (playerXVelocity != 0) {
+        // Not pressing anything? Let's slow you back down...
+        if (playerXVelocity > 0) {
+            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+        } else {
+            playerXVelocity += PLAYER_VELOCITY_ACCEL;
+        }
     }
 
-    playerYVelocity = 1;
     if (controllerState & PAD_UP) {
-        playerYVelocity = -16;
+        if (ABS(playerYVelocity) < maxVelocity) {
+            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+        } else if (ABS(playerYVelocity) > maxVelocity) {
+            playerYVelocity += PLAYER_VELOCITY_ACCEL;
+        }
     } else if (controllerState & PAD_DOWN) {
-        playerYVelocity = 16;
+        if (playerYVelocity < maxVelocity) {
+            playerYVelocity += PLAYER_VELOCITY_ACCEL;
+        } else if (playerYVelocity > maxVelocity) {
+            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+        }
     } else { 
-        playerYVelocity = 0;
+        if (playerYVelocity > 0) {
+            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+        } else if (playerYVelocity < 0) {
+            playerYVelocity += PLAYER_VELOCITY_ACCEL;
+        }
     }
 
     // This will knock out the player's speed if they hit anything.
