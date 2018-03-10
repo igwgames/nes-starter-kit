@@ -130,7 +130,7 @@ _(Note: these are rough ideas and very likely going to change. Suggestions also 
 31. Making the title screen prettier
     (Note: Probably means showing how to replace the text title screen with something prettier)
 32. Animating background tiles
-33. Playing your game on a real NES
+33. [Playing your game on a real NES](./guide/section_4/real_nes.md)
 34. Making a "real" cartridge
 
 ### Part 5: Advanced Topics
@@ -169,11 +169,11 @@ request, and I'm sure we can get something together. Just try to follow the exis
 
 # Rough notes for my use
 - Will likely want to use famitracker directly over famitone2 to lower the barrier of entry
-- Should probably target windows explicitly - need to either not require GOW, or make it very explicit. The simpler the 
-  better. At the same time though, makefiles are absurdly powerful... food for thought.
 - Do we want to give the player a sword/something similar? Or can we get by not doing that?
 - Add some famitracker sfx
 - Add contact info to title && error screen (error screen, include developer name too)?
+-- But doing this actually seems way less fun, looking at it... we want to get the user curious
+   with their first change!
 - Better document how doing a fork works, and more importantly how to upgrade
 - Slightly nicer pause menu?
 - accelerated movement

@@ -42,6 +42,9 @@ VPATH=$(SOURCE_DIRS)
 MAIN_EMULATOR=cmd /c start
 
 CONFIG_FILE=tools/cc65_config/game.cfg
+
+# Path to 7-Zip - only used for generating tools zip. There's a 99.9% chance you don't care about this.
+7ZIP="/cygdrive/c/Program Files/7-Zip/7z"
 # ===== ENGINE SETTINGS END HERE =====
 
 # ===== Actual makefile logic starts here =====
@@ -84,6 +87,14 @@ graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 	$(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib
+
+# Build up the tool zip that's saved on the website/etc. There's a 99.9% chance you don't care about this.
+# Meant to be run from the base folder of nes-starter-kit - all node stuff must be compiled!
+build_tool_zip: 
+	-rm temp/tools.zip
+	$(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/tmx2c/tmx2c.exe tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
+
+
 
 clean:
 	-rm -f rom/*.nes

@@ -7,6 +7,7 @@ tools/tmx2c/src/node_modules
 !tools/chr2img
 tools/chr2img/*.exe
 tools/chr2img/src/node_modules
+!tools/zip_readme
 graphics/generated/*.png
 graphics/generated/*.bmp
 rom/*.nes
