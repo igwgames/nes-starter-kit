@@ -293,6 +293,7 @@ void draw_current_map_to_d() {
 void do_screen_scroll() {
     // First, draw the next tile onto b
     xScrollPosition = -1;
+    scroll(0, 240 - HUD_PIXEL_HEIGHT);
     
     // Draw a sprite into 0 to give us something to split on
     oam_spr(249, HUD_PIXEL_HEIGHT-NES_SPRITE_HEIGHT-0, HUD_SPRITE_ZERO_TILE_ID, 0x00, 0);
@@ -304,9 +305,8 @@ void do_screen_scroll() {
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         // TODO: Move and animate player sprite somehow
         for (i = 0; i != 254; i+=2) {
-            scroll(0, 240 - HUD_PIXEL_HEIGHT);
-            split(i, 0);
             ppu_wait_nmi();
+            split(i, 0);
         }
         xScrollPosition = 256;
     } else if (playerDirection == SPRITE_DIRECTION_LEFT) {
@@ -316,9 +316,8 @@ void do_screen_scroll() {
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         // TODO: Move and animate player sprite somehow
         for (i = 0; i != 254; i+=2) { // we depend on i being an 8 bit integer here (values from 0-255), so 0 rolls over to 254.
-            scroll(0, 240 - HUD_PIXEL_HEIGHT);
-            split(512-i, 0);
             ppu_wait_nmi();
+            split(512-i, 0);
         }
         xScrollPosition = 256;
     } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
@@ -338,7 +337,6 @@ void do_screen_scroll() {
                 draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, 2);
             } else {
                 ppu_wait_nmi();
-                scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 + 32 + otherLoopIndex);
             }
         }
@@ -363,7 +361,6 @@ void do_screen_scroll() {
                 draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, -2);
             } else {
                 ppu_wait_nmi();
-                scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 + 32 + otherLoopIndex);
             }
         }
