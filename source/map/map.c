@@ -136,6 +136,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split(xScrollPosition, 0);
             }
+            set_vram_update(NULL);
 
         }
     }
@@ -291,24 +292,26 @@ void draw_current_map_to_d() {
 
 
 void do_screen_scroll() {
-    // TODO: Turn 2 into a constant for how fast the screen scrolls.
     // First, draw the next tile onto b
     xScrollPosition = -1;
     scroll(0, 240 - HUD_PIXEL_HEIGHT);
     
     // Draw a sprite into 0 to give us something to split on
     oam_spr(249, HUD_PIXEL_HEIGHT-NES_SPRITE_HEIGHT-0, HUD_SPRITE_ZERO_TILE_ID, 0x00, 0);
+    ppu_wait_nmi();
 
     if (playerDirection == SPRITE_DIRECTION_RIGHT) {
         load_map();
 
         clear_asset_table(1);
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
-        for (i = 0; i != 254; i+=2) {
-            playerXPosition -= (2 << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
+        for (i = 0; i != 254; i+= SCREEN_SCROLL_LOOP_INCREMENT) {
+            playerXPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
-            ppu_wait_nmi();
-            split(i, 0);
+            if (i % SCREEN_SCROLL_SPEED == 0) {
+                ppu_wait_nmi();
+                split(i, 0);
+            }
         }
         xScrollPosition = 256;
     } else if (playerDirection == SPRITE_DIRECTION_LEFT) {
@@ -316,11 +319,13 @@ void do_screen_scroll() {
 
         clear_asset_table(1);
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
-        for (i = 0; i != 254; i+=2) { // we depend on i being an 8 bit integer here (values from 0-255), so 0 rolls over to 254.
-            playerXPosition += (2 << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
+        for (i = 0; i != 254; i+= SCREEN_SCROLL_LOOP_INCREMENT) { // we depend on i being an 8 bit integer here (values from 0-255), so 0 rolls over to 254.
+            playerXPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
-            ppu_wait_nmi();
-            split(512-i, 0);
+            if (i % SCREEN_SCROLL_SPEED == 0) {
+                ppu_wait_nmi();
+                split(512-i, 0);
+            }
         }
         xScrollPosition = 256;
     } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
@@ -335,14 +340,21 @@ void do_screen_scroll() {
         i = 0; 
         j = -1;
         xScrollPosition = 256;
-        for (otherLoopIndex = 0; otherLoopIndex < 243 - HUD_PIXEL_HEIGHT; otherLoopIndex+=2) {
-            playerYPosition -= (2 << PLAYER_POSITION_SHIFT);
+        for (otherLoopIndex = 0; otherLoopIndex < 243 - HUD_PIXEL_HEIGHT; otherLoopIndex += SCREEN_SCROLL_LOOP_INCREMENT) {
+            // Going down needs a little bit less of a nudge for some reason - suspect it has something to do with the HUD.
+            // If you have an explanation for this, please file a ticket and let me know how to update this!
+            playerYPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_NUDGE>>1);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (otherLoopIndex % 32 == 0 && otherLoopIndex < 224) {
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, 2);
-            } else {
                 ppu_wait_nmi();
                 split_y(256, 240 + 32 + otherLoopIndex);
+
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, SCREEN_SCROLL_LOOP_INCREMENT);
+            } else {
+                if (i % SCREEN_SCROLL_SPEED == 0) {
+                    ppu_wait_nmi();
+                    split_y(256, 240 + 32 + otherLoopIndex);
+                }
             }
         }
 
@@ -360,15 +372,20 @@ void do_screen_scroll() {
         xScrollPosition = 256;
         // NOTE: For the case here, we test against < 242, because all valid scroll positions are below 242. 
         // Since we're using an unsigned char, 0-1 = 255, so as soon as we get below zero the loop terminates.
-        for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex < 242; otherLoopIndex-=2) {
-            playerYPosition += (2 << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
+        for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex < 242; otherLoopIndex -= SCREEN_SCROLL_LOOP_INCREMENT) {
+            playerYPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_NUDGE;
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (otherLoopIndex % 32 == 0 && otherLoopIndex != 0) {
                 // TODO: Need to figure out how to make this work in reverse order. (Mess with i and j, I assume)
-                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, -2);
-            } else {
                 ppu_wait_nmi();
                 split_y(256, 240 + 32 + otherLoopIndex);
+
+                draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, -SCREEN_SCROLL_LOOP_INCREMENT);
+            } else {
+                if (i % SCREEN_SCROLL_SPEED == 0) {
+                    ppu_wait_nmi();
+                    split_y(256, 240 + 32 + otherLoopIndex);
+                }
             }
         }
 

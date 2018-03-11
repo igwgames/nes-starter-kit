@@ -5,7 +5,16 @@
 // We need to push the player a little bit over each frame when we do a screen scroll, or they will stay offscreen 
 // when the scroll is done, and trigger a new one. Plus it looks kinda crummy if they stay put. This is added to the
 // player's position with each frame.
-#define SCREEN_SCROLL_NUDGE 2
+#define SCREEN_SCROLL_NUDGE 3
+
+// This defines how many pixels to move the screen during each frame of the screen scroll animation.
+// Must be a multiple of 2 (or whatever value is set below)
+// 2 = slow, 4 = fast, 8 = very fast, 16 = almost instant
+// FIXME: Speeds faster than 2 are hyper glitchy going up/down right now...
+#define SCREEN_SCROLL_SPEED 2
+// This is how many pixels are done in each loop - the variable above controls when we wait for interrupts. 
+// You probably don't want to change this...
+#define SCREEN_SCROLL_LOOP_INCREMENT 2
 
 // The current map; usable for collisions/etc
 extern unsigned char currentMap[256];
