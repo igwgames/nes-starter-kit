@@ -131,10 +131,10 @@ void handle_player_movement() {
 void test_player_tile_collision() {
 
 	if (playerYVelocity != 0) {
-		collisionTempY = ((playerYPosition + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-		collisionTempX = ((playerXPosition) >> PLAYER_POSITION_SHIFT);
-        collisionTempYBottom = ((playerYPosition + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempXRight = ((playerXPosition + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
+		collisionTempY = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+		collisionTempX = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED) >> PLAYER_POSITION_SHIFT);
+        collisionTempYBottom = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempXRight = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
         // TODO: Do we need to do clever clamping with collisionTempY here like we do with X below? Need to see how it behaves when we add vertical scrolling
 		if (playerYVelocity < 0) {
             // We're going up - test the top left, and top right
@@ -155,10 +155,10 @@ void test_player_tile_collision() {
     }
 
 	if (playerXVelocity != 0) {
-		collisionTempX = (playerXPosition + playerXVelocity) >> PLAYER_POSITION_SHIFT;
-		collisionTempY = ((playerYPosition + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempYBottom = ((playerYPosition + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempXRight = ((playerXPosition + playerXVelocity + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
+		collisionTempX = (playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity) >> PLAYER_POSITION_SHIFT;
+		collisionTempY = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempYBottom = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempXRight = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
 
 
         // Depending on how far to the left/right the player is, there's a chance part of our bounding box falls into

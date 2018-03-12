@@ -9,11 +9,13 @@
 
 // This is the width and height of player as used in collisions. This is shifty by 4 to allow for sub-pixel
 // sizes. (And smoother acceleration/deceleration.) A 16px wide sprite is 256 units here.
-#define PLAYER_WIDTH_EXTENDED 256
-#define PLAYER_HEIGHT_EXTENDED 256
+#define PLAYER_WIDTH_EXTENDED 205
+#define PLAYER_HEIGHT_EXTENDED 240
+#define PLAYER_X_OFFSET_EXTENDED 28
+#define PLAYER_Y_OFFSET_EXTENDED 16
 
 // We store extra detail about the player's position to make movement smoother. This is how much to shift
-// by to get to the real location. (Think about this as dividing by (this number) * 2)
+// by to get to the real location. (Think about this as dividing by 2^(this number))
 #define PLAYER_POSITION_SHIFT 4
 
 // Handles player movement - we start slow and accelerate/decelerate up to a max speed. As a player,
