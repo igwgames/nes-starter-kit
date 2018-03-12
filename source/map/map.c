@@ -220,7 +220,7 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
             if (xScrollPosition != -1) {
                 otherLoopIndex += oliChange;
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
-                split_y(256, 240 + 32 + otherLoopIndex);
+                split_y(256, 240 + 48 + otherLoopIndex);
             }
         }
         if (bufferIndex == 16) {
@@ -252,7 +252,7 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
             ppu_wait_nmi();
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
-                split_y(256, 240 + 32 + otherLoopIndex);
+                split_y(256, 240 + 48 + otherLoopIndex);
             }
             set_vram_update(NULL);
 
@@ -340,20 +340,20 @@ void do_screen_scroll() {
         i = 0; 
         j = -1;
         xScrollPosition = 256;
-        for (otherLoopIndex = 0; otherLoopIndex < 243 - HUD_PIXEL_HEIGHT; otherLoopIndex += SCREEN_SCROLL_LOOP_INCREMENT) {
+        for (otherLoopIndex = 0; otherLoopIndex < 240 - HUD_PIXEL_HEIGHT; otherLoopIndex += SCREEN_SCROLL_LOOP_INCREMENT) {
             // Going down needs a little bit less of a nudge for some reason - suspect it has something to do with the HUD.
             // If you have an explanation for this, please file a ticket and let me know how to update this!
             playerYPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_NUDGE>>1);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (otherLoopIndex % 32 == 0 && otherLoopIndex < 224) {
                 ppu_wait_nmi();
-                split_y(256, 240 + 32 + otherLoopIndex);
+                split_y(256, 240 + 48 + otherLoopIndex);
 
                 draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, SCREEN_SCROLL_LOOP_INCREMENT);
             } else {
-                if (i % SCREEN_SCROLL_SPEED == 0) {
+                if ((i % (SCREEN_SCROLL_SPEED*4)) == 0) {
                     ppu_wait_nmi();
-                    split_y(256, 240 + 32 + otherLoopIndex);
+                    split_y(256, 240 + 48 + otherLoopIndex);
                 }
             }
         }
@@ -378,13 +378,13 @@ void do_screen_scroll() {
             if (otherLoopIndex % 32 == 0 && otherLoopIndex != 0) {
                 // TODO: Need to figure out how to make this work in reverse order. (Mess with i and j, I assume)
                 ppu_wait_nmi();
-                split_y(256, 240 + 32 + otherLoopIndex);
+                split_y(256, 240 + 48 + otherLoopIndex);
 
                 draw_individual_row(NAMETABLE_B, NAMETABLE_B_ATTRS, -SCREEN_SCROLL_LOOP_INCREMENT);
             } else {
-                if (i % SCREEN_SCROLL_SPEED == 0) {
+                if (i % (SCREEN_SCROLL_SPEED<<1) == 0) {
                     ppu_wait_nmi();
-                    split_y(256, 240 + 32 + otherLoopIndex);
+                    split_y(256, 240 + 48 + otherLoopIndex);
                 }
             }
         }
