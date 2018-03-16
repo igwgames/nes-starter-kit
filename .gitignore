@@ -13,3 +13,4 @@ graphics/generated/*.bmp
 rom/*.nes
 temp/*
 !temp/empty
+todo.md

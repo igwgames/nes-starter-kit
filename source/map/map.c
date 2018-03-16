@@ -7,6 +7,7 @@
 #include "source/configuration/system_constants.h"
 #include "source/graphics/palettes.h"
 #include "source/graphics/hud.h"
+#include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
 #include "source/menus/error.h"
 
@@ -289,9 +290,34 @@ void draw_current_map_to_d() {
     draw_current_map_to_nametable(NAMETABLE_D, NAMETABLE_D_ATTRS, 0);
 }
 
+// A quick, low-tech glamour-free way to transition between screens.
+void do_fade_screen_transition() {
+    load_map();
+    clear_asset_table(1);
+    fade_out_fast();
+    // Now that the screen is clear, migrate the player's sprite a bit..
+    if (playerDirection == SPRITE_DIRECTION_LEFT) {
+        playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_NUDGE << (PLAYER_POSITION_SHIFT+1));
+    } else if (playerDirection == SPRITE_DIRECTION_RIGHT) {
+        playerXPosition = (SCREEN_EDGE_LEFT << PLAYER_POSITION_SHIFT) + (SCREEN_SCROLL_NUDGE << (PLAYER_POSITION_SHIFT+1));
+    } else if (playerDirection == SPRITE_DIRECTION_UP) {
+        playerYPosition = (SCREEN_EDGE_BOTTOM << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_NUDGE << (PLAYER_POSITION_SHIFT+1));
+    } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
+        playerYPosition = (SCREEN_EDGE_TOP << PLAYER_POSITION_SHIFT) + (SCREEN_SCROLL_NUDGE << (PLAYER_POSITION_SHIFT+1));
+    }
+    // Actually move the sprite too, since otherwise this won't happen until after we un-blank the screen.
+    banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
 
+    // Draw the updated map to the screen...
+    draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
+    fade_in_fast();
+    // Aand we're back!
+    gameState = GAME_STATE_RUNNING;
+}
 
-void do_screen_scroll() {
+// A pretty screel scrolling method. Note: This is incomplete - up/down are slower than left/right, and up is very ugly.
+// TODO: Fix this up and make it usable.
+void do_scroll_screen_transition() {
     // First, draw the next tile onto b
     xScrollPosition = -1;
     scroll(0, 240 - HUD_PIXEL_HEIGHT);

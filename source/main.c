@@ -79,7 +79,7 @@ void main() {
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
                 break;
             case GAME_STATE_SCREEN_SCROLL:
-                banked_call(PRG_BANK_MAP_LOGIC, do_screen_scroll);
+                banked_call(PRG_BANK_MAP_LOGIC, do_fade_screen_transition);
                 break;
             case GAME_STATE_PAUSED:
                 fade_out();

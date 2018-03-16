@@ -165,14 +165,3 @@ as public domain, (CC0) but it'd be really nice to give them credit if you don't
 
 I don't have any set rules around this right now. If you've got something you'd like to add, just send over a pull 
 request, and I'm sure we can get something together. Just try to follow the existing code style as best you can.
-
-
-# Rough notes for my use
-- Will likely want to use famitracker directly over famitone2 to lower the barrier of entry
-- Do we want to give the player a sword/something similar? Or can we get by not doing that?
-- Add some famitracker sfx
-- Add contact info to title && error screen (error screen, include developer name too)?
--- But doing this actually seems way less fun, looking at it... we want to get the user curious
-   with their first change!
-- Better document how doing a fork works, and more importantly how to upgrade
-- Slightly nicer pause menu?
