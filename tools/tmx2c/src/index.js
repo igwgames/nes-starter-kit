@@ -121,20 +121,20 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                     }
 
                     var pos = (x * SCREEN_WIDTH) + (y * (roomsWide*SCREEN_WIDTH)*SCREEN_HEIGHT) + (yy * width) + xx;
-                    if (data[pos].id < 0 || data[pos].id > 256) {
+                    if (data[pos].gid < 0 || data[pos].gid > 256) {
                         containsWarnings = true;
-                        out('WARNING: Sprite (id: ' + data[pos].id + ' ) found on map layer in room ( ' + x + ', ' + y + ') - this sprite will be skipped! Please move it to the sprite layer.');
-                        data[pos].id = 0;
+                        out('WARNING: Sprite (id: ' + data[pos].gid + ') found on map layer in room ( ' + x + ', ' + y + ') - this sprite will be skipped! Please move it to the sprite layer.');
+                        data[pos].gid = 0;
                     }
-                    mapData += data[pos].id;
+                    mapData += data[pos].gid;
 
                     if (spriteData[pos]) {
-                        if (spriteData[pos].id < 256) {
-                            out('WARNING: Map tile (id: ' + spriteData[pos].id + ') found on sprite layer in room ( ' + x + ', ' + y + ') - this tile will be skipped! Please move it to the tile layer.');
+                        if (spriteData[pos].gid < 256) {
+                            out('WARNING: Map tile (id: ' + spriteData[pos].gid + ') found on sprite layer in room ( ' + x + ', ' + y + ') - this tile will be skipped! Please move it to the tile layer.');
                             containsWarnings = true;
                         } else {
                             roomSpriteData.push(yy*SCREEN_WIDTH+xx);
-                            roomSpriteData.push(spriteData[pos].id-257);
+                            roomSpriteData.push(spriteData[pos].gid-257);
                         }
                     }
     
