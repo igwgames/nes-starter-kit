@@ -78,7 +78,8 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
         mapColumns = [],
         fileData = '',
         mapData = '',
-        spriteData = '';
+        spriteData = '',
+        containsWarnings = false;
 
     verbose('Map width: ' + width + ' height: ' + height + ' length: ' + (width * height) + ' bytes.');
         
@@ -118,12 +119,23 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                     } else {
                         mapData += "\n";
                     }
+
                     var pos = (x * SCREEN_WIDTH) + (y * (roomsWide*SCREEN_WIDTH)*SCREEN_HEIGHT) + (yy * width) + xx;
+                    if (data[pos].id < 0 || data[pos].id > 256) {
+                        containsWarnings = true;
+                        out('WARNING: Sprite (id: ' + data[pos].id + ' ) found on map layer in room ( ' + x + ', ' + y + ') - this sprite will be skipped! Please move it to the sprite layer.');
+                        data[pos].id = 0;
+                    }
                     mapData += data[pos].id;
 
                     if (spriteData[pos]) {
-                        roomSpriteData.push(yy*SCREEN_WIDTH+xx);
-                        roomSpriteData.push(spriteData[pos].id-257);
+                        if (spriteData[pos].id < 256) {
+                            out('WARNING: Map tile (id: ' + spriteData[pos].id + ') found on sprite layer in room ( ' + x + ', ' + y + ') - this tile will be skipped! Please move it to the tile layer.');
+                            containsWarnings = true;
+                        } else {
+                            roomSpriteData.push(yy*SCREEN_WIDTH+xx);
+                            roomSpriteData.push(spriteData[pos].id-257);
+                        }
                     }
     
                 }
@@ -173,4 +185,10 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
 
     fs.writeFileSync(process.argv[5]+'.c', mapData);
     fs.writeFileSync(process.argv[5]+'.h', headerData);
+
+    if (containsWarnings) {
+        out('WARNING: Map conversion completed with warnings. Please look over the logs above to find them.')
+    } else {
+        out('Map conversion completed successfully.')
+    }
 });

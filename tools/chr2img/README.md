@@ -21,7 +21,7 @@ We package it using a node module called `pkg`, which is installed globally. (`n
 Use the following command to build a release exe:
 
 ```
-pkg -d --public tools/chr2img/src/index.js --output tools/chr2img/chr2img.exe -t node6-windows-x64
+pkg -d --public tools/chr2img/src/index.js --output tools/chr2img/chr2img.exe -t node8-windows-x64
 ```
 
 Note: This must be run from the root nes-starter-kit folder.

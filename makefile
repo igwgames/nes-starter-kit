@@ -55,6 +55,10 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 %.o : %.c
 %.s : %.c
 
+# Keeping all intermediate files, so debugging and learning is easier. :)
+# There are probably better ways to do this, and I know things are still deleted. Feel free to PR a better way in.
+.PRECIOUS: $(SOURCE_C) $(SOURCE_S), $(SOURCE_O)
+
 build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
 
 build-tiles: graphics/generated/tiles.png
