@@ -126,7 +126,7 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                         out('WARNING: Sprite (id: ' + data[pos].gid + ') found on map layer in room ( ' + x + ', ' + y + ') - this sprite will be skipped! Please move it to the sprite layer.');
                         data[pos].gid = 0;
                     }
-                    mapData += data[pos].gid;
+                    mapData += data[pos].gid - 1;
 
                     if (spriteData[pos]) {
                         if (spriteData[pos].gid < 256) {
