@@ -21,7 +21,28 @@
 #define SPRITE_TYPE_NOTHING 0x00
 #define SPRITE_TYPE_KEY 0x01
 #define SPRITE_TYPE_HEALTH 0x02
+#define SPRITE_TYPE_OFFSCREEN 0x7f
 // Used _STATIC_ENEMY for sprites that deal damage, but otherwise don't move.
 #define SPRITE_TYPE_STATIC_ENEMY 0x03 
 
-extern const unsigned char sprite_definitions[];
+// Used to figure out where to put the sprites in sprite memory. 
+// Have to skip over sprite 0 (0x00) and player (0x10)
+#define FIRST_ENEMY_SPRITE_OAM_INDEX 0x20
+
+// How much to shift to get the position on spriteDefinitions. We store 8 bytes, so we shift by 3. 
+// If you want to expand spriteDefinitions to 16 bytes per definition, change this to 4.
+#define SPRITE_DEF_SHIFT 3
+
+// How much to shift sprite positions to put them on the map. 
+#define SPRITE_POSITION_SHIFT 4
+
+// List of data contained in the sprite definitions array.
+#define SPRITE_DEF_POSITION_TYPE            0
+#define SPRITE_DEF_POSITION_TILE_ID         1
+#define SPRITE_DEF_POSITION_SIZE_PALETTE    2
+#define SPRITE_DEF_POSITION_ANIMATION_TYPE  3
+#define SPRITE_DEF_POSITION_HP_RESTORE      4
+#define SPRITE_DEF_POSITION_HEALTH          4
+
+extern const unsigned char spriteDefinitions[];
+

@@ -141,9 +141,10 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                 }
             }
             mapData += ","
-            // Pad roomSpriteData to 32
-            if (roomSpriteData.length > 32) {
-                out('WARNING: Truncating room (' + x + ',' + y + ') to max 16 sprites. The engine cannot support more; please clean some up.');
+            // Pad roomSpriteData to 12 sprites, and add a bit of padding to max out to 32 bytes.
+            if (roomSpriteData.length > 24) {
+                containsWarnings = true;
+                out('WARNING: Truncating room (' + x + ',' + y + ') to max 12 sprites. The engine cannot support more; please clean some up.');
                 roomSpriteData.length = 32;
             }
             while (roomSpriteData.length < 32) {

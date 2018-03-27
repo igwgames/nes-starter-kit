@@ -12,6 +12,7 @@
 // 5th-8th byte: Miscellaneous; you can use this for whatever extra data you need. For enemies, byte 5
 //           is used as the damage they deal. Health powerups use byte 5 to store how much to restore. 
 // NOTE: This array cannot contain more than 64 sprites, or other logic will break.
-const unsigned char sprite_definitions[] = {
-    SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_0, SPRITE_ANIMATION_NONE, 0x01, 0x00, 0x00, 0x00
+const unsigned char spriteDefinitions[] = {
+    SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, 0x01, 0x00, 0x00, 0x00,
+    SPRITE_TYPE_STATIC_ENEMY, 0x40, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_SWAP, 0x00, 0x00, 0x00
 };

@@ -14,8 +14,10 @@ const char* ERR_UNKNOWN_GAME_STATE = "Unknown Game State";
 const char* ERR_UNKNOWN_GAME_STATE_EXPLANATION = "gameState set to a value that the main loop does not recognize.";
 const char* ERR_RECURSION_DEPTH = "Bank Recursion Depth Error";
 const char* ERR_RECURSION_DEPTH_EXPLANATION = "Too many requests were made to bank_call from other requests. Only up to " STR(MAX_RECURSION_DEPTH) " calls can be made.";
+const char* ERR_UNKNOWN_SPRITE_SIZE = "Unknown Sprite Size";
+const char* ERR_UNKNOWN_SPRITE_SIZE_EXPLANATION = "A sprite definition has a size that the engine does not recognize.";
 
-ZEROPAGE_ARRAY_DEF(char, buffer, 10);
+char buffer[10];
 
 // Separate function so we can put it into a separate prg bank, then call it below. See documentation with public function.
 void crash_error_internal(const char *errorId, const char *errorDescription, const char* numberName, int number) {

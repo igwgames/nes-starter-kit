@@ -9,22 +9,21 @@
 #include "source/graphics/hud.h"
 #include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
+#include "source/sprites/sprite_definitions.h"
+#include "source/sprites/map_sprites.h"
 #include "source/menus/error.h"
 
 CODE_BANK(PRG_BANK_MAP_LOGIC);
 
 ZEROPAGE_DEF(unsigned char, playerOverworldPosition);
+ZEROPAGE_DEF(int, xScrollPosition);
 
 unsigned char currentMap[256];
 
 unsigned char assetTable[0x38];
 
-ZEROPAGE_DEF(static int, currentValue);
-ZEROPAGE_DEF(static int, currentMemoryLocation);
-ZEROPAGE_DEF(static unsigned char, bufferIndex);
-ZEROPAGE_DEF(static int, xScrollPosition);
-ZEROPAGE_DEF(static unsigned char, otherLoopIndex);
-ZEROPAGE_DEF(static unsigned char, tempArrayIndex);
+unsigned char currentMapSpriteData[192];
+
 
 void init_map() {
     // Make sure we're looking at the right sprite and chr data, not the ones for the menu.
@@ -40,6 +39,48 @@ void init_map() {
     set_mirroring(MIRROR_MODE_VERTICAL);
 }
 
+// Reusing a few temporary vars for the sprite function below.
+#define currentValue tempInt1
+#define spritePosition tempChar3
+#define spriteDefinitionIndex tempChar4
+#define mapSpriteDataIndex tempChar5
+
+// Load the sprites from the current map
+void load_sprites() {
+    for (i = 0; i != MAP_MAX_SPRITES; ++i) {
+        // Each sprite has just 2 bytes stored. The first is the location, and the 2nd is the sprite id in spriteDefinitions.
+        spriteDefinitionIndex = currentMap[(MAP_DATA_TILE_LENGTH + 1) + (i<<1)]<<SPRITE_DEF_SHIFT;
+        mapSpriteDataIndex = i << MAP_SPRITE_DATA_SHIFT;
+        spritePosition = currentMap[(MAP_DATA_TILE_LENGTH) + (i<<1)];
+
+
+        if (spritePosition != 255) {
+
+            // Get X converted to our extended 16-bit int size.
+            currentValue = (spritePosition & 0x0f) << 8;
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_X] = (currentValue & 0xff);
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_X+1] = (currentValue >> 8);
+            
+            // Now do the same with Y (Which is already shifted 4 bits with the way we store this)
+            currentValue = (spritePosition & 0xf0) << 4;
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y] = (currentValue & 0xff);
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y+1] = (currentValue >> 8);
+
+
+            // Copy the simple bytes from the sprite definition to someplace more easily accessible (and modify-able!)
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_TILE_ID] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_TILE_ID];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_TYPE];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_SIZE_PALETTE];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_HEALTH] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_HEALTH];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_ANIMATION_TYPE];
+
+        } else {
+            // Go away
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+        }
+    }
+}
+
 // Clears the asset table. Set containsHud to 1 to set the HUD bytes to use palette 4 (will break the coloring logic if you use the
 // last few rows for the map.)
 void clear_asset_table(containsHud) {
@@ -53,8 +94,14 @@ void clear_asset_table(containsHud) {
     }
 }
 
+// We need to reuse some variables here to save on memory usage. So, use #define to give them readable names.
+// Note that this is ONLY a rename; if something relies on the original variable, that impacts this one too.
+#define currentMemoryLocation tempInt2
+#define bufferIndex tempChar1
+#define otherLoopIndex tempChar2
+#define tempArrayIndex tempInt3
 
-// FIXME: constants for attribute table addrs
+
 // reverseAttributes: If set to 1, this will flip which bits are used for the top and the bottom palette in the attribute table.
 //                    This allows us to correctly draw starting on an odd-numbered row (such as at the start of our HUD.) 
 void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsigned char reverseAttributes) {
@@ -62,6 +109,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
     // Prepare to draw on the first nametable
     vram_inc(0);
     set_vram_update(NULL);
+    bufferIndex = 0;
 
     if (!reverseAttributes) {
         j = -1;
@@ -295,6 +343,7 @@ void do_fade_screen_transition() {
     load_map();
     clear_asset_table(1);
     fade_out_fast();
+    
     // Now that the screen is clear, migrate the player's sprite a bit..
     if (playerDirection == SPRITE_DIRECTION_LEFT) {
         playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_NUDGE << (PLAYER_POSITION_SHIFT+1));
@@ -310,6 +359,10 @@ void do_fade_screen_transition() {
 
     // Draw the updated map to the screen...
     draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
+    
+    load_sprites();
+    // Update sprites once to make sure we don't show a flash of the old sprite positions.
+    banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
     fade_in_fast();
     // Aand we're back!
     gameState = GAME_STATE_RUNNING;

@@ -7,6 +7,9 @@ extern const char* ERR_UNKNOWN_GAME_STATE;
 extern const char* ERR_UNKNOWN_GAME_STATE_EXPLANATION;
 extern const char* ERR_RECURSION_DEPTH;
 extern const char* ERR_RECURSION_DEPTH_EXPLANATION;
+extern const char* ERR_UNKNOWN_SPRITE_SIZE;
+extern const char* ERR_UNKNOWN_SPRITE_SIZE_EXPLANATION;
+
 
 // What bank do we wanna put this stuff in?
 #define PRG_BANK_ERROR 1

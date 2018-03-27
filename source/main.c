@@ -15,6 +15,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
 #include "source/menus/pause.h"
+#include "source/sprites/map_sprites.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -61,6 +62,7 @@ void main() {
 
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
                 banked_call(PRG_BANK_MAP_LOGIC, init_map);
+                banked_call(PRG_BANK_MAP_LOGIC, load_sprites);
                 
                 // The draw map methods handle turning the ppu on/off, but we weren't quite done yet. Turn it back off.
                 ppu_off();
@@ -71,12 +73,14 @@ void main() {
                 music_play(SONG_OVERWORLD);
                 fade_in();
                 gameState = GAME_STATE_RUNNING;
+                break;
 
             case GAME_STATE_RUNNING:
                 // TODO: Only do this on update?
                 banked_call(PRG_BANK_HUD, update_hud);
                 banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
+                banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
                 break;
             case GAME_STATE_SCREEN_SCROLL:
                 banked_call(PRG_BANK_MAP_LOGIC, do_fade_screen_transition);

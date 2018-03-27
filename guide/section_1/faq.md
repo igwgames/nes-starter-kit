@@ -80,10 +80,54 @@ these sections.
 This is explained in greater detail in the 4th section, in a chapter titled "Understanding and adjusting 
 the size of your game."
 
+#### I see some code that defines a variable as another, like `#define mapSpriteDataIndex tempChar1`. Why?
+
+The NES has an extremely limited amount of RAM. There are 2 kilobytes, and there are 255 bytes that operate
+a bit faster than the rest, known as the zero page. Because of this, sometimes it makes sense to re-use the
+same variable for multiple things. When you see code like this: 
+
+```C
+#define currentValue tempInt1
+#define currentMemoryLocation tempInt2
+```
+
+It means we are creating a nickname of `currentValue` for the variable `tempInt1`. The code would work the same way
+if you just put in tempInt1, but this helps made the code easier to understand. Changing it means changing tempInt1.
+
+This is important to remember, as we give multiple nicknames to this variable. If one function updates tempInt1 using
+the `currentValue` nickname, then you call a function that changes tempInt1 from another nickname, the next time you
+read `currentValue` you will get the wrong value.
+
+Here are a few suggestions to avoid conflicts: 
+1. Place defines close the function using them, so it is easy to look at which values are in use.
+2. Only use nicknames in functions called from the main loop. This way, the situation above is not possible.
+3. Avoid using any of the temp variables in the nmi, or methods called by it. This *will* cause problems eventually.
+
 #### What does `Warning: Memory area overflow` mean?
 
 In short, it means you tried to fit too much data/code into the area given. Check out the chapter titled
 "Understanding and adjusting the size of your game" in section 4. 
+
+#### I got an error like `temp/map.s(203): Error: ':' expected` in a `.s` file. What do I do?
+
+This appears to be caused by a bug with our assembler (ca65) that happens when your C file has 
+really long lines. This can usually be worked around by splitting the function call (or anything)
+onto multiple lines. 
+
+```c
+// Problem line: 
+oam_spr((spritePosition << 4) + (NES_SPRITE_WIDTH/2), HUD_PIXEL_HEIGHT + (spritePosition & 0xf0) + (NES_SPRITE_HEIGHT/2), spriteDefinitions[spriteIndex + SPRITE_DEF_POSITION_TILE_ID], (spriteDefinitions[spriteIndex + SPRITE_DEF_POSITION_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6 , FIRST_ENEMY_SPRITE_OAM_INDEX + (i<<4));
+
+// Workaround:
+oam_spr(
+    (spritePosition << 4) + (NES_SPRITE_WIDTH/2), 
+    HUD_PIXEL_HEIGHT + (spritePosition & 0xf0) + (NES_SPRITE_HEIGHT/2), 
+    spriteDefinitions[spriteIndex + SPRITE_DEF_POSITION_TILE_ID], 
+    (spriteDefinitions[spriteIndex + SPRITE_DEF_POSITION_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6, 
+    FIRST_ENEMY_SPRITE_OAM_INDEX + (i<<4)
+);
+
+```
 
 #### Why are the tools for flashing my NES cartridge not included in the tool zip?
 
