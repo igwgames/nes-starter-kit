@@ -20,6 +20,11 @@
 // but if you change the code around a bit, you might be able to drop this to 3 to use 8 bytes per sprite instead.
 #define MAP_SPRITE_DATA_SHIFT 4
 
+// This controls how many oam sprites we reserve for a single "sprite". By default, we reserve 4
+// sprites, so this is set to 4. (Since 1 shifted left 4 times is 16, and each sprite uses 4 bytes
+// in oam.)
+#define MAP_SPRITE_OAM_SHIFT 4
+
 // Max number of sprites to load from a map tile. Note that this is also coded into the conversion tool that
 // nes-starter-kit uses. Also note that there isn't much room for more... unless you really know the NES hardware
 // intricately, you probably don't want to touch this one.

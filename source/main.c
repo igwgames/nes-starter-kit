@@ -16,6 +16,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/sprites/player.h"
 #include "source/menus/pause.h"
 #include "source/sprites/map_sprites.h"
+#include "source/sprites/sprite_definitions.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -83,6 +84,8 @@ void main() {
                 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
                 break;
             case GAME_STATE_SCREEN_SCROLL:
+                // Hide all non-player sprites in play, so we have an empty screen to add new ones to
+                oam_hide_rest(FIRST_ENEMY_SPRITE_OAM_INDEX);
                 banked_call(PRG_BANK_MAP_LOGIC, do_fade_screen_transition);
                 break;
             case GAME_STATE_PAUSED:

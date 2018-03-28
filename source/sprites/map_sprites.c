@@ -12,13 +12,22 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define currentMapSpriteIndex tempChar1
 #define currentSpriteSize tempChar2
 #define currentSpriteTileId tempChar3
+#define oamMapSpriteIndex tempChar4
 #define sprX tempInt1
 #define sprY tempInt2
 
 void update_map_sprites() {
-    // TODO: Implement flicker somehow.
     for (i = 0; i != MAP_MAX_SPRITES; ++i) {
         currentMapSpriteIndex = i << MAP_SPRITE_DATA_SHIFT;
+        
+        // This switches what position we write the sprite to regularly, so we can maintain a flicker effect instead
+        // of having the sprite just randomly disappear. We use 0x02 so it flips every other frame, so flickering is less
+        // likely to fail if we lose a frame. (If you have enough sprites to flicker, you may also see slowdown.)
+        if (frameCount & 0x02) {
+            oamMapSpriteIndex = (MAP_MAX_SPRITES-i-1) << MAP_SPRITE_OAM_SHIFT;
+        } else {
+            oamMapSpriteIndex = i << MAP_SPRITE_OAM_SHIFT;
+        }
         sprX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
         sprY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
         currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK; 
@@ -26,10 +35,10 @@ void update_map_sprites() {
 
         if (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_OFFSCREEN) {
             // Hide it and move on.
-            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX);
-            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4);
-            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8);
-            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12);
             continue;
         }
 
@@ -62,7 +71,7 @@ void update_map_sprites() {
                 (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + (NES_SPRITE_HEIGHT/2),
                 currentSpriteTileId,
                 (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
+                oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
             );
         } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
             oam_spr(
@@ -70,28 +79,28 @@ void update_map_sprites() {
                 (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
                 currentSpriteTileId,
                 (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
+                oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
             );
             oam_spr(
                 (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
                 (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
                 currentSpriteTileId + 1,
                 (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4
+                oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4
             );
             oam_spr(
                 (sprX >> SPRITE_POSITION_SHIFT),
                 (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
                 currentSpriteTileId + 16,
                 (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8
+                oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8
             );
             oam_spr(
                 (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
                 (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
                 currentSpriteTileId + 17,
                 (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12
+                oamMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12
             );
 
 
