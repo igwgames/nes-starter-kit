@@ -34,72 +34,69 @@ void update_map_sprites() {
         }
 
         switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE]) {
-            case SPRITE_ANIMATION_NONE: 
-                if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT) + (NES_SPRITE_WIDTH/2),
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + (NES_SPRITE_HEIGHT/2),
-                        currentSpriteTileId,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
-                    );
-                } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
-                    // TODO: Repeat with all 4.
-                }
-                break;
             case SPRITE_ANIMATION_SWAP:
 
                 if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT) + (NES_SPRITE_WIDTH/2),
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + (NES_SPRITE_HEIGHT/2),
-                        currentSpriteTileId + ((frameCount & 0X08) >> 3) ,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
-                    );
+                    currentSpriteTileId += ((frameCount & 0x10) >> 4);
                 } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
-                    currentSpriteTileId += ((frameCount & 0x08) >> 2);
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT),
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
-                        currentSpriteTileId,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
-                    );
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
-                        currentSpriteTileId + 1,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4
-                    );
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT),
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
-                        currentSpriteTileId + 16,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8
-                    );
-                    oam_spr(
-                        (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
-                        (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
-                        currentSpriteTileId + 17,
-                        (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
-                        currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12
-                    );
-
-
+                    currentSpriteTileId += ((frameCount & 0x10) >> 3);
                 }
 
                 break;
             case SPRITE_ANIMATION_SWAP_FAST:
-                // TODO: Implement.
+                if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+                    currentSpriteTileId += ((frameCount & 0x08) >> 3);
+                } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+                    currentSpriteTileId += ((frameCount & 0x08) >> 2);
+                }
                 break;
+            case SPRITE_ANIMATION_NONE:
             default: 
-                // TODO: Implement. (error?)
                 break;
 
         }
+
+        if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+            oam_spr(
+                (sprX >> SPRITE_POSITION_SHIFT) + (NES_SPRITE_WIDTH/2),
+                (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + (NES_SPRITE_HEIGHT/2),
+                currentSpriteTileId,
+                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
+            );
+        } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+            oam_spr(
+                (sprX >> SPRITE_POSITION_SHIFT),
+                (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
+                currentSpriteTileId,
+                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX
+            );
+            oam_spr(
+                (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
+                (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT,
+                currentSpriteTileId + 1,
+                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 4
+            );
+            oam_spr(
+                (sprX >> SPRITE_POSITION_SHIFT),
+                (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
+                currentSpriteTileId + 16,
+                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 8
+            );
+            oam_spr(
+                (sprX >> SPRITE_POSITION_SHIFT) + NES_SPRITE_WIDTH,
+                (sprY >> SPRITE_POSITION_SHIFT) + HUD_PIXEL_HEIGHT + NES_SPRITE_HEIGHT,
+                currentSpriteTileId + 17,
+                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                currentMapSpriteIndex + FIRST_ENEMY_SPRITE_OAM_INDEX + 12
+            );
+
+
+        }
+
         
     }
 }
