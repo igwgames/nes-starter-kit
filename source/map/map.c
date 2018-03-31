@@ -62,7 +62,7 @@ void load_sprites() {
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_X+1] = (currentValue >> 8);
             
             // Now do the same with Y (Which is already shifted 4 bits with the way we store this)
-            currentValue = (spritePosition & 0xf0) << 4;
+            currentValue = ((spritePosition & 0xf0) << 4) + (HUD_PIXEL_HEIGHT << SPRITE_POSITION_SHIFT);
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y] = (currentValue & 0xff);
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y+1] = (currentValue >> 8);
 

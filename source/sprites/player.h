@@ -41,3 +41,6 @@ void update_player_sprite();
 
 // Tests if the player is about to collide with any solid tiles, and adjusts the player's velocity to zero if found.
 void test_player_tile_collision();
+
+// The sprite update method gives us an id of a sprite that we most recently hit. This reacts to that appropriately.
+void handle_player_sprite_collision();

@@ -29,6 +29,8 @@ void initialize_variables() {
     playerXPosition = (128 << PLAYER_POSITION_SHIFT); // X position on the screen to start (increasing numbers as you go left to right. Just change the number)
     playerYPosition = (128 << PLAYER_POSITION_SHIFT); // Y position on the screen to start (increasing numbers as you go top to bottom. Just change the number)
     playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
+
+    lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.

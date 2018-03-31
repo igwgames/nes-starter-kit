@@ -6,6 +6,9 @@
 #include "source/configuration/game_states.h"
 #include "source/configuration/system_constants.h"
 #include "source/sprites/collision.h"
+#include "source/sprites/sprite_definitions.h"
+#include "source/sprites/map_sprites.h"
+#include "source/menus/error.h"
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
@@ -16,6 +19,7 @@ ZEROPAGE_DEF(int, playerYVelocity);
 ZEROPAGE_DEF(unsigned char, playerVelocityLockTime);
 ZEROPAGE_DEF(unsigned char, playerDirection);
 
+// TODO: How much of this could use temp vars? I'd guess most...
 ZEROPAGE_DEF(unsigned char, rawXPosition);
 ZEROPAGE_DEF(unsigned char, rawYPosition);
 ZEROPAGE_DEF(unsigned char, rawTileId);
@@ -103,6 +107,7 @@ void handle_player_movement() {
 
     // This will knock out the player's speed if they hit anything.
     test_player_tile_collision();
+    handle_player_sprite_collision();
 
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
@@ -187,4 +192,17 @@ void test_player_tile_collision() {
     playerXPosition += playerXVelocity;
     playerYPosition += playerYVelocity;
 
+}
+
+#define currentMapSpriteIndex tempChar1
+void handle_player_sprite_collision() {
+    if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
+        currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
+        // TODO: Different sprite types, mayhaps?
+        if (playerHealth < playerMaxHealth) {
+            playerHealth++;
+            currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+        }
+
+    }
 }
