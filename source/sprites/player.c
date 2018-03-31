@@ -16,7 +16,8 @@ ZEROPAGE_DEF(int, playerXPosition);
 ZEROPAGE_DEF(int, playerYPosition);
 ZEROPAGE_DEF(int, playerXVelocity);
 ZEROPAGE_DEF(int, playerYVelocity);
-ZEROPAGE_DEF(unsigned char, playerVelocityLockTime);
+ZEROPAGE_DEF(unsigned char, playerControlsLockTime);
+ZEROPAGE_DEF(unsigned char, playerInvulnerabilityTime);
 ZEROPAGE_DEF(unsigned char, playerDirection);
 
 // TODO: How much of this could use temp vars? I'd guess most...
@@ -40,10 +41,19 @@ void update_player_sprite() {
         rawTileId += ((frameCount >> SPRITE_ANIMATION_SPEED_DIVISOR) & 0x01) << 1;
     }
     
-    oam_spr(rawXPosition, rawYPosition, rawTileId, 0x00, PLAYER_SPRITE_INDEX);
-    oam_spr(rawXPosition + NES_SPRITE_WIDTH, rawYPosition, rawTileId + 1, 0x00, PLAYER_SPRITE_INDEX+4);
-    oam_spr(rawXPosition, rawYPosition + NES_SPRITE_HEIGHT, rawTileId + 16, 0x00, PLAYER_SPRITE_INDEX+8);
-    oam_spr(rawXPosition + NES_SPRITE_WIDTH, rawYPosition + NES_SPRITE_HEIGHT, rawTileId + 17, 0x00, PLAYER_SPRITE_INDEX+12);
+    if (playerInvulnerabilityTime && frameCount & PLAYER_INVULNERABILITY_BLINK_MASK) {
+        // If the player is invulnerable, we hide their sprite about half the time to do a flicker animation.
+        oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, rawTileId, 0x00, PLAYER_SPRITE_INDEX);
+        oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, rawTileId + 1, 0x00, PLAYER_SPRITE_INDEX+4);
+        oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, rawTileId + 16, 0x00, PLAYER_SPRITE_INDEX+8);
+        oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, rawTileId + 17, 0x00, PLAYER_SPRITE_INDEX+12);
+
+    } else {
+        oam_spr(rawXPosition, rawYPosition, rawTileId, 0x00, PLAYER_SPRITE_INDEX);
+        oam_spr(rawXPosition + NES_SPRITE_WIDTH, rawYPosition, rawTileId + 1, 0x00, PLAYER_SPRITE_INDEX+4);
+        oam_spr(rawXPosition, rawYPosition + NES_SPRITE_HEIGHT, rawTileId + 16, 0x00, PLAYER_SPRITE_INDEX+8);
+        oam_spr(rawXPosition + NES_SPRITE_WIDTH, rawYPosition + NES_SPRITE_HEIGHT, rawTileId + 17, 0x00, PLAYER_SPRITE_INDEX+12);
+    }
 
 }
 
@@ -59,50 +69,59 @@ void handle_player_movement() {
         gameState = GAME_STATE_PAUSED;
         return;
     }
+    if (playerControlsLockTime) {
+        // If your controls are locked, just tick down the timer until they stop being locked. Don't read player input.
+        playerControlsLockTime--;
+    } else {
+        if (controllerState & PAD_RIGHT && playerXVelocity >= 0) {
+            // If you're moving right, and you're not at max, speed up.
+            if (playerXVelocity < maxVelocity) {
+                playerXVelocity += PLAYER_VELOCITY_ACCEL;
+            // If you're over max somehow, we'll slow you down a little.
+            } else if (playerXVelocity > maxVelocity) {
+                playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+            }
+        } else if (controllerState & PAD_LEFT && playerXVelocity <= 0) {
+            // If you're moving left, and you're not at max, speed up.
+            if (ABS(playerXVelocity) < maxVelocity) {
+                playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+            // If you're over max, slow you down a little...
+            } else if (ABS(playerXVelocity) > maxVelocity) { 
+                playerXVelocity += PLAYER_VELOCITY_ACCEL;
+            }
+        } else if (playerXVelocity != 0) {
+            // Not pressing anything? Let's slow you back down...
+            if (playerXVelocity > 0) {
+                playerXVelocity -= PLAYER_VELOCITY_ACCEL;
+            } else {
+                playerXVelocity += PLAYER_VELOCITY_ACCEL;
+            }
+        }
 
-    if (controllerState & PAD_RIGHT && playerXVelocity >= 0) {
-        // If you're moving right, and you're not at max, speed up.
-        if (playerXVelocity < maxVelocity) {
-            playerXVelocity += PLAYER_VELOCITY_ACCEL;
-        // If you're over max somehow, we'll slow you down a little.
-        } else if (playerXVelocity > maxVelocity) {
-            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
-        }
-    } else if (controllerState & PAD_LEFT && playerXVelocity <= 0) {
-        // If you're moving left, and you're not at max, speed up.
-        if (ABS(playerXVelocity) < maxVelocity) {
-            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
-        // If you're over max, slow you down a little...
-        } else if (ABS(playerXVelocity) > maxVelocity) { 
-            playerXVelocity += PLAYER_VELOCITY_ACCEL;
-        }
-    } else if (playerXVelocity != 0) {
-        // Not pressing anything? Let's slow you back down...
-        if (playerXVelocity > 0) {
-            playerXVelocity -= PLAYER_VELOCITY_ACCEL;
-        } else {
-            playerXVelocity += PLAYER_VELOCITY_ACCEL;
+        if (controllerState & PAD_UP) {
+            if (ABS(playerYVelocity) < maxVelocity) {
+                playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+            } else if (ABS(playerYVelocity) > maxVelocity) {
+                playerYVelocity += PLAYER_VELOCITY_ACCEL;
+            }
+        } else if (controllerState & PAD_DOWN) {
+            if (playerYVelocity < maxVelocity) {
+                playerYVelocity += PLAYER_VELOCITY_ACCEL;
+            } else if (playerYVelocity > maxVelocity) {
+                playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+            }
+        } else { 
+            if (playerYVelocity > 0) {
+                playerYVelocity -= PLAYER_VELOCITY_ACCEL;
+            } else if (playerYVelocity < 0) {
+                playerYVelocity += PLAYER_VELOCITY_ACCEL;
+            }
         }
     }
 
-    if (controllerState & PAD_UP) {
-        if (ABS(playerYVelocity) < maxVelocity) {
-            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
-        } else if (ABS(playerYVelocity) > maxVelocity) {
-            playerYVelocity += PLAYER_VELOCITY_ACCEL;
-        }
-    } else if (controllerState & PAD_DOWN) {
-        if (playerYVelocity < maxVelocity) {
-            playerYVelocity += PLAYER_VELOCITY_ACCEL;
-        } else if (playerYVelocity > maxVelocity) {
-            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
-        }
-    } else { 
-        if (playerYVelocity > 0) {
-            playerYVelocity -= PLAYER_VELOCITY_ACCEL;
-        } else if (playerYVelocity < 0) {
-            playerYVelocity += PLAYER_VELOCITY_ACCEL;
-        }
+    // While we're at it, tick down the invulnerability timer if needed
+    if (playerInvulnerabilityTime) {
+        playerInvulnerabilityTime--;
     }
 
     // This will knock out the player's speed if they hit anything.
@@ -145,17 +164,21 @@ void test_player_tile_collision() {
             // We're going up - test the top left, and top right
 			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1)) {
                 playerYVelocity = 0;
-                playerVelocityLockTime = 0;
+                playerControlsLockTime = 0;
             }
-            playerDirection = SPRITE_DIRECTION_UP;
+            if (!playerControlsLockTime) {
+                playerDirection = SPRITE_DIRECTION_UP;
+            }
 		} else {
             // Okay, we're going down - test the bottom left and bottom right
 			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
                 playerYVelocity = 0;
-                playerVelocityLockTime = 0;
+                playerControlsLockTime = 0;
 
 			}
-            playerDirection = SPRITE_DIRECTION_DOWN;
+            if (!playerControlsLockTime) {
+                playerDirection = SPRITE_DIRECTION_DOWN;
+            }
 		}
     }
 
@@ -173,18 +196,22 @@ void test_player_tile_collision() {
                 // Okay, we're moving left. Need to test the top-left and bottom-left
                 if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1)) {
                     playerXVelocity = 0;
-                    playerVelocityLockTime = 0;
+                    playerControlsLockTime = 0;
 
                 }
-                playerDirection = SPRITE_DIRECTION_LEFT;
+                if (!playerControlsLockTime) {
+                    playerDirection = SPRITE_DIRECTION_LEFT;
+                }
             } else {
                 // Going right - need to test top-right and bottom-right
                 if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
                     playerXVelocity = 0;
-                    playerVelocityLockTime = 0;
+                    playerControlsLockTime = 0;
 
                 }
-                playerDirection = SPRITE_DIRECTION_RIGHT;
+                if (!playerControlsLockTime) {
+                    playerDirection = SPRITE_DIRECTION_RIGHT;
+                }
             }
         }
 	}
@@ -198,10 +225,46 @@ void test_player_tile_collision() {
 void handle_player_sprite_collision() {
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
-        // TODO: Different sprite types, mayhaps?
-        if (playerHealth < playerMaxHealth) {
-            playerHealth++;
-            currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+        // TODO: These could be a good first use of sound effects...
+        switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
+            case SPRITE_TYPE_HEALTH:
+                if (playerHealth < playerMaxHealth) {
+                    playerHealth++;
+                    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                }
+                break;
+            case SPRITE_TYPE_STATIC_ENEMY:
+                // TODO: Variable damage?
+                if (playerInvulnerabilityTime) {
+                    return;
+                }
+                playerHealth--; 
+                if (playerHealth <= 0) {
+                    gameState = GAME_STATE_GAME_OVER;
+                    return;
+                }
+                // Knock the player back
+                playerControlsLockTime = PLAYER_DAMAGE_CONTROL_LOCK_TIME;
+                playerInvulnerabilityTime = PLAYER_DAMAGE_INVULNERABILITY_TIME;
+                if (playerDirection == SPRITE_DIRECTION_LEFT) {
+                    // Punt them back in the opposite direction
+                    playerXVelocity = PLAYER_MAX_VELOCITY;
+                    // Reverse their velocity in the other direction, too.
+                    playerYVelocity = 0 - playerYVelocity;
+                } else if (playerDirection == SPRITE_DIRECTION_RIGHT) {
+                    playerXVelocity = 0-PLAYER_MAX_VELOCITY;
+                    playerYVelocity = 0 - playerYVelocity;
+                } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
+                    playerYVelocity = 0-PLAYER_MAX_VELOCITY;
+                    playerXVelocity = 0 - playerXVelocity;
+                } else { // Make being thrown downward into a catch-all, in case your direction isn't set or something.
+                    playerYVelocity = PLAYER_MAX_VELOCITY;
+                    playerXVelocity = 0 - playerXVelocity;
+                }
+
+                
+                break;
+
         }
 
     }

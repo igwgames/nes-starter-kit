@@ -24,6 +24,13 @@
 #define PLAYER_MAX_VELOCITY 20 // Max speed of the player; we won't let you go past this.
 #define PLAYER_VELOCITY_ACCEL 4 // How quickly do we get up to max velocity? 
 
+// If the player is damaged, how long do we lock their controls such that they bounce backwards?
+#define PLAYER_DAMAGE_CONTROL_LOCK_TIME 20
+// If the player is damaged, how long are they immune to damage?
+#define PLAYER_DAMAGE_INVULNERABILITY_TIME 30
+// If the player is invulnerable, how quickly to we blink the sprite? In sprite mask form, so one of 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+#define PLAYER_INVULNERABILITY_BLINK_MASK 0x02
+
 ZEROPAGE_EXTERN(int, playerXPosition);
 ZEROPAGE_EXTERN(int, playerYPosition);
 ZEROPAGE_EXTERN(int, playerXVelocity);
