@@ -9,6 +9,7 @@
 #include "source/sprites/sprite_definitions.h"
 #include "source/sprites/map_sprites.h"
 #include "source/menus/error.h"
+#include "source/graphics/hud.h"
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
@@ -230,6 +231,12 @@ void handle_player_sprite_collision() {
             case SPRITE_TYPE_HEALTH:
                 if (playerHealth < playerMaxHealth) {
                     playerHealth++;
+                    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                }
+                break;
+            case SPRITE_TYPE_KEY:
+                if (playerKeyCount < MAX_KEY_COUNT) {
+                    playerKeyCount++;
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
                 }
                 break;

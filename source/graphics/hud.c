@@ -39,7 +39,12 @@ void update_hud() {
     for (; i != playerMaxHealth; ++i) {
         screenBuffer[i+3] = HUD_TILE_HEART_EMPTY;
     }
-    screenBuffer[11] = NT_UPD_EOF;
+    screenBuffer[11] = MSB(HUD_KEY_START) | NT_UPD_HORZ;
+    screenBuffer[12] = LSB(HUD_KEY_START);
+    screenBuffer[13] = 2;
+    screenBuffer[14] = HUD_TILE_KEY;
+    screenBuffer[15] = HUD_TILE_NUMBER + playerKeyCount;
+    screenBuffer[16] = NT_UPD_EOF;
     set_vram_update(screenBuffer);
 
 }
