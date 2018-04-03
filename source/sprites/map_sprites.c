@@ -110,6 +110,40 @@ void update_map_sprites() {
                 }
 
                 break;
+            case SPRITE_MOVEMENT_UP_DOWN:
+                // Get the speed to travel at
+                currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SLIDE_SPEED];
+
+                // If it's positive, add to X to get the right of the sprite
+                if ((signed char) currentSpriteData > 0) {
+                    sprY += currentSpriteFullWidth;
+                }
+                // Add speed in
+                sprY += (signed char)currentSpriteData;
+                if (test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) || test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullWidth, sprY)], 0)) {
+                    // Never mind... leave X position alone for now
+                    sprY -= (signed char)currentSpriteData;
+                    // Roll back our change to pick right of the sprite
+                    if ((signed char) currentSpriteData > 0) {
+                        sprY -= currentSpriteFullWidth;
+                    }
+
+                    // And... flip the direction!
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SLIDE_SPEED] = 0 - (signed char)currentSpriteData;
+                } else {
+                    // No collision! Roll back our change to pick right of the sprite
+                    if ((signed char) currentSpriteData > 0) {
+                        sprY -= currentSpriteFullWidth;
+                    }
+
+
+                    // And move the sprite over!
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
+                }
+
+                break;
+
             case SPRITE_MOVEMENT_NONE:
             default:
                 break;
