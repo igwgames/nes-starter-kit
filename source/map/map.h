@@ -37,7 +37,9 @@
 #define MAP_SPRITE_DATA_POS_SIZE_PALETTE        5
 #define MAP_SPRITE_DATA_POS_ANIMATION_TYPE      6
 #define MAP_SPRITE_DATA_POS_HEALTH              7
+#define MAP_SPRITE_DATA_POS_SLIDE_SPEED         7
 #define MAP_SPRITE_DATA_POS_TILE_ID             8
+#define MAP_SPRITE_DATA_POS_MOVEMENT_TYPE       9
 
 // How many tiles are in the map before we start getting into sprite data.
 #define MAP_DATA_TILE_LENGTH 192

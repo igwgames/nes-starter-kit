@@ -73,6 +73,7 @@ void load_sprites() {
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_SIZE_PALETTE];
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_HEALTH] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_HEALTH];
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_ANIMATION_TYPE];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_MOVEMENT_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_MOVEMENT_TYPE];
 
         } else {
             // Go away

@@ -23,6 +23,8 @@ ZEROPAGE_DEF(unsigned char, tempChar2);
 ZEROPAGE_DEF(unsigned char, tempChar3);
 ZEROPAGE_DEF(unsigned char, tempChar4);
 ZEROPAGE_DEF(unsigned char, tempChar5);
+ZEROPAGE_DEF(unsigned char, tempChar6);
+// FIXME: What?? Same type please
 ZEROPAGE_DEF(unsigned int, tempInt1);
 ZEROPAGE_DEF(int, tempInt2);
 ZEROPAGE_DEF(int, tempInt3);

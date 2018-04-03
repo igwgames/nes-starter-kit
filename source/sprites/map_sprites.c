@@ -7,6 +7,7 @@
 #include "source/map/map.h"
 #include "source/library/bank_helpers.h"
 #include "source/menus/error.h"
+#include "source/sprites/collision.h"
 
 CODE_BANK(PRG_BANK_MAP_SPRITES);
 
@@ -15,6 +16,7 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define currentSpriteTileId tempChar3
 #define oamMapSpriteIndex tempChar4
 #define currentSpriteType tempChar5
+#define currentSpriteData tempChar6
 #define sprX tempInt1
 #define sprY tempInt2
 // NOTE: width = height for our examples, so both are set to the same value.
@@ -73,6 +75,44 @@ void update_map_sprites() {
             default: 
                 break;
 
+        }
+        switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVEMENT_TYPE]) {
+            case SPRITE_MOVEMENT_LEFT_RIGHT:
+                // Get the speed to travel at
+                currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SLIDE_SPEED];
+
+                // If it's positive, add to X to get the right of the sprite
+                if ((signed char) currentSpriteData > 0) {
+                    sprX += currentSpriteFullWidth;
+                }
+                // Add speed in
+                sprX += (signed char)currentSpriteData;
+                if (test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) || test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullHeight)], 0)) {
+                    // Never mind... leave X position alone for now
+                    sprX -= (signed char)currentSpriteData;
+                    // Roll back our change to pick right of the sprite
+                    if ((signed char) currentSpriteData > 0) {
+                        sprX -= currentSpriteFullWidth;
+                    }
+
+                    // And... flip the direction!
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SLIDE_SPEED] = 0 - (signed char)currentSpriteData;
+                } else {
+                    // No collision! Roll back our change to pick right of the sprite
+                    if ((signed char) currentSpriteData > 0) {
+                        sprX -= currentSpriteFullWidth;
+                    }
+
+
+                    // And move the sprite over!
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+                }
+
+                break;
+            case SPRITE_MOVEMENT_NONE:
+            default:
+                break;
         }
 
         if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {

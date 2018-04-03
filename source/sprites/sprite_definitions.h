@@ -17,6 +17,10 @@
 #define SPRITE_ANIMATION_SWAP_FAST 11
 #define SPRITE_ANIMATION_FULL 50
 
+#define SPRITE_MOVEMENT_NONE 0
+#define SPRITE_MOVEMENT_LEFT_RIGHT 1
+#define SPRITE_MOVEMENT_UP_DOWN 2
+
 // Use _NOTHING for decoration sprites that don't do anything when collided with.
 #define SPRITE_TYPE_NOTHING 0x00
 #define SPRITE_TYPE_KEY 0x01
@@ -41,8 +45,10 @@
 #define SPRITE_DEF_POSITION_TILE_ID         1
 #define SPRITE_DEF_POSITION_SIZE_PALETTE    2
 #define SPRITE_DEF_POSITION_ANIMATION_TYPE  3
-#define SPRITE_DEF_POSITION_HP_RESTORE      4
-#define SPRITE_DEF_POSITION_HEALTH          4
+#define SPRITE_DEF_POSITION_MOVEMENT_TYPE   4
+#define SPRITE_DEF_POSITION_HP_RESTORE      5
+#define SPRITE_DEF_POSITION_HEALTH          5
+#define SPRITE_DEF_POSITION_SLIDE_SPEED     5
 
 extern const unsigned char spriteDefinitions[];
 

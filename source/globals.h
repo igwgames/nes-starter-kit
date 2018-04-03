@@ -32,6 +32,7 @@ ZEROPAGE_EXTERN(unsigned char, tempChar2);
 ZEROPAGE_EXTERN(unsigned char, tempChar3);
 ZEROPAGE_EXTERN(unsigned char, tempChar4);
 ZEROPAGE_EXTERN(unsigned char, tempChar5);
+ZEROPAGE_EXTERN(unsigned char, tempChar6);
 ZEROPAGE_EXTERN(unsigned int, tempInt1);
 ZEROPAGE_EXTERN(int, tempInt2);
 ZEROPAGE_EXTERN(int, tempInt3);

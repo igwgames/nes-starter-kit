@@ -9,11 +9,15 @@
 // 3rd byte: Split; contains sprite size and palette. Combine the constants
 //           using the logical OR operator (represented by the bar character: |) 
 // 4th byte: Animation type
-// 5th-8th byte: Miscellaneous; you can use this for whatever extra data you need. For enemies, byte 5
+// 5th byte: How the sprite moves.
+// 6th-8th byte: Miscellaneous; you can use this for whatever extra data you need. For enemies, byte 5
 //           is used as the damage they deal. Health powerups use byte 5 to store how much to restore. 
 // NOTE: This array cannot contain more than 64 sprites, or other logic will break.
 const unsigned char spriteDefinitions[] = {
-    SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, 0x01, 0x00, 0x00, 0x00,
-    SPRITE_TYPE_STATIC_ENEMY, 0x40, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_SWAP, 0x00, 0x00, 0x00, 0x00,
-    SPRITE_TYPE_KEY, 0xeb, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, 0x00, 0x00, 0x00, 0x00,
+    SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 0x00, 0x00, 0x00,
+    // TODO: Remove the "static" here - we have a new movement thing.
+    SPRITE_TYPE_STATIC_ENEMY, 0x40, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_SWAP, SPRITE_MOVEMENT_NONE, 0x00, 0x00, 0x00,
+    SPRITE_TYPE_KEY, 0xeb, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 0x00, 0x00, 0x00,
+    SPRITE_TYPE_STATIC_ENEMY, 0xca, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_SWAP, SPRITE_MOVEMENT_LEFT_RIGHT, -40, 0x00, 0x00,
+
 };
