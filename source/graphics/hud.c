@@ -4,8 +4,8 @@
 
 CODE_BANK(PRG_BANK_HUD);
 
-void draw_hud_to_nametable(unsigned int nametableAdr) {
-    vram_adr(nametableAdr + HUD_POSITION_START);
+void draw_hud() {
+    vram_adr(NAMETABLE_A + HUD_POSITION_START);
     for (i = 0; i != 160; ++i) {
         vram_put(HUD_TILE_BLANK);
     }
@@ -15,23 +15,18 @@ void draw_hud_to_nametable(unsigned int nametableAdr) {
     }
     vram_put(HUD_TILE_BORDER_BR);
 
-    vram_adr(nametableAdr + 0x3f0);
+    vram_adr(NAMETABLE_A + HUD_ATTRS_START);
     for (i = 0; i != 16; ++i) {
         vram_put(0xff);
     }
-}
-
-
-void draw_hud() {
-    draw_hud_to_nametable(NAMETABLE_A);
 }
 
 void update_hud() {
     // This sets up screenBuffer to print x hearts, then x more empty hearts. 
     // You give it the address, tell it the direction to write, then follow up with
     // Ids, ending with NT_UPD_EOF
-    screenBuffer[0] = MSB(HUD_HEART_START) | NT_UPD_HORZ;
-    screenBuffer[1] = LSB(HUD_HEART_START);
+    screenBuffer[0] = MSB(NAMETABLE_A + HUD_HEART_START) | NT_UPD_HORZ;
+    screenBuffer[1] = LSB(NAMETABLE_A + HUD_HEART_START);
     screenBuffer[2] = playerMaxHealth;
     for (i = 0; i != playerHealth; ++i) {
         screenBuffer[i+3] = HUD_TILE_HEART;
@@ -39,8 +34,8 @@ void update_hud() {
     for (; i != playerMaxHealth; ++i) {
         screenBuffer[i+3] = HUD_TILE_HEART_EMPTY;
     }
-    screenBuffer[11] = MSB(HUD_KEY_START) | NT_UPD_HORZ;
-    screenBuffer[12] = LSB(HUD_KEY_START);
+    screenBuffer[11] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
+    screenBuffer[12] = LSB(NAMETABLE_A + HUD_KEY_START);
     screenBuffer[13] = 2;
     screenBuffer[14] = HUD_TILE_KEY;
     screenBuffer[15] = HUD_TILE_NUMBER + playerKeyCount;

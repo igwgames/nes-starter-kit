@@ -52,12 +52,12 @@ project that you can use for more of a blank page. That project is elsewhere
 | Game Style             | Adventure only     | Many               | Adventure only     |
 | Graphics editor        | external - nesst   | Built-in           | Built-in           |
 | Map Editor             | external -tiled    | Built-in           | Built-in           |
-| Music Editor           | ext - famitracker  | ext - famitracker  | Not available      |
-| Sound Editor           | ext - famitracker  | ext - famitracker  | Not available      |
+| Music Editor           | ext - famitracker  | Built-in           | Not available      |
+| Sound Editor           | ext - famitracker  | Built-in           | Not available      |
 | Works on console       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Source available       | Yes, you write it! | _Unknown_          | Yes                |
 | Source easily editable | Yes, built for it  | _Unknown_          | No                 |
-| Code Editor available  | Yes, VS Code       |_Unknown_ (unlikely)| No                 |
+| Code Editor available  | Yes, VS Code       | _Unknown_          | Not specialized    |
 | Programming required   | Yes                | No                 | No                 |
 
 **Note**: NESMaker was not available at the time of this writing, so some of these details are based on
@@ -106,7 +106,7 @@ TODO: Links once these exist
 11. Understanding art on the NES
 12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
 13. Changing the sprite art
-14. Changing the HUD (top bar)
+14. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
 15. Adding new enemies
 16. Adding collectible sprites
 17. Adding/changing music
