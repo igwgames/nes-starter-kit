@@ -31,6 +31,9 @@ ZEROPAGE_DEF(unsigned char, collisionTempY);
 ZEROPAGE_DEF(unsigned char, collisionTempXRight);
 ZEROPAGE_DEF(unsigned char, collisionTempYBottom);
 
+#define tempSpriteCollisionX tempInt1
+#define tempSpriteCollisionY tempInt2
+
 void update_player_sprite() {
     // Calculate the position of the player itself, then use these variables to build it up with 4 8x8 NES sprites.
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
@@ -224,6 +227,7 @@ void test_player_tile_collision() {
 
 #define currentMapSpriteIndex tempChar1
 void handle_player_sprite_collision() {
+    // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
         // TODO: These could be a good first use of sound effects...
@@ -270,6 +274,34 @@ void handle_player_sprite_collision() {
                 }
 
                 
+                break;
+            case SPRITE_TYPE_DOOR:
+                // First off, do you have a key? If so, let's just make this go away...
+                if (playerKeyCount > 0) {
+                    playerKeyCount--;
+                    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                    break;
+                }
+                // So you don't have a key...
+                // Okay, we collided with a door before we calculated the player's movement. After being moved, does the 
+                // new player position also collide? If so, stop it. Else, let it go.
+
+                // Calculate position...
+                tempSpriteCollisionX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
+                tempSpriteCollisionY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
+
+                // Are we colliding?
+                // NOTE: We take a bit of a shortcut here and assume all doors are 16x16 (the hard-coded 16 value below)
+                if (
+                    playerXPosition < tempSpriteCollisionX + (16 << PLAYER_POSITION_SHIFT) &&
+                    playerXPosition + PLAYER_WIDTH_EXTENDED > tempSpriteCollisionX &&
+                    playerYPosition < tempSpriteCollisionY + (16 << PLAYER_POSITION_SHIFT) &&
+                    playerYPosition + PLAYER_HEIGHT_EXTENDED > tempSpriteCollisionY
+                ) {
+                    playerXPosition -= playerXVelocity;
+                    playerYPosition -= playerYVelocity;
+                    playerControlsLockTime = 0;
+                }
                 break;
 
         }

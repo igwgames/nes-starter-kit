@@ -190,7 +190,7 @@ void update_map_sprites() {
 
         }
 
-        // While we have all the data above, let's see if we hit anything.
+        // While we have all the data above, let's see if the player hit us.
         
         // Only test collision for sprite types that collide.
         currentSpriteType = currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE];

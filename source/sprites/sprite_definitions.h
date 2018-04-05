@@ -28,6 +28,7 @@
 #define SPRITE_TYPE_OFFSCREEN 0x7f
 // Used _STATIC_ENEMY for sprites that deal damage, but otherwise don't move.
 #define SPRITE_TYPE_STATIC_ENEMY 0x03 
+#define SPRITE_TYPE_DOOR 0x04
 
 // Used to figure out where to put the sprites in sprite memory. 
 // Have to skip over sprite 0 (0x00) and player (0x10)

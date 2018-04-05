@@ -81,9 +81,9 @@ void main() {
             case GAME_STATE_RUNNING:
                 // TODO: Only do this on update?
                 banked_call(PRG_BANK_HUD, update_hud);
+                banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
                 banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
-                banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
                 break;
             case GAME_STATE_SCREEN_SCROLL:
                 // Hide all non-player sprites in play, so we have an empty screen to add new ones to
