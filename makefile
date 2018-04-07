@@ -59,9 +59,10 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 # There are probably better ways to do this, and I know things are still deleted. Feel free to PR a better way in.
 .PRECIOUS: $(SOURCE_C) $(SOURCE_S), $(SOURCE_O)
 
-build: rom/$(ROM_NAME).nes graphics/generated/tiles.png
+build: rom/$(ROM_NAME).nes graphics/generated/tiles.png graphics/generated/sprites.png
 
 build-tiles: graphics/generated/tiles.png
+build-sprites: graphics/generated/sprites.png
 
 temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin 
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
@@ -87,6 +88,11 @@ graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
 	tools/chr2img/chr2img graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 # If you're actively changing chr2img using node, toss it in here to use it directly.
 #	node tools/chr2img/src/index.js graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
+
+graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.pal
+	tools/sprite_def2img/sprite_def2img ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
+# If you're actively change sprite_def2img using node, toss it in here to use it directly.
+#	node tools/sprite_def2img/src/index.js ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)

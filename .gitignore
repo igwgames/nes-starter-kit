@@ -4,6 +4,9 @@ tools/*
 !tools/tmx2c
 tools/tmx2c/*.exe
 tools/tmx2c/src/node_modules
+!tools/sprite_def2img
+tools/sprite_def2img/*.exe
+tools/sprite_def2img/src/node_modules
 !tools/chr2img
 tools/chr2img/*.exe
 tools/chr2img/src/node_modules

@@ -1,0 +1,14 @@
+{
+  "name": "sprite_def2png",
+  "version": "1.0.0",
+  "description": "Converts sprite definition c file to a usable image in tiled",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jimp": "^0.2.28"
+  }
+}
