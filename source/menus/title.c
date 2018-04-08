@@ -21,6 +21,7 @@ void draw_title_screen() {
 
 	set_chr_bank_0(CHR_BANK_MENU);
     set_chr_bank_1(CHR_BANK_MENU+1);
+	clear_screen();
 
     
     put_str(NTADR_A(7, 5), gameName);

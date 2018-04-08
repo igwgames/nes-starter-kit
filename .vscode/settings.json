@@ -8,6 +8,7 @@
         "globals.h": "c",
         "palettes.h": "c",
         "system_constants.h": "c",
-        "bank_helpers.h": "c"
+        "bank_helpers.h": "c",
+        "map_sprites.h": "c"
     }
 }

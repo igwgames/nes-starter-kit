@@ -9,6 +9,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/menus/title.h"
 #include "source/globals.h"
 #include "source/menus/error.h"
+#include "source/menus/credits.h"
 #include "source/map/load_map.h"
 #include "source/map/map.h"
 #include "source/graphics/hud.h"
@@ -108,6 +109,22 @@ void main() {
                 ppu_on_all();
                 fade_in();
 
+                break;
+            case GAME_STATE_CREDITS:
+
+                fade_out();
+                // Draw the "you won screen"
+                banked_call(PRG_BANK_CREDITS_MENU, draw_win_screen);
+                fade_in();
+                banked_call(PRG_BANK_CREDITS_MENU, handle_credits_input);
+                fade_out();
+
+                // Folow it up with the credits.
+                banked_call(PRG_BANK_CREDITS_MENU, draw_credits_screen);
+                fade_in();
+                banked_call(PRG_BANK_CREDITS_MENU, handle_credits_input);
+                gameState = GAME_STATE_SYSTEM_INIT;
+                fade_out();
                 break;
             default: 
                 crash_error(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);

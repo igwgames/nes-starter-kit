@@ -303,6 +303,9 @@ void handle_player_sprite_collision() {
                     playerControlsLockTime = 0;
                 }
                 break;
+            case SPRITE_TYPE_ENDGAME:
+                gameState = GAME_STATE_CREDITS;
+                break;
 
         }
 

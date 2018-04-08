@@ -8,6 +8,28 @@
 
 CODE_BANK(PRG_BANK_CREDITS_MENU);
 
+void draw_win_screen() {
+    ppu_off();
+    clear_screen();
+    // We reuse the title palette here, though we have the option of making our own if needed.
+    pal_bg(titlePalette);
+	pal_spr(titlePalette);
+    scroll(0, 0);
+
+	set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_1(CHR_BANK_MENU+1);
+
+    // Add whatever you want here; NTADR_A just picks a position on the screen for you. Your options are 0, 0 to 32, 30
+    put_str(NTADR_A(7, 2), "- Congratulations -");
+
+    put_str(NTADR_A(4, 8), "You did the thing, and");
+    put_str(NTADR_A(4, 9), "thus won the game!");
+
+    // Hide all existing sprites
+    oam_clear();
+    ppu_on_all();
+
+}
 
 void draw_credits_screen() {
     ppu_off();
