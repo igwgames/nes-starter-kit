@@ -295,6 +295,38 @@ detectNTSC:
 
 	.incbin "graphics/main.chr"
 
+; Note: You can put your own separate chr files here to use them... we only use 2 in the demo. This is to avoid warnings,
+; and make the rom a predictable size. Note that if you do this you'll have to tweak the engine to support it! There's
+; hopefully a guide on how to do this in the repo.
+.segment "CHR_2"
+	.incbin "graphics/main.chr"
+.segment "CHR_3"
+	.incbin "graphics/main.chr"
+.segment "CHR_4"
+	.incbin "graphics/main.chr"
+.segment "CHR_5"
+	.incbin "graphics/main.chr"
+.segment "CHR_6"
+	.incbin "graphics/main.chr"
+.segment "CHR_7"
+	.incbin "graphics/main.chr"
+.segment "CHR_8"
+	.incbin "graphics/main.chr"
+.segment "CHR_9"
+	.incbin "graphics/main.chr"
+.segment "CHR_A"
+	.incbin "graphics/main.chr"
+.segment "CHR_B"
+	.incbin "graphics/main.chr"
+.segment "CHR_C"
+	.incbin "graphics/main.chr"
+.segment "CHR_D"
+	.incbin "graphics/main.chr"
+.segment "CHR_E"
+	.incbin "graphics/main.chr"
+.segment "CHR_F"
+	.incbin "graphics/main.chr"
+
 ; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
 .repeat $07, I
 	resetstub_in .concat("STUB_", .sprintf("%02X", I))
