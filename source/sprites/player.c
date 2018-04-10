@@ -163,7 +163,7 @@ void test_player_tile_collision() {
 		collisionTempX = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED) >> PLAYER_POSITION_SHIFT);
         collisionTempYBottom = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
         collisionTempXRight = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
-        // TODO: Do we need to do clever clamping with collisionTempY here like we do with X below? Need to see how it behaves when we add vertical scrolling
+
 		if (playerYVelocity < 0) {
             // We're going up - test the top left, and top right
 			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1)) {
@@ -244,7 +244,7 @@ void handle_player_sprite_collision() {
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
                 }
                 break;
-            case SPRITE_TYPE_STATIC_ENEMY:
+            case SPRITE_TYPE_REGULAR_ENEMY:
                 // TODO: Variable damage?
                 if (playerInvulnerabilityTime) {
                     return;

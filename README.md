@@ -90,8 +90,6 @@ this chapter. It gets into depth on details of how the library itself works, as 
 the rom is organized. That said, these topics are here if you need them, or for that matter if they
 interest you.
 
-TODO: Links once these exist
-
 ### Part 1: Getting started
 
 1. [Setting up your tools](./guide/section_1/setting_up_your_tools.md)

@@ -8,13 +8,13 @@ Note that I'm assuming you know the basics of 6502 assembly language, as well as
 you get here? :)
 
 TODO: Don't forget code bank stuffs
-TODO: .import .export
 TODO: Reference shiru docs (directly and for anything I missed)
 
 ## Create a function Definition
 
-First, we'll start with the basics. Create a new header file to put your function into. Next, figure out what
-your function is going to look like. To demonstrate, here are two functions we will define further down.
+First, we'll start with the basics. Create a new header file to put your function into. This will allow us
+to call them from C code. Next, figure out what your function is going to look like. To demonstrate, here 
+are two functions we will define further down.
 
 **NOTE**: These example functions are not useful; there are features built into neslib for these. They are
 simply examples!
@@ -42,12 +42,12 @@ on the actual assembly code, but I'll highlight a few key points.
 
 _get_current_frame
     ; Put a variable into a before you call `rts`, and that will be your return value.
-    ; For 16 bit values, put the MSB into x!
+    ; For 16 bit values, put the high byte into x, (using ldx) and low byte into a.
     lda FRAME_COUNTER
     rts
 
 _set_random_seed
-    ; Due to using __fastcall__, your value is in the a register. 2 bit values have their MSB in x.
+    ; Due to using __fastcall__, your value is in the a register. 2 bit values have their high byte in x.
     ; If you have multiple parameters, they are loaded from right to left. A/X will have the far right value,
     ; then you can use the `popa` or `popax` to move left through parameters.
     stx >RAND_SEED
@@ -57,7 +57,7 @@ _set_random_seed
 
 Most of what's going on is explained in comments, however I will call out the underscores before function
 names. Any functions available to C must be prefixed with an underscore. This underscore will not be part
-of how you call the function - just do it like you did in the header file.
+of how you call the function - just call it like you wrote it in the header file.
 
 ## Hooking up the assembly files
 

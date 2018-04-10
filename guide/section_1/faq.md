@@ -12,7 +12,7 @@ TODO: Link chapter references before, once chapters are a little more solidified
 Absolutely! This engine produces roms that are completely compatible with the NES - they are not limited
 to just emulators. It's actually very easy with the right hardware.
 
-There's a whole chapter about this in section 4! 
+There's [a whole chapter about this](../section_4/real_nes.md) in section 4! 
 
 #### Can I use this for Game Jams/Coding competitions?
 
@@ -45,7 +45,7 @@ Hey, we all forget to hit `ctrl+s` sometimes!
 
 This is the equivalent to turning it off and on again. In your cygwin terminal in the base of `nes-starter-kit`,
 run `make clean`, then build it again. This will get rid of all temporary files on your system, forcing us to
-re-generate all files. If you find yourself doing this often, you may want to open a support ticket with
+re-generate all files. If you find yourself doing this often, you may want to open a ticket with
 `nes-starter-kit` on GitHub so we can fix this in the project itself.
 
 ##### 3. Change something else, and see if that works
@@ -77,6 +77,7 @@ NES knows about at once. (This is known as ROM banking) The `CODE_BANK(number)` 
 which of these 16k sections the code belongs in. The `banked_call` method runs code that is in one of
 these sections.
 
+TODO: Better link goes here.
 This is explained in greater detail in the 4th section, in a chapter titled "Understanding and adjusting 
 the size of your game."
 

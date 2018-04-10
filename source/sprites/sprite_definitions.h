@@ -27,7 +27,7 @@
 #define SPRITE_TYPE_HEALTH 0x02
 #define SPRITE_TYPE_OFFSCREEN 0x7f
 // Used _STATIC_ENEMY for sprites that deal damage, but otherwise don't move.
-#define SPRITE_TYPE_STATIC_ENEMY 0x03 
+#define SPRITE_TYPE_REGULAR_ENEMY 0x03 
 #define SPRITE_TYPE_DOOR 0x04
 #define SPRITE_TYPE_ENDGAME 0x05
 

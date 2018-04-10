@@ -21,7 +21,7 @@ You should also rename the folder from `nes-starter-kit` to the name of your gam
 To make life easier, most of the tools, including the compiler, c library, and various converters are 
 included in the following zip file: 
 
-TODO: Make this zip!! 
+TODO: Upload this zip!! 
 
 Download this file, and extract it to the "tools" folder. Once you have done that, follow the steps below.
 
@@ -123,16 +123,3 @@ This is a 6502 assembly language support extension. You probably don't need it f
 It will provide syntax highlighting for the raw assembly language in neslib, and some of our custom extensions.
 You want this if you're planning on modifying or extending the guts of `nes-starter-kit`. If you'd prefer stick with C,
 you can avoid this.
-
-### Personal notes and junk 
-TODO: Remove these
-
-TODO: Build the zip...
-Stuff to put in zip: 
-- cc65 (original version)
-- neslib + famitracker
-- wget script
-- nesst?
-- size tool?
-- what else?
-- Converter packaged with pkg node module
