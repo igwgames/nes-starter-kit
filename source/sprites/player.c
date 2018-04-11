@@ -233,8 +233,12 @@ void handle_player_sprite_collision() {
         // TODO: These could be a good first use of sound effects...
         switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
             case SPRITE_TYPE_HEALTH:
+                // This if statement ensures that we don't remove hearts if you don't need them yet.
                 if (playerHealth < playerMaxHealth) {
-                    playerHealth++;
+                    playerHealth += currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH];
+                    if (playerHealth > playerMaxHealth) {
+                        playerHealth = playerMaxHealth;
+                    }
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
                 }
                 break;

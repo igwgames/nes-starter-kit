@@ -89,7 +89,7 @@ graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
 # If you're actively changing chr2img using node, toss it in here to use it directly.
 #	node tools/chr2img/src/index.js graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 
-graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.pal
+graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.pal source/sprites/sprite_definitions.c
 	tools/sprite_def2img/sprite_def2img ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 # If you're actively change sprite_def2img using node, toss it in here to use it directly.
 #	node tools/sprite_def2img/src/index.js ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png

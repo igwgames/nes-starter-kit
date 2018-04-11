@@ -105,8 +105,8 @@ interest you.
 12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
 13. Changing the sprite art
 14. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
-15. Adding new enemies
-16. Adding collectible sprites
+15. [Adding collectible sprites](./guide/section_2/collectible sprites.md)
+16. Adding new enemies
 17. Adding/changing music
 18. Adding/changing sound effects
 19. Changing movement
