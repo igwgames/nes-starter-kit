@@ -22,14 +22,16 @@
 #define SPRITE_MOVEMENT_UP_DOWN 2
 
 // Use _NOTHING for decoration sprites that don't do anything when collided with.
+// This can be used for decorations, etc...
 #define SPRITE_TYPE_NOTHING 0x00
 #define SPRITE_TYPE_KEY 0x01
 #define SPRITE_TYPE_HEALTH 0x02
-#define SPRITE_TYPE_OFFSCREEN 0x7f
-// Used _STATIC_ENEMY for sprites that deal damage, but otherwise don't move.
 #define SPRITE_TYPE_REGULAR_ENEMY 0x03 
 #define SPRITE_TYPE_DOOR 0x04
 #define SPRITE_TYPE_ENDGAME 0x05
+
+// Use this when a sprite is destroyed - this will skip all logic about the sprite.
+#define SPRITE_TYPE_OFFSCREEN 0x7f
 
 // Used to figure out where to put the sprites in sprite memory. 
 // Have to skip over sprite 0 (0x00) and player (0x10)

@@ -34,12 +34,14 @@ void update_hud() {
     for (; i != playerMaxHealth; ++i) {
         screenBuffer[i+3] = HUD_TILE_HEART_EMPTY;
     }
-    screenBuffer[11] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
-    screenBuffer[12] = LSB(NAMETABLE_A + HUD_KEY_START);
-    screenBuffer[13] = 2;
-    screenBuffer[14] = HUD_TILE_KEY;
-    screenBuffer[15] = HUD_TILE_NUMBER + playerKeyCount;
-    screenBuffer[16] = NT_UPD_EOF;
+    // Okay, let's just use i for the rest of the byte locations, since playerMaxHealth can vary in length
+    i = i + 3;
+    screenBuffer[i++] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
+    screenBuffer[i++] = LSB(NAMETABLE_A + HUD_KEY_START);
+    screenBuffer[i++] = 2;
+    screenBuffer[i++] = HUD_TILE_KEY;
+    screenBuffer[i++] = HUD_TILE_NUMBER + playerKeyCount;
+    screenBuffer[i++] = NT_UPD_EOF;
     set_vram_update(screenBuffer);
 
 }

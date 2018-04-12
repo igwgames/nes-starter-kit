@@ -68,4 +68,91 @@ the sprite from the screen. You can tweak this code to heal the player more, or
 never make the sprite go away if you want. We'll expand on this to make our own
 new type of collectible sprite!
 
-## Changing the sprite behavior completely
+## Making the sprite change our max health
+
+Okay, we made a heart that heals more than 1 damage, but let's take it a little bit
+further. Why don't we make this sprite increase the player's max health, so that they
+can take one more heart of damage!
+
+Based on seeing the logic above, we probably want to create a new sprite type - we 
+could use the `SPRITE_TYPE_HEALTH` type, but this would make the code kind of confusing.
+
+Open up `source/sprites/sprite_definitions.h` and look for a bunch of definitions starting
+with SPRITE_TYPE. There should be something like this: 
+
+```c
+#define SPRITE_TYPE_NOTHING 0x00
+#define SPRITE_TYPE_KEY 0x01
+#define SPRITE_TYPE_HEALTH 0x02
+#define SPRITE_TYPE_REGULAR_ENEMY 0x03 
+#define SPRITE_TYPE_DOOR 0x04
+#define SPRITE_TYPE_ENDGAME 0x05
+```
+
+These simply map pretty names to values that the code knows about. Add a new one for
+this sprite called `SPRITE_TYPE_LIFE_UP`, and give it a value not taken by another 
+SPRITE_TYPE variable - in this example, you could use `0x10`. 
+
+Now, we need to have our sprite definition use that variable. Here it is from before:
+
+```c
+SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 2, 0x00, 0x00
+```
+
+We want to change `SPRITE_TYPE_HEALTH` to `SPRITE_TYPE_LIFE_UP`. While we are at it, let's
+make the sprite a little bit more unique? If we look at nesst for our sprites, there is
+a big heart sprite at `0xec`. If we change the sprite id (second byte) to this, we can 
+use that big heart sprite. However, our old sprite was 8x8 pixels in size, and this new 
+one is 16x16. We also need to update the size of the sprite, by changing 
+`SPRITE_SIZE_8PX_8PX` to `SPRITE_SIZE_16px_16px`. Lastly, let's make the color red again,
+using `SPRITE_PALETTE_2`. The end result should look like this: 
+
+```c
+SPRITE_TYPE_LIFE_UP, 0xec, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 2, 0x00, 0x00
+```
+
+If you rebuild the game at this step, you should see your new heart sprite in use!
+Tiled should also show the new image after the game is built. You may notice that
+nothing happens when you try to collect the sprite though - that's our next step!
+
+![big heart](../images/big_heart.png)
+
+In the last section, we looked at the logic in `source/sprites/player.c`, which 
+handles sprite collision. We need to delve back into that code to make this logic
+work for our new case. Open that file back up, and find the section that handles
+`SPRITE_TYPE_HEALTH`. We want to add some new logic for `SPRITE_TYPE_LIFE_UP`.
+
+Here's what the code looks like now: 
+
+```c
+switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
+    case SPRITE_TYPE_HEALTH:
+        // ... implementation of sprite health stuff here...
+        break;
+    case SPRITE_TYPE_KEY:
+
+```
+
+Let's add a new case for `SPRITE_TYPE_LIFE_UP` between `SPRITE_TYPE_HEALTH` and 
+`SPRITE_TYPE_KEY`. Player health is controlled by a global variable called 
+`maxPlayerHealth`, so we will need to change that. There is also a line of code
+that hides the sprite in the `SPRITE_TYPE_HEALTH` method that we can reuse here.
+
+The end result is something like this: 
+
+```c
+switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
+    case SPRITE_TYPE_HEALTH:
+        // ... implementation of sprite health stuff here...
+        break;
+    case SPRITE_TYPE_LIFE_UP:
+        playerMaxHealth += 1;
+        // Hide the sprite now that it has been taken.
+        currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+        break;
+    case SPRITE_TYPE_KEY:
+
+```
+
+If you rebuild the game and collect your new sprite, you should see the player's
+max health increase, and be able to collect hearts to fill it up!

@@ -239,6 +239,7 @@ void handle_player_sprite_collision() {
                     if (playerHealth > playerMaxHealth) {
                         playerHealth = playerMaxHealth;
                     }
+                    // Hide the sprite now that it has been taken.
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
                 }
                 break;
