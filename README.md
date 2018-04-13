@@ -96,7 +96,8 @@ interest you.
 2. [Building your game](./guide/section_1/building_your_game.md)
 3. [Playing your game](./guide/section_1/playing_your_game.md)
 4. [Making Your first change](./guide/section_1/your_first_change.md)
-5. [FAQ](./guide/section_1/faq.md)
+5. [Things to know about the NES and C](./guide/section_1/nes_miscellany.md)
+6. [FAQ](./guide/section_1/faq.md)
 
 ### Part 2: Making it your Own
 
