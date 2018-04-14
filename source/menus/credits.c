@@ -59,7 +59,6 @@ void draw_credits_screen() {
     put_str(NTADR_A(4, 18), "Refresh Games (OpenGameArt)");
 
     // FIXME: Where's that constant?
-    // FIXME: Need a way to bring this about
     // TODO: How can we make this easy to expand on?
     put_str(NTADR_A(6, 24), "Created in 2018 by");
     put_str(NTADR_A(8, 26), "Your name here");

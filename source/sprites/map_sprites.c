@@ -53,7 +53,6 @@ void update_map_sprites() {
         // TODO: Make sprites a little bit smaller so they're harder to hit? (Maybe only if they're enemies/damaging)
         // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you 
         // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
-
         if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
             currentSpriteFullWidth = NES_SPRITE_WIDTH << PLAYER_POSITION_SHIFT;
         } else {
@@ -213,14 +212,12 @@ void update_map_sprites() {
                         --currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME];
                     }
 
-                    // FIXME: Use a better constant for this, or put something in the sprite def.
-                    // FIXME: Restrain to screen so things don't escape
-                    // FIXME: Bottom seems a little off (but this might be because of ^)
-                    // FIXME: Add full-scale animation type.
-                    currentSpriteData = PLAYER_MAX_VELOCITY;
+                    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
+                    // We'll then add/subtract it from sprX and sprY
+                    currentSpriteData = currentMapSpriteData[MAP_SPRITE_DATA_POS_MOVE_SPEED];
                     switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
                         case SPRITE_DIRECTION_LEFT:
-                            // FIXME: This is super unclear; please document.
+
                             sprX -= currentSpriteData;
                             if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
                                 // Roll back the position since we use sprX to place the sprite

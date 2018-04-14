@@ -54,6 +54,7 @@
 #define SPRITE_DEF_POSITION_HP_RESTORE      5
 #define SPRITE_DEF_POSITION_HEALTH          5
 #define SPRITE_DEF_POSITION_SLIDE_SPEED     5
+#define SPRITE_DEF_POSITION_MOVE_SPEED      6
 
 extern const unsigned char spriteDefinitions[];
 
