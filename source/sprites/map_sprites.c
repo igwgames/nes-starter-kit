@@ -100,9 +100,9 @@ void update_map_sprites() {
 
                 // Next, let's animate based on the current frame. 
                 if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
-                    currentSpriteTileId += (frameCount & 0x08) >> 2;
+                    currentSpriteTileId += (frameCount & 0x10) >> 3;
                 } else {
-                    currentSpriteTileId += (frameCount & 0x04) >> 2;
+                    currentSpriteTileId += (frameCount & 0x08) >> 3;
                 }
                 break;
             case SPRITE_ANIMATION_NONE:
