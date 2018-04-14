@@ -101,8 +101,8 @@ rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 # Build up the tool zip that's saved on the website/etc. There's a 99.9% chance you don't care about this.
 # Meant to be run from the base folder of nes-starter-kit - all node stuff must be compiled!
 build_tool_zip: 
-	-rm temp/tools.zip
-	$(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/tmx2c/tmx2c.exe tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
+	-rm -f temp/tools.zip
+	$(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/nesst tools/tmx2c/tmx2c.exe tools/sprite_def2img/sprite_def2img.exe tools/sprite_Def2img/LICENSE tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
 
 
 
