@@ -20,6 +20,7 @@
 #define SPRITE_MOVEMENT_NONE 0
 #define SPRITE_MOVEMENT_LEFT_RIGHT 1
 #define SPRITE_MOVEMENT_UP_DOWN 2
+#define SPRITE_MOVEMENT_RANDOM_WANDER 3
 
 // Use _NOTHING for decoration sprites that don't do anything when collided with.
 // This can be used for decorations, etc...

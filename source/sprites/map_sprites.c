@@ -44,6 +44,17 @@ void update_map_sprites() {
         sprY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
         currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK; 
         currentSpriteTileId = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TILE_ID];
+                
+        // TODO: Make sprites a little bit smaller so they're harder to hit? (Maybe only if they're enemies/damaging)
+        // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you 
+        // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
+
+        if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
+            currentSpriteFullWidth = NES_SPRITE_WIDTH << PLAYER_POSITION_SHIFT;
+        } else {
+            currentSpriteFullWidth = NES_SPRITE_WIDTH << (PLAYER_POSITION_SHIFT+1);
+        }
+
 
         if (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_OFFSCREEN) {
             // Hide it and move on.
@@ -143,6 +154,129 @@ void update_map_sprites() {
                 }
 
                 break;
+            case SPRITE_MOVEMENT_RANDOM_WANDER:
+                // Okay, we're going to simulate an intelligent enemy. 
+                
+                // First, how long have we been travelling in the same direction? Is it time for a swap?
+                if (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] == 0) {
+                    // Yep. Figure out if direction is: none, left, right, up, or down we do this by getting a random number
+                    // between 0 and 8 with bit masking. If it's 0, stop for a bit... if it's 1, left... 4 down, or 5-7, maintain.
+                    switch (rand8() & 0x07) {
+                        case 0:
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_STATIONARY;
+                            break;
+                        case 1:
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_LEFT;
+                            break;
+                        case 2:
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_RIGHT;
+                            break;
+                        case 3: 
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_UP;
+                            break;
+                        case 4:
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_DOWN;
+                            break;
+                        default:
+                            // Do nothing - just carry on in the direction you're going for another cycle.
+                            break;
+                    }
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] = 20 + (rand8() & 31);
+                } else {
+                    --currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME];
+                }
+
+                // FIXME: Use a better constant for this, or put something in the sprite def.
+                // FIXME: Restrain to screen so things don't escape
+                // FIXME: Bottom seems a little off (but this might be because of ^)
+                // FIXME: Add full-scale animation type.
+                currentSpriteData = PLAYER_MAX_VELOCITY;
+                switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+                    case SPRITE_DIRECTION_LEFT:
+                        // FIXME: This is super unclear; please document.
+                        sprX -= currentSpriteData;
+                        if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
+                            // Roll back the position since we use sprX to place the sprite
+                            sprX += currentSpriteData;
+                            break;
+                        }
+                        
+                        // If we have not collided, save the new position. Else, just exit.
+                        if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullHeight)], 0)) {
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+                        } else {
+                            // Roll back the position since we use sprX to place the sprite
+                            sprX -= currentSpriteData;
+                        }
+
+                        break;
+                    case SPRITE_DIRECTION_RIGHT:
+                        // Set the X position to our new position, plus the full width of the sprite for the collision test
+                        sprX += currentSpriteData + currentSpriteFullWidth;
+                        if (sprX > SCREEN_EDGE_RIGHT << SPRITE_POSITION_SHIFT) {
+                            // Roll back the position since we use sprX to place the sprite
+                            sprX -= currentSpriteData + currentSpriteFullWidth;
+                            break;
+                        }
+    
+                        // If we have not collided, save the new position. Else, just exit.
+                        if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullHeight)], 0)) {
+                            // If we did collide, we added the full width of the sprite to sprX; take that back out.
+                            sprX -= currentSpriteFullWidth;
+
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+                        } else {
+                            // Roll back the position since we use sprX to place the sprite
+                            sprX -= currentSpriteData + currentSpriteFullWidth;
+                        }
+                        break;
+                    case SPRITE_DIRECTION_UP:
+                        sprY -= currentSpriteData;
+                        if (sprY < SCREEN_EDGE_TOP << SPRITE_POSITION_SHIFT) {
+                            // Roll back the position since we use sprY to place the sprite
+                            sprY += currentSpriteData;
+                            break;
+                        }
+
+                        // If we have not collided, save the new position. Else, just exit.
+                        if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullWidth, sprY)], 0)) {
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
+                        } else {
+                            // Roll back the position since we use sprY to place the sprite
+                            sprY += currentSpriteData;
+                        }
+
+                        break;
+                    case SPRITE_DIRECTION_DOWN:
+                        // Set our Y position to the new position, plus the full height of the sprite for collisions
+                        sprY += currentSpriteData + currentSpriteFullHeight;
+
+                        if (sprY > SCREEN_EDGE_BOTTOM << SPRITE_POSITION_SHIFT) {
+                            // Roll back the position since we use sprY to place the sprite
+                            sprY -= currentSpriteData + currentSpriteFullHeight;
+                            break;
+                        }
+
+                        // If we have not collided, save the new position. Else, just exit.
+                        if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullWidth, sprY)], 0)) {
+                            // Reset sprY to the top of the sprite before we update.
+                            sprY -= currentSpriteFullHeight;
+
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
+                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
+                        } else {
+                            // Roll back the position since we use sprY to place the sprite
+                            sprY -= currentSpriteData + currentSpriteFullHeight;
+                        }
+
+                        break;
+                }
+
+                break;
+
 
             case SPRITE_MOVEMENT_NONE:
             default:
@@ -196,14 +330,6 @@ void update_map_sprites() {
         currentSpriteType = currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE];
         if (currentSpriteType != SPRITE_TYPE_NOTHING && currentSpriteType != SPRITE_TYPE_OFFSCREEN) {
 
-            // TODO: Make sprites a little bit smaller so they're harder to hit? (Maybe only if they're enemies/damaging)
-            // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you 
-            // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
-            if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
-                currentSpriteFullWidth = NES_SPRITE_WIDTH << PLAYER_POSITION_SHIFT;
-            } else {
-                currentSpriteFullWidth = NES_SPRITE_WIDTH << (PLAYER_POSITION_SHIFT+1);
-            }
             // Collision test... see here for a clear explanation: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
             // rect1=player position, rect2=sprite position
             if (
