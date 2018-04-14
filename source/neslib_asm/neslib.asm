@@ -7,6 +7,7 @@
 ; - Made the nmi and music_play methods support swapping to a set SOUND_BANK before reading data.
 ; - Added second split method with y split support from na_th_an's NESDev code
 ; - Messed with the original split method to make it trigger a little later.
+; - Problematic PAL bugfix removed; only supporting NTSC with this engine.
 
 ;modified to work with the FamiTracker music driver
 
@@ -294,16 +295,19 @@ FamiToneSfxInit:
 	sty <TEMP+1
 	
 	ldy #0
-	
-	.if(FT_PITCH_FIX)
 
-	lda FT_PAL_ADJUST		;add 2 to the sound list pointer for PAL
-	bne @ntsc
-	iny
-	iny
+; @cppchriscpp change:
+; Disable the famitracker PAL features... it has a weird bug where if I disable PAL, this var
+; is no longer defined, and ca65 does not like that.	
+;	.if(FT_PITCH_FIX)
+
+;	lda FT_PAL_ADJUST		;add 2 to the sound list pointer for PAL
+;	bne @ntsc
+;	iny
+;	iny
 @ntsc:
 
-	.endif
+;	.endif
 	
 	lda (TEMP),y		;read and store pointer to the effects list
 	sta FT_SFX_ADR_L
@@ -1265,13 +1269,31 @@ _music_pause:
 _sfx_play:
 
 .if(FT_SFX_ENABLE)
+	; TODO: Should I be blocking interrupts while doing weird bank stuff?
+	; @cppchriscpp Edit - forcing a swap to the music bank
+	; Need to temporarily swap banks to pull this off. 
+	tay ; Put our song into y for a moment...
+	; Being extra careful and setting BP_BANK to ours in case an nmi fires while we're doing this.
+	lda BP_BANK
+	pha
+	lda #SOUND_BANK
+	sta BP_BANK
+	mmc1_register_write MMC1_PRG
+	tya ; bring back the song number!
 
 	and #$03
 	tax
 	lda @sfxPriority,x
 	tax
 	jsr popa
-	jmp FamiToneSfxPlay
+	jsr FamiToneSfxPlay
+
+	; Remember when we stored the old bank into BP_BANK and swapped? Time to roll back.
+	pla
+	sta BP_BANK
+	mmc1_register_write MMC1_PRG
+
+	rts
 
 @sfxPriority:
 

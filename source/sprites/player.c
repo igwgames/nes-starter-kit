@@ -230,7 +230,7 @@ void handle_player_sprite_collision() {
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
-        // TODO: These could be a good first use of sound effects...
+
         switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
             case SPRITE_TYPE_HEALTH:
                 // This if statement ensures that we don't remove hearts if you don't need them yet.
@@ -241,12 +241,16 @@ void handle_player_sprite_collision() {
                     }
                     // Hide the sprite now that it has been taken.
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+
+                    // Play the heart sound!
+                    sfx_play(SFX_HEART, SFX_CHANNEL_3);
                 }
                 break;
             case SPRITE_TYPE_KEY:
                 if (playerKeyCount < MAX_KEY_COUNT) {
                     playerKeyCount++;
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                    sfx_play(SFX_KEY, SFX_CHANNEL_3);
                 }
                 break;
             case SPRITE_TYPE_REGULAR_ENEMY:
@@ -257,6 +261,8 @@ void handle_player_sprite_collision() {
                 playerHealth--; 
                 if (playerHealth <= 0) {
                     gameState = GAME_STATE_GAME_OVER;
+                    music_stop();
+                    sfx_play(SFX_GAMEOVER, SFX_CHANNEL_1);
                     return;
                 }
                 // Knock the player back
@@ -277,6 +283,7 @@ void handle_player_sprite_collision() {
                     playerYVelocity = PLAYER_MAX_VELOCITY;
                     playerXVelocity = 0 - playerXVelocity;
                 }
+                sfx_play(SFX_HURT, SFX_CHANNEL_2);
 
                 
                 break;

@@ -51,6 +51,18 @@
 #define SONG_TITLE 0
 #define SONG_OVERWORLD 1
 
+// Constants for sound effects we play in the game
+#define SFX_HURT 0
+#define SFX_HEART 1
+#define SFX_KEY 2
+#define SFX_GAMEOVER 3
+
+// Constants for sfx channels. Completely unnecessary but it's easier to read
+#define SFX_CHANNEL_1 0
+#define SFX_CHANNEL_2 1
+#define SFX_CHANNEL_3 2
+#define SFX_CHANNEL_4 3
+
 #define ATTRIBUTE_TABLE_OFFSET 0x3c0
 #define NAMETABLE_A_ATTRS NAMETABLE_A + ATTRIBUTE_TABLE_OFFSET
 #define NAMETABLE_B_ATTRS NAMETABLE_B + ATTRIBUTE_TABLE_OFFSET

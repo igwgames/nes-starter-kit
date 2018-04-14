@@ -23,6 +23,7 @@ MAIN_ASM_COMPILER=./tools/cc65/bin/ca65
 MAIN_LINKER=./tools/cc65/bin/ld65
 MAP_PARSER=./tools/tmx2c/tmx2c 
 SPACE_CHECKER=tools/nessc/nessc
+SFX_CONVERTER=tools/neslib_famitracker/tools/nsf2data
 SOUND_BANK=0
 
 SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
@@ -64,7 +65,7 @@ build: rom/$(ROM_NAME).nes graphics/generated/tiles.png graphics/generated/sprit
 build-tiles: graphics/generated/tiles.png
 build-sprites: graphics/generated/sprites.png
 
-temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin 
+temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
 	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
 # This bit is a little cheap... any time a header file changes, just recompile all C files. There might
@@ -94,6 +95,8 @@ graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.
 # If you're actively change sprite_def2img using node, toss it in here to use it directly.
 #	node tools/sprite_def2img/src/index.js ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
+sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
+	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 	$(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib

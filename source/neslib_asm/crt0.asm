@@ -28,7 +28,7 @@ FT_SFX_STREAMS			= 4			;number of sound effects played at once, 1..4
 FT_BASE_ADR=$0100			;page in RAM, should be $xx00
 
 .define FT_THREAD       1	;undefine if you call sound effects in the same thread as sound update
-.define FT_PAL_SUPPORT	1   ;undefine to exclude PAL support
+.define FT_PAL_SUPPORT	0   ;undefine to exclude PAL support
 .define FT_NTSC_SUPPORT	1   ;undefine to exclude NTSC support
 
 
@@ -360,7 +360,7 @@ music_dummy_data:
 
 .if(FT_SFX_ENABLE)
 sounds_data:
-	.include "tools/neslib_famitracker/sounds.s"
+	.include "sound/sfx/generated/sfx.s"
 .endif
 
 .segment "DMC"
