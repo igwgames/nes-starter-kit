@@ -24,6 +24,17 @@ MAIN_LINKER=./tools/cc65/bin/ld65
 MAP_PARSER=./tools/tmx2c/tmx2c 
 SPACE_CHECKER=tools/nessc/nessc
 SFX_CONVERTER=tools/neslib_famitracker/tools/nsf2data
+
+# Built-in tools: 
+CHR2IMG=tools/chr2img/chr2img
+TMX2C=tools/tmx2c/tmx2c
+SPRITE_DEF2IMG=tools/sprite_def2img/sprite_def2img
+
+# Javascript versions of built-in tools: (Uncomment these if you're working on the tools)
+# CHR2IMG=node tools/chr2img/src/index.js
+# TMX2C=node tools/tmx2c/src/index.js
+# SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
+
 SOUND_BANK=0
 
 SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
@@ -81,19 +92,13 @@ temp/%.s: temp/%.c
 	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
 temp/level_%.c: levels/%.tmx
-	tools/tmx2c/tmx2c 3 overworld $< $(patsubst %.c, %, $@)
-# If you're actively changing tmx2c using node, toss it in here to use it directly.
-#	node tools/tmx2c/src/index.js 3 overworld $< $(patsubst %.c, %, $@)
+	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
 
 graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
-	tools/chr2img/chr2img graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
-# If you're actively changing chr2img using node, toss it in here to use it directly.
-#	node tools/chr2img/src/index.js graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
+	$(CHR2IMG) graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 
 graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.pal source/sprites/sprite_definitions.c
-	tools/sprite_def2img/sprite_def2img ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
-# If you're actively change sprite_def2img using node, toss it in here to use it directly.
-#	node tools/sprite_def2img/src/index.js ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
+	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
 	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
@@ -111,8 +116,11 @@ build_tool_zip:
 
 clean:
 	-rm -f rom/*.nes
-	-rm -f temp/levels/*
+	-rm -rf temp/levels
 	-rm -f temp/*
+	-rm -f sounds/sfx/generated/*.s
+	-rm -f graphics/generated/*.png
+	mkdir temp/levels
 	touch temp/empty
 	touch temp/levels/empty
 
