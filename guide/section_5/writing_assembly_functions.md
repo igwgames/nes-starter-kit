@@ -7,9 +7,6 @@ Whatever the reason, this isn't hard to support!
 Note that I'm assuming you know the basics of 6502 assembly language, as well as C. If not, uh, how did 
 you get here? :)
 
-TODO: Don't forget code bank stuffs
-TODO: Reference shiru docs (directly and for anything I missed)
-
 ## Create a function Definition
 
 First, we'll start with the basics. Create a new header file to put your function into. This will allow us
@@ -69,3 +66,9 @@ where we include `source/graphics/palettes.asm` and add yours right after.
 
 Finally, we have the easy bit. To use it, include your new header file into a C file wherever you need it,
 and call the functions like you would any other C function. You're done!
+
+## How did you learn this? Where can I learn more?
+
+The author of neslib wrote some really good documentation on how to do this, as well as how to use neslib
+in general. Find that [here](https://shiru.untergrund.net/articles/programming_nes_games_in_c.htm). Look
+for the section titled "Writing Functions in Assembly Code".

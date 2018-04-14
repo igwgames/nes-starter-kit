@@ -100,7 +100,8 @@ That's it; you're done! Run the game, and you should see something like this:
 
 ![player hud](../images/player_hud.png)
 
-TODO: Is it worth trying to get into the asset table here? If not, can we detail it somewhere else?
+## Adding dynamic data into the hud
 
-TODO: Should we also address the update_hud method more directly? If we've detailed the weird 
-      set_vram_update method, that might be enough to point to.
+TODO: Fill this out with a tutorial that ends up putting the frame counter onto the screen.
+
+TODO: Is it worth trying to get into the asset table here? If not, can we detail it somewhere else?

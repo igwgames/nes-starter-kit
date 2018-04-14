@@ -8,9 +8,16 @@ Make sure you have installed everything marked as **REQUIRED** before moving on 
 **REQUIRED**
 
 First, if you haven't already done so, get a copy of this repository. You may do this either by doing a `git clone` of
-this repository, or downloading it as a zip file. 
+this repository, or downloading it as a zip file. *Using git is very strongly encouraged*. If you have not used it before,
+[here is a decent introduction](https://www.git-tower.com/learn/git/ebook/en/command-line/basics/why-use-version-control).
+
+If you decide to go this path, and you also decide to install Visual Studio Code (feel free to skip to that step lower
+in this document, then come back!), you can press `ctrl+shift+p` then type in `git clone` to get some prompts to do it.
+Visual Studio Code is also very well integrated into Visual Studio Code.
+
 
 To download a zip file, go to this project's page on Github, and click the green `Clone or download` button at the top right.
+This should get you to a download link.
 
 You should also rename the folder from `nes-starter-kit` to the name of your game!
 
@@ -21,7 +28,7 @@ You should also rename the folder from `nes-starter-kit` to the name of your gam
 To make life easier, most of the tools, including the compiler, c library, and various converters are 
 included in the following zip file: 
 
-TODO: Upload this zip!! 
+[Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
 
 Download this file, and extract it to the "tools" folder. Once you have done that, follow the steps below.
 

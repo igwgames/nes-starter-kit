@@ -5,8 +5,6 @@ This section tries to address common questions and answers for new developers.
 If you have a question that isn't addressed here, feel free to oepn a Github issue, or reach out on
 Twitter/somewhere else.
 
-TODO: Link chapter references before, once chapters are a little more solidified.
-
 #### Can I play my game on a real NES?
 
 Absolutely! This engine produces roms that are completely compatible with the NES - they are not limited
@@ -77,7 +75,6 @@ NES knows about at once. (This is known as ROM banking) The `CODE_BANK(number)` 
 which of these 16k sections the code belongs in. The `banked_call` method runs code that is in one of
 these sections.
 
-TODO: Better link goes here.
 This is explained in greater detail in the 4th section, in a chapter titled "Understanding and adjusting 
 the size of your game."
 

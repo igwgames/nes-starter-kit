@@ -23,7 +23,8 @@ The only thing this is *not* is an introduction to programming - if you have nev
 suggest finding a tutorial online for C or C++, and getting a couple really basic programs working. (At the
 very least, find out what a "hello world" program is, and write+run one successfully.) 
 
-TODO: Find a good tutorial that uses a decent modern compiler. Don't let this scare people away!!
+Here is a pretty good interactive tutorial - it lets you write and run your code in the browser, so you don't
+need to set anything up! [Learn C Tutorial](http://www.learn-c.org/)
 
 
 ## Related projects

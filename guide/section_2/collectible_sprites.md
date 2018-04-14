@@ -3,8 +3,6 @@
 Adding new sprites involves changing our list of available sprites, then adding some logic to handle the new sprite.
 We will start simple with a new heart object, then expand on this to make it a new thing.
 
-TODO: Do we update the hud with the new thing?
-
 ## Adding the new sprite object
 
 First, let's create a new sprite. Open up `source/sprites/sprite_definitions.c`, and you should be able to see a list
