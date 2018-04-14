@@ -72,6 +72,9 @@ void main() {
                 ppu_off();
                 banked_call(PRG_BANK_HUD, draw_hud);
                 ppu_on_all();
+
+                // Seed the random number generator here, using the time since console power on as a seed
+                set_rand(frameCount);
                 
                 // Map drawing is complete; let the player play the game!
                 music_play(SONG_OVERWORLD);

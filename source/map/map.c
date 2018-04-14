@@ -24,6 +24,8 @@ unsigned char assetTable[0x38];
 
 unsigned char currentMapSpriteData[192];
 
+unsigned char mapScreenBuffer[0x55];
+
 
 void init_map() {
     // Make sure we're looking at the right sprite and chr data, not the ones for the menu.
@@ -126,10 +128,10 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
             currentMemoryLocation = nametableAdr +  ((i / 16) << 6) + ((i % 16) << 1);
         }
 
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1)] = currentValue;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 1] = currentValue + 1;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 32] = currentValue + 16;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 33] = currentValue + 17;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1)] = currentValue;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 1] = currentValue + 1;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 32] = currentValue + 16;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 33] = currentValue + 17;
 
 
         // okay, now we have to update the byte for palettes. This is going to look a bit messy...
@@ -176,11 +178,11 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
         if (bufferIndex == 16) {
             bufferIndex = 0;
             // Bunch of messy-looking stuff that tells neslib where to write this to the nametable, and how.
-            screenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
-            screenBuffer[1] = LSB(currentMemoryLocation);
-            screenBuffer[2] = 65;
-            screenBuffer[64 + NAMETABLE_UPDATE_PREFIX_LENGTH + 1] = NT_UPD_EOF;
-            set_vram_update(screenBuffer);
+            mapScreenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
+            mapScreenBuffer[1] = LSB(currentMemoryLocation);
+            mapScreenBuffer[2] = 65;
+            mapScreenBuffer[64 + NAMETABLE_UPDATE_PREFIX_LENGTH + 1] = NT_UPD_EOF;
+            set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -191,15 +193,15 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
         }
     }
     // Draw the palette that we built up above.
-    // Start by copying it into screenBuffer, so we can tell neslib where this lives.
+    // Start by copying it into mapScreenBuffer, so we can tell neslib where this lives.
     for (i = 0; i != 0x38; ++i) {
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + i] = assetTable[i];
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + i] = assetTable[i];
     }
-    screenBuffer[0] = MSB(attributeTableAdr) | NT_UPD_HORZ;
-    screenBuffer[1] = LSB(attributeTableAdr);
-    screenBuffer[2] = 0x38;
-    screenBuffer[0x3b] = NT_UPD_EOF;
-    set_vram_update(screenBuffer);
+    mapScreenBuffer[0] = MSB(attributeTableAdr) | NT_UPD_HORZ;
+    mapScreenBuffer[1] = LSB(attributeTableAdr);
+    mapScreenBuffer[2] = 0x38;
+    mapScreenBuffer[0x3b] = NT_UPD_EOF;
+    set_vram_update(mapScreenBuffer);
     ppu_wait_nmi();
     if (xScrollPosition != -1) {
         scroll(0, 240 - HUD_PIXEL_HEIGHT);
@@ -224,10 +226,10 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
             currentMemoryLocation = nametableAdr +  ((i / 16) << 6) + ((i % 16) << 1);
         }
 
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1)] = currentValue;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 1] = currentValue + 1;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 32] = currentValue + 16;
-        screenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 33] = currentValue + 17;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1)] = currentValue;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 1] = currentValue + 1;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 32] = currentValue + 16;
+        mapScreenBuffer[NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1) + 33] = currentValue + 17;
 
 
         // okay, now we have to update the byte for palettes. This is going to look a bit messy...
@@ -276,29 +278,29 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
         if (bufferIndex == 16) {
             bufferIndex = 0;
             // Bunch of messy-looking stuff that tells neslib where to write this to the nametable, and how.
-            screenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
-            screenBuffer[1] = LSB(currentMemoryLocation);
-            screenBuffer[2] = 65;
+            mapScreenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
+            mapScreenBuffer[1] = LSB(currentMemoryLocation);
+            mapScreenBuffer[2] = 65;
             // We wrote the 64 tiles in the loop above; they're ready to go.
 
             // Add in another update for the palette
             tempArrayIndex = 64 + NAMETABLE_UPDATE_PREFIX_LENGTH + 1;
-            screenBuffer[tempArrayIndex++] = MSB(attributeTableAdr + j - 7) | NT_UPD_HORZ;
-            screenBuffer[tempArrayIndex++] = LSB(attributeTableAdr + j - 7);
-            screenBuffer[tempArrayIndex++] = 8;
+            mapScreenBuffer[tempArrayIndex++] = MSB(attributeTableAdr + j - 7) | NT_UPD_HORZ;
+            mapScreenBuffer[tempArrayIndex++] = LSB(attributeTableAdr + j - 7);
+            mapScreenBuffer[tempArrayIndex++] = 8;
 
             // Using an unrolled loop to save a bit of RAM - not like we need it really.
-            screenBuffer[tempArrayIndex++] = assetTable[j-7];
-            screenBuffer[tempArrayIndex++] = assetTable[j-6];
-            screenBuffer[tempArrayIndex++] = assetTable[j-5];
-            screenBuffer[tempArrayIndex++] = assetTable[j-4];
-            screenBuffer[tempArrayIndex++] = assetTable[j-3];
-            screenBuffer[tempArrayIndex++] = assetTable[j-2];
-            screenBuffer[tempArrayIndex++] = assetTable[j-1];
-            screenBuffer[tempArrayIndex++] = assetTable[j];
-            screenBuffer[tempArrayIndex++] = NT_UPD_EOF;
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-7];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-6];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-5];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-4];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-3];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-2];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j-1];
+            mapScreenBuffer[tempArrayIndex++] = assetTable[j];
+            mapScreenBuffer[tempArrayIndex++] = NT_UPD_EOF;
 
-            set_vram_update(screenBuffer);
+            set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);

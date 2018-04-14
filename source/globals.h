@@ -14,7 +14,7 @@ ZEROPAGE_EXTERN(unsigned char, playerHealth);
 ZEROPAGE_EXTERN(unsigned char, playerKeyCount);
 ZEROPAGE_EXTERN(unsigned char, playerMaxHealth);
 
-ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x55);
+ZEROPAGE_ARRAY_EXTERN(unsigned char, screenBuffer, 0x20);
 
 ZEROPAGE_EXTERN(unsigned char, controllerState);
 ZEROPAGE_EXTERN(unsigned char, lastControllerState);
@@ -33,6 +33,11 @@ ZEROPAGE_EXTERN(unsigned char, tempChar3);
 ZEROPAGE_EXTERN(unsigned char, tempChar4);
 ZEROPAGE_EXTERN(unsigned char, tempChar5);
 ZEROPAGE_EXTERN(unsigned char, tempChar6);
+ZEROPAGE_EXTERN(unsigned char, tempChar7);
+ZEROPAGE_EXTERN(unsigned char, tempChar8);
+ZEROPAGE_EXTERN(unsigned char, tempChar9);
+ZEROPAGE_EXTERN(unsigned char, tempChara);
+
 
 ZEROPAGE_EXTERN(int, tempInt1);
 ZEROPAGE_EXTERN(int, tempInt2);

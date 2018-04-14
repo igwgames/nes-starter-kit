@@ -13,7 +13,7 @@ ZEROPAGE_DEF(unsigned char, playerKeyCount);
 ZEROPAGE_DEF(unsigned char, playerMaxHealth);
 ZEROPAGE_DEF(unsigned char, gameState);
 
-ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x55);
+ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x20);
 
 ZEROPAGE_DEF(unsigned char, controllerState);
 ZEROPAGE_DEF(unsigned char, lastControllerState);
@@ -24,6 +24,10 @@ ZEROPAGE_DEF(unsigned char, tempChar3);
 ZEROPAGE_DEF(unsigned char, tempChar4);
 ZEROPAGE_DEF(unsigned char, tempChar5);
 ZEROPAGE_DEF(unsigned char, tempChar6);
+ZEROPAGE_DEF(unsigned char, tempChar7);
+ZEROPAGE_DEF(unsigned char, tempChar8);
+ZEROPAGE_DEF(unsigned char, tempChar9);
+ZEROPAGE_DEF(unsigned char, tempChara);
 
 ZEROPAGE_DEF(int, tempInt1);
 ZEROPAGE_DEF(int, tempInt2);
