@@ -68,17 +68,3 @@ void draw_credits_screen() {
     oam_clear();
     ppu_on_all();
 }
-
-void handle_credits_input() {
-    while (1) {
-        lastControllerState = controllerState;
-        controllerState = pad_poll(0);
-
-        // If Start is pressed now, and was not pressed before...
-        if (controllerState & PAD_START && !(lastControllerState & PAD_START)) {
-            gameState = GAME_STATE_SYSTEM_INIT;
-            break;
-        }
-
-    }
-}

@@ -5,6 +5,7 @@
 #include "source/neslib_asm/neslib.h"
 #include "source/configuration/game_states.h"
 #include "source/menus/text_helpers.h"
+#include "source/menus/input_helpers.h"
 
 CODE_BANK(PRG_BANK_PAUSE_MENU);
 
@@ -32,15 +33,6 @@ void draw_pause_screen() {
 }
 
 void handle_pause_input() {
-    while (1) {
-        lastControllerState = controllerState;
-        controllerState = pad_poll(0);
-
-        // If Start is pressed now, and was not pressed before...
-        if (controllerState & PAD_START && !(lastControllerState & PAD_START)) {
-            gameState = GAME_STATE_RUNNING;
-            break;
-        }
-
-    }
+    banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
+    gameState = GAME_STATE_RUNNING;
 }

@@ -18,6 +18,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/menus/pause.h"
 #include "source/sprites/map_sprites.h"
 #include "source/sprites/sprite_definitions.h"
+#include "source/menus/input_helpers.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -119,13 +120,13 @@ void main() {
                 // Draw the "you won screen"
                 banked_call(PRG_BANK_CREDITS_MENU, draw_win_screen);
                 fade_in();
-                banked_call(PRG_BANK_CREDITS_MENU, handle_credits_input);
+                banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
                 fade_out();
 
                 // Folow it up with the credits.
                 banked_call(PRG_BANK_CREDITS_MENU, draw_credits_screen);
                 fade_in();
-                banked_call(PRG_BANK_CREDITS_MENU, handle_credits_input);
+                banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
                 gameState = GAME_STATE_SYSTEM_INIT;
                 fade_out();
                 break;
