@@ -123,7 +123,7 @@ void main() {
                 fade_in();
                 banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
                 fade_out();
-                gameState = GAME_STATE_SYSTEM_INIT;
+                reset();
                 break;
             case GAME_STATE_CREDITS:
 
@@ -138,8 +138,8 @@ void main() {
                 banked_call(PRG_BANK_CREDITS_MENU, draw_credits_screen);
                 fade_in();
                 banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
-                gameState = GAME_STATE_SYSTEM_INIT;
                 fade_out();
+                reset();
                 break;
             default: 
                 crash_error(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);

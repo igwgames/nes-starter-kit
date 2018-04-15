@@ -13,6 +13,7 @@
 
 // Edits for nes-starter-kit by cppchriscpp
 // - Added split_y method that supports y splits based on na_th_an's NESDev code.
+// - Added reset method to reset the console to startup state.
 
 
 //set bg and spr palettes, data is 32 bytes array
@@ -252,6 +253,10 @@ void __fastcall__ memfill(void *dst,unsigned char value,unsigned int len);
 //delay for N frames
 
 void __fastcall__ delay(unsigned char frames);
+
+// Reset the console to its power-on state
+// Added by @cppchriscpp
+void __fastcall__ reset(void);
 
 
 

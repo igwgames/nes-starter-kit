@@ -55,6 +55,7 @@
 #define SPRITE_DEF_POSITION_HEALTH          5
 #define SPRITE_DEF_POSITION_SLIDE_SPEED     5
 #define SPRITE_DEF_POSITION_MOVE_SPEED      6
+#define SPRITE_DEF_POSITION_DAMAGE          7
 
 extern const unsigned char spriteDefinitions[];
 

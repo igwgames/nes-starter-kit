@@ -79,6 +79,7 @@ void load_sprites() {
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_ANIMATION_TYPE];
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_MOVEMENT_TYPE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_MOVEMENT_TYPE];
             currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_MOVE_SPEED];
+            currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_DAMAGE] = spriteDefinitions[spriteDefinitionIndex + SPRITE_DEF_POSITION_DAMAGE];
 
         } else {
             // Go away

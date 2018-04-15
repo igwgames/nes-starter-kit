@@ -8,6 +8,7 @@
 ; - Added second split method with y split support from na_th_an's NESDev code
 ; - Messed with the original split method to make it trigger a little later.
 ; - Problematic PAL bugfix removed; only supporting NTSC with this engine.
+; - Added reset method to reset system to initial state
 
 ;modified to work with the FamiTracker music driver
 
@@ -27,7 +28,7 @@
 	.export _set_vram_update,_flush_vram_update
 	.export _memcpy,_memfill,_delay
 
-	.export _split_y
+	.export _split_y,_reset
 
 
 ;NMI handler
@@ -1711,6 +1712,11 @@ _delay:
 	bne @1
 
 	rts
+
+
+;void __fastcall__ reset();
+_reset:
+	jmp _exit
 
 
 
