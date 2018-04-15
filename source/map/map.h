@@ -56,6 +56,11 @@ extern unsigned char currentMap[256];
 // Supporting data for sprites; 16 bytes per sprite. Look at the sprite loader function in `map.h` (or the guide) for more details.
 extern unsigned char currentMapSpriteData[(16 * MAP_MAX_SPRITES)];
 
+// This stores the state for the 8 sprites on every map screen. Each screen is represented by one byte.
+// We do this by storing 1 bit for each sprite - 0 if not collected, 1 if it collected. We don't re-spawn
+// collected sprites.
+extern unsigned char currentMapSpritePersistance[64];
+
 // The player's position on the world map. 0-7 are first row, 8-15 are 2nd, etc...
 ZEROPAGE_EXTERN(unsigned char, playerOverworldPosition);
 

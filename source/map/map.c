@@ -24,6 +24,8 @@ unsigned char assetTable[0x38];
 
 unsigned char currentMapSpriteData[(16 * MAP_MAX_SPRITES)];
 
+unsigned char currentMapSpritePersistance[64];
+
 unsigned char mapScreenBuffer[0x55];
 
 
@@ -56,7 +58,7 @@ void load_sprites() {
         spritePosition = currentMap[(MAP_DATA_TILE_LENGTH) + (i<<1)];
 
 
-        if (spritePosition != 255) {
+        if (spritePosition != 255 && !(currentMapSpritePersistance[playerOverworldPosition] & bitToByte[i])) {
 
             // Get X converted to our extended 16-bit int size.
             currentValue = (spritePosition & 0x0f) << 8;

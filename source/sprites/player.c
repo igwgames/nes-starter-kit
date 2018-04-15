@@ -244,13 +244,20 @@ void handle_player_sprite_collision() {
 
                     // Play the heart sound!
                     sfx_play(SFX_HEART, SFX_CHANNEL_3);
+
+                    // Mark the sprite as collected, so we can't get it again.
+                    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
                 }
                 break;
             case SPRITE_TYPE_KEY:
                 if (playerKeyCount < MAX_KEY_COUNT) {
                     playerKeyCount++;
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+
                     sfx_play(SFX_KEY, SFX_CHANNEL_3);
+
+                    // Mark the sprite as collected, so we can't get it again.
+                    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
                 }
                 break;
             case SPRITE_TYPE_REGULAR_ENEMY:
@@ -292,6 +299,10 @@ void handle_player_sprite_collision() {
                 if (playerKeyCount > 0) {
                     playerKeyCount--;
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+
+                    // Mark the door as gone, so it doesn't come back.
+                    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+
                     break;
                 }
                 // So you don't have a key...

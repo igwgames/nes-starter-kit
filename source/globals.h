@@ -43,6 +43,8 @@ ZEROPAGE_EXTERN(int, tempInt1);
 ZEROPAGE_EXTERN(int, tempInt2);
 ZEROPAGE_EXTERN(int, tempInt3);
 
+extern const unsigned int bitToByte[8];
+
 // TODO: There might be a nicer home for these
 // Get the absolute value of a number, the lazy person's way.
 #define ABS(x) (x > 0 ? x : 0-x)

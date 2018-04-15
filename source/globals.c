@@ -32,3 +32,15 @@ ZEROPAGE_DEF(unsigned char, tempChara);
 ZEROPAGE_DEF(int, tempInt1);
 ZEROPAGE_DEF(int, tempInt2);
 ZEROPAGE_DEF(int, tempInt3);
+
+// This can be used to convert a byte value to a bit id - just get the 
+const unsigned int bitToByte[8] = {
+    0x01,
+    0x02,
+    0x04,
+    0x08,
+    0x10,
+    0x20,
+    0x40,
+    0x80
+};
