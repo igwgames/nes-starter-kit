@@ -17,7 +17,7 @@ void draw_win_screen() {
     scroll(0, 0);
 
 	set_chr_bank_0(CHR_BANK_MENU);
-    set_chr_bank_1(CHR_BANK_MENU+1);
+    set_chr_bank_1(CHR_BANK_MENU);
 
     // Add whatever you want here; NTADR_A just picks a position on the screen for you. Your options are 0, 0 to 32, 30
     put_str(NTADR_A(7, 2), "- Congratulations -");
@@ -43,7 +43,7 @@ void draw_credits_screen() {
     // Bonus points: write as we go, start with a black starwars-esque screen
 
 	set_chr_bank_0(CHR_BANK_MENU);
-    set_chr_bank_1(CHR_BANK_MENU+1);
+    set_chr_bank_1(CHR_BANK_MENU);
 
     // Add whatever you want here; NTADR_A just picks a position on the screen for you. Your options are 0, 0 to 32, 30
     put_str(NTADR_A(11, 2), "- Credits -");

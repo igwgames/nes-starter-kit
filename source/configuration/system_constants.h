@@ -13,7 +13,8 @@
 #define ROOM_HEIGHT_MAP_TILES 12
 
 #define CHR_BANK_MENU 0
-#define CHR_BANK_GAME 2
+#define CHR_BANK_TILES 1
+#define CHR_BANK_SPRITES 2
 
 #define HUD_TILE_SIZE 192
 #define HUD_PIXEL_HEIGHT 48

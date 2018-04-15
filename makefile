@@ -94,11 +94,11 @@ temp/%.s: temp/%.c
 temp/level_%.c: levels/%.tmx
 	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
 
-graphics/generated/tiles.png: graphics/main.chr graphics/palettes/main_bg.pal
-	$(CHR2IMG) graphics/main.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
+graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal
+	$(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 
-graphics/generated/sprites.png: graphics/main.chr graphics/palettes/main_sprite.pal source/sprites/sprite_definitions.c
-	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/main.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
+graphics/generated/sprites.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_sprite.pal source/sprites/sprite_definitions.c
+	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
 	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s

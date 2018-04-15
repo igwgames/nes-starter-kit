@@ -20,7 +20,7 @@ void draw_title_screen() {
 	pal_spr(titlePalette);
 
 	set_chr_bank_0(CHR_BANK_MENU);
-    set_chr_bank_1(CHR_BANK_MENU+1);
+    set_chr_bank_1(CHR_BANK_MENU);
 	clear_screen();
 
     

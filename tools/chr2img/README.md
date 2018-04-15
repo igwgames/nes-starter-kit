@@ -11,7 +11,7 @@ Run the command as follows:
 ```
 chr2img [chr file to convert] [pal file to convert] [file to save output to
 
-chr2img graphics/main.chr graphics/palettes/main_bg.pal ./test.png
+chr2img graphics/tiles.chr graphics/palettes/main_bg.pal ./test.png
 ```
 
 ## Packaging for nes-starter-kit

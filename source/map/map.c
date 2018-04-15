@@ -31,8 +31,8 @@ unsigned char mapScreenBuffer[0x55];
 
 void init_map() {
     // Make sure we're looking at the right sprite and chr data, not the ones for the menu.
-    set_chr_bank_0(CHR_BANK_GAME);
-    set_chr_bank_1(CHR_BANK_GAME+1);
+    set_chr_bank_0(CHR_BANK_TILES);
+    set_chr_bank_1(CHR_BANK_SPRITES);
 
     // Also set the palettes to the in-game palettes.
     pal_bg(mainBgPalette);

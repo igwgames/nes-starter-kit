@@ -114,7 +114,7 @@ var fs = require('fs'),
     SCREEN_WIDTH = 16,
     SCREEN_HEIGHT = 12,
     SCREEN_HEIGHT_PADDED = 16,
-    CHR_SPRITE_OFFSET = 4096;
+    CHR_SPRITE_OFFSET = 0;
 
 function printDate() {
     return '[' + new Date().toUTCString() + '] ';

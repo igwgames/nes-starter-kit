@@ -4,7 +4,7 @@ Adding new map tiles is fairly easy - all you will need is NES Screen Tool, (NES
 you likely installed in section 1. It should be in `tools/nesst`. 
 
 Open the program up, and go to the Patterns menu, then select `Open chr`, then open
-`graphics/main.chr`. You should now see the tiles for your game, but the colors may
+`graphics/tiles.chr`. You should now see the tiles for your game, but the colors may
 look a little off. Next, select `Open Palettes` from the Palettes menu, then open
 `graphics/palettes/main_bg.pal`. Now things should look more familiar.
 
