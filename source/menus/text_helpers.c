@@ -1,4 +1,6 @@
 #include "source/neslib_asm/neslib.h"
+#include "source/menus/text_helpers.h"
+#include "source/globals.h"
 
 // Put a string on the screen at X/Y coordinates given in adr.
 void put_str(unsigned int adr, const char *str) {
@@ -13,4 +15,37 @@ void put_str(unsigned int adr, const char *str) {
 void clear_screen() {
 	vram_adr(0x2000);
 	vram_fill(' ' - 0x20, 0x0400);
+}
+
+// Clear the screen and put a nice border around it.
+// TODO: Once we have constants for game name, put it at the top.
+void clear_screen_with_border() {
+	set_vram_update(NULL);
+	vram_adr(0x2000);
+	vram_fill(' ' - 0x20, 64);
+
+	vram_put(' ' - 0x20);
+	vram_put(ASCII_TILE_TL);
+	vram_fill(ASCII_TILE_HORZ, 28);
+	vram_put(ASCII_TILE_TR);
+	vram_put(' ' - 0x20);
+
+	for (i = 0; i != 24; ++i) {
+		vram_put(' ' - 0x20);
+		vram_put(ASCII_TILE_VERT);
+		vram_fill(' ' - 0x20, 28);
+		vram_put(ASCII_TILE_VERT);
+		vram_put(' ' - 0x20);
+	}
+	vram_put(' ' - 0x20);
+	vram_put(ASCII_TILE_BL);
+	vram_fill(ASCII_TILE_HORZ, 28);
+	vram_put(ASCII_TILE_BR);
+	vram_put(' ' - 0x20);
+
+	vram_fill(' ' - 0x20, 64);
+
+	// Attribute table
+	vram_fill(0, 64);
+
 }

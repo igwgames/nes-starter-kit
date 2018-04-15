@@ -1,4 +1,4 @@
-#include "source/menus/pause.h"
+#include "source/menus/game_over.h"
 #include "source/graphics/palettes.h"
 #include "source/configuration/system_constants.h"
 #include "source/globals.h"
@@ -7,12 +7,12 @@
 #include "source/menus/text_helpers.h"
 #include "source/menus/input_helpers.h"
 
-CODE_BANK(PRG_BANK_PAUSE_MENU);
+CODE_BANK(PRG_BANK_GAME_OVER);
 
-
-void draw_pause_screen() {
+void draw_game_over_screen() {
     ppu_off();
     clear_screen_with_border();
+
     // We reuse the title palette here, though we have the option of making our own if needed.
     pal_bg(titlePalette);
 	pal_spr(titlePalette);
@@ -22,7 +22,7 @@ void draw_pause_screen() {
     set_chr_bank_1(CHR_BANK_MENU);
 
     // Just write "- Paused -" on the screen... there's plenty of nicer things you could do if you wanna spend time!
-    put_str(NTADR_A(11, 13), "- Paused -");
+    put_str(NTADR_A(11, 13), "Game Over");
 
 
 
@@ -30,9 +30,5 @@ void draw_pause_screen() {
     // This means all menu drawing must be done with background tiles - if you want to use sprites (eg for a menu item),
     // you will have to hide all sprites, then put them back after. 
     ppu_on_bg();
-}
 
-void handle_pause_input() {
-    banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
-    gameState = GAME_STATE_RUNNING;
 }

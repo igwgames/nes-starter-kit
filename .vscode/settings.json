@@ -9,6 +9,7 @@
         "palettes.h": "c",
         "system_constants.h": "c",
         "bank_helpers.h": "c",
-        "map_sprites.h": "c"
+        "map_sprites.h": "c",
+        "text_helpers.h": "c"
     }
 }
