@@ -21,7 +21,7 @@ things, this is where to do it.
 ## Making a Change
 
 Okay, now you've seen this code; let's make a change! If you pop open our tile editor
-(NESST) and look at `graphics/main.chr` - towards the bottom you should see some text
+(NESST) and look at `graphics/tiles.chr` - towards the bottom you should see some text
 that says "Player" - why don't we put that on the hud?
 
 ![hud text](../images/nesst_player_text.png)
