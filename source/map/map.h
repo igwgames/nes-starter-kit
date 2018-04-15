@@ -5,7 +5,8 @@
 // We need to push the player a little bit over each frame when we do a screen scroll, or they will stay offscreen 
 // when the scroll is done, and trigger a new one. Plus it looks kinda crummy if they stay put. This is added to the
 // player's position with each frame.
-#define SCREEN_SCROLL_NUDGE 3
+#define SCREEN_SCROLL_H_NUDGE 3
+#define SCREEN_SCROLL_V_NUDGE 0
 
 // This defines how many pixels to move the screen during each frame of the screen scroll animation.
 // Must be a multiple of 2 (or w`hatever value is set below)

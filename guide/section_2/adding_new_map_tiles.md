@@ -37,7 +37,7 @@ you can apply any of the 4 palettes to any tile when designing maps. Try to make
 that work with all 4 palettes whenever possible!
 
 Once you have added new tiles, make sure to save them by going to `Patterns` and 
-hitting `Save Chr` -> `8K (Both Tables)`. This will save changes to your background
+hitting `Save Chr` -> `4K (Current Table)`. This will save changes to your background
 tiles, as well as your sprites. (See next chapter for more details)
 If you changed palette colors, don't forget to save those from the `palettes` menu!
 

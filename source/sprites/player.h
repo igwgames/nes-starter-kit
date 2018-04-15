@@ -7,7 +7,7 @@
 // The id of the first sprite in the 4 sprites comprising the player. (out of 64 total sprites)
 #define PLAYER_SPRITE_INDEX 0x10
 
-// This is the width and height of player as used in collisions. This is shifty by 4 to allow for sub-pixel
+// This is the width and height of player as used in collisions. This is shifted by 4 to allow for sub-pixel
 // sizes. (And smoother acceleration/deceleration.) A 16px wide sprite is 256 units here.
 #define PLAYER_WIDTH_EXTENDED 205
 #define PLAYER_HEIGHT_EXTENDED 240

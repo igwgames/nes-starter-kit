@@ -42,8 +42,8 @@
 
 #define SCREEN_EDGE_LEFT 4
 #define SCREEN_EDGE_RIGHT 240
-#define SCREEN_EDGE_TOP 4 + HUD_PIXEL_HEIGHT
-#define SCREEN_EDGE_BOTTOM 220
+#define SCREEN_EDGE_TOP HUD_PIXEL_HEIGHT-1
+#define SCREEN_EDGE_BOTTOM 222
 
 // Data included before a nametable update if done mid-frame.
 #define NAMETABLE_UPDATE_PREFIX_LENGTH 3

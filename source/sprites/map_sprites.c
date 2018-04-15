@@ -111,7 +111,7 @@ void update_map_sprites() {
         }
         // We only want to do movement once every other frame, to save some cpu time. 
         // So, split this to update even sprites on even frames, odd sprites on odd frames
-        if ((i & 0x01) == (frameCount & 0x01)) {
+        if ((i & 0x01) == everyOtherCycle) {
 
             switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVEMENT_TYPE]) {
                 case SPRITE_MOVEMENT_LEFT_RIGHT:

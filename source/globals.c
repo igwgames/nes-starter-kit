@@ -15,6 +15,8 @@ ZEROPAGE_DEF(unsigned char, gameState);
 
 ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x20);
 
+ZEROPAGE_DEF(unsigned char, everyOtherCycle);
+
 ZEROPAGE_DEF(unsigned char, controllerState);
 ZEROPAGE_DEF(unsigned char, lastControllerState);
 
