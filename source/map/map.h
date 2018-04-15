@@ -26,9 +26,12 @@
 #define MAP_SPRITE_OAM_SHIFT 4
 
 // Max number of sprites to load from a map tile. Note that this is also coded into the conversion tool that
-// nes-starter-kit uses. Also note that there isn't much room for more... unless you really know the NES hardware
+// nes-starter-kit uses. 
+// Note: You can bump this to 12, but if a room has more than 8 sprites, the last 4 will not have their state
+// persisted. This means sprites can be duplicated if there are more than 8 on a screen, including hearts or keys. 
+// Also note that there isn't much room for more than that... unless you really know the NES hardware
 // intricately, you probably don't want to touch this one.
-#define MAP_MAX_SPRITES 12
+#define MAP_MAX_SPRITES 8
 
 // Lookup positions for sprite data in currentMapSpriteData.
 #define MAP_SPRITE_DATA_POS_X                   0
@@ -51,7 +54,7 @@
 extern unsigned char currentMap[256];
 
 // Supporting data for sprites; 16 bytes per sprite. Look at the sprite loader function in `map.h` (or the guide) for more details.
-extern unsigned char currentMapSpriteData[192];
+extern unsigned char currentMapSpriteData[(16 * MAP_MAX_SPRITES)];
 
 // The player's position on the world map. 0-7 are first row, 8-15 are 2nd, etc...
 ZEROPAGE_EXTERN(unsigned char, playerOverworldPosition);

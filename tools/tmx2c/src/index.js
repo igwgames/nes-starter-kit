@@ -141,8 +141,8 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
                 }
             }
             mapData += ","
-            // Pad roomSpriteData to 12 sprites, and add a bit of padding to max out to 32 bytes.
-            if (roomSpriteData.length > 24) {
+            // Pad roomSpriteData to 8 sprites, and add a bit of padding to max out to 32 bytes.
+            if (roomSpriteData.length > 16) {
                 containsWarnings = true;
                 out('WARNING: Truncating room (' + x + ',' + y + ') to max 12 sprites. The engine cannot support more; please clean some up.');
                 roomSpriteData.length = 32;

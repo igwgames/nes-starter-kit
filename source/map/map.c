@@ -22,7 +22,7 @@ unsigned char currentMap[256];
 
 unsigned char assetTable[0x38];
 
-unsigned char currentMapSpriteData[192];
+unsigned char currentMapSpriteData[(16 * MAP_MAX_SPRITES)];
 
 unsigned char mapScreenBuffer[0x55];
 

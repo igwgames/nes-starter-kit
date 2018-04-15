@@ -25,7 +25,16 @@ or pull requests are welcome! We need to keep two separate layers, since sprites
 any type of tile. 
 
 Beyond that, just make the rooms look like you want them to, then save the tmx file and build your game. 
-\**Bam!*\* level designs updated!
+**Bam!** level designs updated!
+
+### Sprite limit
+
+By default, you can put a maximum of 8 sprites on a single map tile. If you add more than this, the last
+few will be skipped, and your build command will output warnings. Try to keep this limit in mind while 
+adding to your map! 
+
+_If this limit is really constraining, there is a constant you can change to get up to 12, however there
+are some side-effects to doing that, and you will have to sort those out._
 
 ## The room grid
 
