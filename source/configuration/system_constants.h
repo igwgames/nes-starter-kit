@@ -57,6 +57,7 @@
 #define SFX_HEART 1
 #define SFX_KEY 2
 #define SFX_GAMEOVER 3
+#define SFX_WIN 4
 
 // Constants for sfx channels. Completely unnecessary but it's easier to read
 #define SFX_CHANNEL_1 0

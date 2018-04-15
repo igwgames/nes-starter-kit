@@ -126,6 +126,8 @@ void main() {
                 reset();
                 break;
             case GAME_STATE_CREDITS:
+                music_stop();
+                sfx_play(SFX_WIN, SFX_CHANNEL_1);
 
                 fade_out();
                 // Draw the "you won" screen

@@ -6,8 +6,11 @@
 #define MAX_KEY_COUNT 9
 
 // We make our 16x16 sprites a little bit smaller than they appear, so collisions with them are 
-// less likely. This makes getting hit by enemies less likely.
+// less likely. This makes getting hit by enemies less likely. This is only for collisions with 
+// the player.
 #define SPRITE_HITBOX_OFFSET 24
+// This does the same thing, but only for sprite collisions with tiles.
+#define SPRITE_TILE_HITBOX_OFFSET 10
 
 // The last sprite id that collided with the player, if any. Otherwise, set to NO_SPRITE_HIT
 ZEROPAGE_EXTERN(unsigned char, lastPlayerSpriteCollisionId);
@@ -16,4 +19,4 @@ ZEROPAGE_EXTERN(unsigned char, lastPlayerSpriteCollisionId);
 void update_map_sprites();
 
 // Little helper to turn an X,Y position to a tile on the map
-#define SPRITE_MAP_POSITION(xPos, yPos) (xPos>>(SPRITE_POSITION_SHIFT+4)) + (((yPos >> SPRITE_POSITION_SHIFT) - HUD_PIXEL_HEIGHT) & 0xf0)
+#define SPRITE_MAP_POSITION(xPos, yPos) ((xPos)>>(SPRITE_POSITION_SHIFT+4)) + (((yPos >> SPRITE_POSITION_SHIFT) - HUD_PIXEL_HEIGHT) & 0xf0)
