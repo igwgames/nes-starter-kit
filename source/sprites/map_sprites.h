@@ -5,6 +5,10 @@
 // Maximum number of keys to let the player pick up.
 #define MAX_KEY_COUNT 9
 
+// We make our 16x16 sprites a little bit smaller than they appear, so collisions with them are 
+// less likely. This makes getting hit by enemies less likely.
+#define SPRITE_HITBOX_OFFSET 24
+
 // The last sprite id that collided with the player, if any. Otherwise, set to NO_SPRITE_HIT
 ZEROPAGE_EXTERN(unsigned char, lastPlayerSpriteCollisionId);
 

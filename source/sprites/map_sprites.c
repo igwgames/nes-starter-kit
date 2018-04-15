@@ -50,7 +50,6 @@ void update_map_sprites() {
         currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK; 
         currentSpriteTileId = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TILE_ID];
                 
-        // TODO: Make sprites a little bit smaller so they're harder to hit? (Maybe only if they're enemies/damaging)
         // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you 
         // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
         if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
@@ -356,6 +355,13 @@ void update_map_sprites() {
         // Only test collision for sprite types that collide.
         currentSpriteType = currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE];
         if (currentSpriteType != SPRITE_TYPE_NOTHING && currentSpriteType != SPRITE_TYPE_OFFSCREEN) {
+
+            // For 16x16 enemy sprites, make their hitbox a bit smaller
+            if (currentSpriteType == SPRITE_TYPE_REGULAR_ENEMY) {
+                sprX -= SPRITE_HITBOX_OFFSET;
+                sprY -= SPRITE_HITBOX_OFFSET;
+                currentSpriteFullWidth -= (2*SPRITE_HITBOX_OFFSET);
+            }
 
             // Collision test... see here for a clear explanation: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
             // rect1=player position, rect2=sprite position
