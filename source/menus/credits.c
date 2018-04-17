@@ -5,6 +5,7 @@
 #include "source/neslib_asm/neslib.h"
 #include "source/configuration/game_states.h"
 #include "source/menus/text_helpers.h"
+#include "source/configuration/game_info.h"
 
 CODE_BANK(PRG_BANK_CREDITS_MENU);
 
@@ -49,8 +50,7 @@ void draw_credits_screen() {
     put_str(NTADR_A(11, 2), "- Credits -");
 
     put_str(NTADR_A(2, 6), "Game Design and Logic");
-    // FIXME: Constants. Update guide to match for 1st change.
-    put_str(NTADR_A(4, 8), "Your name here");
+    put_str(NTADR_A(4, 8), gameAuthor);
 
     put_str(NTADR_A(2, 11), "Music");
     put_str(NTADR_A(4, 13), "Wolfgang (OpenGameArt)");
@@ -58,10 +58,11 @@ void draw_credits_screen() {
     put_str(NTADR_A(2, 16), "Artwork");
     put_str(NTADR_A(4, 18), "Refresh Games (OpenGameArt)");
 
-    // FIXME: Where's that constant?
-    // TODO: How can we make this easy to expand on?
-    put_str(NTADR_A(6, 24), "Created in 2018 by");
-    put_str(NTADR_A(8, 26), "Your name here");
+    put_str(NTADR_A(6, 24), "Created in");
+    put_str(NTADR_A(17, 24), currentYear);
+    put_str(NTADR_A(22, 24), "by");
+
+    put_str(NTADR_A(8, 26), gameAuthor);
 
 
     // Hide all existing sprites

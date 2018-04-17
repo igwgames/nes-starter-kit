@@ -5,14 +5,9 @@
 #include "source/configuration/system_constants.h"
 #include "source/menus/text_helpers.h"
 #include "source/graphics/palettes.h"
+#include "source/configuration/game_info.h"
 
 CODE_BANK(PRG_BANK_TITLE);
-
-// The name of your game :)
-const unsigned char gameName[] = "Quirk's Adventure";
-const unsigned char gameAuthor[] = "YOU!";
-const unsigned char gameAuthorContact[] = "Tweet at us! @your_twitter";
-const unsigned char currentYear[] = "2018";
 
 void draw_title_screen() {
     ppu_off();
