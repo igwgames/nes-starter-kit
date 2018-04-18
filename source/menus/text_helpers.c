@@ -18,7 +18,6 @@ void clear_screen() {
 }
 
 // Clear the screen and put a nice border around it.
-// TODO: Once we have constants for game name, put it at the top.
 void clear_screen_with_border() {
 	set_vram_update(NULL);
 	vram_adr(0x2000);

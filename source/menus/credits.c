@@ -40,9 +40,6 @@ void draw_credits_screen() {
 	pal_spr(titlePalette);
     scroll(0, 0);
 
-    // TODO: Do we wanna switch around mirroring, and do a nice slow scroll to the bottom?
-    // Bonus points: write as we go, start with a black starwars-esque screen
-
 	set_chr_bank_0(CHR_BANK_MENU);
     set_chr_bank_1(CHR_BANK_MENU);
 

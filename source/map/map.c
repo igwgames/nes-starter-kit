@@ -353,13 +353,13 @@ void do_fade_screen_transition() {
     
     // Now that the screen is clear, migrate the player's sprite a bit..
     if (playerDirection == SPRITE_DIRECTION_LEFT) {
-        playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_H_NUDGE << (PLAYER_POSITION_SHIFT+1));
+        playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT);
     } else if (playerDirection == SPRITE_DIRECTION_RIGHT) {
-        playerXPosition = (SCREEN_EDGE_LEFT << PLAYER_POSITION_SHIFT) + (SCREEN_SCROLL_H_NUDGE << (PLAYER_POSITION_SHIFT+1));
+        playerXPosition = (SCREEN_EDGE_LEFT << PLAYER_POSITION_SHIFT);
     } else if (playerDirection == SPRITE_DIRECTION_UP) {
-        playerYPosition = (SCREEN_EDGE_BOTTOM << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_V_NUDGE << (PLAYER_POSITION_SHIFT+1));
+        playerYPosition = (SCREEN_EDGE_BOTTOM << PLAYER_POSITION_SHIFT);
     } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
-        playerYPosition = (SCREEN_EDGE_TOP << PLAYER_POSITION_SHIFT) + (SCREEN_SCROLL_V_NUDGE << (PLAYER_POSITION_SHIFT+1));
+        playerYPosition = (SCREEN_EDGE_TOP << PLAYER_POSITION_SHIFT);
     }
     // Actually move the sprite too, since otherwise this won't happen until after we un-blank the screen.
     banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
@@ -392,7 +392,7 @@ void do_scroll_screen_transition() {
         clear_asset_table(1);
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         for (i = 0; i != 254; i+= SCREEN_SCROLL_LOOP_INCREMENT) {
-            playerXPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_H_NUDGE;
+            playerXPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (i % SCREEN_SCROLL_SPEED == 0) {
                 ppu_wait_nmi();
@@ -406,7 +406,7 @@ void do_scroll_screen_transition() {
         clear_asset_table(1);
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
         for (i = 0; i != 254; i+= SCREEN_SCROLL_LOOP_INCREMENT) { // we depend on i being an 8 bit integer here (values from 0-255), so 0 rolls over to 254.
-            playerXPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_H_NUDGE;
+            playerXPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (i % SCREEN_SCROLL_SPEED == 0) {
                 ppu_wait_nmi();
@@ -427,9 +427,8 @@ void do_scroll_screen_transition() {
         j = -1;
         xScrollPosition = 256;
         for (otherLoopIndex = 0; otherLoopIndex < 240 - HUD_PIXEL_HEIGHT; otherLoopIndex += SCREEN_SCROLL_LOOP_INCREMENT) {
-            // Going down needs a little bit less of a nudge for some reason - suspect it has something to do with the HUD.
-            // If you have an explanation for this, please file a ticket and let me know how to update this!
-            playerYPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - (SCREEN_SCROLL_V_NUDGE>>1);
+
+            playerYPosition -= (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (otherLoopIndex % 32 == 0 && otherLoopIndex < 224) {
                 ppu_wait_nmi();
@@ -459,7 +458,7 @@ void do_scroll_screen_transition() {
         // NOTE: For the case here, we test against < 242, because all valid scroll positions are below 242. 
         // Since we're using an unsigned char, 0-1 = 255, so as soon as we get below zero the loop terminates.
         for (otherLoopIndex = 242 - HUD_PIXEL_HEIGHT; otherLoopIndex < 242; otherLoopIndex -= SCREEN_SCROLL_LOOP_INCREMENT) {
-            playerYPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT) - SCREEN_SCROLL_V_NUDGE;
+            playerYPosition += (SCREEN_SCROLL_LOOP_INCREMENT << PLAYER_POSITION_SHIFT);
             banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
             if (otherLoopIndex % 32 == 0 && otherLoopIndex != 0) {
                 // TODO: Need to figure out how to make this work in reverse order. (Mess with i and j, I assume)

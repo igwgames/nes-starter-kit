@@ -2,16 +2,10 @@
 
 #define PRG_BANK_MAP_LOGIC 2
 
-// We need to push the player a little bit over each frame when we do a screen scroll, or they will stay offscreen 
-// when the scroll is done, and trigger a new one. Plus it looks kinda crummy if they stay put. This is added to the
-// player's position with each frame.
-// TODO: If not using, remove?
-#define SCREEN_SCROLL_H_NUDGE 0
-#define SCREEN_SCROLL_V_NUDGE 0
-
 // This defines how many pixels to move the screen during each frame of the screen scroll animation.
 // Must be a multiple of 2 (or w`hatever value is set below)
 // 2 = slow, 4 = fast, 8 = very fast, 16 = almost instant
+// This is UNUSED while I try to sort out issues with it.
 // FIXME: Speeds faster than 2 are hyper glitchy going up/down right now...
 #define SCREEN_SCROLL_SPEED 4
 // This is how many pixels are done in each loop - the variable above controls when we wait for interrupts. 
