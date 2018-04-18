@@ -13,6 +13,7 @@
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
+// Some useful global variables
 ZEROPAGE_DEF(int, playerXPosition);
 ZEROPAGE_DEF(int, playerYPosition);
 ZEROPAGE_DEF(int, playerXVelocity);
@@ -21,18 +22,18 @@ ZEROPAGE_DEF(unsigned char, playerControlsLockTime);
 ZEROPAGE_DEF(unsigned char, playerInvulnerabilityTime);
 ZEROPAGE_DEF(unsigned char, playerDirection);
 
-// TODO: How much of this could use temp vars? I'd guess most...
-ZEROPAGE_DEF(unsigned char, rawXPosition);
-ZEROPAGE_DEF(unsigned char, rawYPosition);
-ZEROPAGE_DEF(unsigned char, rawTileId);
-
-ZEROPAGE_DEF(unsigned char, collisionTempX);
-ZEROPAGE_DEF(unsigned char, collisionTempY);
-ZEROPAGE_DEF(unsigned char, collisionTempXRight);
-ZEROPAGE_DEF(unsigned char, collisionTempYBottom);
+// Huge pile of temporary variables
+#define rawXPosition tempChar1
+#define rawYPosition tempChar2
+#define rawTileId tempChar3
+#define collisionTempX tempChar4
+#define collisionTempY tempChar5
+#define collisionTempXRight tempChar6
+#define collisionTempYBottom tempChar7
 
 #define tempSpriteCollisionX tempInt1
 #define tempSpriteCollisionY tempInt2
+
 
 void update_player_sprite() {
     // Calculate the position of the player itself, then use these variables to build it up with 4 8x8 NES sprites.
