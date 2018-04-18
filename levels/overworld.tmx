@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="128" height="96" tilewidth="16" tileheight="16" infinite="0" nextobjectid="21">
+<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="128" height="96" tilewidth="16" tileheight="16" infinite="0" nextobjectid="21">
  <tileset firstgid="1" name="Overworld Tiles" tilewidth="16" tileheight="16" tilecount="256" columns="8">
   <image source="../graphics/generated/tiles.png" width="128" height="512"/>
  </tileset>

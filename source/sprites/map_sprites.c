@@ -222,7 +222,7 @@ void update_map_sprites() {
 
                     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
                     // We'll then add/subtract it from sprX and sprY
-                    currentSpriteData = currentMapSpriteData[MAP_SPRITE_DATA_POS_MOVE_SPEED];
+                    currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
                     switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
                         case SPRITE_DIRECTION_LEFT:
 
