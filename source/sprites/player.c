@@ -102,13 +102,13 @@ void handle_player_movement() {
             }
         }
 
-        if (controllerState & PAD_UP) {
+        if (controllerState & PAD_UP && playerYVelocity <= 0) {
             if (ABS(playerYVelocity) < maxVelocity) {
                 playerYVelocity -= PLAYER_VELOCITY_ACCEL;
             } else if (ABS(playerYVelocity) > maxVelocity) {
                 playerYVelocity += PLAYER_VELOCITY_ACCEL;
             }
-        } else if (controllerState & PAD_DOWN) {
+        } else if (controllerState & PAD_DOWN && playerYVelocity >= 0) {
             if (playerYVelocity < maxVelocity) {
                 playerYVelocity += PLAYER_VELOCITY_ACCEL;
             } else if (playerYVelocity > maxVelocity) {
