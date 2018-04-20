@@ -80,7 +80,7 @@ the size of your game."
 
 #### I see some code that defines a variable as another, like `#define mapSpriteDataIndex tempChar1`. Why?
 
-The NES has an extremely limited amount of RAM. There are 2 kilobytes, and there are 255 bytes that operate
+The NES has an extremely limited amount of RAM. There are 2 kilobytes, and there are 256 bytes that operate
 a bit faster than the rest, known as the zero page. Because of this, sometimes it makes sense to re-use the
 same variable for multiple things. When you see code like this: 
 
@@ -98,7 +98,7 @@ read `currentValue` you will get the wrong value.
 
 Here are a few suggestions to avoid conflicts: 
 1. Place defines close the function using them, so it is easy to look at which values are in use.
-2. Only use nicknames in functions called from the main loop. This way, the situation above is not possible.
+2. Only use nicknames in functions called directly from the main loop. This way, the situation above is not possible.
 3. Avoid using any of the temp variables in the nmi, or methods called by it. This *will* cause problems eventually.
 
 #### What does `Warning: Memory area overflow` mean?

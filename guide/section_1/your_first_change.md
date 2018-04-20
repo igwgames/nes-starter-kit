@@ -7,7 +7,7 @@ Let's do something really simple to start - let's change the title screen a bit.
 for your game now. (Don't stress over it; this will be easy to change later!) We are going to
 change the title screen to show it.
 
-First, use your IDE to open `source/configuraiton/game_info.h`. You should see a fairly simple file.
+First, use your IDE to open `source/configuration/game_info.h`. You should see a fairly simple file.
 In fact, it just has a few constant variables with details about your game. It should look something
 like this:
 

@@ -3,7 +3,9 @@
 The HUD is the thing that shows you information about your player. As it is set up, it will
 show you the player's health, and the number of keys you hold. This is mainly handled in a 
 file named `source/graphics/hud.c`. There are two methods we care about: `draw_hud()` and
-`update_hud()`. 
+`update_hud()`.
+
+![HUD](../images/hud_before.png) 
 
 ## draw_hud()
 
@@ -69,14 +71,14 @@ after we show hearts, we might add 0x20 to that address, and get 0x381. Add this
 ```
 
 Okay, almost done; we just need to write a little code to draw it! If we look back at the 
-`draw_hud()` method, we see it call `vram_adr(HAMETABLE_A + HUD_POSITION_START)`, then call
-`vram_put(/*value*/)` a bunch of times. The last thing we do is draw the border here. We need
-to add to this.
+`draw_hud()` method, we see it call `vram_adr(NAMETABLE_A + HUD_POSITION_START)`, then call
+`vram_put(/* value */)` a bunch of times. At the bottom, we use this to draw a border at the bottom
+of the HUD. We want to add our new code below this.
 
 You might be tempted to find out where the loops write to that position and replace part of the loop, 
 and that will technically work. However, this method is called very rarely so we have no issue with
-it being slow. Let's just write over the HUD a second time using our new address. Here's the code,
-with explanation in-line using comments: 
+it being slow. Let's just write over the HUD a second time using our new address, giving ourselves
+more readable code. Here's the code, with explanation in-line using comments: 
 
 ```c
 void draw_hud() {

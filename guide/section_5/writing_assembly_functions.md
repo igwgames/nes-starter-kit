@@ -10,7 +10,7 @@ you get here? :)
 ## Create a function Definition
 
 First, we'll start with the basics. Create a new header file to put your function into. This will allow us
-to call them from C code. Next, figure out what your function is going to look like. To demonstrate, here 
+to call it from C code. Next, figure out what your function is going to look like. To demonstrate, here 
 are two functions we will define further down.
 
 **NOTE**: These example functions are not useful; there are features built into neslib for these. They are
@@ -21,7 +21,7 @@ unsigned char __fastcall__ get_current_frame();
 void __fastcall__ set_random_seed(int seed);
 ```
 
-These are almost normal function definitions, except for the `__fastcall__` definition. Don't miss this! It
+These are almost normal function definitions, except for the `__fastcall__` annotation. Don't miss this! It
 tells the compiler how your function will use the registers. Also, don't use `__fastcall__` with C functions.
 This will confuse the compiler.
 

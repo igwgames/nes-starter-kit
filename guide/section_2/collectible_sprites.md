@@ -29,11 +29,12 @@ the blue color palette. Try changing `SPRITE_PALETTE_2` to `SPRITE_PALETTE_1` - 
 Let's make sure we can see the blue sprite next. First, we need to update the sprites that Tiled
 knows about. You can run `make build-sprites` to do this instantly. (Alternatively, this is built
 every time you build the game. You can just build the game instead.) If you open Tiled, you should
-see the new sprite available in the `Sprites` tab. If not, try closing Tiled and reopening it. 
+see the new sprite available in the `Sprites` tab. If not, try using the `reload` option in the
+`file` menu.
 
 Once you see it, we need to add the Sprite to your map. Be sure to add it to the `Sprites` layer
 instead of the map layer, or it will not work. If you then rebuild your game, you should see the
-new sprite on the map. If you try to collect it, you will get one heart. 
+new sprite on the map. If you try to collect it after taking damage, you will get one heart. 
 
 ![Blue heart sprite](../images/blue_heart.png)
 

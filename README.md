@@ -8,23 +8,24 @@ warned **this is not anywhere near a finished project yet**. Imagine this like t
 Tripod and Geocities back in the day ;)
 
 That said, if you decide to check this out and have thoughts, please share them. You are welcome to open an issue or PR, 
-or even just send me a Tweet/DM. You can help shape the outcome of this project.
+or even just send me a Tweet/DM. You can help shape the outcome of this project. Don't be afraid to dive in, even though
+not everything is done!
 
 ## What is this?
 
-A fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the tools
-needed to change it. It also comes with a guide to changing everything about it, alternatively titled
-"Making an NES Game for Dummies".
+It's a fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the 
+tools needed to change it. It also comes with a guide to changing everything about it, which could also be titled
+"The dummy's guide to creating an NES game".
 
-The idea is, download this (either via git or github zip file), set up the tools, run the game, then tweak it and make
-your own! With the right hardware, you can even play your game on an actual NES.
+The idea is, download this (either via git or a zip file), set up the tools, run the game, then tweak it and make
+your own! With the right hardware, you can even play your game on your own NES.
 
 The only thing this is *not* is an introduction to programming - if you have never programmed anything before, I
 suggest finding a tutorial online for C or C++, and getting a couple really basic programs working. (At the
 very least, find out what a "hello world" program is, and write+run one successfully.) 
 
-Here is a pretty good interactive tutorial - it lets you write and run your code in the browser, so you don't
-need to set anything up! [Learn C Tutorial](http://www.learn-c.org/)
+One options is the [Learn C Tutorial](http://www.learn-c.org/) - it lets you write and run your code in the 
+browser, so you don't need to set anything up! 
 
 
 ## Related projects
@@ -40,7 +41,7 @@ In a similar vein, if you'd like a way to do that with Gameboy games, look into 
 code-free web-based game builder. It also exports C source code, in case you want to extend it yourself! Check
 that out on [the ClassicGB website}(http://game-builder.cpprograms.net)!
 
-Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"j
+Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
 project that you can use for more of a blank page. That project is elsewhere 
 [on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
 
@@ -83,13 +84,13 @@ The third part focuses on how you can extend the game further. Want to give the 
 Add some new features to the start menu? Do something else unique? This has guides and pointers on how to
 do it!
 
-The fourth part focuses on more cosmetic things - don't be afraid to get into this chapter early; 
+The fourth part focuses on more cosmetic things - don't be afraid to get into these chapters early; 
 sometimes adding a little bit of polish can really help encourage you to continue working on the game.
 
-The final part deals with more advanced topics - for most simple games you should not need to get into
-this chapter. It gets into depth on details of how the library itself works, as well as the system, and how
-the rom is organized. That said, these topics are here if you need them, or for that matter if they
-interest you.
+The final part deals with more advanced topics - for most simple games, you won't need to read 
+anything in this section. It gets into depth on details of how the library itself works, as well as the 
+system, and how the rom is organized. That said, these topics are here if you need them, or for that 
+matter if they interest you.
 
 ### Part 1: Getting started
 
@@ -107,7 +108,7 @@ interest you.
 12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
 13. Changing the sprite art
 14. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
-15. [Adding collectible sprites](./guide/section_2/collectible sprites.md)
+15. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
 16. Adding new enemies
 17. Adding/changing music
 18. Adding/changing sound effects
@@ -148,7 +149,22 @@ need these things for most games, but if you do, this is a place to learn!_
 
 # Credits
 
-[NESLib](https://shiru.untergrund.net/software.shtml) by [Shiru](http://shiru.untergrund.net/)
+## Tools
+
+[cc65](https://www.cc65.org/) By [Ullrich von Bassewitz](https://www.von-bassewitz.de/uz/)
+
+[NESLib](http://shiru.untergrund.net/code.shtml) by [Shiru](http://shiru.untergrund.net/)
+
+[NES Screen Tool](http://shiru.untergrund.net/software.shtml) by [Shiru](https://shiru.untergrund.net/)
+
+[NES Space Checker (nessc)](http://shiru.untergrund.net/software.shtml) by [Shiru](http://shiru.untergrund.net/)
+
+[Famitracker](http://famitracker.com/) by jsr
+
+[FCEUX](http://www.fceux.com/web/home.html) 
+
+
+## Art/Resources
 
 [Early 90's Arcade Pixel Art](https://opengameart.org/content/early-80s-arcade-pixel-art-dungeonsslimes-walls-power-ups-etc) 
 by [Refresh Games](https://refreshgames.co.uk/)
@@ -156,10 +172,12 @@ by [Refresh Games](https://refreshgames.co.uk/)
 [Who's Cuter Font](https://forums.nesdev.com/viewtopic.php?f=21&t=10284&start=0) by [Damian Yerrick (Tepples)](http://pineight.com)
 
 [8-Bit Victory Loop](https://opengameart.org/content/8-bit-victory-loop) by [Wolfgang](https://opengameart.org/users/wolfgang)
+
 [8-Bit Forest Theme](https://opengameart.org/content/8-bit-forest-theme) by [Wolfgang](https://opengameart.org/users/wolfgang)
 
-**Please credit these wonderful people in your own creations, too!** Technically all of the art and music is licensed
-as public domain, (CC0) but it'd be really nice to give them credit if you don't replace it.
+**Please credit these wonderful people in your own creations, if you don't replace their work!** 
+Technically all of the art and music is licensed as public domain, (CC0) but it'd be really nice to 
+give them credit.
 
 # Contributing
 

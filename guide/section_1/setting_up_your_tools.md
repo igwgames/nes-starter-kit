@@ -13,7 +13,7 @@ this repository, or downloading it as a zip file. *Using git is very strongly en
 
 If you decide to go this path, and you also decide to install Visual Studio Code (feel free to skip to that step lower
 in this document, then come back!), you can press `ctrl+shift+p` then type in `git clone` to get some prompts to do it.
-Visual Studio Code is also very well integrated into Visual Studio Code.
+Visual Studio Code has a very good git integration, as well.
 
 
 To download a zip file, go to this project's page on Github, and click the green `Clone or download` button at the top right.
@@ -30,17 +30,18 @@ included in the following zip file:
 
 [Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
 
-Download this file, and extract it to the "tools" folder. Once you have done that, follow the steps below.
+Download this file, and extract it to the "tools" folder within the `nes-starter-kit` folder. Once 
+you have done that, follow the steps below.
 
 **NOTE**: _This tutorial is built entirely for Windows - while things may be compatible with other 
-Operating Systems, I don't want to spend extra time supporting them._
+Operating Systems, they are not supported with this guide._
 
 ## Cygwin, make, and unix tools
 
 **REQUIRED**
 
 These are some tools usually available on unix-based systems for building things. We mainly need the `make` command. 
-You won't use this directly at all, but it is needed to build your NES rom.
+You may not run this directly depending on your setup, but it is needed to build your NES rom.
 
 To install this, go to the tools folder, and double-click `install_cygwin.bat`. This will download and launch the installer
 for cygwin. You will need to go through the entire wizard - it just pre-selects some packages for you. Pick any url for the 
@@ -48,7 +49,8 @@ mirror when you get to that step; it does not matter.
 
 **NOTE**: _The script isn't strictly necessary, but it selects the packages we need automatically, in addition to the defaults.
 It is provided merely as a convenience. If you have cygwin installed already, make sure you have `make`, `wget` `chere`, and `curl`
-installed._ Alternatively, the `install_cygwin.bat` script won't delete/change your existing packages, so you can just use that.
+installed._ Alternatively, if you already have Cygwin installed, the `install_cygwin.bat` script won't delete/change your existing 
+packages, so you can just use it.
 
 ## FCEUX (Or another NES Emulator)
 
@@ -73,18 +75,24 @@ emulator you downloaded:
 
 (Note: On Windows 10 you have to click `more apps`, scroll down and find `look for another app on this pc` instead.) 
 
-If you don't do this, running your rom will not work.
+If you don't do this, you won't be able to easily run your game through the command line, or your IDE.
 
 ## Tiled
 
 **REQUIRED**
 
 Tiled is a tile editing tool for maps. We will be using it for designing our levels. It's similar to a paint program, but
-with map tiles. Just install it for now; we will talk about it when we start editing maps.
+with map tiles. We won't go into too much detail now; you can probably get by without it for a little while.
 
 Get it here: http://www.mapeditor.org/
 
-The tools are built for version 1.1.1, however later versions should also be fine.
+The tools are built for version 1.1.4, however later versions should also be fine.
+
+## Famitracker
+
+Famitracker is a music editing tool for the NES. We will use it to make music and sound effects for the
+game. You don't have to download this right away if you don't want to; the built-in sound effects and 
+music can probably cover you for a while!
 
 ## Visual Studio Code (Or other code editor)
 
@@ -129,4 +137,4 @@ manually if you don't want to.
 This is a 6502 assembly language support extension. You probably don't need it for most nes-starter-kit projects.
 It will provide syntax highlighting for the raw assembly language in neslib, and some of our custom extensions.
 You want this if you're planning on modifying or extending the guts of `nes-starter-kit`. If you'd prefer stick with C,
-you can avoid this.
+you can skip this.
