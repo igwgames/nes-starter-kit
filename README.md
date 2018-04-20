@@ -1,6 +1,10 @@
 # NES Starter Kit
  A Beginner's Guide and toolkit for NES game creation.
 
+ [!<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px">](http://cpprograms.net/classic-gaming/nes-starter-kit/)
+
+ [Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
+
 ## **Work in progress!!** 
 
 Fair warning, this project is extremely work in progress. This readme tries to outline the end product, but please be
