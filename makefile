@@ -101,7 +101,7 @@ graphics/generated/sprites.png: graphics/tiles.chr graphics/sprites.chr graphics
 	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
-	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
+	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && sleep 1 && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 	$(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib

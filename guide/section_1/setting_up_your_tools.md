@@ -30,8 +30,9 @@ included in the following zip file:
 
 [Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
 
-Download this file, and extract it to the "tools" folder within the `nes-starter-kit` folder. Once 
-you have done that, follow the steps below.
+Download this file, and extract it to the base folder within the `nes-starter-kit` folder. Once 
+you have done that, follow the steps below. It will replace the `tools` folder and a few things in
+it - that is expected and normal.
 
 **NOTE**: _This tutorial is built entirely for Windows - while things may be compatible with other 
 Operating Systems, they are not supported with this guide._
@@ -116,6 +117,14 @@ If you used a 32 bit cygwin, or did not install it in the default directory, you
 Open `nes-starter-kit/.vscode/settings.json`, and change the setting `terminal.integrated.shell.windows` to wherever you 
 installed cygwin. You will then have to also edit `nes-starter-kit/.vscode/tasks.json` to change the path used for 
 `bash.exe`.
+
+You will also have to press "OK" on a dialog asking if you want to run cygwin, based on project settings. Please do
+this if you want builds to work!
+
+**NOTE**: I've found that VS Code acts weird about cygwin bash the first couple times I try to build... if you run into
+something similar, try closing VS Code and opening it again. You can also try opening one or two new tabs for your
+terminal - the first one may be cmd, and the second one cygwin bash in the wrong directory. The third one worked,
+and I stopped seeing issues.
 
 #### Compile and run on pressing ctrl+shift+b
 
