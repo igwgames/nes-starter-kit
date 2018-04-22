@@ -42,7 +42,7 @@ code, but it will likely be in assembly language, and a little harder to pick up
 
 In a similar vein, if you'd like a way to do that with Gameboy games, look into my ClassicGB project. It's a 
 code-free web-based game builder. It also exports C source code, in case you want to extend it yourself! Check
-that out on [the ClassicGB website}(http://game-builder.cpprograms.net)!
+that out on [the ClassicGB website](http://game-builder.cpprograms.net)!
 
 Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
 project that you can use for more of a blank page. That project is elsewhere 
@@ -74,8 +74,9 @@ This guide is broken into 4 main chapters:
 
 1. Getting Started
 2. Making it Your Own
-3. Polish
-4. Advanced topics.
+3. Adding new features
+4. Adding Polish
+5. Advanced topics.
 
 The suggested approach is to follow along with all of part 1 in order to get yourself familiar with
 the console/tools/etc. After that, feel free to jump around to whatever chapters interest you. 
@@ -120,6 +121,7 @@ matter if they interest you.
 ### Part 3: Adding new features
 
 _(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
+
 20. Putting your code in the right place: an introduction to prg banking
 21. Giving your main character a sword
 22. Adding more features to the pause menu
