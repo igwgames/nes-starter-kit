@@ -7,13 +7,12 @@
 
 ## **Work in progress!!** 
 
-Fair warning, this project is extremely work in progress. This readme tries to outline the end product, but please be
-warned **this is not anywhere near a finished project yet**. Imagine this like the "Under Construction" pages on
+Fair warning, this project is very much a work in progress. This readme tries to outline the end product, but please be
+warned that not everything's there yet. Imagine this like the "Under Construction" pages on
 Tripod and Geocities back in the day ;)
 
 That said, if you decide to check this out and have thoughts, please share them. You are welcome to open an issue or PR, 
-or even just send me a Tweet/DM. You can help shape the outcome of this project. Don't be afraid to dive in, even though
-not everything is done!
+or even just send me a Tweet/DM/email/whatever. You can help shape the outcome of this project. 
 
 ## What is this?
 
@@ -121,14 +120,15 @@ matter if they interest you.
 ### Part 3: Adding new features
 
 _(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
-20. Giving your main character a sword
-21. Adding more features to the pause menu
-22. Adding a second map
-23. Making the main character grow or shrink
-24. Adding objects that attract or repel the player
-25. Adding an enemy that mimics player behavior
+20. Putting your code in the right place: an introduction to prg banking
+21. Giving your main character a sword
+22. Adding more features to the pause menu
+23. Adding a second map
+24. Making the main character grow or shrink
+25. Adding objects that attract or repel the player
+26. Adding an enemy that mimics player behavior
 
-### Part 4: Polish and more!
+### Part 4: Polish and more
 
 30. Ways to improve performance 
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
@@ -147,9 +147,8 @@ need these things for most games, but if you do, this is a place to learn!_
 41. Understanding and adjusting the size of your game
 42. [ROM Data Map](./guide/section_5/rom_map.md)
 43. Expanding available graphics using CHR banking
-44. Making room for more code using PRG banking
-45. Getting finer control over graphics with chr ram
-46. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
+44. Getting finer control over graphics with chr ram
+45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
 
 # Credits
 
