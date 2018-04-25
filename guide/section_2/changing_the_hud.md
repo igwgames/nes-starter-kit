@@ -104,6 +104,75 @@ That's it; you're done! Run the game, and you should see something like this:
 
 ## Adding dynamic data into the hud
 
-TODO: Fill this out with a tutorial that ends up putting the frame counter onto the screen.
+That was all cool, but the HUD is mainly useful for information that is constantly changing. What if
+we wanted to show another value here? We can do that too!
 
-TODO: Is it worth trying to get into the asset table here? If not, can we detail it somewhere else?
+As an example we will show the current frame count on-screen. This is a number that is updated by the engine
+once every time the NES redraws the screen. We are also going to take a shortcut, and show the number as 
+hexidecimal, rather than converting it to an integer. This will result in us showing other tiles when a 
+digit is between `0xa` and `0xf`
+
+Let's do it! Open up `source/graphics/hud.c` and take a look at the `update_hud` method. You should see
+a bunch of updates to an array called screenBuffer. They seem to update the player's health, max health, 
+and number of keys. It looks kinda like this: 
+
+```c
+// This sets up screenBuffer to print x hearts, then x more empty hearts. 
+// You give it the address, tell it the direction to write, then follow up with
+// Ids, ending with NT_UPD_EOF
+
+// We use i for the index on screen buffer, so we don't have to shift things around
+// as we add values. 
+i = 0;
+screenBuffer[i++] = MSB(NAMETABLE_A + HUD_HEART_START) | NT_UPD_HORZ;
+// ... This continues for a little bit.
+
+// Next, draw the key count, using the key tile, and our key count variable
+screenBuffer[i++] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
+screenBuffer[i++] = LSB(NAMETABLE_A + HUD_KEY_START);
+screenBuffer[i++] = 2;
+screenBuffer[i++] = HUD_TILE_KEY;
+screenBuffer[i++] = HUD_TILE_NUMBER + playerKeyCount;
+
+screenBuffer[i++] = NT_UPD_EOF;
+set_vram_update(screenBuffer);
+```
+
+The first thing we want to think about is - will the `screenBuffer` variable hold our new value? It
+looks like right now we use about 14 bytes, from adding up all of the places we increment i. (Including
+the for loops); If we look at the definition in `source/globals.c`, it reserves 0x20 (32) bytes. So, we
+will be okay as long as we add less than 18 additional bytes.
+
+Next, we need to find a place to put it. We see the code is using variables like `HUD_KEY_START` in
+it. If we look around, we find out this variable is defined in `source/graphics/hud.h`, so let's add a
+new constant for our thing. I want to put it above the keys, by two rows, so I'll subtract two rows (0x40)
+from that value. Here's the new constant: 
+
+```c
+#define HUD_FRAME_COUNTER_START 0x033d
+```
+
+Let's save this file and start using it. If we reopen `source/graphics/hud.c`, we can start adding code
+for our new value. We can use the key text as an example. We just need to separate out the two digits
+of `frameCounter`. We can get the first digit by shifting down to divide by 16; this will give us our
+first digit. The second one can be obtained using a logical AND to block out the first value.
+
+Here's what it ends up looking like:
+
+```c
+// Draw the current frame count, letting digits larger than 9 show up as tiles
+screenBuffer[i++] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
+screenBuffer[i++] = LSB(NAMETABLE_A + HUD_KEY_START);
+screenBuffer[i++] = 2;
+screenBuffer[i++] = HUD_TILE_NUMBER + ((frameCount >> 4) & 0x0f);
+screenBuffer[i++] = HUD_TILE_NUMBER + (frameCount & 0x0f);
+
+screenBuffer[i++] = NT_UPD_EOF;
+set_vram_update(screenBuffer);
+``` 
+
+![frame counter](../images/hud_frame_count.png)
+
+If you save, then run the game, you should see a frame counter in the upper right corner that is constantly changing. 
+Success! _Note that you will see map tiles mix into this regularly_ - this is because we do not have tiles for 
+hexidecimal digits above 9. This is expected!)
