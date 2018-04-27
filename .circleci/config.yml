@@ -14,4 +14,4 @@ jobs:
           name: Build the game itself
           command: make
       - store_artifacts:
-        path: ./rom
+          path: ./rom
