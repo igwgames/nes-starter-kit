@@ -6,6 +6,9 @@ jobs:
       - image: debian:stretch
     steps:
       - checkout
+      - run: 
+          name: Install gcc and make
+          command: apt-get install build-essential 
       # TODO: Can we cache this at all?
       - run:
           name: Set up build tools
