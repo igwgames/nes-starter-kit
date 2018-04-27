@@ -24,6 +24,7 @@ MAIN_LINKER=./tools/cc65/bin/ld65
 MAP_PARSER=./tools/tmx2c/tmx2c 
 SPACE_CHECKER=tools/nessc/nessc
 SFX_CONVERTER=tools/neslib_famitracker/tools/nsf2data
+AFTER_SFX_CONVERTER=mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
 
 # Built-in tools: 
 CHR2IMG=tools/chr2img/chr2img
@@ -65,6 +66,7 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 # Disable generating sfx and music on circleci
 ifdef CIRCLECI
 	SFX_CONVERTER=echo -q
+	AFTER_SFX_CONVERTER=echo Skipping SFX Generation...
 endif
 
 # Cancelling a couple implicit rules that confuse us greatly
@@ -106,7 +108,7 @@ graphics/generated/sprites.png: graphics/tiles.chr graphics/sprites.chr graphics
 	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
-	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && sleep 1 && mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
+	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && sleep 1 && $(AFTER_SFX_CONVERTER)
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
 	$(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib
