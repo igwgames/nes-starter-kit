@@ -13,7 +13,6 @@ tools/chr2img/src/node_modules
 !tools/zip_readme
 graphics/generated/*.png
 graphics/generated/*.bmp
-sound/sfx/generated/*.s
 rom/*.nes
 temp/*
 !temp/empty
