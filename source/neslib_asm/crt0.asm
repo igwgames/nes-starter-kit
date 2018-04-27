@@ -398,5 +398,5 @@ sounds_data:
 .segment "DMC"
 
 .if(FT_DPCM_ENABLE)
-	.incbin "tools/neslib_famitracker/samples.bin"
+	.incbin "sound/samples/samples.bin"
 .endif
