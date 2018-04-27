@@ -1,0 +1,17 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      # TODO: Can we cache this at all?
+      - run:
+          name: Set up build tools
+          command: ./.circleci/set_up_tools.sh
+      - run:
+          name: Build the game itself
+          command: make
+      - store_artifacts:
+        path: ./rom
