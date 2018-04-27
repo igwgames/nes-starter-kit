@@ -62,6 +62,11 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 # ===== Actual makefile logic starts here =====
 # You really shouldn't need to edit anything below this line if you're not doing advanced stuff.
 
+# Disable generating sfx and music on circleci
+ifdef CIRCLECI
+	SFX_CONVERTER=echo -q
+endif
+
 # Cancelling a couple implicit rules that confuse us greatly
 %.o : %.s
 %.o : %.c
