@@ -21,7 +21,6 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 MAIN_COMPILER=./tools/cc65/bin/cc65
 MAIN_ASM_COMPILER=./tools/cc65/bin/ca65
 MAIN_LINKER=./tools/cc65/bin/ld65
-MAP_PARSER=./tools/tmx2c/tmx2c 
 SPACE_CHECKER=tools/nessc/nessc
 SFX_CONVERTER=tools/neslib_famitracker/tools/nsf2data
 AFTER_SFX_CONVERTER=mv sound/sfx/sfx.s sound/sfx/generated/sfx.s
@@ -63,10 +62,21 @@ CONFIG_FILE=tools/cc65_config/game.cfg
 # ===== Actual makefile logic starts here =====
 # You really shouldn't need to edit anything below this line if you're not doing advanced stuff.
 
-# Disable generating sfx and music on circleci
+# Tweak a bunch of stuff to use circleci settings
+# These might get you running in a limited fashion on non-windows systems too...
 ifdef CIRCLECI
+	# SFX and music are committed to git, so we don't use these tools. They're sadly windows-only anyway...
 	SFX_CONVERTER=echo -q
 	AFTER_SFX_CONVERTER=echo Skipping SFX Generation...
+	# We don't have our nice toolkit here, so we have to use node directly
+	CHR2IMG=node tools/chr2img/src/index.js
+	TMX2C=node tools/tmx2c/src/index.js
+	SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
+	# cc65 is preinstalled in our docker image into /tools/cc65, so use that rather than moving stuff around
+	MAIN_COMPILER=/tools/cc65/bin/cc65
+	MAIN_ASM_COMPILER=/tools/cc65/bin/ca65
+	MAIN_LINKER=/tools/cc65/bin/ld65
+
 endif
 
 # Cancelling a couple implicit rules that confuse us greatly

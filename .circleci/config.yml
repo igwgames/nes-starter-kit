@@ -3,16 +3,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
+      - image: cppchriscpp:cc65-node
     steps:
       - checkout
-      - run: 
-          name: Install gcc and make
-          command: apt-get update && apt-get -y install build-essential wget
-      # TODO: Can we cache this at all?
-      - run:
-          name: Set up build tools
-          command: ./.circleci/set_up_tools.sh
       - run:
           name: Build the game itself
           command: make
