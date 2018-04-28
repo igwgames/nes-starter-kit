@@ -10,6 +10,9 @@ jobs:
           name: Move tools folder to expected location
           command: cp -rf /tools .
       - run:
+          name: "Npm installs"
+          command: "cd tools/tmx2c/src && npm install && cd ../../../tools/sprite_def2img/src && npm install && cd ../../../tools/chr2img/src && npm install"
+      - run:
           name: Build the game itself
           command: make
       - store_artifacts:
