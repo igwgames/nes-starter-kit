@@ -18,7 +18,7 @@ jobs:
           path: ./rom
   deploy:
     docker: 
-      - image: cppchriscpp-cc65-node:latest
+      - image: cppchriscpp/cc65-node:latest
     steps:
       - run:
           name: Deploy new version to s3
