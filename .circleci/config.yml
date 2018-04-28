@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cppchriscpp:cc65-node
+      - image: cppchriscpp/cc65-node:latest
     steps:
       - checkout
       - run:
