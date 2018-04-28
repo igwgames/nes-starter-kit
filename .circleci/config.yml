@@ -18,12 +18,12 @@ jobs:
           path: ./rom
       - run: 
           name: Upload to version number in s3
-          command: aws s3 cp --region us-east-1 ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.$CIRCLE_BUILD_NUM.nes
+          command: aws s3 cp --region us-east-1 ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.$CIRCLE_BUILD_NUM.nes --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
       - run: 
           name: Replace "latest" rom file in s3
-          command: aws s3 cp --region us-east-1 ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.latest.nes  
+          command: aws s3 cp --region us-east-1 ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.latest.nes --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 workflows:
   version: 2
-  build-deploy:
+  build:
     jobs: 
       - build
