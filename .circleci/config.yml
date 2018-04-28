@@ -16,23 +16,14 @@ jobs:
           command: make
       - store_artifacts:
           path: ./rom
-  deploy:
-    docker: 
-      - image: cppchriscpp/cc65-node:latest
-    steps:
-      - run:
-          name: Deploy new version to s3
+      - run: 
+          name: Upload to version number in s3
           command: aws s3 cp ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.$CIRCLE_BUILD_NUM.nes
       - run: 
-          name: Replace "latest" rom file
-          command: aws s3 cp ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.latest.nes
-  
+          name: Replace "latest" rom file in s3
+          command: aws s3 cp ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.latest.nes  
 workflows:
   version: 2
   build-deploy:
     jobs: 
       - build
-      - deploy:
-          requires:
-            - build
-        
