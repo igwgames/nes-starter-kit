@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Move tools folder to expected location
+          command: cp -rf /tools ./tools
+      - run:
           name: Build the game itself
           command: make
       - store_artifacts:

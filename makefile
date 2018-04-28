@@ -72,10 +72,6 @@ ifdef CIRCLECI
 	CHR2IMG=node tools/chr2img/src/index.js
 	TMX2C=node tools/tmx2c/src/index.js
 	SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
-	# cc65 is preinstalled in our docker image into /tools/cc65, so use that rather than moving stuff around
-	MAIN_COMPILER=/tools/cc65/bin/cc65
-	MAIN_ASM_COMPILER=/tools/cc65/bin/ca65
-	MAIN_LINKER=/tools/cc65/bin/ld65
 
 endif
 
