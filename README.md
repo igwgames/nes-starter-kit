@@ -108,15 +108,14 @@ matter if they interest you.
 ### Part 2: Making it your Own
 
 10. [Changing the world](./guide/section_2/changing_the_world.md)
-11. Understanding art on the NES
-12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
-13. [Changing sprite art](./guide/section_2/changing_sprite_art.md)
-14. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
-15. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
-16. Adding new enemies
-17. Adding/changing music
-18. Adding/changing sound effects
-19. Changing movement
+11. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
+12. [Changing sprite art](./guide/section_2/changing_sprite_art.md)
+13. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
+14. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
+15. Adding new enemies
+16. Adding/changing music
+17. Adding/changing sound effects
+18. Changing movement
 
 ### Part 3: Adding new features
 
