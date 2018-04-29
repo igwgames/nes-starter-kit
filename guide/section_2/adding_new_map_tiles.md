@@ -53,3 +53,19 @@ like you usually do. This works off a program called `chr2img`, which is install
 tools folder.
 
 After you do this, you should be able to see your new tiles in Tiled immediately!
+
+## Using another editor
+
+Not loving the limitations of nesst? Wish you could use gimp/photoshop/whatever? You can!
+
+Go to the `Export` menu, then hit `Tileset as bmp file` and save this somewhere. This saves
+a bitmap file using the 4 colors of your currently selected palette. 
+
+You can then edit this file with whatever program you like - just make sure you only use 4
+colors. (The tool will just strip off additional colors) The colors you use in this bitmap
+do not affect your palette in the tool.
+
+When you are done with your changes, save them back into a bitmap, then open nesst again.
+Go to the `Import` menu, then hit `bmp file as tileset` and find the file you edited. 
+Assuming all went well and you stuck to 4 colors, you will see your changes in the tool.
+That's it; just save as usual and move on!

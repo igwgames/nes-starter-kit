@@ -110,7 +110,7 @@ matter if they interest you.
 10. [Changing the world](./guide/section_2/changing_the_world.md)
 11. Understanding art on the NES
 12. [Adding new map tiles](./guide/section_2/adding_new_map_tiles.md)
-13. Changing the sprite art
+13. [Changing sprite art](./guide/section_2/changing_sprite_art.md)
 14. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
 15. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
 16. Adding new enemies
