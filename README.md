@@ -151,6 +151,7 @@ need these things for most games, but if you do, this is a place to learn!_
 43. Expanding available graphics using CHR banking
 44. Getting finer control over graphics with chr ram
 45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
+46. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.md)
 
 # Credits
 
