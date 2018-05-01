@@ -1,6 +1,6 @@
 #include "source/sprites/sprite_definitions.h"
 
-// NOTE: All of this data is in the kernel. 
+// NOTE: All of this data is in the primary bank.
 
 // Put all newly-designed sprites here. 8 Bytes per sprite, defined mostly from constants
 // in sprite_definitions.h. The 8 bytes are: 
@@ -22,5 +22,5 @@ const unsigned char spriteDefinitions[] = {
     SPRITE_TYPE_REGULAR_ENEMY, 0xca, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_3, SPRITE_ANIMATION_SWAP, SPRITE_MOVEMENT_UP_DOWN, -60, 0x00, 0x01,
     SPRITE_TYPE_DOOR, 0xc8, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_0, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 0x00, 0x00, 0x00,
     SPRITE_TYPE_ENDGAME, 0xe8, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 0x00, 0x00, 0x00
-    
+
 };

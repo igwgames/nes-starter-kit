@@ -67,12 +67,12 @@ the built-in tools to open your emulator of choice easily.
 
 First, choose the "Select a program from a list of installed programs" option:
 
-![Step 1](./images/fceux_1.png)
+![Step 1](../images/fceux_1.png)
 
 Make sure the "Always use the selected program to open this kind of file" checkbox is ticked, then click browse, and find the
 emulator you downloaded: 
 
-![Step 2](./images/fceux_2.png)
+![Step 2](../images/fceux_2.png)
 
 (Note: On Windows 10 you have to click `more apps`, scroll down and find `look for another app on this pc` instead.) 
 
