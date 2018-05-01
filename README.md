@@ -112,7 +112,7 @@ matter if they interest you.
 12. [Changing sprite art](./guide/section_2/changing_sprite_art.md)
 13. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.md)
 14. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
-15. Adding new enemies
+15. [Adding new enemies](./guide/section_2/adding_enemies.md)
 16. Adding/changing music
 17. Adding/changing sound effects
 18. Changing movement

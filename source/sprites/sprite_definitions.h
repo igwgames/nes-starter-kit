@@ -12,14 +12,22 @@
 #define SPRITE_PALETTE_2 0x80
 #define SPRITE_PALETTE_3 0xc0
 
+// Use this for wprites that are not animated at all.
 #define SPRITE_ANIMATION_NONE 0
+// This is used for sprites with two animation states; it will flip between the two.
 #define SPRITE_ANIMATION_SWAP 10
+// This flips sprites between two animation states, like the one above. Just faster!
 #define SPRITE_ANIMATION_SWAP_FAST 11
+// This is the "full" animation style - it flips between two animation frames in each direction.
 #define SPRITE_ANIMATION_FULL 50
 
+// Use this for sprites that never move.
 #define SPRITE_MOVEMENT_NONE 0
+// This is used for sprites that move left to right (and back) in a predictable pattern
 #define SPRITE_MOVEMENT_LEFT_RIGHT 1
+// This is used for sprites that move top to bottom (and back) in a predictable pattern
 #define SPRITE_MOVEMENT_UP_DOWN 2
+// This is used for sprites that wander in a randomized pattern, with collisions.
 #define SPRITE_MOVEMENT_RANDOM_WANDER 3
 
 // Use _NOTHING for decoration sprites that don't do anything when collided with.

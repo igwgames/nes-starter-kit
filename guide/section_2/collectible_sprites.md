@@ -22,6 +22,10 @@ increase our health. Let's make a new one! Copy that line at the top, and paste 
 a new sprite. Be sure to add a comma on the line above your new one to avoid syntax errors. You will
 also need to remove the comma at the end. 
 
+A word of caution, if you add a new sprite in the middle of this list, _all of the sprites on your 
+map will change as a result._ Our tools rely on the order of sprites in this file, so it's best
+to always add new sprites at the end, even if the order doesn't look amazing.
+
 Next, let's customize it a little. First, let's change the color! The current sprite uses palette 2, 
 which is mostly red. This makes sense for a regular heart, but we want a super-heart, so we will use
 the blue color palette. Try changing `SPRITE_PALETTE_2` to `SPRITE_PALETTE_1` - it's blue now! 
@@ -99,7 +103,7 @@ SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_1, SPRITE_ANIMATI
 ```
 
 We want to change `SPRITE_TYPE_HEALTH` to `SPRITE_TYPE_LIFE_UP`. While we are at it, let's
-make the sprite a little bit more unique? If we look at nesst for our sprites, there is
+make the sprite a little bit more unique! If we look at nesst for our sprites, there is
 a big heart sprite at `0xec`. If we change the sprite id (second byte) to this, we can 
 use that big heart sprite. However, our old sprite was 8x8 pixels in size, and this new 
 one is 16x16. We also need to update the size of the sprite, by changing 
