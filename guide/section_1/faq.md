@@ -127,6 +127,30 @@ oam_spr(
 
 ```
 
+#### I got an error like `Error: Call to undefined function 'test_collision'`. What do I do?
+
+First, check for typos. I'm guessing if you got here you probably did that, huh? Oh well, have
+to mention it!
+
+This error usually means that you need to include a header file (`.h`) that is missing. If this is an
+existing method, it is probably already present in a header file that you need to include. Search the
+project for that method, and if you find it in a `.h` file, include that file at the top of yours using
+`#include "the/file.h"`. 
+
+**NOTE**: If that header file contains code like this: 
+
+```c
+#define PRG_BANK_MAP_SPRITES 2
+```
+
+You need to call it using the `banked_call` method, as described in an earlier FAQ answer. 
+
+If this is a new method that you are adding, you may need to add your function definition to a header
+file yourself. (Or create one, if this is a new method!)
+
+There is a quick explanation of header files in C available 
+[here](https://www.quora.com/What-is-the-use-of-header-files-in-C-language).
+
 #### Why are the tools for flashing my NES cartridge not included in the tool zip?
 
 There are two reasons why these tools were excluded. The first one is that, simply, not everyone 
