@@ -114,7 +114,7 @@ matter if they interest you.
 14. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
 15. [Adding new enemies](./guide/section_2/adding_enemies.md)
 16. [Adding/changing music](./guide/section_2/changing_music.md)
-17. Adding/changing sound effects
+17. [Adding/changing sound effects](./guides/section_2/changing_sfx.md)
 18. Changing movement
 
 ### Part 3: Adding new features
