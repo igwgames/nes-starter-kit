@@ -115,7 +115,7 @@ matter if they interest you.
 15. [Adding new enemies](./guide/section_2/adding_enemies.md)
 16. [Adding/changing music](./guide/section_2/changing_music.md)
 17. [Adding/changing sound effects](./guides/section_2/changing_sfx.md)
-18. Changing movement
+18. [Changing movement](./guides/section_2/changing_movement.md)
 
 ### Part 3: Adding new features
 
@@ -133,8 +133,7 @@ _(Note: these are rough ideas and very likely going to change. Suggestions also 
 
 30. Ways to improve performance 
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
-31. Making the title screen prettier
-    (Note: Probably means showing how to replace the text title screen with something prettier)
+31. Making a full title screen
 32. Animating background tiles
 33. [Playing your game on a real NES](./guide/section_4/real_nes.md)
 34. Making a "real" cartridge
