@@ -5,14 +5,19 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
 
-## **Work in progress!!** 
+## **Work in progress** 
 
-Fair warning, this project is very much a work in progress. This readme tries to outline the end product, but please be
-warned that not everything's there yet. Imagine this like the "Under Construction" pages on
+This project is very much a work in progress. This readme tries to outline the end product, but please be
+warned that not everything is here yet. Imagine this like the "Under Construction" gifs on
 Tripod and Geocities back in the day ;)
 
-That said, if you decide to check this out and have thoughts, please share them. You are welcome to open an issue or PR, 
-or even just send me a Tweet/DM/email/whatever. You can help shape the outcome of this project. 
+Right now, the tools are set up to work, the project produces a working game, and the first two sections of the guide
+are complete. You should be able to produce a rudimentary game using nes-starter-kit. Consider this like an Alpha
+release.
+
+If you decide to check this out and have thoughts, please share them! You are welcome to open an issue or PR, 
+or even just send me a Tweet/DM/email/whatever. Your input can help shape the outcome of this project. (and is
+very much appreciated!)
 
 ## What is this?
 
