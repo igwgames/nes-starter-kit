@@ -283,7 +283,8 @@ detectNTSC:
     .include "source/library/bank_helpers.asm"
 	.include "source/neslib_asm/neslib.asm"
 	.include "source/graphics/palettes.asm"
-
+	.include "source/graphics/static/custom_title_assets.asm"
+	
 .segment "CHR_00"
 
 	; We just put the ascii tiles into both sprites and tiles. If you want to get more clever you could do something else.
@@ -297,7 +298,7 @@ detectNTSC:
 .segment "CHR_02"
 	.incbin "graphics/sprites.chr"
 .segment "CHR_03"
-	.incbin "graphics/tiles.chr"
+	.incbin "graphics/static/title.chr"
 .segment "CHR_04"
 	.incbin "graphics/tiles.chr"
 .segment "CHR_05"
