@@ -294,6 +294,7 @@ detectNTSC:
 
     .include "graphics/graphics.config.asm"
     .include "graphics/palettes/palettes.config.asm"
+    .include "graphics/static/custom_title_assets.asm"
 
 .segment "ROM_00"
 

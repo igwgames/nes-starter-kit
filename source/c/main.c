@@ -21,6 +21,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/c/sprites/sprite_definitions.h"
 #include "source/c/menus/input_helpers.h"
 #include "source/c/menus/game_over.h"
+#include "source/c/graphics/static/custom_title.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -56,12 +57,12 @@ void main(void) {
                 break;
 
             case GAME_STATE_TITLE_DRAW:
-                banked_call(PRG_BANK_TITLE, draw_title_screen);
+                banked_call(PRG_BANK_CUSTOM_TITLE, draw_custom_title);
                 music_play(SONG_TITLE);
                 fade_in();
                 break;
             case GAME_STATE_TITLE_INPUT:
-                banked_call(PRG_BANK_TITLE, handle_title_input);
+                banked_call(PRG_BANK_CUSTOM_TITLE, handle_custom_title_input);
                 break;
             case GAME_STATE_POST_TITLE:
 
