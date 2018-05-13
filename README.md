@@ -119,14 +119,14 @@ matter if they interest you.
 14. [Adding collectible sprites](./guide/section_2/collectible_sprites.md)
 15. [Adding new enemies](./guide/section_2/adding_enemies.md)
 16. [Adding/changing music](./guide/section_2/changing_music.md)
-17. [Adding/changing sound effects](./guides/section_2/changing_sfx.md)
-18. [Changing movement](./guides/section_2/changing_movement.md)
+17. [Adding/changing sound effects](./guide/section_2/changing_sfx.md)
+18. [Changing movement](./guide/section_2/changing_movement.md)
 
 ### Part 3: Adding new features
 
 _(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
 
-20. Putting your code in the right place: an introduction to prg banking
+20. Putting your code in the right place: an introduction to prg banking (TODO: Can I shove this off until part 5?)
 21. Giving your main character a sword
 22. Adding more features to the pause menu
 23. Adding a second map
@@ -138,7 +138,7 @@ _(Note: these are rough ideas and very likely going to change. Suggestions also 
 
 30. Ways to improve performance 
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
-31. Making a full title screen
+31. [Making a full title screen](./guide/section_4/title_screen.md)
 32. Animating background tiles
 33. [Playing your game on a real NES](./guide/section_4/real_nes.md)
 34. Making a "real" cartridge
