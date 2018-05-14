@@ -37,7 +37,8 @@
 #define SPRITE_TYPE_HEALTH 0x02
 #define SPRITE_TYPE_REGULAR_ENEMY 0x03 
 #define SPRITE_TYPE_DOOR 0x04
-#define SPRITE_TYPE_ENDGAME 0x05
+#define SPRITE_TYPE_LOCKED_DOOR 0x05
+#define SPRITE_TYPE_ENDGAME 0x06
 
 // Use this when a sprite is destroyed - this will skip all logic about the sprite.
 #define SPRITE_TYPE_OFFSCREEN 0x7f

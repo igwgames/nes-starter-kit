@@ -297,7 +297,12 @@ void handle_player_sprite_collision() {
 
                 
                 break;
-            case SPRITE_TYPE_DOOR:
+            case SPRITE_TYPE_DOOR: 
+                // Doors without locks are very simple - they just open! Hide the sprite until the user comes back...
+                // note that we intentionally *don't* store this state, so it comes back next time.
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                break;
+            case SPRITE_TYPE_LOCKED_DOOR:
                 // First off, do you have a key? If so, let's just make this go away...
                 if (playerKeyCount > 0) {
                     playerKeyCount--;
