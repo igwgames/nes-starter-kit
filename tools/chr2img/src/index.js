@@ -6,7 +6,7 @@
  * It's still very quick and dirty. I tried to document some of it, but it probably isn't very clear.
  * Don't be afraid to reach out for help if you're tweaking this. I hope it meets most needs as-is.
  */
-var VERSION = require('package.json').version;
+var VERSION = require('./package.json').version;
 
 // Expects exactly (binary) infile outfile (first param is always node)
 if (process.argv.length != 5) {
