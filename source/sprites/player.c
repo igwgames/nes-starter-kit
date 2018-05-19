@@ -141,19 +141,19 @@ void handle_player_movement() {
         // We use sprite direction to determine which direction to scroll in, so be sure this is set properly.
         playerDirection = SPRITE_DIRECTION_RIGHT;
         gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition+=8;
+        playerOverworldPosition++;
     } else if (rawXPosition < SCREEN_EDGE_LEFT) {
         playerDirection = SPRITE_DIRECTION_LEFT;
         gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition -= 8;
+        playerOverworldPosition--;
     } else if (rawYPosition > SCREEN_EDGE_BOTTOM) {
         playerDirection = SPRITE_DIRECTION_DOWN;
         gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition++;
+        playerOverworldPosition += 8;
     } else if (rawYPosition < SCREEN_EDGE_TOP) {
         playerDirection = SPRITE_DIRECTION_UP;
         gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition--;
+        playerOverworldPosition -= 8;
     }
 }
 

@@ -100,8 +100,8 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
     originalSize = data.length;
 
     // Loop through all rooms
-    for (var x = 0; x < roomsWide; x++) {
-        for (var y = 0; y < roomsTall; y++) {
+    for (var y = 0; y < roomsTall; y++) {
+        for (var x = 0; x < roomsWide; x++) {
             var roomSpriteData = [];
             if (x == 7 && y == 7) {
                 verbose('Skipping the final room, because there is not enough rom space the way we map things out. Perhaps if we used RLE...');
