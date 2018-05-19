@@ -19,6 +19,16 @@ If you decide to check this out and have thoughts, please share them! You are we
 or even just send me a Tweet/DM/email/whatever. Your input can help shape the outcome of this project. (and is
 very much appreciated!)
 
+## NOTE on update from May 19th, 2018
+
+In a change to master today, I swapped around how maps are ordered due to a dumb mistake I ported over from older games.
+Unfortunately, this required creating a new version of the `tmx22c` tool, and I haven't figured out proper versioning
+yet. If you downloaded or updated past this date, **you need to redownload the tools zip file**.
+
+I'm sorry about this - I hope breaking changes like this will be rare, but at the same time this was a necessary change
+to make future chapters more understandable. In addition, once the guide is more fleshed out, I will start maintaining
+proper versions. (This is a reminder to me that I need to do that very soon!)
+
 ## What is this?
 
 It's a fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the 
