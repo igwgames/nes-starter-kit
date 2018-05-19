@@ -7,7 +7,7 @@
  * bit of the library. Don't be afraid to reach out for help if you're tweaking this. I hope it meets most needs
  * as-is.
  */
-var VERSION = '1.0.0';
+var VERSION = require('./package.json').version;
 
 // Expects exactly tmx2c infile outfile (first param is always node)
 if (process.argv.length != 6) {
