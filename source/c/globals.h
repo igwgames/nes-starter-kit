@@ -50,6 +50,8 @@ ZEROPAGE_EXTERN(int, tempInt6);
 
 extern const unsigned int bitToByte[8];
 
+extern unsigned char warpCooldownTime;
+
 // TODO: There might be a nicer home for these
 // Get the absolute value of a number, the lazy person's way.
 #define ABS(x) ((x) > 0 ? x : 0-(x))

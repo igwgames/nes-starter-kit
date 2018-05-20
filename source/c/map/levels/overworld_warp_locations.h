@@ -1,0 +1,1 @@
+extern const unsigned char overworld_warp_locations[];
