@@ -500,15 +500,30 @@ void do_fade_screen_transition(void) {
     clear_asset_table(1);
     fade_out_fast();
     
-    // Now that the screen is clear, migrate the player's sprite a bit..
-    if (playerDirection == SPRITE_DIRECTION_LEFT) {
-        playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT);
-    } else if (playerDirection == SPRITE_DIRECTION_RIGHT) {
-        playerXPosition = (SCREEN_EDGE_LEFT << PLAYER_POSITION_SHIFT);
-    } else if (playerDirection == SPRITE_DIRECTION_UP) {
-        playerYPosition = (SCREEN_EDGE_BOTTOM << PLAYER_POSITION_SHIFT);
-    } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
-        playerYPosition = (SCREEN_EDGE_TOP << PLAYER_POSITION_SHIFT);
+    if (gameState == GAME_STATE_SCREEN_SCROLL) {
+        // Now that the screen is clear, migrate the player's sprite a bit, if we are doing a regular screen transition
+        if (playerDirection == SPRITE_DIRECTION_LEFT) {
+            playerXPosition = (SCREEN_EDGE_RIGHT << PLAYER_POSITION_SHIFT);
+        } else if (playerDirection == SPRITE_DIRECTION_RIGHT) {
+            playerXPosition = (SCREEN_EDGE_LEFT << PLAYER_POSITION_SHIFT);
+        } else if (playerDirection == SPRITE_DIRECTION_UP) {
+            playerYPosition = (SCREEN_EDGE_BOTTOM << PLAYER_POSITION_SHIFT);
+        } else if (playerDirection == SPRITE_DIRECTION_DOWN) {
+            playerYPosition = (SCREEN_EDGE_TOP << PLAYER_POSITION_SHIFT);
+        }
+    } else if (gameState == GAME_STATE_WORLD_TRANSITION) {
+        // If we went through a door, find the door on this screen, and place the player on it.
+        for (i = 0; i != MAP_MAX_SPRITES; ++i) {
+            mapSpriteDataIndex = i << MAP_SPRITE_DATA_SHIFT;
+            if (currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_WARP_DOOR) {
+                // Place the player on top of the door sprite, assuming we found it.
+                playerXPosition = ((currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
+                playerYPosition = ((currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
+                // Also hide the sprite to avoid the door flickering
+                currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_TILE_ID] = SPRITE_TILE_ID_OFFSCREEN;
+
+            }
+        }
     }
     // Actually move the sprite too, since otherwise this won't happen until after we un-blank the screen.
     banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);

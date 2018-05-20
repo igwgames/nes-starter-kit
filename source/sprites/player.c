@@ -12,6 +12,8 @@
 #include "source/graphics/hud.h"
 #include "source/graphics/game_text.h"
 #include "source/sprites/map_sprites.h"
+#include "source/map/levels/overworld_warp_locations.h"
+#include "source/map/levels/underworld_warp_locations.h"
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
@@ -320,6 +322,9 @@ void test_player_tile_collision(void) {
 }
 
 void handle_player_sprite_collision(void) {
+    if (warpCooldownTime != 0) {
+        --warpCooldownTime;
+    }
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
@@ -388,6 +393,52 @@ void handle_player_sprite_collision(void) {
                 sfx_play(SFX_HURT, SFX_CHANNEL_2);
 
                 
+                break;
+            case SPRITE_TYPE_WARP_DOOR:
+
+                // First, hide the sprite. We want to physically keep it around though, so just update the tile ids.
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TILE_ID] = SPRITE_TILE_ID_OFFSCREEN;
+
+                if (warpCooldownTime != 0) {
+                    break;
+                }
+
+                // Next, figure out if the player is completely within the tile, and if so, teleport them.
+                // Note that this isn't a normal collision test, and don't try to reuse it as one ;)
+                
+                // Calculate position...
+                tempSpriteCollisionX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
+                tempSpriteCollisionY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
+
+                if (
+                    playerXPosition > tempSpriteCollisionX - (2 << PLAYER_POSITION_SHIFT) &&
+                    playerXPosition + PLAYER_WIDTH_EXTENDED < tempSpriteCollisionX + (18 << PLAYER_POSITION_SHIFT) &&
+                    playerYPosition > tempSpriteCollisionY - (2 << PLAYER_POSITION_SHIFT) &&
+                    playerYPosition + PLAYER_HEIGHT_EXTENDED < tempSpriteCollisionY + (18 << PLAYER_POSITION_SHIFT)
+                ) {
+                    warpCooldownTime = DOOR_WARP_COOLDOWN_TIME;
+
+                    
+                    // NOTE: If you find yourself adding this logic somewhere else, consider putting it into a function.
+                    if (currentWorldId == WORLD_OVERWORLD) {
+                        // TODO: Can we swap the music? Probably just wanna reuse the title music.
+
+                        // Swap worlds
+                        currentWorldId = WORLD_UNDERWORLD;
+                        // And place the character onto the map tile.
+                        playerOverworldPosition = overworld_warp_locations[playerOverworldPosition];
+                    } else {
+                        // Swap worlds
+                        currentWorldId = WORLD_OVERWORLD;
+                        // And place the character onto the map tile.
+                        playerOverworldPosition = underworld_warp_locations[playerOverworldPosition];
+
+                    }
+                    gameState = GAME_STATE_WORLD_TRANSITION;
+                }
+
+
+
                 break;
             case SPRITE_TYPE_DOOR: 
                 // Doors without locks are very simple - they just open! Hide the sprite until the user comes back...

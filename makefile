@@ -115,6 +115,9 @@ temp/%.s: temp/%.c
 
 temp/level_overworld.c: levels/overworld.tmx
 	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
+	
+temp/level_underworld.c: levels/underworld.tmx
+	$(TMX2C) 5 underworld $< $(patsubst %.c, %, $@)
 
 graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal
 	$(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png

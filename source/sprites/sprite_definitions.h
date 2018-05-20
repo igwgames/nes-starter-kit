@@ -30,7 +30,7 @@
 // This is used for sprites that wander in a randomized pattern, with collisions.
 #define SPRITE_MOVEMENT_RANDOM_WANDER 3
 
-// Use _NOTHING for decoration sprites that don't do anything when collided with.
+// Use _NOTHING for decoration sWARPprites that don't do anything when collided with.
 // This can be used for decorations, etc...
 #define SPRITE_TYPE_NOTHING 0x00
 #define SPRITE_TYPE_KEY 0x01
@@ -39,6 +39,7 @@
 #define SPRITE_TYPE_INVULNERABLE_ENEMY 0x04
 #define SPRITE_TYPE_DOOR 0x05
 #define SPRITE_TYPE_LOCKED_DOOR 0x06
+#define SPRITE_TYPE_WARP_DOOR 0x08
 #define SPRITE_TYPE_ENDGAME 0x07
 #define SPRITE_TYPE_NPC 0x10
 
@@ -66,6 +67,10 @@
 #define SPRITE_DEF_POSITION_SLIDE_SPEED     5
 #define SPRITE_DEF_POSITION_MOVE_SPEED      6
 #define SPRITE_DEF_POSITION_DAMAGE          7
+
+// This is the number of frames to wait before allowing a second teleportation via a door.
+// Bump this down if you want it to happen sooner.
+#define DOOR_WARP_COOLDOWN_TIME 60
 
 extern const unsigned char spriteDefinitions[];
 

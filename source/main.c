@@ -36,7 +36,8 @@ void initialize_variables(void) {
 
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
 
-    currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
+    currentWorldId = WORLD_OVERWORLD; // The ID of the world to load, since we have multiple
+    warpCooldownTime = 0;
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
@@ -105,6 +106,10 @@ void main(void) {
             case GAME_STATE_SHOWING_TEXT:
                 banked_call(PRG_BANK_GAME_TEXT, draw_game_text);
                 gameState = GAME_STATE_RUNNING;
+                break;
+            case GAME_STATE_WORLD_TRANSITION:
+                oam_hide_rest(FIRST_ENEMY_SPRITE_OAM_INDEX);
+                banked_call(PRG_BANK_MAP_LOGIC, do_fade_screen_transition);
                 break;
             case GAME_STATE_PAUSED:
                 fade_out();
