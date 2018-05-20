@@ -30,7 +30,7 @@
 // This is used for sprites that wander in a randomized pattern, with collisions.
 #define SPRITE_MOVEMENT_RANDOM_WANDER 3
 
-// Use _NOTHING for decoration sWARPprites that don't do anything when collided with.
+// Use _NOTHING for decoration sprites that don't do anything when collided with.
 // This can be used for decorations, etc...
 #define SPRITE_TYPE_NOTHING 0x00
 #define SPRITE_TYPE_KEY 0x01
