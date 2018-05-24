@@ -351,6 +351,7 @@ void draw_current_map_to_d() {
 // A quick, low-tech glamour-free way to transition between screens.
 void do_fade_screen_transition() {
     load_map();
+    load_sprites();
     clear_asset_table(1);
     fade_out_fast();
     
@@ -370,7 +371,6 @@ void do_fade_screen_transition() {
     // Draw the updated map to the screen...
     draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
     
-    load_sprites();
     // Update sprites once to make sure we don't show a flash of the old sprite positions.
     banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
     fade_in_fast();

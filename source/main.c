@@ -34,6 +34,8 @@ void initialize_variables() {
     playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
 
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+
+    currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.

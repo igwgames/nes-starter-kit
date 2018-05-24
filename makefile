@@ -104,7 +104,7 @@ temp/%.o: temp/%.s
 temp/%.s: temp/%.c
 	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
-temp/level_%.c: levels/%.tmx
+temp/level_overworld.c: levels/overworld.tmx
 	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
 
 graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal

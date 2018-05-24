@@ -43,6 +43,9 @@
 // Use this when a sprite is destroyed - this will skip all logic about the sprite.
 #define SPRITE_TYPE_OFFSCREEN 0x7f
 
+// You can use this for a tile id if you *don't* want to skip all logic.
+#define SPRITE_TILE_ID_OFFSCREEN 0xee
+
 // Used to figure out where to put the sprites in sprite memory. 
 // Have to skip over sprite 0 (0x00) and player (0x10)
 #define FIRST_ENEMY_SPRITE_OAM_INDEX 0x20
