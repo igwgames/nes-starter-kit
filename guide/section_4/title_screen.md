@@ -5,6 +5,8 @@
 to view the changes in the branch, or do `git checkout custom_title` with a local
 copy of the repo to view the code._
 
+[Download the rom version of this example](https://s3.amazonaws.com/nes-starter-kit/custom_title/starter.latest.nes)
+
 Okay, you're getting pretty far with your game, but the text-based title screen
 isn't quite cutting it. There are better options if you have a bit of time, and some
 artistic skill! 

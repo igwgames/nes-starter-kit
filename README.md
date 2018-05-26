@@ -5,6 +5,8 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
 
+[Download the example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes)
+
 ## **Work in progress** 
 
 This project is very much a work in progress. This readme tries to outline the end product, but please be
@@ -141,7 +143,7 @@ _(Note: these are rough ideas and very likely going to change. Suggestions also 
 20. Putting your code in the right place: an introduction to prg banking (TODO: Can I shove this off until part 5?)
 21. Giving your main character a sword
 22. Adding more features to the pause menu
-23. Adding a second map
+23. [Adding a second map](./guide/section_3/adding_a_second_map.md)
 24. Making the main character grow or shrink
 25. Adding objects that attract or repel the player
 26. Adding an enemy that mimics player behavior
