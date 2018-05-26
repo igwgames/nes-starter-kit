@@ -11,7 +11,8 @@ This is going to be one of the longer chapters, but it should be quite worth it 
 We need to cover a lot. 
 
 You can follow along in the git branch named [second_map](https://github.com/cppchriscpp/nes-starter-kit/compare/second_map).
-If you want to see what it looks like, try the [example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes)
+
+If you want to see what it looks like, try the [example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes).
 
 ## Creating a new map
 
