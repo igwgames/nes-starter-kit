@@ -213,7 +213,7 @@ const unsigned char overworld_warp_locations[] = {
 }; 
 ```
 
-![compare code tiled](../guide/map_c_tiled.png)
+![compare code tiled](../images/map_c_tiled.png)
 
 If you look at this next to tiled, each number lines up to one map tile on-screen. So, since our house is in the
 first tile on the second row in Tiled, we have to update the first byte in the second row of this array. The value
