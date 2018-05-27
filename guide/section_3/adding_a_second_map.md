@@ -96,7 +96,6 @@ Now, we just need to add some logic for it. This won't work without some additio
 section, so don't fret if it won't compile, and complains about map locations. I'm going to paste it 
 in-line, then explain a few of the finer points in more detail.
 
-FIXME: Copy these comments back into the code
 ```c
 case SPRITE_TYPE_WARP_DOOR:
 

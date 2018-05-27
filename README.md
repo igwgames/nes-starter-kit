@@ -140,7 +140,7 @@ matter if they interest you.
 
 _(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
 
-20. Putting your code in the right place: an introduction to prg banking (TODO: Can I shove this off until part 5?)
+20. Putting your code in the right place: a brief introduction to prg banking
 21. Giving your main character a sword
 22. Adding more features to the pause menu
 23. [Adding a second map](./guide/section_3/adding_a_second_map.md)
