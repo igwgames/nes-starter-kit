@@ -1,16 +1,4 @@
 {
     "terminal.integrated.shell.windows": "C:\\cygwin64\\bin\\bash.exe",
-    "terminal.integrated.shellArgs.windows": ["/bin/xhere", "/bin/bash"],
-
-    "files.associations": {
-        "neslib.h": "c",
-        "game_states.h": "c",
-        "globals.h": "c",
-        "palettes.h": "c",
-        "system_constants.h": "c",
-        "bank_helpers.h": "c",
-        "map_sprites.h": "c",
-        "text_helpers.h": "c",
-        "hud.h": "c"
-    }
+    "terminal.integrated.shellArgs.windows": ["/bin/xhere", "/bin/bash"]
 }
