@@ -399,46 +399,57 @@ void handle_player_sprite_collision(void) {
                 // First, hide the sprite. We want to physically keep it around though, so just update the tile ids.
                 currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TILE_ID] = SPRITE_TILE_ID_OFFSCREEN;
 
+                // If we set a cooldown time, don't allow warping. This allows us to re-spawn the user into the doorway
+                // in the other map without them immediately trying to teleport again.
                 if (warpCooldownTime != 0) {
                     break;
                 }
 
                 // Next, figure out if the player is completely within the tile, and if so, teleport them.
-                // Note that this isn't a normal collision test, and don't try to reuse it as one ;)
+                // Note that this isn't a normal collision test, so don't try to reuse it as one ;)
                 
-                // Calculate position...
+                // Calculate position of this sprite...
                 tempSpriteCollisionX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
                 tempSpriteCollisionY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
 
+                // Test to see if the sprite is completely contained within the boundaries of this sprite. 
+                // To make it a little loose, we make the sprite look like it is 2 pixels wider on all sides. 
+                // (subtract 2 from x and y positions for comparison, then add 2 to the width and height.)
                 if (
                     playerXPosition > tempSpriteCollisionX - (2 << PLAYER_POSITION_SHIFT) &&
                     playerXPosition + PLAYER_WIDTH_EXTENDED < tempSpriteCollisionX + (18 << PLAYER_POSITION_SHIFT) &&
                     playerYPosition > tempSpriteCollisionY - (2 << PLAYER_POSITION_SHIFT) &&
                     playerYPosition + PLAYER_HEIGHT_EXTENDED < tempSpriteCollisionY + (18 << PLAYER_POSITION_SHIFT)
                 ) {
+                    // Okay, we are going to warp the user!
+
+                    // Set our cooldown timer, so when the user shows up on the new map inside the door, they are not teleported.
                     warpCooldownTime = DOOR_WARP_COOLDOWN_TIME;
 
-                    
+                    // Determine which world map to place the player on based on the current map.
                     // NOTE: If you find yourself adding this logic somewhere else, consider putting it into a function.
+                    // Additionally, this will not scale to having many maps. You may have to add a second array of characters
+                    // and look up the world id like that.
                     if (currentWorldId == WORLD_OVERWORLD) {
-                        // TODO: Can we swap the music? Probably just wanna reuse the title music.
+                        // If you have more music, this would be a great place to switch!
 
                         // Swap worlds
                         currentWorldId = WORLD_UNDERWORLD;
-                        // And place the character onto the map tile.
+                        // Look up what world map tile to place the player on, from our big table, and switch to that tile.
                         playerOverworldPosition = overworld_warp_locations[playerOverworldPosition];
                     } else {
+                        // If you have more music, this would be a great place to switch!
+
                         // Swap worlds
                         currentWorldId = WORLD_OVERWORLD;
-                        // And place the character onto the map tile.
+                        // Look up what world map tile to place the player on, from our big table, and switch to that tile.
                         playerOverworldPosition = underworld_warp_locations[playerOverworldPosition];
 
                     }
+                    // Switch to a new gameState that tells our game to animate your transition into this new world.
                     gameState = GAME_STATE_WORLD_TRANSITION;
                 }
-
-
-
+                
                 break;
             case SPRITE_TYPE_DOOR: 
                 // Doors without locks are very simple - they just open! Hide the sprite until the user comes back...
