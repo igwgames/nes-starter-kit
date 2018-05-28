@@ -24,7 +24,7 @@ very much appreciated!)
 ## NOTE on update from May 19th, 2018
 
 In a change to master today, I swapped around how maps are ordered due to a dumb mistake I ported over from older games.
-Unfortunately, this required creating a new version of the `tmx22c` tool, and I haven't figured out proper versioning
+Unfortunately, this required creating a new version of the `tmx2c` tool, and I haven't figured out proper versioning
 yet. If you downloaded or updated past this date, **you need to redownload the tools zip file**. 
 
 Running `tools/tmx2c/tmx2c.exe` should show version 1.0.1. (Not 1.0.0)
