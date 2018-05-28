@@ -297,7 +297,7 @@ detectNTSC:
 .segment "CHR_02"
 	.incbin "graphics/sprites.chr"
 .segment "CHR_03"
-	.incbin "graphics/tiles.chr"
+	.incbin "graphics/tiles_2.chr"
 .segment "CHR_04"
 	.incbin "graphics/tiles.chr"
 .segment "CHR_05"

@@ -21,6 +21,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/sprites/sprite_definitions.h"
 #include "source/menus/input_helpers.h"
 #include "source/menus/game_over.h"
+#include "source/map/tile_animation.h"
 
 
 // Method to set a bunch of variables to default values when the system starts up.
@@ -92,6 +93,7 @@ void main(void) {
                 // care about. (For example, if you get a key, update the key count; not everything!
                 banked_call(PRG_BANK_HUD, update_hud);
                 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
+                banked_call(PRG_BANK_MAP_TILE_ANIMATION, animate_map_tiles);
                 banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
                 break;
