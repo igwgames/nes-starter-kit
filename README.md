@@ -165,7 +165,7 @@ need these things for most games, but if you do, this is a place to learn!_
 40. [Understanding and tweaking the build tools](./guide/section_5/build_tools.md)
 41. Understanding and adjusting the size of your game
 42. [ROM Data Map](./guide/section_5/rom_map.md)
-43. Expanding available graphics using CHR banking
+43. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.md)
 44. Getting finer control over graphics with chr ram
 45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
 46. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.md)
