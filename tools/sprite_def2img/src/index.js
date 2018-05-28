@@ -105,6 +105,10 @@ var reverseBitmaskLookup = [
 var fs = require('fs'),
     logLevel = 'info', // change to 'verbose' for some extra output
     Jimp = require('jimp'),
+    path = require('path'),
+    // NOTE: This is unused, however pkg uses it to figure out that it has to package up font.png, which we need to add duplicate text.
+    // Don't remove it!
+    ____packageHack = path.join(__dirname, 'font.png'),
     spriteDefFile = process.argv[2],
     spriteChrFile = process.argv[3],
     spritePalFile = process.argv[4],
@@ -237,35 +241,56 @@ new Jimp(128, 128, function(err, image) {
 
     // Okay, we made some image science. BUT, this is just the chr file. We need to move some stuff around.
     new Jimp(128, 128, function(err, spriteImage) {
-        spriteImage.rgba(false);
-        spriteImage.background(Jimp.rgbaToInt(0, 0, 0, 255));
-        // Okay, we're going to compose this image of sprites until we run out. 
-        // All are 16x16, and we want to tile left to right, top to bottom
-        for (var i = 0; i < parsedSpriteData.length; i++) {
+        Jimp.loadFont(path.join(__dirname, 'font.fnt')).then(function(font) {
+            spriteImage.rgba(false);
+            spriteImage.background(Jimp.rgbaToInt(0, 0, 0, 255));
 
-            var offset = parsedSpriteData[i].size == 8 ? 4 : 0,
-                baseX = Math.floor(i%8) * 16 + offset,
-                baseY = Math.floor(i/8) * 16 + offset;
-            spriteImage.blit(image, baseX, baseY, Math.floor(parsedSpriteData[i].tileId%16) * 8, Math.floor(parsedSpriteData[i].tileId/16)*8, parsedSpriteData[i].size, parsedSpriteData[i].size);
-            // Okay, we have the right image drawn... BUT, we need to re-color it :(
-            // For every pixel in the image...
-            for (var x = 0; x < parsedSpriteData[i].size; x++) {
-                for (var y = 0; y < parsedSpriteData[i].size; y++) {
-                    // Okay, get the color at this x/y... we just used 0-3 before, which conveniently is our index off rgbPalettes!
-                    var color = spriteImage.getPixelColor(baseX + x, baseY +y);
-                    color = rgbPalettes[parsedSpriteData[i].palette][color];
-                    // Now write it back out.
-                    spriteImage.setPixelColor(color, baseX + x, baseY + y);
+            var spriteDuplicateMap = {}
+            // Do an initial loop through our sprites to find ones with the same id + palette, so we can mark them.
+            for (var i = 0; i < parsedSpriteData.length; i++) {
+                var lookupId = parsedSpriteData[i].tileId + '_' + parsedSpriteData[i].palette;
+                if (!spriteDuplicateMap[lookupId]) {
+                    spriteDuplicateMap[lookupId] = {totalCount: 1, thisCount: 0};
+                } else {
+                    spriteDuplicateMap[lookupId].totalCount++;
                 }
             }
-        }
-        
 
-        verbose('Writing image...');
-        spriteImage.write(spriteOutFile);
-        out('Success! Image written to ' + spriteOutFile);
+            // Okay, we're going to compose this image of sprites until we run out. 
+            // All are 16x16, and we want to tile left to right, top to bottom
+            for (var i = 0; i < parsedSpriteData.length; i++) {
+
+                var offset = parsedSpriteData[i].size == 8 ? 4 : 0,
+                    baseX = Math.floor(i%8) * 16 + offset,
+                    baseY = Math.floor(i/8) * 16 + offset,
+                    lookupId = parsedSpriteData[i].tileId + '_' + parsedSpriteData[i].palette;
+                spriteImage.blit(image, baseX, baseY, Math.floor(parsedSpriteData[i].tileId%16) * 8, Math.floor(parsedSpriteData[i].tileId/16)*8, parsedSpriteData[i].size, parsedSpriteData[i].size);
+                // Okay, we have the right image drawn... BUT, we need to re-color it :(
+                // For every pixel in the image...
+                for (var x = 0; x < parsedSpriteData[i].size; x++) {
+                    for (var y = 0; y < parsedSpriteData[i].size; y++) {
+                        // Okay, get the color at this x/y... we just used 0-3 before, which conveniently is our index off rgbPalettes!
+                        var color = spriteImage.getPixelColor(baseX + x, baseY +y);
+                        color = rgbPalettes[parsedSpriteData[i].palette][color];
+                        // Now write it back out.
+                        spriteImage.setPixelColor(color, baseX + x, baseY + y);
+                    }
+                }
+                if (spriteDuplicateMap[lookupId].totalCount > 1) {
+
+                    spriteImage.print(font, baseX - offset + 4, baseY + 1 - offset, String.fromCharCode('A'.charCodeAt(0) + spriteDuplicateMap[lookupId].thisCount));
+                    spriteDuplicateMap[lookupId].thisCount++;
+                }
+
+            }
+            
+
+            verbose('Writing image...');
+            spriteImage.write(spriteOutFile);
+            out('Success! Image written to ' + spriteOutFile);
 
 
+        });
     });
 });
     

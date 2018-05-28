@@ -3,6 +3,9 @@
 Converts a sprite definition, alongside a palette and chr file, and generates a 
 png file with the sprites suitable for use with Tiled.
 
+If it encounters duplicates, it will try to place a white character on top of the sprite, to help
+tell the difference between them.
+
 ## Command
 
 Run the command as follows:
