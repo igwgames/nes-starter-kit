@@ -4,7 +4,7 @@
 // They contain the map data definitions, as well as defines for which bank they are in.
 #include "temp/level_overworld.h" 
 
-#define PRG_BANK_MAP_LOGIC 2
+#define PRG_BANK_MAP_LOGIC 1
 
 // This defines how many pixels to move the screen during each frame of the screen scroll animation.
 // Must be a multiple of 2 (or w`hatever value is set below)

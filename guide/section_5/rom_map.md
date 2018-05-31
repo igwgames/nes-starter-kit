@@ -20,12 +20,12 @@ banks into them by changing their associated `PRG_BANK_TYPE` define in the heade
 
 ## ROM_01 ($01)
 - Error handler screen
+- Level drawing logic
 
 ## ROM_02 ($02)
 - Title screen
 - Various menus
 - Pause Menu
-- Level drawing logic
 - Hud logic
 - Player sprite/movement logic
 
