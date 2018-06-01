@@ -1,6 +1,7 @@
 tools/*
 !tools/README.md
 !tools/cc65_config
+!tools/jekyll_post_processor
 !tools/tmx2c
 tools/tmx2c/*.exe
 tools/tmx2c/src/node_modules
@@ -17,3 +18,9 @@ rom/*.nes
 temp/*
 !temp/empty
 todo.md
+_site/
+.sass-cache/
+.jekyll-metadata
+_pdf
+.DS_Store
+.idea
