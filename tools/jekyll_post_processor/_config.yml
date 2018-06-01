@@ -4,7 +4,7 @@ email: admin@cpprograms.net
 description: >
   Quickstart guide for making NES games from scratch in C.
 
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/nes-starter-kit/" # the subpath of your site, e.g. /blog/
 url: https://cppchriscpp.github.io/nes-starter-kit # the base hostname & protocol for your site
 git_address: https://github.com/cppchriscpp/nes-starter-kit
 git_edit_address: https://github.com/cppchriscpp/nes-starter-kit/blob/master
