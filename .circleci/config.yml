@@ -5,6 +5,9 @@ jobs:
       - image: cppchriscpp/cc65-node:latest
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints: 
+            - "62:d1:f8:4c:c4:bd:64:69:ca:6f:56:05:12:31:79:8d"
       - run:
           name: Move tools folder to expected location
           command: cp -rf /tools .
@@ -22,6 +25,16 @@ jobs:
       - run: 
           name: Replace "latest" rom file in s3
           command: aws s3 cp --region us-east-1 ./rom/starter.nes s3://nes-starter-kit/$CIRCLE_BRANCH/starter.latest.nes --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+      - run:
+          name: Update jekyll documentation on a branch
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config user.email "automation@cpprograms.net"
+              git config user.name "CircleCI Automation"
+              git config credential.helper 'cache --timeout=120'
+              git fetch && git checkout gh-pages && git merge origin/master -m "Automatic merge of master" && ./tools/jekyll_post_processor/jekyll_post_processor.sh && git commit -a --allow-empty -m "Automated documentation update [ci skip]" && git push
+            fi
+
 workflows:
   version: 2
   build:
