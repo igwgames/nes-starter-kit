@@ -8,38 +8,35 @@ Any banks marked as unused are great targets for your own code. You can also mov
 banks into them by changing their associated `PRG_BANK_TYPE` define in the header file.
 
 
-## PRG (always loaded)
+## Kernel (always loaded - $07)
 - NESLib
 - Main program loop
 - prg/chr/etc banking routines
 - Famitracker music library
 
-## ROM_00
+## ROM_00 ($00)
 - Music data
 - Sound effect data
 
-## ROM_01
+## ROM_01 ($01)
 - Error handler screen
+- Level drawing logic
 
-## ROM_02
+## ROM_02 ($02)
 - Title screen
 - Various menus
 - Pause Menu
-- Level drawing logic
 - Hud logic
 - Player sprite/movement logic
 
-## ROM_03
+## ROM_03 ($03)
 - Level data
 
-## ROM_04
+## ROM_04 ($04)
 - Unused
 
-## ROM_05
+## ROM_05 ($05)
 - Unused
 
-## ROM_06
-- Unused
-
-## ROM_07
+## ROM_06 ($06)
 - Unused

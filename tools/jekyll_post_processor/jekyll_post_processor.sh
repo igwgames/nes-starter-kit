@@ -21,6 +21,9 @@ mkdir _docs/section_3
 mkdir _docs/section_4
 mkdir _docs/section_5
 cp -R guide/images ./images
+cp tools/jekyll_post_processor/_config.yml _config.yml
+cp tools/jekyll_post_processor/index.html index.html
+cp tools/jekyll_post_processor/favicon.ico favicon.ico
 #cp README.md _docs/README.md
 
 READMEDATA="---

@@ -115,6 +115,8 @@ anything in this section. It gets into depth on details of how the library itsel
 system, and how the rom is organized. That said, these topics are here if you need them, or for that 
 matter if they interest you.
 
+<!-- TOC START -->
+
 ### Part 1: Getting started
 
 1. [Setting up your tools](./guide/section_1/setting_up_your_tools.md)
@@ -169,6 +171,8 @@ need these things for most games, but if you do, this is a place to learn!_
 44. Getting finer control over graphics with chr ram
 45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
 46. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.md)
+
+<!-- TOC END -->
 
 # Credits
 
