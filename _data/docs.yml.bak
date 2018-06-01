@@ -1,0 +1,13 @@
+- title: Getting Started
+  docs:
+  - home
+  - themes
+  - customization
+  - title: Setting Up your Tools
+    url: /docs/section_1/setting_up_your_tools.html
+
+- title: Examples
+  docs:
+  - cheatsheet
+  - font-awesome
+  - bootstrap

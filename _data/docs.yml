@@ -1,0 +1,118 @@
+
+- title: " Part 1: Getting started"
+  docs:
+
+  - title: "1. Setting up your tools"
+    url: "/guide/section_1/setting_up_your_tools.html"
+
+  - title: "2. Building your game"
+    url: "/guide/section_1/building_your_game.html"
+
+  - title: "3. Playing your game"
+    url: "/guide/section_1/playing_your_game.html"
+
+  - title: "4. Making Your first change"
+    url: "/guide/section_1/your_first_change.html"
+
+  - title: "5. Things to know about the NES and C"
+    url: "/guide/section_1/nes_miscellany.html"
+
+  - title: "6. FAQ"
+    url: "/guide/section_1/faq.html"
+
+- title: " Part 2: Making it your Own"
+  docs:
+
+  - title: "10. Changing the world"
+    url: "/guide/section_2/changing_the_world.html"
+
+  - title: "11. Adding new map tiles"
+    url: "/guide/section_2/adding_new_map_tiles.html"
+
+  - title: "12. Changing sprite art"
+    url: "/guide/section_2/changing_sprite_art.html"
+
+  - title: "13. Changing the HUD (top bar)"
+    url: "/guide/section_2/changing_the_hud.html"
+
+  - title: "14. Adding collectible sprites"
+    url: "/guide/section_2/collectible_sprites.html"
+
+  - title: "15. Adding new enemies"
+    url: "/guide/section_2/adding_enemies.html"
+
+  - title: "16. Adding/changing music"
+    url: "/guide/section_2/changing_music.html"
+
+  - title: "17. Adding/changing sound effects"
+    url: "/guide/section_2/changing_sfx.html"
+
+  - title: "18. Changing movement"
+    url: "/guide/section_2/changing_movement.html"
+
+- title: " Part 3: Adding new features"
+  docs:
+
+  - title: "20. Putting your code in the right place: a brief introduction to prg banking"
+    url: "/guide/section_3/putting_your_code_in_the_right_place.html"
+
+  - title: "21. Giving your main character a sword"
+    url: ""
+
+  - title: "22. Adding more features to the pause menu"
+    url: ""
+
+  - title: "23. Adding a second map"
+    url: "/guide/section_3/adding_a_second_map.html"
+
+  - title: "24. Making the main character grow or shrink"
+    url: ""
+
+  - title: "25. Adding objects that attract or repel the player"
+    url: ""
+
+  - title: "26. Adding an enemy that mimics player behavior"
+    url: ""
+
+- title: " Part 4: Polish and more"
+  docs:
+
+  - title: "30. Ways to improve performance"
+    url: ""
+
+  - title: "31. Making a full title screen"
+    url: "/guide/section_4/title_screen.html"
+
+  - title: "32. Animating tiles"
+    url: "/guide/section_4/animated_tiles.html"
+
+  - title: "33. Playing your game on a real NES"
+    url: "/guide/section_4/real_nes.html"
+
+  - title: "34. Making a \"real\" cartridge"
+    url: ""
+
+- title: " Part 5: Advanced Topics"
+  docs:
+
+  - title: "40. Understanding and tweaking the build tools"
+    url: "/guide/section_5/build_tools.html"
+
+  - title: "41. Understanding and adjusting the size of your game"
+    url: ""
+
+  - title: "42. ROM Data Map"
+    url: "/guide/section_5/rom_map.html"
+
+  - title: "43. Expanding available graphics using CHR banking"
+    url: "/guide/section_5/chr_banking.html"
+
+  - title: "44. Getting finer control over graphics with chr ram"
+    url: ""
+
+  - title: "45. Writing Functions in Assembly"
+    url: "/guide/section_5/writing_assembly_functions.html"
+
+  - title: "46. Automatic builds with CircleCI"
+    url: "/guide/section_5/automatic_builds.html"
+
