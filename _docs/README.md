@@ -196,6 +196,8 @@ need these things for most games, but if you do, this is a place to learn!_
 
 [FCEUX](http://www.fceux.com/web/home.html) 
 
+[Tiled](http://www.mapeditor.org/) by [Thorbjørn Lindeijer](https://github.com/bjorn)
+
 
 ## Art/Resources
 
