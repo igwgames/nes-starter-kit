@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shader language="GLSL">
+  <vertex><![CDATA[
+    uniform vec2 rubyTextureSize;
+
+    void main() {
+      vec4 offsetx;
+      vec4 offsety;
+
+      gl_Position = aModelViewProjectionMatrix * aVertexPosition;
+
+      offsetx.x = 1.0 / rubyTextureSize.x;
+      offsetx.y = 0.0;
+      offsetx.w = 0.0;
+      offsetx.z = 0.0;
+      offsety.y = 1.0 / rubyTextureSize.y;
+      offsety.x = 0.0;
+      offsety.w = 0.0;
+      offsety.z = 0.0;
+
+      vTextureCoord[0] = aTextureCoord;         //center
+      vTextureCoord[1] = vTextureCoord[0] - offsetx;  //left
+      vTextureCoord[2] = vTextureCoord[0] + offsetx;  //right
+      vTextureCoord[3] = vTextureCoord[0] - offsety;  //top
+      vTextureCoord[4] = vTextureCoord[0] + offsety;  //bottom
+    }
+  ]]></vertex>
+
+  <fragment filter="nearest"><![CDATA[
+    uniform sampler2D rubyTexture;
+    uniform vec2 rubyTextureSize;
+
+    void main() {
+      vec4 colD, colF, colB, colH, col, tmp;
+      vec2 sel;
+
+      col  = texture2DProj(rubyTexture, vTextureCoord[0]);  //central (can be E0-E3)
+      colD = texture2DProj(rubyTexture, vTextureCoord[1]);  //D (left)
+      colF = texture2DProj(rubyTexture, vTextureCoord[2]);  //F (right)
+      colB = texture2DProj(rubyTexture, vTextureCoord[3]);  //B (top)
+      colH = texture2DProj(rubyTexture, vTextureCoord[4]);  //H (bottom)
+
+      sel = fract(vTextureCoord[0].xy * rubyTextureSize.xy);       //where are we (E0-E3)? 
+                                                                 //E0 is default
+      if(sel.y >= 0.5) { tmp = colB; colB = colH; colH = tmp; }  //E1 (or E3): swap B and H
+      if(sel.x >= 0.5) { tmp = colF; colF = colD; colD = tmp; }  //E2 (or E3): swap D and F 
+
+      if(colB == colD && colB != colF && colD != colH) {  //do the Scale2x rule
+        col = colD;
+      }
+
+      gl_FragColor = col;
+    }
+  ]]></fragment>
+</shader>

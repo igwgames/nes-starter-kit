@@ -1,0 +1,5 @@
+body,html{height:95%;padding:5px;font-family:"Trebuchet MS",Helvetica,Arial,Verdana,sans-serif;font-size:80%}.wrapper{display:inline-block}.wrapper canvas{box-shadow:2px 2px 5px 0 rgba(20,20,20,1)}.ui-menu{position:absolute;width:150px}.controlBarSlider .ui-dialog-titlebar{display:none}.controlBarSliderContents{margin-top:4px;margin-left:4px}.debugWindow{position:absolute;right:2%}#loadStateDialog{display:none}.controlBar{visibility:hidden;display:inline-block;position:absolute bottom:30px}.controlBarSeperator{width:15px;display:inline-block}.controlBarMenuButton{text-decoration:none!important;font-weight:400!important}.infoPanel{position:absolute;right:auto;bottom:auto;display:block;width:20%;height:50%}.socialMediaPanel{position:absolute;left:10px;right:auto;top:auto;bottom:10px;display:block;width:auto;height:auto}.gameGenieDialog{display:none;position:absolute}.loadSaveDiv{display:inline-block}.hideJQueryTitleBar .ui-dialog-titlebar{display:none}
+
+body {
+overflow: hidden;
+}

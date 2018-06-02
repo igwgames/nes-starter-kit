@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Edge shader
+    Author: Themaister
+    License: Public domain.
+-->
+<shader language="GLSL">
+   <vertex><![CDATA[
+     uniform vec2 rubyTextureSize;
+ 
+     void main()
+     {
+	float x = 0.5 / rubyTextureSize.x;
+	float y = 0.5 / rubyTextureSize.y;
+	vec2 dg1 = vec2( x, y);
+	vec2 dg2 = vec2(-x, y);
+	vec2 dx = vec2(x, 0.0);
+	vec2 dy = vec2(0.0, y);
+ 
+	gl_Position = aModelViewProjectionMatrix * aVertexPosition;
+	vTextureCoord[0] = aTextureCoord;
+	vTextureCoord[1].xy = vTextureCoord[0].xy - dg1;
+	vTextureCoord[1].zw = vTextureCoord[0].xy - dy;
+	vTextureCoord[2].xy = vTextureCoord[0].xy - dg2;
+	vTextureCoord[2].zw = vTextureCoord[0].xy + dx;
+	vTextureCoord[3].xy = vTextureCoord[0].xy + dg1;
+	vTextureCoord[3].zw = vTextureCoord[0].xy + dy;
+	vTextureCoord[4].xy = vTextureCoord[0].xy + dg2;
+	vTextureCoord[4].zw = vTextureCoord[0].xy - dx;
+     }
+    ]]></vertex>
+ 
+   <fragment filter="nearest"><![CDATA[
+     vec3 grayscale(vec3 color)
+     {
+	return vec3(dot(color, vec3(0.3, 0.59, 0.11)));
+     }
+ 
+     uniform sampler2D rubyTexture;
+     uniform vec2 rubyTextureSize;
+ 
+     void main ()
+     {
+	vec3 c00 = texture2D(rubyTexture, vTextureCoord[1].xy).xyz;
+	vec3 c02 = texture2D(rubyTexture, vTextureCoord[4].xy).xyz;
+	vec3 c11 = texture2D(rubyTexture, vTextureCoord[0].xy).xyz;
+	vec3 c20 = texture2D(rubyTexture, vTextureCoord[2].xy).xyz;
+	vec3 c22 = texture2D(rubyTexture, vTextureCoord[3].xy).xyz;
+ 
+	vec2 tex = vTextureCoord[0].xy;
+	vec2 texsize = rubyTextureSize;
+ 
+	vec3 first = mix(c00, c20, fract(tex.x * texsize.x + 0.5));
+	vec3 second = mix(c02, c22, fract(tex.x * texsize.x + 0.5));
+ 
+	vec3 res = mix(first, second, fract(tex.y * texsize.y + 0.5));
+	vec4 final = vec4(5.0 * grayscale(abs(res - c11)), 1.0);
+	gl_FragColor = clamp(final, 0.0, 1.0);
+     }
+    ]]></fragment>
+</shader>
+

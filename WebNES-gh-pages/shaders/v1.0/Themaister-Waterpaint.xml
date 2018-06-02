@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Themaister's Waterpaint shader
+
+     Placed in the public domain. 
+
+     (From this thread: http://board.byuu.org/viewtopic.php?p=30483#p30483 
+     PD declaration here: http://board.byuu.org/viewtopic.php?p=30542#p30542 )
+-->
+<shader language="GLSL">
+   <vertex><![CDATA[
+     uniform vec2 rubyTextureSize;
+ 
+     void main()
+     {
+	float x = 0.5 * (1.0 / rubyTextureSize.x);
+	float y = 0.5 * (1.0 / rubyTextureSize.y);
+	vec2 dg1 = vec2( x, y);
+	vec2 dg2 = vec2(-x, y);
+	vec2 dx = vec2(x, 0.0);
+	vec2 dy = vec2(0.0, y);
+ 
+	gl_Position = aModelViewProjectionMatrix * aVertexPosition;
+	vTextureCoord[0] = aTextureCoord;
+	vTextureCoord[1].xy = vTextureCoord[0].xy - dg1;
+	vTextureCoord[1].zw = vTextureCoord[0].xy - dy;
+	vTextureCoord[2].xy = vTextureCoord[0].xy - dg2;
+	vTextureCoord[2].zw = vTextureCoord[0].xy + dx;
+	vTextureCoord[3].xy = vTextureCoord[0].xy + dg1;
+	vTextureCoord[3].zw = vTextureCoord[0].xy + dy;
+	vTextureCoord[4].xy = vTextureCoord[0].xy + dg2;
+	vTextureCoord[4].zw = vTextureCoord[0].xy - dx;
+     }
+     ]]></vertex>
+ 
+   <fragment filter="nearest"><![CDATA[
+     vec4 compress(vec4 in_color, float threshold, float ratio)
+     {
+	vec4 diff = in_color - vec4(threshold);
+	diff = clamp(diff, 0.0, 100.0);
+	return in_color - (diff * (1.0 - 1.0/ratio));
+     }
+ 
+     uniform sampler2D rubyTexture;
+     uniform vec2 rubyTextureSize;
+ 
+     void main ()
+     {
+	vec3 c00 = texture2D(rubyTexture, vTextureCoord[1].xy).xyz;
+	vec3 c01 = texture2D(rubyTexture, vTextureCoord[4].zw).xyz;
+	vec3 c02 = texture2D(rubyTexture, vTextureCoord[4].xy).xyz;
+	vec3 c10 = texture2D(rubyTexture, vTextureCoord[1].zw).xyz;
+	vec3 c11 = texture2D(rubyTexture, vTextureCoord[0].xy).xyz;
+	vec3 c12 = texture2D(rubyTexture, vTextureCoord[3].zw).xyz;
+	vec3 c20 = texture2D(rubyTexture, vTextureCoord[2].xy).xyz;
+	vec3 c21 = texture2D(rubyTexture, vTextureCoord[2].zw).xyz;
+	vec3 c22 = texture2D(rubyTexture, vTextureCoord[3].xy).xyz;
+ 
+	vec2 tex = vTextureCoord[0].xy;
+	vec2 texsize = rubyTextureSize;
+ 
+	vec3 first = mix(c00, c20, fract(tex.x * texsize.x + 0.5));
+	vec3 second = mix(c02, c22, fract(tex.x * texsize.x + 0.5));
+ 
+	vec3 mid_horiz = mix(c01, c21, fract(tex.x * texsize.x + 0.5));
+	vec3 mid_vert = mix(c10, c12, fract(tex.y * texsize.y + 0.5));
+ 
+	vec3 res = mix(first, second, fract(tex.y * texsize.y + 0.5));
+	vec4 final = vec4(0.26 * (res + mid_horiz + mid_vert) + 3.5 * abs(res - mix(mid_horiz, mid_vert, 0.5)), 1.0);
+	gl_FragColor = compress(final, 0.8, 5.0);
+     }
+     ]]></fragment>
+</shader>
