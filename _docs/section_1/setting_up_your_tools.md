@@ -29,8 +29,8 @@ You should also rename the folder from `nes-starter-kit` to the name of your gam
 
 **REQUIRED**
 
-To make life easier, most of the tools, including the compiler, c library, and various converters are 
-included in the following zip file: 
+To make life easier, most of the tools, including cc65 (our c compiler), neslib (The library we use to interface with
+the NES), and various converters are included in the following zip file: 
 
 [Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
 
