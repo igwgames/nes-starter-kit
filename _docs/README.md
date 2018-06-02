@@ -11,6 +11,8 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [Download the example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes)
 
+_Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
+
 ## **Work in progress** 
 
 This project is very much a work in progress. This readme tries to outline the end product, but please be
@@ -76,13 +78,13 @@ project that you can use for more of a blank page. That project is elsewhere
 | Feature Name           | nes-c-starter-kit  | NESMaker           | gameboy-bootstrap  |
 |------------------------|--------------------|--------------------|--------------------|
 | Language               | C                  | 6502 Assembly      | C                  |
-| Gui Editing            | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Gui Editing            | No                 | Yes                | Yes                |
 | Game Style             | Adventure only     | Many               | Adventure only     |
 | Graphics editor        | external - nesst   | Built-in           | Built-in           |
 | Map Editor             | external -tiled    | Built-in           | Built-in           |
 | Music Editor           | ext - famitracker  | Built-in           | Not available      |
 | Sound Editor           | ext - famitracker  | Built-in           | Not available      |
-| Works on console       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Works on console       | Yes                | Yes                | Yes                |
 | Source available       | Yes, you write it! | _Unknown_          | Yes                |
 | Source easily editable | Yes, built for it  | _Unknown_          | No                 |
 | Code Editor available  | Yes, VS Code       | _Unknown_          | Not specialized    |
