@@ -225,6 +225,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
         ++bufferIndex;
         if (bufferIndex == 8) {
             if (xScrollPosition != -1) {
+                ppu_wait_nmi();
                 split_y(xScrollPosition, yScrollPosition);
             }
         }
