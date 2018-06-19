@@ -8,13 +8,18 @@
 
 // This defines how many pixels to move the screen during each frame of the screen scroll animation.
 // Must be a multiple of 2 (or w`hatever value is set below)
-// 2 = slow, 4 = fast, 8 = very fast, 16 = almost instant
-// This is UNUSED while I try to sort out issues with it.
-// FIXME: Speeds faster than 2 are hyper glitchy going up/down right now...
+// This likely requires a bunch of tweaking the other variables to make this work. I don't actively
+// support other speeds, but if you make another one work reliably let me know with a github issue and I may update
+// this documentation.
 #define SCREEN_SCROLL_SPEED 4
 // This is how many pixels are done in each loop - the variable above controls when we wait for interrupts. 
-// You probably don't want to change this...
-#define SCREEN_SCROLL_LOOP_INCREMENT 2
+// You probably don't want to change these...
+#define SCREEN_SCROLL_LOOP_INCREMENT_LR 2
+#define SCREEN_SCROLL_LOOP_INCREMENT_UD 4
+
+// These two variables handle how much we shift the player each loop to match screen scrolling
+#define SCREEN_SCROLL_MOVEMENT_INCREMENT_LR 29 + ((frameCount & 0x10) >> 3)
+#define SCREEN_SCROLL_MOVEMENT_INCREMENT_UD 80
 
 // This controls how much ram we reserve for sprite data lookups. This sets us up to have 16 byte per sprite,
 // but if you change the code around a bit, you might be able to drop this to 3 to use 8 bytes per sprite instead.
@@ -78,8 +83,6 @@ void draw_current_map_to_c();
 void draw_current_map_to_d();
 
 // Take the value of playerOverworldPosition, and transition to this with a pretty scrolling animation.
-// NOTE: This is INCOMPLETE - it needs a lot of work to make it reasonable. Don't expect it to work.
-// TODO: Fix this up.
 void do_scroll_screen_transition();
 
 // Take the value of playerOverworldPosition, and transition onto that screen with a fade animation.

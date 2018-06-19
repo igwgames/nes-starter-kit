@@ -35,6 +35,7 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 #define tempSpriteCollisionY tempInt2
 
 
+// NOTE: This uses tempChar1 through tempChar3; the caller must not use these.
 void update_player_sprite() {
     // Calculate the position of the player itself, then use these variables to build it up with 4 8x8 NES sprites.
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
