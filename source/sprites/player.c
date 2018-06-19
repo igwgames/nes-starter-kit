@@ -136,26 +136,45 @@ void handle_player_movement() {
 
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
-
-
-    if (rawXPosition > SCREEN_EDGE_RIGHT) {
+        if (rawXPosition > SCREEN_EDGE_RIGHT) {
         // We use sprite direction to determine which direction to scroll in, so be sure this is set properly.
-        playerDirection = SPRITE_DIRECTION_RIGHT;
-        gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition++;
+        if (playerInvulnerabilityTime) {
+            playerXPosition -= playerXVelocity;
+            rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
+        } else {
+            playerDirection = SPRITE_DIRECTION_RIGHT;
+            gameState = GAME_STATE_SCREEN_SCROLL;
+            playerOverworldPosition++;
+        }
     } else if (rawXPosition < SCREEN_EDGE_LEFT) {
-        playerDirection = SPRITE_DIRECTION_LEFT;
-        gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition--;
+        if (playerInvulnerabilityTime) {
+            playerXPosition -= playerXVelocity;
+            rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
+        } else {
+            playerDirection = SPRITE_DIRECTION_LEFT;
+            gameState = GAME_STATE_SCREEN_SCROLL;
+            playerOverworldPosition--;
+        }
     } else if (rawYPosition > SCREEN_EDGE_BOTTOM) {
-        playerDirection = SPRITE_DIRECTION_DOWN;
-        gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition += 8;
+        if (playerInvulnerabilityTime) {
+            playerYPosition -= playerYVelocity;
+            rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
+        } else {
+            playerDirection = SPRITE_DIRECTION_DOWN;
+            gameState = GAME_STATE_SCREEN_SCROLL;
+            playerOverworldPosition += 8;
+        }
     } else if (rawYPosition < SCREEN_EDGE_TOP) {
-        playerDirection = SPRITE_DIRECTION_UP;
-        gameState = GAME_STATE_SCREEN_SCROLL;
-        playerOverworldPosition -= 8;
+        if (playerInvulnerabilityTime) {
+            playerYPosition -= playerYVelocity;
+            rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
+        } else {
+            playerDirection = SPRITE_DIRECTION_UP;
+            gameState = GAME_STATE_SCREEN_SCROLL;
+            playerOverworldPosition -= 8;
+        }
     }
+
 }
 
 void test_player_tile_collision() {

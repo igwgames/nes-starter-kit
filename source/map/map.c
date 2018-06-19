@@ -691,8 +691,6 @@ void do_scroll_screen_transition() {
         clear_asset_table(1);
         draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
 
-
-
     }
 
     // and bump the player back to the first screen now that we're done.
