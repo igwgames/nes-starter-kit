@@ -83,8 +83,6 @@ void draw_current_map_to_c();
 void draw_current_map_to_d();
 
 // Take the value of playerOverworldPosition, and transition to this with a pretty scrolling animation.
-// NOTE: This is INCOMPLETE - it needs a lot of work to make it reasonable. Don't expect it to work.
-// TODO: Fix this up.
 void do_scroll_screen_transition();
 
 // Take the value of playerOverworldPosition, and transition onto that screen with a fade animation.

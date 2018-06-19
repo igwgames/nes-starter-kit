@@ -26,7 +26,6 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define currentSpriteFullWidth tempInt3
 #define currentSpriteFullHeight tempInt3
 // Same story, but corrected for tile collisions
-// TODO: What if, instead of storing width, we stored the Y coordinate of the rightmost and bottom points?
 #define currentSpriteFullTileCollisionWidth tempInt4
 #define currentSpriteFullTileCollisionHeight tempInt4
 

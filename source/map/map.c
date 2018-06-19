@@ -620,10 +620,7 @@ void do_scroll_screen_transition() {
         load_map();
         xScrollPosition = 0;
         yScrollPosition = 0;
-
-        // TODO: Is there a way to make this feel less slow? Can we make it skip less and/or make player movement less jittery?
-        // TODO: The HUD still glitches out on us on console (nintendulator can repro)
-        
+                
         // Draw the first line outside the general loop while this line is offscreen.
         i = 240 - (48 + 32);
         j = (i >> 2) + 7;
