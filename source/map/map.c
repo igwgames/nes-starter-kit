@@ -190,6 +190,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
     } else {
         j = 7;
     }
+    tempArrayIndex = NAMETABLE_UPDATE_PREFIX_LENGTH;
     for (i = 0; i != 192; ++i) {
          // The top 2 bytes of map data are palette data. Skip that for now.
          
@@ -200,7 +201,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
             currentMemoryLocation = nametableAdr +  ((i & 0xf0) << 2) + ((i % 16) << 1);
         }
 
-        tempArrayIndex = NAMETABLE_UPDATE_PREFIX_LENGTH + (bufferIndex<<1);
+        
 
         mapScreenBuffer[tempArrayIndex] = currentValue;
         mapScreenBuffer[tempArrayIndex + 1] = currentValue + 1;
@@ -223,14 +224,10 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
 
         // Every 16 frames, write the buffered data to the screen and start anew.
         ++bufferIndex;
-        if (bufferIndex == 8) {
-            if (xScrollPosition != -1) {
-                ppu_wait_nmi();
-                split_y(xScrollPosition, yScrollPosition);
-            }
-        }
+        tempArrayIndex += 2;
         if (bufferIndex == 16) {
             bufferIndex = 0;
+            tempArrayIndex = NAMETABLE_UPDATE_PREFIX_LENGTH;
             // Bunch of messy-looking stuff that tells neslib where to write this to the nametable, and how.
             mapScreenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
             mapScreenBuffer[1] = LSB(currentMemoryLocation);
