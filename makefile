@@ -82,7 +82,7 @@ endif
 
 # Keeping all intermediate files, so debugging and learning is easier. :)
 # There are probably better ways to do this, and I know things are still deleted. Feel free to PR a better way in.
-.PRECIOUS: $(SOURCE_C) $(SOURCE_S), $(SOURCE_O)
+.PRECIOUS: $(SOURCE_C) $(SOURCE_S) $(SOURCE_O) temp/%.s
 
 build: rom/$(ROM_NAME).nes graphics/generated/tiles.png graphics/generated/sprites.png
 
