@@ -9,7 +9,7 @@ as well as a few C language features you won't see often elsewhere.
 This may not all make sense right away; that's fine! Just be sure to come back here
 when you encounter some of these things, and read up as needed.
 
-## On bytes and Hexidecimal numbers
+## On bytes, bits, and Hexidecimal numbers
 
 On the NES (and most computers), everything is stored in one or more things called
 bytes. A byte is a number between 0 and 255, and can represent anything from a health
@@ -39,6 +39,52 @@ Counting the same numbers (0-20, or 0x00 to 0x14) in hexidecimal looks like this
 You can also represent larger numbers in hexidecimal. For example, the integer value
 of 256 can be represented as `0x100` and 1024 can be repesented as `0x400`.
 
+
+Why do we care about these numbers, though? The answer is faster code, and also a better
+understanding of the underlying system. To survive writing code for the NES, you will have
+to have a basic understanding of this. Every number we store actually stored as a pattern of
+bits. A bit is a single point of data - it can be set to `0` or `1`. 
+
+A byte like we described above is actually 8 bits put together. Understanding this lets you
+do magic tricks with numbers to make math much faster and easier. 
+
+Follow [this tutorial](http://www.purplemath.com/modules/numbbase.htm) if you haven't encountered
+binary numbers before. Think about how you could change the binary numbers if you shifted all 
+of the binary digits over by one. This will be useful in a few moments.
+
+## A quick introduction to bitwise operators
+
+Now that we know how numbers are stored, we can start to think about how we can manipulate them
+quickly. For starters, think about how you might divide a number by hand. For example, let's divide
+12 by 4. Traditionally, you might do this: 
+
+```c
+unsigned char bigNumber = 12;
+unsigned char result = bigNumber / 4; // This will contain 3
+```
+
+After this runs, `result` will contain `3` as you expect. Behind the scenes though, the console
+might take `12` and subtract `4` 3 times to figure that out. (Note: Technically, the compiler will optimize 
+this correctly so you do not have to in this simple case. It is not safe to rely on that though! This isn't 
+as nice as the compilers you have for most modern systems.)
+
+What if we could do this more quickly? Think about how these numbers are laid out in binary: 
+12 is actually equal to `0x0b` in hex, or `00001100` in binary. Each digit in the binary is a power of two, 
+so if we simply shift the number over one digit, we get `00000110`, or 6. If we do the same thing again,
+we get `00000011`, which is equal to `3`! This only took two operations. This is called a bit shift, and C
+makes them really easy! Here's the same code again, but with shifting: 
+
+```c
+unsigned char bigNumber = 12;
+unsigned char result = bigNumber >> 2; // This will contain 3.
+```
+
+This is admittedly a little hard to read, but can help save cycles. You won't have to do this with all
+of your code, but if you are having problems with speed or space this will definitely help. Plus, the engine
+uses this kind of thing all over the place, so it is best to understand them.
+
+**This is only one of many tricks - check out [this tutorial](https://www.cprogramming.com/tutorial/bitwise_operators.html) for a much better explanation!**
+
 ## There is *very* little RAM available
 
 The NES has 2kb of ram available to it - period. That is not a typo; you can store
@@ -47,17 +93,8 @@ expand this with special NES cartridges, but this is non-trivial.)
 
 This results in us using some amount of trickery for storage - such as packing multiple
 small values into a single byte, and using the `unsigned char` type everywhere. (It takes
-up 1 byte. The `int` type takes up 2.)
-
-As a result, you will also need to do some things that otherwise might be bad C 
-practice. Here are some examples: 
-- Use global variables wherever possible
-- Reuse the same variable for multiple things (Use `#define` to make things more readable)
-- Avoid using function parameters if a global variable could suffice
-- Prefer separate arrays of bytes instead of arrays of structs
-- Always use the `const` keyword when defining constant data
-- Prefer using `++i` over `i++` - the resulting code is smaller and faster
-- Use bit shifting (`<<` and `>>`) in place of multiplication and division whenever possible
+up 1 byte. The `int` type takes up 2.) Note that constant (`const`) variables do not count
+towards this total.
 
 ## The zero page is a small amount of "special" ram
 
@@ -86,6 +123,29 @@ To set which bank to put code into, we use the `CODE_BANK()` macro, with a numbe
 placed into it. If this is used at the top of a code file, all code winds up in that
 bank. To call code in a bank, we use the `banked_call()` method. There are a lot of
 examples of this in `source/main.c`.
+
+## How to work within these system's limitations
+
+As the past couple headings demonstrated, the NES is _very_ limited as a console. 
+
+As a result, you will also need to do some things that otherwise might be bad C 
+practice, just to keep your game playable. 
+
+Here are some examples: 
+- Use global variables wherever possible
+- Reuse the same variable for multiple things (Use `#define` to make things more readable)
+- Avoid using function parameters if a global variable could suffice
+- Prefer separate arrays of bytes instead of arrays of structs
+- Always use the `const` keyword when defining constant data
+- Prefer using `++i` over `i++` - the resulting code is smaller and faster
+- Be familiar with bitwise operators (such as `<<`, `>>`, `&` and `|`) and use them often
+- Use bit shifting (`<<` and `>>`) in place of multiplication and division whenever possible
+
+If you are familiar with assembly, or think you can figure it out, every `.c` file is compiled
+down to a `.s` assembly file in the `temp/` directory during each build. The file is laid out
+such that each line of C is entered as a comment, then all assembly code for that line is
+included after. You can tweak your code and see what produces less instructions this way, if
+you are so inclined.
 
 ## Project layout
 
