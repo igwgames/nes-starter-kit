@@ -12,6 +12,10 @@
 // This does the same thing, but only for sprite collisions with tiles.
 #define SPRITE_TILE_HITBOX_OFFSET 10
 
+// Used to figure out where to put the sprites in sprite memory. 
+// Have to skip over sprite 0 (0x00) and player (0x10)
+#define FIRST_ENEMY_SPRITE_OAM_INDEX 0x40
+
 // The last sprite id that collided with the player, if any. Otherwise, set to NO_SPRITE_HIT
 ZEROPAGE_EXTERN(unsigned char, lastPlayerSpriteCollisionId);
 

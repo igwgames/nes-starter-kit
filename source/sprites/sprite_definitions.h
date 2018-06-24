@@ -46,10 +46,6 @@
 // You can use this for a tile id if you *don't* want to skip all logic.
 #define SPRITE_TILE_ID_OFFSCREEN 0xee
 
-// Used to figure out where to put the sprites in sprite memory. 
-// Have to skip over sprite 0 (0x00) and player (0x10)
-#define FIRST_ENEMY_SPRITE_OAM_INDEX 0x20
-
 // How much to shift to get the position on spriteDefinitions. We store 8 bytes, so we shift by 3. 
 // If you want to expand spriteDefinitions to 16 bytes per definition, change this to 4.
 #define SPRITE_DEF_SHIFT 3
