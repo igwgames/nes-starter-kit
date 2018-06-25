@@ -48,11 +48,25 @@
 // If the player is invulnerable, how quickly to we blink the sprite? In sprite mask form, so one of 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 #define PLAYER_INVULNERABILITY_BLINK_MASK 0x02
 
+// We hve a few free sprite slots before the map sprites start - the weapon (sword) the player has will
+// take up the first two sprites at 0x20.
+#define PLAYER_WEAPON_OAM_LOCATION 0x20
+
+// Where  in our list of files can we find the sword graphics?
+#define PLAYER_SWORD_TILE_ID_H1 0xd1
+#define PLAYER_SWORD_TILE_ID_H2 0xc1
+#define PLAYER_SWORD_TILE_ID_V1 0xd0
+#define PLAYER_SWORD_TILE_ID_V2 0xc0
+
+// Define the number of pixels away from the character to set the sword when fully extended.
+#define PLAYER_SWORD_POSITION_FULLY_EXTENDED 14
+
 ZEROPAGE_EXTERN(int, playerXPosition);
 ZEROPAGE_EXTERN(int, playerYPosition);
 ZEROPAGE_EXTERN(int, playerXVelocity);
 ZEROPAGE_EXTERN(int, playerYVelocity);
 ZEROPAGE_EXTERN(unsigned char, playerDirection);
+ZEROPAGE_EXTERN(unsigned char, swordPosition);
 
 // Helper macro to convert the player's X and Y position into a position on the map
 #define PLAYER_MAP_POSITION(xPos, yPos) (xPos>>4) + (yPos & 0xf0)
