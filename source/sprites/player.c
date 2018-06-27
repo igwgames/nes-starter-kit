@@ -129,7 +129,7 @@ void handle_player_movement(void) {
         if (swordPosition == 0 && controllerState & PAD_A && !(lastControllerState & PAD_A)) {
             swordPosition = PLAYER_SWORD_POSITION_FULLY_EXTENDED;
         } else if (swordPosition != 0) {
-            swordPosition -= 1;
+            swordPosition -= 2;
         }
 
         if (controllerState & PAD_RIGHT && playerXVelocity >= (0 - PLAYER_VELOCITY_NUDGE)) {
