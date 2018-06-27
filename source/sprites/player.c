@@ -363,9 +363,19 @@ void handle_player_sprite_collision(void) {
                 lastPlayerSpriteCollisionId = lastPlayerWeaponCollisionId;
                 break;
             case SPRITE_TYPE_REGULAR_ENEMY:
-                // TODO: This isn't right.
-                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
-                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                // If the sprite is already in the invulnerability animation, just skip out.
+                if (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN]) {
+                    break;
+                }
+                
+                // Kinda complex logic warning: in the if statement below, we subtract 1 from the enemy's health, then
+                // compare it with 0. If it is zero, we remove the sprite; otherwise we bump the invulnerability timer.
+                if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] == 0) {
+                    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                } else {
+                    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN] = SPRITE_INVULNERABILITY_TIME;
+                }
                 break;
         }
     }

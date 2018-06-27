@@ -274,46 +274,54 @@ void update_map_sprites(void) {
 
         sprX8 = sprX >> SPRITE_POSITION_SHIFT;
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
-        tempMapSpriteIndex = (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6;
-        if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
-            oam_spr(
-                sprX8 + (NES_SPRITE_WIDTH/2),
-                sprY8 + (NES_SPRITE_HEIGHT/2),
-                currentSpriteTileId,
-                tempMapSpriteIndex,
-                oamMapSpriteIndex
-            );
-        } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
-            oam_spr(
-                sprX8,
-                sprY8,
-                currentSpriteTileId,
-                tempMapSpriteIndex,
-                oamMapSpriteIndex
-            );
-            oam_spr(
-                sprX8 + NES_SPRITE_WIDTH,
-                sprY8,
-                currentSpriteTileId + 1,
-                tempMapSpriteIndex,
-                oamMapSpriteIndex + 4
-            );
-            oam_spr(
-                sprX8,
-                sprY8 + NES_SPRITE_HEIGHT,
-                currentSpriteTileId + 16,
-                tempMapSpriteIndex,
-                oamMapSpriteIndex + 8
-            );
-            oam_spr(
-                sprX8 + NES_SPRITE_WIDTH,
-                sprY8 + NES_SPRITE_HEIGHT,
-                currentSpriteTileId + 17,
-                tempMapSpriteIndex,
-                oamMapSpriteIndex + 12
-            );
+        // If the sprite is not in the invulnerability countdown, or half the time when the sprite is in the countdown, draw the sprite.
+        if (!currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN] || (frameCount & 0x04)) {
 
+            tempMapSpriteIndex = (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6;
+            if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+                oam_spr(
+                    sprX8 + (NES_SPRITE_WIDTH/2),
+                    sprY8 + (NES_SPRITE_HEIGHT/2),
+                    currentSpriteTileId,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex
+                );
+            } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+                oam_spr(
+                    sprX8,
+                    sprY8,
+                    currentSpriteTileId,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex
+                );
+                oam_spr(
+                    sprX8 + NES_SPRITE_WIDTH,
+                    sprY8,
+                    currentSpriteTileId + 1,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 4
+                );
+                oam_spr(
+                    sprX8,
+                    sprY8 + NES_SPRITE_HEIGHT,
+                    currentSpriteTileId + 16,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 8
+                );
+                oam_spr(
+                    sprX8 + NES_SPRITE_WIDTH,
+                    sprY8 + NES_SPRITE_HEIGHT,
+                    currentSpriteTileId + 17,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 12
+                );
+            }
 
+        }
+
+        // Decrement the countdown for invulnerability if it is non-zero.
+        if (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN]) {
+            --currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN];
         }
 
         // While we have all the data above, let's see if the player hit us.

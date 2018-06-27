@@ -12,7 +12,11 @@
 // This does the same thing, but only for sprite collisions with tiles.
 #define SPRITE_TILE_HITBOX_OFFSET 10
 
-// Used to figure out where to put the sprites in sprite memory.
+// The number of frames to flicker the enemy sprite for (and disallow damage) before returning to normal.
+#define SPRITE_INVULNERABILITY_TIME 60
+
+// Used to figure out where to put the sprites in sprite memory. 
+
 // Have to skip over sprite 0 (0x00) and player (0x10)
 #define FIRST_ENEMY_SPRITE_OAM_INDEX 0x40
 
