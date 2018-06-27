@@ -20,7 +20,7 @@
 // The last sprite id that collided with the player, if any. Otherwise, set to NO_SPRITE_HIT
 ZEROPAGE_EXTERN(unsigned char, lastPlayerSpriteCollisionId);
 ZEROPAGE_EXTERN(unsigned char, currentMapSpriteIndex);
-
+ZEROPAGE_EXTERN(unsigned char, lastPlayerWeaponCollisionId);
 
 // Update all sprites on the current map tile. You probably want to call this 1x/frame.
 void update_map_sprites(void);

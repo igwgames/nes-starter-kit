@@ -361,6 +361,23 @@ void test_player_tile_collision(void) {
 }
 
 void handle_player_sprite_collision(void) {
+    if (lastPlayerWeaponCollisionId != NO_SPRITE_HIT) {
+        currentMapSpriteIndex = lastPlayerWeaponCollisionId<<MAP_SPRITE_DATA_SHIFT;
+
+        switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
+            // If we hit an item, just use the normal method to collect it; let it override whatever we hit for a cycle.
+            case SPRITE_TYPE_HEALTH:
+            case SPRITE_TYPE_KEY:
+            case SPRITE_TYPE_DOOR:
+                lastPlayerSpriteCollisionId = lastPlayerWeaponCollisionId;
+                break;
+            case SPRITE_TYPE_REGULAR_ENEMY:
+                // TODO: This isn't right.
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                break;
+        }
+    }
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;

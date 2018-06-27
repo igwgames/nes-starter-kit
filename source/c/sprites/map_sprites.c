@@ -29,10 +29,16 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define currentSpriteFullTileCollisionWidth tempInt4
 #define currentSpriteFullTileCollisionHeight tempInt4
 
+#define playerSwordX tempInt5
+#define playerSwordY tempInt6
+
+#define playerSwordWidth tempChar9
+#define playerSwordHeight tempChara
 
 
 ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
 ZEROPAGE_DEF(unsigned char, currentMapSpriteIndex);
+ZEROPAGE_DEF(unsigned char, lastPlayerWeaponCollisionId);
 
 // Forward definition of this method; code is at the bottom of this file. Ignore this for now!
 void do_sprite_movement_with_collision(void);
@@ -40,7 +46,40 @@ void do_sprite_movement_with_collision(void);
 // Updates all available map sprites (with movement every other frame)
 void update_map_sprites(void) {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+    lastPlayerWeaponCollisionId = NO_SPRITE_HIT;
 
+    if (swordPosition > 4) {
+        playerSwordX = playerXPosition;
+        playerSwordY = playerYPosition;
+        switch (playerDirection) {
+            case SPRITE_DIRECTION_RIGHT:
+                playerSwordX += PLAYER_WIDTH_EXTENDED;
+                playerSwordY += (PLAYER_HEIGHT_EXTENDED / 2);
+                playerSwordWidth = PLAYER_SWORD_SIZE_LONG;
+                playerSwordHeight = PLAYER_SWORD_SIZE_SHORT;
+                break;
+            case SPRITE_DIRECTION_LEFT:
+                playerSwordX -= PLAYER_WIDTH_EXTENDED;
+                playerSwordY += (PLAYER_HEIGHT_EXTENDED / 2);
+                playerSwordWidth = PLAYER_SWORD_SIZE_LONG;
+                playerSwordHeight = PLAYER_SWORD_SIZE_SHORT;
+                break;
+            case SPRITE_DIRECTION_DOWN:
+                playerSwordX += (PLAYER_WIDTH_EXTENDED / 2);
+                playerSwordY += PLAYER_HEIGHT_EXTENDED;
+                playerSwordWidth = PLAYER_SWORD_SIZE_SHORT;
+                playerSwordHeight = PLAYER_SWORD_SIZE_LONG;
+                break;
+            case SPRITE_DIRECTION_UP:
+                playerSwordX += (PLAYER_WIDTH_EXTENDED / 2);
+                playerSwordY -= PLAYER_HEIGHT_EXTENDED;
+                playerSwordWidth = PLAYER_SWORD_SIZE_SHORT;
+                playerSwordHeight = PLAYER_SWORD_SIZE_LONG;
+                break;
+        }
+    }
+    
+    // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
     for (i = 0; i < MAP_MAX_SPRITES; ++i) {
         currentMapSpriteIndex = i << MAP_SPRITE_DATA_SHIFT;
 
@@ -283,11 +322,24 @@ void update_map_sprites(void) {
         currentSpriteType = currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE];
         if (currentSpriteType != SPRITE_TYPE_NOTHING && currentSpriteType != SPRITE_TYPE_OFFSCREEN) {
 
-            // For 16x16 enemy sprites, make their hitbox a bit smaller
+            // If the player's sword is swinging, do some damage with it.
+            if (swordPosition > 4) {
+                if (
+                    playerSwordX < sprX + currentSpriteFullTileCollisionWidth &&
+                    playerSwordX + playerSwordWidth > sprX &&
+                    playerSwordY < sprY + currentSpriteFullTileCollisionHeight &&
+                    playerSwordY + playerSwordHeight > sprY
+                ) {
+                    lastPlayerWeaponCollisionId = i;
+                }
+            }
+
+            // For 16x16 enemy sprites, make their hitbox a bit smaller - but only for non-weapon hits.
             if (currentSpriteType == SPRITE_TYPE_REGULAR_ENEMY || currentSpriteType == SPRITE_TYPE_INVULNERABLE_ENEMY) {
                 sprX -= SPRITE_HITBOX_OFFSET;
                 sprY -= SPRITE_HITBOX_OFFSET;
             }
+
 
             // Collision test... see here for a clear explanation: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
             // rect1=player position, rect2=sprite position
