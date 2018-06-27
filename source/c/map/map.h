@@ -53,6 +53,7 @@
 #define MAP_SPRITE_DATA_POS_DIRECTION_TIME      11
 #define MAP_SPRITE_DATA_POS_MOVE_SPEED          12
 #define MAP_SPRITE_DATA_POS_DAMAGE              13
+#define MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN    14
 
 // How many tiles are in the map before we start getting into sprite data.
 #define MAP_DATA_TILE_LENGTH 192
