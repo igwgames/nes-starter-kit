@@ -35,6 +35,7 @@ void initialize_variables(void) {
     playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
 
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+    lastPlayerWeaponCollisionId = NO_SPRITE_HIT;
 
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
     

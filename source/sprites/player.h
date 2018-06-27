@@ -58,6 +58,10 @@
 #define PLAYER_SWORD_TILE_ID_V1 0xd0
 #define PLAYER_SWORD_TILE_ID_V2 0xc0
 
+// The width and height of the sword sprite for collisions
+#define PLAYER_SWORD_SIZE_LONG (14 << PLAYER_POSITION_SHIFT)
+#define PLAYER_SWORD_SIZE_SHORT (4 << PLAYER_POSITION_SHIFT)
+
 // Define the number of pixels away from the character to set the sword when fully extended.
 #define PLAYER_SWORD_POSITION_FULLY_EXTENDED 14
 
