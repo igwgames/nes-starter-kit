@@ -92,9 +92,10 @@ with SPRITE_TYPE. There should be something like this:
 #define SPRITE_TYPE_KEY 0x01
 #define SPRITE_TYPE_HEALTH 0x02
 #define SPRITE_TYPE_REGULAR_ENEMY 0x03 
-#define SPRITE_TYPE_DOOR 0x04
-#define SPRITE_TYPE_LOCKED_DOOR 0x05
-#define SPRITE_TYPE_ENDGAME 0x06
+#define SPRITE_TYPE_INVULNERABLE_ENEMY 0x04
+#define SPRITE_TYPE_DOOR 0x05
+#define SPRITE_TYPE_LOCKED_DOOR 0x06
+#define SPRITE_TYPE_ENDGAME 0x07
 ```
 
 These simply map pretty names to values that the code knows about. Add a new one for
