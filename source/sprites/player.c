@@ -251,7 +251,6 @@ void handle_player_sprite_collision() {
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
-
         switch (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE]) {
             case SPRITE_TYPE_HEALTH:
                 // This if statement ensures that we don't remove hearts if you don't need them yet.
@@ -282,6 +281,7 @@ void handle_player_sprite_collision() {
                 }
                 break;
             case SPRITE_TYPE_REGULAR_ENEMY:
+            case SPRITE_TYPE_INVULNERABLE_ENEMY:
 
                 if (playerInvulnerabilityTime) {
                     return;
