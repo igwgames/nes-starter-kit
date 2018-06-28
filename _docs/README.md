@@ -9,7 +9,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
 
-[Download the example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes)
+[Download the example rom](https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes)
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
 
