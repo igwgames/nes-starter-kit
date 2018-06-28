@@ -365,7 +365,7 @@ void update_map_sprites() {
         if (currentSpriteType != SPRITE_TYPE_NOTHING && currentSpriteType != SPRITE_TYPE_OFFSCREEN) {
 
             // For 16x16 enemy sprites, make their hitbox a bit smaller
-            if (currentSpriteType == SPRITE_TYPE_REGULAR_ENEMY) {
+            if (currentSpriteType == SPRITE_TYPE_REGULAR_ENEMY || currentSpriteType == SPRITE_TYPE_INVULNERABLE_ENEMY) {
                 sprX -= SPRITE_HITBOX_OFFSET;
                 sprY -= SPRITE_HITBOX_OFFSET;
             }
