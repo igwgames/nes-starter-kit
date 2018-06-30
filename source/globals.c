@@ -37,6 +37,7 @@ ZEROPAGE_DEF(int, tempInt2);
 ZEROPAGE_DEF(int, tempInt3);
 ZEROPAGE_DEF(int, tempInt4);
 ZEROPAGE_DEF(int, tempInt5);
+ZEROPAGE_DEF(int, tempInt6);
 
 // This can be used to convert a byte value to a bit id - just get the 
 const unsigned int bitToByte[8] = {
