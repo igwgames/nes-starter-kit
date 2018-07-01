@@ -316,6 +316,12 @@ void update_map_sprites(void) {
                     oamMapSpriteIndex + 12
                 );
             }
+        } else {
+            // The sprite is flashing, and this is a hidden frame. Explicitly hide the sprite.
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + 4);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + 8);
+            oam_spr(SPRITE_OFFSCREEN, SPRITE_OFFSCREEN, 0, 0, oamMapSpriteIndex + 12);
 
         }
 
