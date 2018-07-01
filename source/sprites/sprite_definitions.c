@@ -11,7 +11,8 @@
 // 4th byte: Animation type
 // 5th byte: How the sprite moves.
 // 6th-8th byte: Miscellaneous; you can use this for whatever extra data you need. For enemies, byte 5
-//           is used as the damage they deal. Health powerups use byte 5 to store how much to restore. 
+//           is used as the damage they deal. Health powerups use byte 5 to store how much to restore. Byte 7 is used
+//           for health on enemy sprites in our `add_sword` branch.
 // NOTE: This array cannot contain more than 64 sprites, or other logic will break.
 const unsigned char spriteDefinitions[] = {
     SPRITE_TYPE_HEALTH, 0xea, SPRITE_SIZE_8PX_8PX | SPRITE_PALETTE_2, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 1, 0x00, 0x00,
