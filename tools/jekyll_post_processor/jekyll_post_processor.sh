@@ -37,7 +37,7 @@ for i in guide/**/*.md; do
 	# Parse the name from the first line starting with a #
 	TITLE=`grep "^#" $i | head -n1`
 	# And take out the # and the space.
-	TITLE=`echo ${title:2}`
+	TITLE=`echo ${TITLE:2}`
 	
 	# Find the location for the new file in our _docs folder.
 	NEWFILE="${i/guide/_docs}"
