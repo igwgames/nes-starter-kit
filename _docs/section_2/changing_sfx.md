@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing Sound effects
 permalink: guide/section_2/changing_sfx.html
 ---
 # Changing Sound effects

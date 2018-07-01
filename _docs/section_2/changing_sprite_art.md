@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing Sprite Art
 permalink: guide/section_2/changing_sprite_art.html
 ---
 # Changing Sprite Art

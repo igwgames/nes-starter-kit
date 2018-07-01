@@ -1,5 +1,5 @@
 ---
-title: 
+title: Adding New Map Tiles
 permalink: guide/section_2/adding_new_map_tiles.html
 ---
 # Adding New Map Tiles

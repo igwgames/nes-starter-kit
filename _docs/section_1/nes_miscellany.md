@@ -1,5 +1,5 @@
 ---
-title: 
+title: Things to know about the NES and C
 permalink: guide/section_1/nes_miscellany.html
 ---
 # Things to know about the NES and C

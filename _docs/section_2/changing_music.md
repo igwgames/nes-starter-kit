@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing the Music
 permalink: guide/section_2/changing_music.html
 ---
 # Changing the Music

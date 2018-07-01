@@ -1,5 +1,5 @@
 ---
-title: 
+title: Animating Tiles
 permalink: guide/section_4/animated_tiles.html
 ---
 # Animating Tiles

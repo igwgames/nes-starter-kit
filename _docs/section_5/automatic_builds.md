@@ -1,5 +1,5 @@
 ---
-title: 
+title: Automatic Builds with CircleCI
 permalink: guide/section_5/automatic_builds.html
 ---
 # Automatic Builds with CircleCI

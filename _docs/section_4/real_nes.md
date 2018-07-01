@@ -1,5 +1,5 @@
 ---
-title: 
+title: Playing your game on a Real NES Console
 permalink: guide/section_4/real_nes.html
 ---
 # Playing your game on a Real NES Console

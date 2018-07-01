@@ -1,5 +1,5 @@
 ---
-title: 
+title: Playing your Game
 permalink: guide/section_1/playing_your_game.html
 ---
 # Playing your Game

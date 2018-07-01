@@ -1,5 +1,5 @@
 ---
-title: 
+title: Adding new enemies
 permalink: guide/section_2/adding_enemies.html
 ---
 # Adding new enemies

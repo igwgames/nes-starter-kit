@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing the World
 permalink: guide/section_2/changing_the_world.html
 ---
 # Changing the World

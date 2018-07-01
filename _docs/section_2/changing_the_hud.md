@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing the HUD
 permalink: guide/section_2/changing_the_hud.html
 ---
 # Changing the HUD

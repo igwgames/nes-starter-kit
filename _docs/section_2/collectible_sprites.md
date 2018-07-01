@@ -1,5 +1,5 @@
 ---
-title: 
+title: Adding a new collectible sprite
 permalink: guide/section_2/collectible_sprites.html
 ---
 # Adding a new collectible sprite

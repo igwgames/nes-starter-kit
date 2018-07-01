@@ -1,5 +1,5 @@
 ---
-title: 
+title: Frequently Asked Questions
 permalink: guide/section_1/faq.html
 ---
 # Frequently Asked Questions

@@ -1,5 +1,5 @@
 ---
-title: 
+title: Setting up your tools
 permalink: guide/section_1/setting_up_your_tools.html
 ---
 # Setting up your tools

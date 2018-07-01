@@ -1,5 +1,5 @@
 ---
-title: 
+title: Making Your First Change
 permalink: guide/section_1/your_first_change.html
 ---
 # Making Your First Change

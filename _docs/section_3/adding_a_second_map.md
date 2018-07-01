@@ -1,5 +1,5 @@
 ---
-title: 
+title: Adding a Second Map
 permalink: guide/section_3/adding_a_second_map.html
 ---
 # Adding a Second Map

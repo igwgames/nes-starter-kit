@@ -1,5 +1,5 @@
 ---
-title: 
+title: Writing Functions in Assembly Language
 permalink: guide/section_5/writing_assembly_functions.html
 ---
 # Writing Functions in Assembly Language

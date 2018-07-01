@@ -1,5 +1,5 @@
 ---
-title: 
+title: Changing Movement
 permalink: guide/section_2/changing_movement.html
 ---
 # Changing Movement

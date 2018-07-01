@@ -1,5 +1,5 @@
 ---
-title: 
+title: Making a Full Title Screen
 permalink: guide/section_4/title_screen.html
 ---
 # Making a Full Title Screen

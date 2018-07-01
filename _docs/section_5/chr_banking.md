@@ -1,5 +1,5 @@
 ---
-title: 
+title: Extending the available graphics via CHR banking
 permalink: guide/section_5/chr_banking.html
 ---
 # Extending the available graphics via CHR banking

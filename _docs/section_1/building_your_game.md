@@ -1,5 +1,5 @@
 ---
-title: 
+title: Building Your Game
 permalink: guide/section_1/building_your_game.html
 ---
 # Building Your Game

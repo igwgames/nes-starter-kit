@@ -1,5 +1,5 @@
 ---
-title: 
+title: Putting Your Code In the Right Place: A Brief Introduction to PRG Banking
 permalink: guide/section_3/putting_your_code_in_the_right_place.html
 ---
 # Putting Your Code In the Right Place: A Brief Introduction to PRG Banking
