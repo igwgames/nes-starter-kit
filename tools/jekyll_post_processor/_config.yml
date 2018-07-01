@@ -31,13 +31,6 @@ exclude:
 timezone: US/Eastern
 defaults:
 - scope:
-    path: _posts
-    type: posts
-  values:
-    layout: post
-    sectionid: blog
-
-- scope:
     path: _docs
     type: docs
   values:
