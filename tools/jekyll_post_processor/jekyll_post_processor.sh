@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Starting Jekyll post-processor"
 # Quick and dirty script to get our documentation into a format we can use with Jekyll
 # Responsible for a few things: 
 # 1. Copying all markdown to the /_docs folder
@@ -104,3 +105,5 @@ echo "$OUTFILE" > _data/docs.yml
 # This tries to pull a find-and-replace on all of them.
 # Hat tip: https://stackoverflow.com/questions/28402181/replace-many-arbitrary-markdown-links-with-grep-sed
 find ./_docs -type f -exec sed -ri 's/([[]*]\(\S+).md\)/\1.html)/ig' {} \;
+
+echo "Jekyll post-processor completed"
