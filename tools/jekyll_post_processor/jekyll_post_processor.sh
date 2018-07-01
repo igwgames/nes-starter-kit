@@ -52,6 +52,8 @@ title: $TITLE
 permalink: $FILEURL
 ---"
 
+echo "Parsed $i as (title: $TITLE; link: $NEWFILE)"
+
 # Output the file alongside its header text.
 	(echo "$FULLHEAD"; cat $i) > $NEWFILE
 
