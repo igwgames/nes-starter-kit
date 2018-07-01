@@ -137,7 +137,7 @@ matter if they interest you.
 _(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
 
 20. [Putting your code in the right place: a brief introduction to prg banking](./guide/section_3/putting_your_code_in_the_right_place.html)
-21. Giving your main character a sword
+21. [Giving your main character a sword](./guide/section_3/giving_the_player_a_sword.html)
 22. Adding more features to the pause menu
 23. [Adding a second map](./guide/section_3/adding_a_second_map.html)
 24. Making the main character grow or shrink
