@@ -140,9 +140,10 @@ _(Note: these are rough ideas and very likely going to change. Suggestions also 
 21. [Giving your main character a sword](./guide/section_3/giving_the_player_a_sword.html)
 22. Adding more features to the pause menu
 23. [Adding a second map](./guide/section_3/adding_a_second_map.html)
-24. Making the main character grow or shrink
-25. Adding objects that attract or repel the player
-26. Adding an enemy that mimics player behavior
+24. [Saving the Game](./guide/section_3/saving_the_game.html)
+25. Making the main character grow or shrink
+26. Adding objects that attract or repel the player
+27. Adding an enemy that mimics player behavior
 
 ### Part 4: Polish and more
 
