@@ -94,6 +94,8 @@ Okay, that's it for the basic example! Start the game up, you should see zero. B
 Close the emulator and re-open it; you should still see one! Saved! Read on for some more information on how to use
 this correctly.
 
+![Games Beaten](../images/games_beaten_3.png)
+
 ## Saving arrays of data
 
 If you're doing anything complex, you likely would want to save arrays of data as well. Luckily, it's just as simple.
