@@ -98,8 +98,8 @@
   - title: "40. Understanding and tweaking the build tools"
     url: "/guide/section_5/build_tools.html"
 
-  - title: "41. Understanding and adjusting the size of your game"
-    url: ""
+  - title: "41. Resizing your rom"
+    url: "/guide/section_5/rom_size.html"
 
   - title: "42. ROM Data Map"
     url: "/guide/section_5/rom_map.html"

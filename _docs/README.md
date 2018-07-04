@@ -159,7 +159,7 @@ _Things in this section are somewhat complicated, and go into how the engine wor
 need these things for most games, but if you do, this is a place to learn!_
 
 40. [Understanding and tweaking the build tools](./guide/section_5/build_tools.html)
-41. Understanding and adjusting the size of your game
+41. [Resizing your rom](./guide/section_5/rom_size.html)
 42. [ROM Data Map](./guide/section_5/rom_map.html)
 43. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.html)
 44. Getting finer control over graphics with chr ram
