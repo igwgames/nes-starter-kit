@@ -19,9 +19,8 @@ This project is very much a work in progress. This readme tries to outline the e
 warned that not everything is here yet. Imagine this like the "Under Construction" gifs on
 Tripod and Geocities back in the day ;)
 
-Right now, the tools are set up to work, the project produces a working game, and the first two sections of the guide
-are complete. You should be able to produce a rudimentary game using nes-starter-kit. Consider this like an Alpha
-release.
+Right now, the tools are set up to work, the project produces a working game, and most of the guide is complete. 
+You should be able to produce a rudimentary game using nes-starter-kit. Consider this like an Beta release.
 
 If you decide to check this out and have thoughts, please share them! You are welcome to open an issue or PR, 
 or even just send me a Tweet/DM/email/whatever. Your input can help shape the outcome of this project. (and is
