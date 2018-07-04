@@ -68,6 +68,21 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
     _Pragma("bssseg (pop)") \
     _Pragma("dataseg (pop)")
 
+#define SRAM_DEF(defa, defb) \
+    _Pragma("bssseg (push,\"SRAM\")") \
+    _Pragma("dataseg (push, \"SRAM\")") \
+    defa defb; \
+    _Pragma("bssseg (pop)") \
+    _Pragma("dataseg (pop)")
+
+#define SRAM_ARRAY_DEF(defa, defb, defArr) \
+    _Pragma("bssseg (push,\"SRAM\")") \
+    _Pragma("dataseg (push, \"SRAM\")") \
+    defa defb[defArr]; \
+    _Pragma("bssseg (pop)") \
+    _Pragma("dataseg (pop)")
+
+
 
 // Mark a variable referenced in a header file as being a zeropage symbol.
 // Any time you set a variable as a ZEROPAGE_DEF, you will want to also update any header files referencing it
@@ -75,6 +90,12 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
 // (Usage; ZEROPAGE_EXTERN(type, variableName); eg ZEROPAGE_EXTERN(int, myInt))
 #define ZEROPAGE_EXTERN(defa, defb) extern defa defb; _Pragma("zpsym (\"" STR(defb) "\")")
 #define ZEROPAGE_ARRAY_EXTERN(defa, defb, defArr) extern defa defb[defArr]; _Pragma("zpsym (\"" STR(defb) "\")")
+
+// Mark a variable referened in a header file as being SRAM. 
+// Technically this just creates a regular extern, and you could avoid using this symbol. It is used only for
+// consistency with ZEROPAGE variables, to make the source easier to follow.
+#define SRAM_EXTERN(defa, defb) extern defa defb;
+#define SRAM_ARRAY_EXTERN(defa, defb, defArr) extern defa defb[defArr];
 
 // Set the PRG bank to put the code in the current file into.
 #define CODE_BANK(id) _Pragma("rodataseg (push, \"ROM_0" STR(id) "\")") _Pragma("codeseg (push, \"ROM_0" STR(id) "\")")
