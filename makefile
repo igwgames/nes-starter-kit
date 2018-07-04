@@ -53,7 +53,12 @@ VPATH=$(SOURCE_DIRS)
 # which effectively does the same thing as double-clicking the rom in explorer.
 MAIN_EMULATOR=cmd /c start
 
-CONFIG_FILE=tools/cc65_config/game.cfg
+# Which configuration file to use. Lets you add more PRG banks and/or SRAM.
+CONFIG_FILE_PATH=tools/cc65_config/game
+
+# These are the configuration files loaded by the line above. You probably don't have to change these.
+CONFIG_FILE=$(CONFIG_FILE_PATH).cfg
+CONFIG_ASM=$(CONFIG_FILE_PATH)_constants.asm
 
 # Path to 7-Zip - only used for generating tools zip. There's a 99.9% chance you don't care about this.
 7ZIP="/cygdrive/c/Program Files/7-Zip/7z"
@@ -89,8 +94,12 @@ build: rom/$(ROM_NAME).nes graphics/generated/tiles.png graphics/generated/sprit
 build-tiles: graphics/generated/tiles.png
 build-sprites: graphics/generated/sprites.png
 
-temp/crt0.o: source/neslib_asm/crt0.asm $(SOURCE_CRT0_ASM) $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
-	$(MAIN_ASM_COMPILER) source/neslib_asm/crt0.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
+temp/base.asm: $(CONFIG_ASM)
+	echo ".include \"$(CONFIG_ASM)\"" > temp/base.asm
+	echo ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
+
+temp/crt0.o: source/neslib_asm/crt0.asm temp/base.asm $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
+	$(MAIN_ASM_COMPILER) temp/base.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
 # This bit is a little cheap... any time a header file changes, just recompile all C files. There might
 # be some trickery we could do to find all C files that actually care, but this compiles fast enough that 
