@@ -13,3 +13,8 @@
         .incbin "graphics/tiles.chr"
 	_main_sprites: 
         .incbin "graphics/sprites.chr"
+
+.export _ocean_tiles
+.segment "CODE"
+	_ocean_tiles: 
+		.incbin "graphics/ocean_tiles.chr"
