@@ -57,7 +57,7 @@ ca65_chr_ram.cfg -> ca65.cfg
 ca65_chr_ram_constants.asm -> ca65_constants.asm
 ```
 
-Next, we need to stop loading the chr files in our C startup file. Open `source/c/system-runtime.asm` and look for 
+Next, we need to stop loading the chr files in our C startup file. Open `graphics/graphics.config.asm` and look for 
 the following code:
 
 ```asm
