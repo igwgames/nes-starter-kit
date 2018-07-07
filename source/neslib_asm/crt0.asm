@@ -293,6 +293,12 @@ detectNTSC:
 	_main_tiles: .incbin "graphics/tiles.chr"
 	_main_sprites: .incbin "graphics/sprites.chr"
 
+.export _ocean_tiles
+.segment "CODE"
+	_ocean_tiles: 
+		.incbin "graphics/ocean_tiles.chr"
+
+
 ; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
 .repeat (SYS_PRG_BANKS-1), I
 	resetstub_in .concat("STUB_", .sprintf("%02X", I))

@@ -61,3 +61,5 @@ extern const unsigned int bitToByte[8];
 extern const unsigned char ascii_tiles[];
 extern const unsigned char main_tiles[];
 extern const unsigned char main_sprites[];
+
+extern const unsigned char ocean_tiles[];
