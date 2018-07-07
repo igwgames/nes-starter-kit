@@ -129,16 +129,13 @@ matter if they interest you.
 
 ### Part 3: Adding new features
 
-_(Note: these are rough ideas and very likely going to change. Suggestions also welcome)_
-
 20. [Putting your code in the right place: a brief introduction to prg banking](./guide/section_3/putting_your_code_in_the_right_place.md)
 21. [Giving your main character a sword](./guide/section_3/giving_the_player_a_sword.md)
 22. Adding more features to the pause menu
 23. [Adding a second map](./guide/section_3/adding_a_second_map.md)
 24. [Saving the Game](./guide/section_3/saving_the_game.md)
-25. Making the main character grow or shrink
-26. Adding objects that attract or repel the player
-27. Adding an enemy that mimics player behavior
+25. Adding objects that attract or repel the player
+26. Adding an enemy that mimics player behavior
 
 ### Part 4: Polish and more
 
@@ -158,7 +155,7 @@ need these things for most games, but if you do, this is a place to learn!_
 41. [Resizing your rom](./guide/section_5/rom_size.md)
 42. [ROM Data Map](./guide/section_5/rom_map.md)
 43. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.md)
-44. Getting finer control over graphics with chr ram
+44. [Getting finer control over graphics with chr ram](./guide/section_5/chr_ram.md)
 45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.md)
 46. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.md)
 
