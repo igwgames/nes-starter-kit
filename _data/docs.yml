@@ -68,13 +68,10 @@
   - title: "24. Saving the Game"
     url: "/guide/section_3/saving_the_game.html"
 
-  - title: "25. Making the main character grow or shrink"
+  - title: "25. Adding objects that attract or repel the player"
     url: ""
 
-  - title: "26. Adding objects that attract or repel the player"
-    url: ""
-
-  - title: "27. Adding an enemy that mimics player behavior"
+  - title: "26. Adding an enemy that mimics player behavior"
     url: ""
 
 - title: " Part 4: Polish and more"
@@ -111,7 +108,7 @@
     url: "/guide/section_5/chr_banking.html"
 
   - title: "44. Getting finer control over graphics with chr ram"
-    url: ""
+    url: "/guide/section_5/chr_ram.html"
 
   - title: "45. Writing Functions in Assembly"
     url: "/guide/section_5/writing_assembly_functions.html"
