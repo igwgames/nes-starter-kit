@@ -54,7 +54,7 @@ VPATH=$(SOURCE_DIRS)
 MAIN_EMULATOR=cmd /c start
 
 # Which configuration file to use. Lets you add more PRG banks and/or SRAM.
-CONFIG_FILE_PATH=tools/cc65_config/game
+CONFIG_FILE_PATH=tools/cc65_config/game_chr_ram
 
 # These are the configuration files loaded by the line above. You probably don't have to change these.
 CONFIG_FILE=$(CONFIG_FILE_PATH).cfg
