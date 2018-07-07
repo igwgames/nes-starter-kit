@@ -56,3 +56,8 @@ extern const unsigned int bitToByte[8];
 
 // Set a memory address to a value. Very, very raw.
 #define SET_ADDR_VALUE(addr, value) *(unsigned char*)(addr) = value
+
+// CHR data loaded in crt0.asm
+extern const unsigned char ascii_tiles[];
+extern const unsigned char main_tiles[];
+extern const unsigned char main_sprites[];

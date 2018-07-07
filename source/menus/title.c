@@ -14,8 +14,8 @@ void draw_title_screen(void) {
 	pal_bg(titlePalette);
 	pal_spr(titlePalette);
 
-	set_chr_bank_0(CHR_BANK_MENU);
-    set_chr_bank_1(CHR_BANK_MENU);
+	// set_chr_bank_0(CHR_BANK_MENU);
+    // set_chr_bank_1(CHR_BANK_MENU);
 	clear_screen();
 	oam_clear();
 
