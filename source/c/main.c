@@ -43,6 +43,30 @@ void initialize_variables(void) {
     bank_spr(1);
 }
 
+void initialize_chr_ram_menu(void) {
+    set_chr_bank_0(0);
+    set_chr_bank_1(1);
+    bank_push(5);
+    vram_adr(PPU_PATTERN_TABLE_0_ADDRESS);
+    vram_write((unsigned char*)ascii_tiles, PPU_PATTERN_TABLE_LENGTH);
+    vram_adr(PPU_PATTERN_TABLE_1_ADDRESS);
+    vram_write((unsigned char*)ascii_tiles, PPU_PATTERN_TABLE_LENGTH);
+    bank_pop();
+
+}
+
+void initialize_chr_ram_game(void) {
+    set_chr_bank_0(0);
+    set_chr_bank_1(1);
+    bank_push(5);
+    vram_adr(PPU_PATTERN_TABLE_0_ADDRESS);
+    vram_write((unsigned char*)main_tiles, PPU_PATTERN_TABLE_LENGTH);
+    vram_adr(PPU_PATTERN_TABLE_1_ADDRESS);
+    vram_write((unsigned char*)main_sprites, PPU_PATTERN_TABLE_LENGTH);
+    bank_pop();
+
+}
+
 void main(void) {
     fade_out_instant();
     gameState = GAME_STATE_SYSTEM_INIT;
@@ -56,6 +80,7 @@ void main(void) {
                 break;
 
             case GAME_STATE_TITLE_DRAW:
+                initialize_chr_ram_menu();
                 banked_call(PRG_BANK_TITLE, draw_title_screen);
                 music_play(SONG_TITLE);
                 fade_in();
@@ -67,6 +92,9 @@ void main(void) {
 
                 music_stop();
                 fade_out();
+                ppu_off();
+                initialize_chr_ram_game();
+                ppu_on_all();
                 load_map();
 
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
@@ -110,6 +138,10 @@ void main(void) {
                 break;
             case GAME_STATE_PAUSED:
                 fade_out();
+                ppu_off();
+                initialize_chr_ram_menu();
+                ppu_on_all();
+
                 banked_call(PRG_BANK_PAUSE_MENU, draw_pause_screen);
                 fade_in();
                 banked_call(PRG_BANK_PAUSE_MENU, handle_pause_input);
@@ -117,6 +149,10 @@ void main(void) {
                 // When we get here, the player has unpaused. 
                 // Pause has its own mini main loop in handle_input to make logic easier.
                 fade_out();
+                ppu_off();
+                initialize_chr_ram_game();
+                ppu_on_all();
+
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
                 banked_call(PRG_BANK_MAP_LOGIC, init_map);
                 
@@ -130,6 +166,11 @@ void main(void) {
             case GAME_STATE_GAME_OVER:
                 fade_out();
 
+                ppu_off();
+                initialize_chr_ram_menu();
+                ppu_on_all();
+
+
                 // Draw the "you lose" screen
                 banked_call(PRG_BANK_GAME_OVER, draw_game_over_screen);
                 fade_in();
@@ -142,6 +183,10 @@ void main(void) {
                 sfx_play(SFX_WIN, SFX_CHANNEL_1);
 
                 fade_out();
+                ppu_off();
+                initialize_chr_ram_menu();
+                ppu_on_all();
+
                 // Draw the "you won" screen
                 banked_call(PRG_BANK_CREDITS_MENU, draw_win_screen);
                 fade_in();
