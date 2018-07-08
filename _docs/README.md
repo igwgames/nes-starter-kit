@@ -146,7 +146,7 @@ matter if they interest you.
 30. Ways to improve performance 
     (Note: these will likely include changing the music engine, and doing stuff every other frame)
 31. [Making a full title screen](./guide/section_4/title_screen.html)
-32. [Animating tiles](./guide/section_4/animated_tiles.html))
+32. [Animating tiles](./guide/section_4/animated_tiles.html)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.html)
 34. Making a "real" cartridge
 
