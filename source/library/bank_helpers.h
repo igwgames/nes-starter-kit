@@ -46,6 +46,15 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
 
 // ===== nes-c-boilerplate code end
 
+// Set what chr bank to set at the beginning of every nmi. This allows you to wait for a sprite0 hit, then change
+// your chr bank as normal. This allows you to use a separate chr bank for a text engine, or potentially even the 
+// entire status bar.
+void __fastcall__ set_nmi_chr_tile_bank(unsigned char bank);
+
+// Unset the chr bank to set at the beginning of every nmi. Undoes what the function above does.
+void __fastcall__ unset_nmi_chr_tile_bank(void);
+
+
 // A few defines to make common tasks simpler.
 
 // The zero page is 255 bytes of space at the beginning of RAM that is faster to access. The space is shared with rest of 

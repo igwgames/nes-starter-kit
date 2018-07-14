@@ -12,6 +12,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/menus/credits.h"
 #include "source/map/load_map.h"
 #include "source/map/map.h"
+#include "source/graphics/game_text.h"
 #include "source/graphics/hud.h"
 #include "source/graphics/fade_animation.h"
 #include "source/sprites/player.h"
@@ -40,7 +41,7 @@ void initialize_variables() {
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
     bank_spr(1);
-}
+}   
 
 void main() {
     fade_out_instant();
@@ -101,6 +102,10 @@ void main() {
                 // If you don't like the screen scrolling transition, you can replace the transition with `do_fade_screen_transition`
                 banked_call(PRG_BANK_MAP_LOGIC, do_scroll_screen_transition);
                 break;
+            case GAME_STATE_SHOWING_TEXT:
+                banked_call(PRG_BANK_GAME_TEXT, draw_game_text);
+                gameState = GAME_STATE_RUNNING;
+                break;
             case GAME_STATE_PAUSED:
                 fade_out();
                 banked_call(PRG_BANK_PAUSE_MENU, draw_pause_screen);
@@ -152,6 +157,7 @@ void main() {
                 crash_error(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);
                 
         }
-        ppu_wait_frame();
+        ppu_wait_nmi();
+        
     }
 }

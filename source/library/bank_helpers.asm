@@ -1,7 +1,16 @@
 .feature c_comments
 .linecont +
 
+.define NO_CHR_BANK 255
+
+.segment "ZEROPAGE"
+    nmiChrTileBank: .res 1
+    .exportzp nmiChrTileBank
+
+.segment "CODE"
+
 .export _set_prg_bank, _get_prg_bank, _set_chr_bank_0, _set_chr_bank_1
+.export _set_nmi_chr_tile_bank, _unset_nmi_chr_tile_bank
 .export _set_mirroring
 
 _set_prg_bank:
@@ -26,6 +35,16 @@ _set_chr_bank_0:
 
 _set_chr_bank_1:
     mmc1_register_write MMC1_CHR1
+    rts
+
+; Both of these just set/unset a varible used in `neslib.asm` to trigger this during nmi.
+_set_nmi_chr_tile_bank: 
+    sta nmiChrTileBank
+    rts
+
+_unset_nmi_chr_tile_bank:
+    lda #NO_CHR_BANK
+    sta nmiChrTileBank
     rts
 
 _set_mirroring:

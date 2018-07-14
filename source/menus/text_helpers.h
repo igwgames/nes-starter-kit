@@ -15,5 +15,5 @@ void clear_screen_with_border();
 #define ASCII_TILE_TR   0xe1
 #define ASCII_TILE_BL   0xf0
 #define ASCII_TILE_BR   0xf1
-#define ASCII_TILE_HORZ 0xf2
-#define ASCII_TILE_VERT 0xe2
+#define ASCII_TILE_HORZ 0xf6
+#define ASCII_TILE_VERT 0xe6
