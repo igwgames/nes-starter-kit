@@ -40,8 +40,11 @@ every time you build the game. You can just build the game instead.) If you open
 see the new sprite available in the `Sprites` tab. If not, try using the `reload` option in the
 `file` menu.
 
-Once you see it, we need to add the Sprite to your map. Be sure to add it to the `Sprites` layer
-instead of the map layer, or it will not work. If you then rebuild your game, you should see the
+Once you see it, we need to add the Sprite to your map. Due to how Tiled works, we need to be careful
+about where we add it. There should be a section called `Layers` (usually on the right) that has a list
+of `Room Grid`, `Sprites` and `Overworld Tiles`. You will need to select the `Sprites` layer
+instead of the map layer, or the sprite will not appear. (This will also show warnings in the console as
+you build your game.) If you then rebuild your game, you should see the
 new sprite on the map. If you try to collect it after taking damage, you will get one heart. 
 
 ![Blue heart sprite](../images/blue_heart.png)

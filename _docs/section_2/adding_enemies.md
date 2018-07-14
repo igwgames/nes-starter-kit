@@ -57,8 +57,9 @@ heart of damage. Here's our new line after those changes:
 ```
 
 If you save, then either build your game or run `make build-sprites`, you should see your new sprite available 
-in Tiled. Add it to a level and run the game. You're done; your sprite should be running around, and causing
-the player pain when you hit it. Grand!
+in Tiled. Add it to the `Sprites` layer (like we did in the 
+[adding collectible sprites chapter](./collectible_sprites.html) and run the game. You're done; your 
+sprite should be running around, and causing the player pain when you hit it. Grand!
 
 ![smiley ball](../images/smiley_ball.png)
 
