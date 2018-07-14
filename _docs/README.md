@@ -127,7 +127,7 @@ matter if they interest you.
 13. [Changing the HUD (top bar)](./guide/section_2/changing_the_hud.html)
 14. [Adding collectible sprites](./guide/section_2/collectible_sprites.html)
 15. [Adding new enemies](./guide/section_2/adding_enemies.html)
-16. [Adding new NPCs and NPC text](./guide/section_2/adding_npc_text.html)
+16. [Adding new talking NPCs](./guide/section_2/adding_npc_text.html)
 16. [Adding/changing music](./guide/section_2/changing_music.html)
 17. [Adding/changing sound effects](./guide/section_2/changing_sfx.html)
 18. [Changing movement](./guide/section_2/changing_movement.html)
