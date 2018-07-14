@@ -21,6 +21,7 @@ banks into them by changing their associated `PRG_BANK_TYPE` define in the heade
 ## ROM_01 ($01)
 - Error handler screen
 - Level drawing logic
+- NPC text engine
 
 ## ROM_02 ($02)
 - Title screen

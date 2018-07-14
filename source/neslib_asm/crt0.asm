@@ -270,6 +270,11 @@ detectNTSC:
 	ldx #0
 	jsr _set_vram_update
 
+	; This is a little weird - this variable expects to be a non-zero value on startup.
+	; We call this method to set it properly so the average user doesn't see this weirdness.
+	; If you're not the average engine user, hi! Welcome to the code behind the matrix ;)
+	jsr _unset_nmi_chr_tile_bank
+
 
 	jmp _main			;no parameters
 

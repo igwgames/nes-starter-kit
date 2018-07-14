@@ -9,6 +9,8 @@ extern const char* ERR_RECURSION_DEPTH;
 extern const char* ERR_RECURSION_DEPTH_EXPLANATION;
 extern const char* ERR_UNKNOWN_SPRITE_SIZE;
 extern const char* ERR_UNKNOWN_SPRITE_SIZE_EXPLANATION;
+extern const char* ERR_GAME_TEXT_MISSING;
+extern const char* ERR_GAME_TEXT_MISSING_EXPLANATION;
 
 
 // What bank do we wanna put this stuff in?

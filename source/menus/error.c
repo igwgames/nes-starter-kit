@@ -16,6 +16,8 @@ const char* ERR_RECURSION_DEPTH = "Bank Recursion Depth Error";
 const char* ERR_RECURSION_DEPTH_EXPLANATION = "Too many requests were made to bank_call from other requests. Only up to " STR(MAX_RECURSION_DEPTH) " calls can be made.";
 const char* ERR_UNKNOWN_SPRITE_SIZE = "Unknown Sprite Size";
 const char* ERR_UNKNOWN_SPRITE_SIZE_EXPLANATION = "A sprite definition has a size that the engine does not recognize.";
+const char* ERR_GAME_TEXT_MISSING = "Game Text Missing";
+const char* ERR_GAME_TEXT_MISSING_EXPLANATION = "No game text was specified before calling draw_game_text. This is done  the trigger_game_text method.";
 
 char buffer[10];
 

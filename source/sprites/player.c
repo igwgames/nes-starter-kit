@@ -10,6 +10,7 @@
 #include "source/sprites/map_sprites.h"
 #include "source/menus/error.h"
 #include "source/graphics/hud.h"
+#include "source/graphics/game_text.h"
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
@@ -34,6 +35,17 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 #define tempSpriteCollisionX tempInt1
 #define tempSpriteCollisionY tempInt2
 
+ const unsigned char* introductionText = 
+                                "Welcome to nes-starter-kit! I " 
+                                "am an NPC.                    "
+                                "                              "
+
+                                "Hope you're having fun!       "
+                                "                              "
+                                "- Chris";
+const unsigned char* movedText = 
+                                "Hey, you put me on another    "
+                                "screen! Cool!";
 
 // NOTE: This uses tempChar1 through tempChar3; the caller must not use these.
 void update_player_sprite() {
@@ -357,6 +369,36 @@ void handle_player_sprite_collision() {
             case SPRITE_TYPE_ENDGAME:
                 gameState = GAME_STATE_CREDITS;
                 break;
+            case SPRITE_TYPE_NPC:
+                // Okay, we collided with this NPC before we calculated the player's movement. After being moved, does the 
+                // new player position also collide? If so, stop it. Else, let it go.
+
+                // Calculate position...
+                tempSpriteCollisionX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
+                tempSpriteCollisionY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
+                // Are we colliding?
+                // NOTE: We take a bit of a shortcut here and assume all NPCs are 16x16 (the hard-coded 16 value below)
+                if (
+                    playerXPosition < tempSpriteCollisionX + (16 << PLAYER_POSITION_SHIFT) &&
+                    playerXPosition + PLAYER_WIDTH_EXTENDED > tempSpriteCollisionX &&
+                    playerYPosition < tempSpriteCollisionY + (16 << PLAYER_POSITION_SHIFT) &&
+                    playerYPosition + PLAYER_HEIGHT_EXTENDED > tempSpriteCollisionY
+                ) {
+                    playerXPosition -= playerXVelocity;
+                    playerYPosition -= playerYVelocity;
+                    playerControlsLockTime = 0;
+                }
+
+                if (controllerState & PAD_A && !(lastControllerState & PAD_A)) {
+                    // Show the text for the player on the first screen
+                    if (playerOverworldPosition == 0) {
+                        trigger_game_text(introductionText);
+                    } else {
+                        // If it's on another screen, show some different text :)
+                        trigger_game_text(movedText);
+                    }
+                }
+
 
         }
 

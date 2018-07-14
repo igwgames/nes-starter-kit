@@ -258,6 +258,9 @@ void __fastcall__ delay(unsigned char frames);
 // Added by @cppchriscpp
 void __fastcall__ reset(void);
 
+// Wait for a sprite0 hit, to allow for changing chr, and other fun stuff.
+void __fastcall__ wait_for_sprite0_hit(void);
+
 
 
 #define PAD_A			0x01

@@ -9,6 +9,8 @@
 ; - Messed with the original split method to make it trigger a little later.
 ; - Problematic PAL bugfix removed; only supporting NTSC with this engine.
 ; - Added reset method to reset system to initial state
+; - Added a simple wait for sprite0 hit, to allow us to do C things.
+; - Added a handler to nmi to allow switching chr banks at the very start of nmi (mixed with functions in bank_helpers)
 
 ;modified to work with the FamiTracker music driver
 
@@ -28,8 +30,7 @@
 	.export _set_vram_update,_flush_vram_update
 	.export _memcpy,_memfill,_delay
 
-	.export _split_y,_reset
-
+	.export _split_y,_reset,_wait_for_sprite0_hit
 
 ;NMI handler
 
@@ -46,6 +47,12 @@ nmi:
 	jmp	@skipAll
 
 @doUpdate:
+
+	lda nmiChrTileBank
+	cmp #NO_CHR_BANK 
+	beq @no_chr_chg
+		jsr _set_chr_bank_0
+	@no_chr_chg:
 
 	lda #>OAM_BUF		;update OAM
 	sta PPU_OAM_DMA
@@ -1002,6 +1009,34 @@ _split:
 	sta PPU_CTRL
 
 	rts
+
+;;void __fastcall__ wait_for_sprite0_hit();
+
+_wait_for_sprite0_hit:
+	lda <PPU_CTRL_VAR
+	and #$fc
+	ora <TEMP
+	sta <PPU_CTRL_VAR1
+
+@3:
+
+	bit PPU_STATUS
+	bvs @3
+
+@4:
+
+	bit PPU_STATUS
+	bvc @4
+
+	; Wait a few cycles to align with the *next* line.
+	; @cppchriscpp hack
+	ldx #0
+	@looper:
+		inx
+		cpx #44
+		bne @looper
+	rts
+
 
 ;;void __fastcall__ split_y(unsigned int x,unsigned int y);
 
