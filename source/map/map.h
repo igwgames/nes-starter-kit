@@ -46,13 +46,13 @@
 #define MAP_SPRITE_DATA_POS_ANIMATION_TYPE      6
 #define MAP_SPRITE_DATA_POS_HEALTH              7
 #define MAP_SPRITE_DATA_POS_SLIDE_SPEED         7
+#define MAP_SPRITE_DATA_POS_NPC_ID              7
 #define MAP_SPRITE_DATA_POS_TILE_ID             8
 #define MAP_SPRITE_DATA_POS_MOVEMENT_TYPE       9
 #define MAP_SPRITE_DATA_POS_CURRENT_DIRECTION   10
 #define MAP_SPRITE_DATA_POS_DIRECTION_TIME      11
 #define MAP_SPRITE_DATA_POS_MOVE_SPEED          12
 #define MAP_SPRITE_DATA_POS_DAMAGE              13
-#define MAP_SPRITE_DATA_POS_NPC_ID              13
 
 // How many tiles are in the map before we start getting into sprite data.
 #define MAP_DATA_TILE_LENGTH 192
