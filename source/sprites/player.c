@@ -398,6 +398,7 @@ void handle_player_sprite_collision() {
                         trigger_game_text(movedText);
                     }
                 }
+                break;
 
 
         }
