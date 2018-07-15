@@ -387,23 +387,7 @@ void handle_player_sprite_collision(void) {
                     currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN] = SPRITE_INVULNERABILITY_TIME;
                     // Also launch the enemy in the other direction
                     currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] = SPRITE_INVULNERABILITY_TIME;
-                    // Move them away from the player very quickly!
-                    switch (playerDirection) {
-                        case SPRITE_DIRECTION_LEFT:
-                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_LEFT;
-                            break;
-                        case SPRITE_DIRECTION_RIGHT:
-                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_RIGHT;
-                            break;
-                        case SPRITE_DIRECTION_DOWN:
-                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_DOWN;
-                            break;
-                        case SPRITE_DIRECTION_UP:
-                        default: // If they weren't heading in a direction, they can also go up.
-                            currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_UP;
-                            break;
-                    }
-
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = playerDirection;
                 }
                 break;
         }
