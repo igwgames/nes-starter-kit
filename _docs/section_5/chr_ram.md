@@ -15,6 +15,9 @@ which one to use in your game. In this section I'll try to cover some pros and c
 wiki also has [an article on this](https://wiki.nesdev.com/w/index.php/CHR_ROM_vs._CHR_RAM) 
 which goes into much greater depth if you're interested.
 
+_Please be warned that using chr ram will cause the text engine in the game to break. It relies on chr rom bank 
+switching, and needs a complete rewrite to work with chr ram._
+
 ### CHR ROM (default) pros
 - Easy to understand
 - Bank switching is fast - can even be done multiple times per frame
@@ -33,6 +36,7 @@ which goes into much greater depth if you're interested.
 - Can only update a limited number of tiles per frame (before the screen begins to get glitchy)
 - More code to manage and understand
 - Can't switch between banks - in our case you only have 2 banks of chr ram
+- _nes-starter-kit's text engine does not work - will corrupt the screen when used_
 
 This author would suggest against chr ram for a first project, and if there is a clear way to use chr rom
 to do what you need to do. That said, if you really want it, that's what this chapter's here for. If you haven't
