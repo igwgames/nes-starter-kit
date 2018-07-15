@@ -225,7 +225,7 @@ if (lastPlayerWeaponCollisionId != NO_SPRITE_HIT) {
             // compare it with 0. If it is zero, we remove the sprite; otherwise we bump the invulnerability timer.
             if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] == 0) {
                 currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
-                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerWeaponCollisionId];
             }
             // One more piece of invulnerability logic was cut from here.
             break;
