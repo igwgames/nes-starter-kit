@@ -376,6 +376,10 @@ void do_sprite_movement_with_collision(void) {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement)
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+    // We temporarily double the enemy's speed when they are in their invulnerability animation, so they shoot backwards.
+    if (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN]) {
+        currentSpriteData <<= 2;
+    }
     switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
         case SPRITE_DIRECTION_LEFT:
 
