@@ -229,7 +229,7 @@ if (lastPlayerWeaponCollisionId != NO_SPRITE_HIT) {
             // compare it with 0. If it is zero, we remove the sprite; otherwise we bump the invulnerability timer.
             if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] == 0) {
                 currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
-                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerWeaponCollisionId];
             }
             // One more piece of invulnerability logic was cut from here.
             break;
@@ -346,6 +346,77 @@ if (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_CO
     --currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN];
 }
 ```
+
+## Bouncing enemies back when they are hit
+
+In games, enemies usually bounce backwards when you hit them. This gives you a better chance of getting away from
+them, and also gives you a little bit of a feeling of power. We can add that here, too. 
+
+Above, we had an if/else statement that would remove an enemy that had been defeated, and make the enemy invincible
+for a short period if they were not defeated. We'll need to tack a little extra logic onto that. We want to point
+the enemy in the same direction the player is facing, then keep them facing that direction for a little while. We
+are back to editing `source/sprite/player.c` in the `handle_player_sprite_collision()` method.
+
+Locking the enemy sprite into a direction just requires setting their `MAP_SPRITE_DATA_POS_DIRECTION_TIME` variable to
+the same amount of time the sprite is invulnerable. That looks like this: 
+
+```c
+currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] = SPRITE_INVULNERABILITY_TIME;
+```
+
+We also need to point them in the same direction as the player - this is also one line of code: 
+
+```c
+currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = playerDirection;
+```
+
+The resulting logic ends up looking like this, when put all together; 
+
+```c
+// compare it with 0. If it is zero, we remove the sprite; otherwise we bump the invulnerability timer.
+if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] == 0) {
+    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+    currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerWeaponCollisionId];
+} else {
+    // Bump the invulnerability timer for the enemy
+    currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN] = SPRITE_INVULNERABILITY_TIME;
+    // Also launch the enemy in the other direction
+    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = playerDirection;
+}
+
+```
+
+Finally, we want the sprite to move away from the player much faster than it normally moves - let's shoot for double.
+We can do this by changing how the sprite moves in `source/sprites/map_sprites.c`, within the `update_map_sprites()` 
+method. There's a section where we move the sprite based on its speed in `currentMapSpriteData` - look for some code
+that looks like this: 
+
+```c
+currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+    case SPRITE_DIRECTION_LEFT:
+```
+
+If the sprite were going just a little faster in our case, that would do it. We just need to know when to double it.
+We set the `MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN` variable earlier to track when the sprite can't be harmed - this
+seems like a clear indicator. We'll check for this, and double the speed before we start our calculations. Here's
+the resulting code: 
+
+```c
+currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+// We temporarily double the enemy's speed when they are in their invulnerability animation, so they shoot backwards.
+if (currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN]) {
+    currentSpriteData <<= 2;
+}
+switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+    CASE SPRITE_DIRECTION_LEFT:
+```
+
+If you start the game back up after making this change, you should find that enemies fly away from you when you hit
+them. (Only works on enemies that take more than one hit; find the red enemies!
+
+## Wrapping up
 
 Well, that's it! Your enemies can now be hit, and the ones with more than 1 health will be invulnerable for a short
 period after each hit. The red slimes in the example map take 2 hits to kill, if you want to try it! You can also tweak
