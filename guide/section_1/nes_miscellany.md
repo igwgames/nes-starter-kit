@@ -147,6 +147,34 @@ such that each line of C is entered as a comment, then all assembly code for tha
 included after. You can tweak your code and see what produces less instructions this way, if
 you are so inclined.
 
+## How to debug/print log statements
+
+The NES is a bit hard to work with due to its limitations, so this is tough. The browser or IDE you are reading 
+this in likely used more RAM to display it than the NES has. There aren't a lot of tools targetting the NES, 
+either, so debugging is pretty difficult. (Note that certain emulators can help, but you won't see your C code.)
+
+There is no `cout` or `console.log` here, and there is no high-level debugger for us, so what can we do?
+
+The closest thing we have is a method called `crash_error()` which is included by `source/menus/error.h`. It will
+crash the entire game, and print out any text you want alongside an optional variable. If you add this to your game,
+you can see what was set at a certain time - it's not much, but hopefully it helps. 
+
+Here's an example: 
+
+```c
+crash_error("Got Here", "You got to this point in the code", NULL, NULL);
+```
+
+You can inject this in various places to see where you get to. You can also provide a variable as needed, like this:
+
+```c
+crash_error("Crashed Bandicoot", "Got to the point in code where we use gameState", "GameState Value", gameState);
+```
+
+![blue screen of death](../images/bluescreened.png)
+
+This error screen can help in situations where the game is acting strangly, and other tools are not helping enough.
+
 ## Project layout
 
 The project layout is hopefully somewhat simple, but I'll reproduce it with a
