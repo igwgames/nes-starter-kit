@@ -39,7 +39,7 @@ void draw_game_text() {
     set_vram_update(NULL);
 
     if (currentText == NULL) {
-        crash_error(ERR_GAME_TEXT_MISSING, ERR_GAME_TEXT_MISSING_EXPLANATION, NULL, NULL);
+        crash_error_use_banked_details(ERR_GAME_TEXT_MISSING, ERR_GAME_TEXT_MISSING_EXPLANATION, NULL, NULL);
     }
     // Draw sprite0 onto the screen so we can test it.
     oam_spr(249, HUD_PIXEL_HEIGHT-NES_SPRITE_HEIGHT-0, HUD_SPRITE_ZERO_TILE_ID, 0x00, 0);

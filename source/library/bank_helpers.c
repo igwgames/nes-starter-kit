@@ -17,7 +17,7 @@ void bank_push(unsigned char bankId) {
     bankBuffer[bankLevel] = bankId;
     ++bankLevel;
     if (bankLevel > MAX_BANK_DEPTH) {
-        crash_error(ERR_RECURSION_DEPTH, ERR_RECURSION_DEPTH_EXPLANATION, "MAX_BANK_DEPTH", MAX_BANK_DEPTH);
+        crash_error_use_banked_details(ERR_RECURSION_DEPTH, ERR_RECURSION_DEPTH_EXPLANATION, ERR_RECURSION_DEPTH_VAR, MAX_BANK_DEPTH);
     }
     set_prg_bank(bankId);
 }

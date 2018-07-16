@@ -7,6 +7,7 @@ extern const char* ERR_UNKNOWN_GAME_STATE;
 extern const char* ERR_UNKNOWN_GAME_STATE_EXPLANATION;
 extern const char* ERR_RECURSION_DEPTH;
 extern const char* ERR_RECURSION_DEPTH_EXPLANATION;
+extern const char* ERR_RECURSION_DEPTH_VAR;
 extern const char* ERR_UNKNOWN_SPRITE_SIZE;
 extern const char* ERR_UNKNOWN_SPRITE_SIZE_EXPLANATION;
 extern const char* ERR_GAME_TEXT_MISSING;
@@ -22,3 +23,8 @@ extern const char* ERR_GAME_TEXT_MISSING_EXPLANATION;
 // numberName: A description of the numeric parameter accepted after this one. Can be NULL.
 // number: A number to print out that goes with the error code (address, something else...) Can be NULL.
 void crash_error(const char* errorId, const char* errorDescription, const char* numberName, int number);
+
+// This is the same function above, but it switches banks to the prg bank for errors, meaning any strings you pass
+// in directly _will not work_, but the ERR_* strings above will. If you're not sure, use `crash_error()` and
+// _do not_ add anything to `error.c`.
+void crash_error_use_banked_details(const char* errorId, const char* errorDescription, const char* numberName, int number);
