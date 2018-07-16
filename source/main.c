@@ -153,8 +153,8 @@ void main() {
                 fade_out();
                 reset();
                 break;
-            default: 
-                crash_error(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);
+            default:
+                crash_error_use_banked_details(ERR_UNKNOWN_GAME_STATE, ERR_UNKNOWN_GAME_STATE_EXPLANATION, "gameState value", gameState);
                 
         }
         ppu_wait_nmi();
