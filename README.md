@@ -140,8 +140,7 @@ matter if they interest you.
 
 ### Part 4: Polish and more
 
-30. Ways to improve performance 
-    (Note: these will likely include changing the music engine, and doing stuff every other frame)
+30. [Ways to improve performance](./guide/section_4/performance.md)
 31. [Making a full title screen](./guide/section_4/title_screen.md)
 32. [Animating tiles](./guide/section_4/animated_tiles.md)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.md)
