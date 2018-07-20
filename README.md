@@ -132,7 +132,7 @@ matter if they interest you.
 
 20. [Putting your code in the right place: a brief introduction to prg banking](./guide/section_3/putting_your_code_in_the_right_place.md)
 21. [Giving your main character a sword](./guide/section_3/giving_the_player_a_sword.md)
-22. Adding more features to the pause menu
+22. [Adding more features to the pause menu](./guide/section_3/adding_to_pause_menu.md)
 23. [Adding a second map](./guide/section_3/adding_a_second_map.md)
 24. [Saving the Game](./guide/section_3/saving_the_game.md)
 25. Adding objects that attract or repel the player
