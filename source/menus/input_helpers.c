@@ -15,5 +15,7 @@ void wait_for_start() {
             break;
         }
 
+        ppu_wait_nmi();
+
     }
 }

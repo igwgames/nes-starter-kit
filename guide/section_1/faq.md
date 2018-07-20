@@ -59,6 +59,25 @@ behaves as expected.
 
 Another option is to comment out part of the code that does something obvious, and see if that thing keeps happening.
 
+Finally, if you need to see state, you can trigger an error that crashes the game and prints state information by 
+running the `crash_error()` method. You have to include the `source/menus/error.h` first. It looks like this: 
+
+```c
+crash_error("Got Here", "You got to this point in the code", NULL, NULL);
+```
+
+You can inject this in various places to see where you get to. You can also provide a variable as needed, like this:
+
+```c
+crash_error("Crashed Bandicoot", "Got to the point in code where we use gameState", "GameState Value", gameState);
+```
+
+![blue screen of death](../images/bluescreened.png)
+
+This can help figure out the state of variables and more when the game crashes.
+
+
+
 This part is always painful, but just try to keep probing at things until you learn something about the problem. You
 also might want to try reaching out to someone and talking through the problem (even if they're not familiar with
 `nes-starter-kit`) to see if it helps you come to a solution. I hope this helps, and don't be afraid to reach out for
