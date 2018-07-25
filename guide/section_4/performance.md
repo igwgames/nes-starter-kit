@@ -1,37 +1,119 @@
 # Ways to improve performance
 
-Ok, you've got a pretty good game going, but it's slowing down when you play it! Or perhaps you just want to plan in advance for a 
-game that you think will be involved. Either way, there are a number of things we can do to improve performance. The key to this is
-to decide what tradeoffs you can afford.
+Ok, you've got a pretty good game going, but it's slowing down when you play it; what do you do!? 
+Or, perhaps you want to plan ahead for a more involved game. Either way, there are a number of things we can do to 
+improve  performance. The key to this is to decide what tradeoffs you can afford.
 
-## Option 1: Remove unused engine code
+## Option 1: Making existing code more efficient
 
-The game engine includes a lot of code to help you build your game. This includes a number of features around updating the hud, 
-error checking, sprite types and collisions, and more. Most of this is intended to be useful, but some of it may be overkill, or
-not used in your game. Don't be afraid to remove things you don't need! If you aren't sure, spend a little time trying to figure
-out what the code in question does, then remove it and test any features you think could have been impacted/broken. Let's try
-a few examples!
+C lets you do a lot of cool things with a lot less code than assembly language. It's very powerful, but also makes it 
+very easy to write inefficient things without noticing. This section covers some code that produces inefficent 
+assembly code, and how to replace it. (Note: this is _very_ specific to 6502 assembly, and specifically our compiler - 
+it will not translate to other languages.)
 
+There are also guidelines published by [cc65's Authors](https://www.cc65.org/doc/coding.html) and
+[Shiru (Neslib)](https://shiru.untergrund.net/articles/programming_nes_games_in_c.htm). These are less detailed,
+but great if you want the raw information.
 
+### Work in multiples of 8 and 16 where possible
 
-## Option 2: Use a less resource-hungry music engine
+In the normal world, we often group things into sizes of 5 or 10 naturally, becaue they make sense to us. Most people
+have five fingers on each hand, so we see this number a lot. In coding for low-powered systems though, this can hurt us.
+The console is much better at doing math based on powers of 2 (2, 4, 8, 16, 32, 64, etc...) - this can actually
+make a huge difference in performance. 
 
-The music engine our game uses is pretty resource-intensive. The reason for this is that it supports all of Famitracker's features.
-The goal was to allow new developers to create music without any restrictions, so they could focus more on making good music. That said,
-this engine takes up _a  lot_ of cpu time, as well as a lot of ram. 
+If you find yourself doing multiplication or division by numbers that aren't powers of two, see if you can find ways
+to change that. For example, if you have data stored for multiple objects in an array, try moving
+to store more (or less) data to make the sprite index a multiple of two. That way your index becomes `myArray[index*8]`
+instead of `myArray[index*5]`.
 
-Switching to a new engine will require modifying some assembly language, a bit of neslib itself, and also likely reworking much of
-your music to fit that engine's requirements. **This option is not for the faint of heart!**
+It may help your understanding and performance to use bit shifting instead of multiplication and division. This can help
+you force yourself to use powers of two. Here is a  simple table that gives the equivalents for multiplication and 
+division when doing a bit shift.
 
-## Option 3: Making code more efficient
+| Bit Shift  | Multiplication/Division equivalent |
+|------------|------------------------------------|
+| `var << 1` | `var * 2`                          |
+| `var << 2` | `var * 4`                          |
+| `var << 3` | `var * 8`                          |
+| `var << 4` | `var * 16`                         |
+| `var << 5` | `var * 32`                         |
+| `var << 6` | `var * 64`                         |
+| `var >> 1` | `var / 2`                          |
+| `var >> 2` | `var / 4`                          |
+| `var >> 3` | `var / 8`                          |
+| `var >> 4` | `var / 16`                         |
+| `var >> 5` | `var / 32`                         |
+| `var >> 6` | `var / 64`                         |
 
-C lets you do a lot of cool things with a lot less code than assembly language. It's very powerful, but also makes it very easy to write
-inefficient things without noticing. This section covers some code that produces inefficent assembly code, and how to replace it. (Note:
-this is _very_ specific to 6502 assembly, and specifically our compiler - it will not translate to other languages.)
+So, if you wanted to switch `myArray[index*8]` to bit shifting, you would use `myArray[index<<3]` instead.
 
-## Option 4: Breaking logic up to run on different frames
+### Use unsigned types whenever possible
 
-Most of the time when we write game logic, we expect this logic to run every frame. It's simple and it works. That said, one 
-often-overlooked option for improving performance is to break this habit. We can make some of our logic run on every other frame, or
-even every four frames. If you can find pieces of your game that can do this and feel natural, it can get you back a lot of time. That
-said, this has to be applied carefully, or it can result in weird bugs. 
+In short, this will generate faster code. Unsigned types start at `0` and go up; they have no concept of negative
+values. As a result, the underlying assembly code around them is much simpler and faster. We do this whenever possible
+in the `nes-starter-kit` engine. 
+
+### Use char instead of int whenever possible
+
+A `char` data type takes up 1 byte of ram, whereas an `int` data type will take up two by default. This causes it to
+take up more ram, but also makes any operations using the variable take longer. 
+
+To understand this, think of a simple operation like `(variable == 25)`. If `variable` is represented by a one-byte 
+`char`, the underlying code just has to load the one bye of `variable`, and see if it equals the byte value of `25`.
+
+If we used an `int` in the example instead, this same comparison would involve loading the first byte, and checking
+that the byte is equal to `25`, like we did above. After this, the code has to load the second byte, and make sure
+this byte is equal to `0`, since if it is non-zero, the number must be much larger than `25`.
+
+### Prefer the preincrement operator over the postincrmeent operator
+
+This may sound confusing, but basically prefer `++i` over `i++` unless you are actively using the variable and need
+to use the first syntax. The code generated by the second option can be significantly slower in some cases.
+
+This also applies to the decrement operators - use `--i` instead of `i++` whenever possible.
+
+You may be surprised how much of a difference this can make - both to program size and application performance.
+
+### Use global variables instead of local ones where possible
+TBD
+
+### Avoid passing parameters to functions if not needed
+TBD
+
+### Prefer separate arrays to creating arrays of structs
+TBD
+
+### Use ZEROPAGE variables wisely
+TBD
+
+### Don't forget to mark variables as `const` if they are constant
+TBD
+
+## Option 2: Breaking logic up to run on different frames
+
+Most of the time when we write game logic, we expect this logic to run every frame. It's simple and it works. That 
+said, one often-overlooked option for improving performance is to break this habit. We can make some of our logic run 
+on every other frame, or even every four frames. If you can find pieces of your game that can do this and feel natural, 
+it can get you back a lot of time. That said, this has to be applied carefully, or it can result in weird bugs. 
+
+## Option 3: Use a less resource-hungry music engine
+
+The music engine our game uses is pretty resource-intensive. The reason for this is that it supports all of 
+Famitracker's features. The goal was to allow new developers to create music without any restrictions, so they could 
+focus more on making good music. That said, this engine takes up _a  lot_ of cpu time, as well as a lot of ram. 
+
+Switching to a new engine will require modifying some assembly language, a bit of neslib itself, and also likely 
+reworking much of your music to fit that engine's requirements. **This option is not for the faint of heart!**
+
+### **To Be written**
+
+## Option 4: Remove unused engine code
+
+The game engine includes a lot of code to help you build your game. This includes a number of features around updating 
+the hud, error checking, sprite types and collisions, and more. Most of this is intended to be useful, but some of it 
+may be overkill, or not used in your game. Don't be afraid to remove things you don't need! If you aren't sure, spend 
+a little time trying to figure out what the code in question does, then remove it and test any features you think could 
+have been impacted/broken. Let's try a few examples!
+
+TODO: Break this out to another chapter for freeing up prg space
