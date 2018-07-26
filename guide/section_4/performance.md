@@ -52,7 +52,9 @@ So, if you wanted to switch `myArray[index*8]` to bit shifting, you would use `m
 
 In short, this will generate faster code. Unsigned types start at `0` and go up; they have no concept of negative
 values. As a result, the underlying assembly code around them is much simpler and faster. We do this whenever possible
-in the `nes-starter-kit` engine. 
+in the `nes-starter-kit` engine. This obviously makes math a little confusing, since using unsigned integers will make
+`7-5` result in `254` rather than `-2` -- but if you can work within the limitations the performance benefit is worth
+it.
 
 ### Use char instead of int whenever possible
 
@@ -76,19 +78,74 @@ This also applies to the decrement operators - use `--i` instead of `i++` whenev
 You may be surprised how much of a difference this can make - both to program size and application performance.
 
 ### Use global variables instead of local ones where possible
-TBD
 
-### Avoid passing parameters to functions if not needed
-TBD
-
-### Prefer separate arrays to creating arrays of structs
-TBD
+This one goes directly against most good C practice, but the NES has extremely limited RAM, and C does not make the
+best use of it. The best way to use this is to declare variables as global wherever possible. This means adding them
+at the file level, rather than inside individual functions. (The reasons for this are beyond the scope of the guide.)
 
 ### Use ZEROPAGE variables wisely
-TBD
+
+There is a special section of ram called ZEROPAGE that works slightly more quickly than other sections. It has 256 bytes
+available in it, and mmany of these are in use by the engine. All of the `tempInt` and `tempChar` variables are located
+in ZEROPAGE, alongside a few other common variables. (Such as `i` and `j`.)
+
+Whenever possible prefer to use these for calculations; especially repeated ones. Reading these
+variables works slightly differently, and the console can do it faster. You can also give them nicknames/aliases by
+using `#define`. The [FAQ](../section_1/faq.md) chapter has more detail on this.
+
+### Avoid passing parameters to functions if not needed
+
+Passing parameters is surprisingly slow on the NES due to how variables are allocated. This gets worse as you add
+more parameters to a function. In many cases, it may be possible to use a global variable that both functions can
+access instead. Prefer to do that whenever possible - the code will not look as nice, however the result will be much
+faster.
+
+```c
+// This demonstrates our ideal - myNumber is a variable used by the code calling this function. 
+// This should be fast.
+unsigned char multiply_myNumber_by_two() {
+    return myNumber << 1;
+}
+
+// This will also work - myNumber is a variable that is passed into this function - it would be called like:
+// multiply_by_two(32)
+// This will be slower than the function above because of the parameter passing.
+unsigned char multiply_by_two(unsigned char myNumber) {
+    return myNumber << 1;
+}
+```
+
+### Prefer separate arrays to creating arrays of structs
+
+This one may be slightly counter-intuitive. If you have worked in C before, you may be tempted to create structs
+to represent things like enemies, then create an array of these structures. It makes logical sense and is easy to 
+write code around. 
+
+For the NES, you will want to avoid this practice. Behind the scenes, your game will have to calculate the index of
+each element in the array, and depending on the size of the struct, this can be _slow_. (For the same reason we want
+to avoid multiplication/division and use powers of two.) Worse yet, if your array ends up having more than 255 bytes
+total, this can make accesses even slower since we need to use an int. 
+
+It is much more efficient to create one array for each element you would put in the struct. In our sprite example, it
+would be better to have an array for X positions, and a second array for Y positions. (There are parts of 
+`nes-starter-kit` that do not do this, and they might benefit from a refactor like this.)
 
 ### Don't forget to mark variables as `const` if they are constant
-TBD
+
+This is easy to forget if you mostly work in languages with less memory constraints. In our game, variables are
+generally stored in our very limited RAM space (2K) when you declare them. This allows you to change the value of those
+variables while the program is running. 
+
+If you have data that will not change during gameplay, you definitely want to declare it with `const` to make sure we
+do not waste RAM space on them. The variable will instead be stored with the game code, and not possible to change. This
+has a positive impact on performance and also reduces your risk of running out of RAM. 
+
+```c
+// This will be stored with your code, and cannot be changed by the code. It is faster
+const unsigned char characterWidth = 32;
+// This will be stored in memory, and can be changed by code. It is slower
+unsigned char characterWidth = 32;
+```
 
 ## Option 2: Breaking logic up to run on different frames
 
@@ -96,6 +153,11 @@ Most of the time when we write game logic, we expect this logic to run every fra
 said, one often-overlooked option for improving performance is to break this habit. We can make some of our logic run 
 on every other frame, or even every four frames. If you can find pieces of your game that can do this and feel natural, 
 it can get you back a lot of time. That said, this has to be applied carefully, or it can result in weird bugs. 
+
+The built-in engine actually does this for sprite collisions - we test for collision with half of our sprites on every
+even frame, then test the other half every odd frame. You can do this for your own code too. 
+
+TODO: Demonstrate how we do this in existing code
 
 ## Option 3: Use a less resource-hungry music engine
 
