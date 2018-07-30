@@ -151,13 +151,37 @@ unsigned char characterWidth = 32;
 
 Most of the time when we write game logic, we expect this logic to run every frame. It's simple and it works. That 
 said, one often-overlooked option for improving performance is to break this habit. We can make some of our logic run 
-on every other frame, or even every four frames. If you can find pieces of your game that can do this and feel natural, 
-it can get you back a lot of time. That said, this has to be applied carefully, or it can result in weird bugs. 
+on every other frame, or with a little more work, even less often. If you can find pieces of your game that can do this 
+and feel natural, it can get you back a lot of time. That said, this has to be applied carefully, or it can result 
+in weird bugs. 
 
 The built-in engine actually does this for sprite collisions - we test for collision with half of our sprites on every
-even frame, then test the other half every odd frame. You can do this for your own code too. 
+even frame, then test the other half every odd frame. If you have slow code that could work well every other frame, or
+even less often, this is a good option. 
 
-TODO: Demonstrate how we do this in existing code
+Here's how we do it for sprite collisions - you can follow along in `source/sprites/map_sprites.c` in the 
+`update_map_sprites()` method. We've ommitted a bunch of the action code to make this understandable. 
+
+```c
+    for (i = 0; i < MAP_MAX_SPRITES; ++i) {
+        currentMapSpriteIndex = i << MAP_SPRITE_DATA_SHIFT;
+        
+        // ... Code to draw the current sprite skipped here...
+
+        // ... Code to animate the current sprite skiped here...
+
+        // We only want to do movement once every other frame, to save some cpu time. 
+        // So, split this to update even sprites on even frames, odd sprites on odd frames
+        if ((i & 0x01) == everyOtherCycle) {
+
+            // Movement code ommitted - this is the part that takes a long time, and we want to skip sometimes.
+        }
+    }
+```
+
+The key here is the line that reads `if ((i % 0x01) == everyOtherCycle)` - the variable `everyOtherCycle` is updated 
+every time our main loop runs, by doing `everyOtherCycle = !everyOtherCycle`. This makes it jump between `1` and `0`.
+As such, this alternates between only running when `i` is even one lop, then when `i` is odd the next loop.
 
 ## Option 3: Use a less resource-hungry music engine
 
