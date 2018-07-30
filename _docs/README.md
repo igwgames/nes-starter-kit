@@ -144,8 +144,7 @@ matter if they interest you.
 
 ### Part 4: Polish and more
 
-30. Ways to improve performance 
-    (Note: these will likely include changing the music engine, and doing stuff every other frame)
+30. [Ways to improve performance](./guide/section_4/performance.html)
 31. [Making a full title screen](./guide/section_4/title_screen.html)
 32. [Animating tiles](./guide/section_4/animated_tiles.html)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.html)
@@ -157,12 +156,13 @@ _Things in this section are somewhat complicated, and go into how the engine wor
 need these things for most games, but if you do, this is a place to learn!_
 
 40. [Understanding and tweaking the build tools](./guide/section_5/build_tools.html)
-41. [Resizing your rom](./guide/section_5/rom_size.html)
-42. [ROM Data Map](./guide/section_5/rom_map.html)
-43. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.html)
-44. [Getting finer control over graphics with chr ram](./guide/section_5/chr_ram.html)
-45. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.html)
-46. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.html)
+41. [Dealing with limited ROM space](./guide/section_5/limited_space.html)
+42. [Resizing your rom](./guide/section_5/rom_size.html)
+43. [ROM Data Map](./guide/section_5/rom_map.html)
+44. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.html)
+45. [Getting finer control over graphics with chr ram](./guide/section_5/chr_ram.html)
+46. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.html)
+47. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.html)
 
 <!-- TOC END -->
 

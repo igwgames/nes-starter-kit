@@ -81,7 +81,7 @@
   docs:
 
   - title: "30. Ways to improve performance"
-    url: ""
+    url: "/guide/section_4/performance.html"
 
   - title: "31. Making a full title screen"
     url: "/guide/section_4/title_screen.html"
@@ -101,21 +101,24 @@
   - title: "40. Understanding and tweaking the build tools"
     url: "/guide/section_5/build_tools.html"
 
-  - title: "41. Resizing your rom"
+  - title: "41. Dealing with limited ROM space"
+    url: "/guide/section_5/limited_space.html"
+
+  - title: "42. Resizing your rom"
     url: "/guide/section_5/rom_size.html"
 
-  - title: "42. ROM Data Map"
+  - title: "43. ROM Data Map"
     url: "/guide/section_5/rom_map.html"
 
-  - title: "43. Expanding available graphics using CHR banking"
+  - title: "44. Expanding available graphics using CHR banking"
     url: "/guide/section_5/chr_banking.html"
 
-  - title: "44. Getting finer control over graphics with chr ram"
+  - title: "45. Getting finer control over graphics with chr ram"
     url: "/guide/section_5/chr_ram.html"
 
-  - title: "45. Writing Functions in Assembly"
+  - title: "46. Writing Functions in Assembly"
     url: "/guide/section_5/writing_assembly_functions.html"
 
-  - title: "46. Automatic builds with CircleCI"
+  - title: "47. Automatic builds with CircleCI"
     url: "/guide/section_5/automatic_builds.html"
 
