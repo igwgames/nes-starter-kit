@@ -190,16 +190,22 @@ Famitracker's features. The goal was to allow new developers to create music wit
 focus more on making good music. That said, this engine takes up _a  lot_ of cpu time, as well as a lot of ram. 
 
 Switching to a new engine will require modifying some assembly language, a bit of neslib itself, and also likely 
-reworking much of your music to fit that engine's requirements. **This option is not for the faint of heart!**
+reworking much of your music to fit that engine's requirements. 
 
-### **To Be written**
+**This option is not for the faint of heart!**
 
-## Option 4: Remove unused engine code
+_As of now, there are no plans of including multiple music/sound libraries in the base `nes-starter-kit` 
+repository/engine._ (If a PR is made that does this in a sane way, it will be considered.)
 
-The game engine includes a lot of code to help you build your game. This includes a number of features around updating 
-the hud, error checking, sprite types and collisions, and more. Most of this is intended to be useful, but some of it 
-may be overkill, or not used in your game. Don't be afraid to remove things you don't need! If you aren't sure, spend 
-a little time trying to figure out what the code in question does, then remove it and test any features you think could 
-have been impacted/broken. Let's try a few examples!
+The first thing you'll have to do is pick an engine. The path of least resistance is probably `famitone2`. You can find
+the library alongside C bindings for it on [the Author's website](https://shiru.untergrund.net/code.shtml). If you grab
+the copy of `neslib` that _doesn't_ use the Famitracker library, there is a version of `neslib.asm` that supports 
+famitone2 natively. The problem is, we've made changes to `neslib.asm` in `nes-starter-kit`, so you will have to merge
+the two files. You will also likely have to merge some changes from `crt0.asm`. (variable definitions, mainly)
 
-TODO: Break this out to another chapter for freeing up prg space
+If you are using another engine, you will need to figure out what the engine requires, and replace all famitracker code
+with the code for that library. This is unfortunately very complex, so it will not be detailed here. 
+
+Most NES music engines require you to structure your songs in a certain way, so that they are compatible with the
+engine. You may need to go through your music to make it compatible. You also may need to run the output of Famitracker
+through a converter program, or even save things from Famitracker differently.
