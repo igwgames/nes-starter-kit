@@ -135,7 +135,7 @@ matter if they interest you.
 22. [Adding more features to the pause menu](./guide/section_3/adding_to_pause_menu.md)
 23. [Adding a second map](./guide/section_3/adding_a_second_map.md)
 24. [Saving the Game](./guide/section_3/saving_the_game.md)
-25. Adding objects that attract or repel the player
+25. [Adding objects that attract or repel the player](./guide/section_3/attract_repel.md)
 26. Adding an enemy that mimics player behavior
 
 ### Part 4: Polish and more

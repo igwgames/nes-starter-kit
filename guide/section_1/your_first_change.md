@@ -36,7 +36,7 @@ it yet!_
 Now, compile and run the game again (Press `ctrl+shift+b` in Visual Studio Code, or run 
 `make clean && make && make run` in the Cygwin terminal). 
 
-![New title screen](./images/changed_title.png)
+![New title screen](../images/changed_title.png)
 
 The title screen should now show your game name and author. Congratulations, you've officially started
 programming your NES game!
