@@ -24,6 +24,9 @@ ZEROPAGE_DEF(unsigned char, playerControlsLockTime);
 ZEROPAGE_DEF(unsigned char, playerInvulnerabilityTime);
 ZEROPAGE_DEF(unsigned char, playerDirection);
 
+int playerMagnetXAccel;
+int playerMagnetYAccel;
+
 // Huge pile of temporary variables
 #define rawXPosition tempChar1
 #define rawYPosition tempChar2
@@ -165,6 +168,9 @@ void handle_player_movement(void) {
         #endif
 
     }
+
+    playerXVelocity += playerMagnetXAccel;
+    playerYVelocity += playerMagnetYAccel;
 
     // While we're at it, tick down the invulnerability timer if needed
     if (playerInvulnerabilityTime) {

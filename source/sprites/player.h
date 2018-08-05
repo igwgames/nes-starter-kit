@@ -54,6 +54,11 @@ ZEROPAGE_EXTERN(int, playerXVelocity);
 ZEROPAGE_EXTERN(int, playerYVelocity);
 ZEROPAGE_EXTERN(unsigned char, playerDirection);
 
+extern int playerMagnetXAccel;
+extern int playerMagnetYAccel;
+
+#define MAGNET_ACCELERATION_CHANGE 4
+
 // Helper macro to convert the player's X and Y position into a position on the map
 #define PLAYER_MAP_POSITION(xPos, yPos) (xPos>>4) + (yPos & 0xf0)
 

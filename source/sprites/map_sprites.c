@@ -40,6 +40,10 @@ void do_sprite_movement_with_collision(void);
 // Updates all available map sprites (with movement every other frame)
 void update_map_sprites(void) {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+    
+    // Reset the player's magnet acceleration, so we are only affected by magnets active this frame.
+    playerMagnetXAccel = 0;
+    playerMagnetYAccel = 0;
 
     // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
     for (i = 0; i < MAP_MAX_SPRITES; ++i) {
@@ -231,6 +235,38 @@ void update_map_sprites(void) {
                 case SPRITE_MOVEMENT_NONE:
                 default:
                     break;
+            }
+
+            // Special case for magnet to do movement and more.
+            if (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_MAGNET) {
+                // We want the magnet to turn on/off every 128 frames
+                if (frameCount & 0x80) {
+                    // It's on for half the time; set the sprite to be animated
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE] = SPRITE_ANIMATION_SWAP_FAST;
+                    // Set the acceleration based on the player's location compared to the magnet.
+                    // But only if we are not very close to the sprite already. 
+                    if (ABS(sprX - playerXPosition) > 4) {
+                        if (playerXPosition < sprX) {
+                            playerMagnetXAccel += MAGNET_ACCELERATION_CHANGE;
+                        } else {
+                            playerMagnetXAccel -= MAGNET_ACCELERATION_CHANGE;
+                        }
+                    }
+                    if (ABS(sprY - playerYPosition) > 4) {
+                        if (playerYPosition < sprY) {
+                            playerMagnetYAccel += MAGNET_ACCELERATION_CHANGE;
+                        } else {
+                            playerMagnetYAccel -= MAGNET_ACCELERATION_CHANGE;
+                        }
+                    }
+
+                } else {
+                    // It's off; set the sprite not to be animated anymore.
+                    currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE] = SPRITE_ANIMATION_NONE;
+                    // Also reset the acceleration for the magnet, so we don't touch the player anymore.
+                    playerMagnetXAccel = 0;
+                    playerMagnetYAccel = 0;
+                }
             }
         }
 
