@@ -35,6 +35,9 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 #define tempSpriteCollisionX tempInt1
 #define tempSpriteCollisionY tempInt2
 
+#define collisionTempXInt tempInt3
+#define collisionTempYInt tempInt4
+
  const unsigned char* introductionText = 
                                 "Welcome to nes-starter-kit! I " 
                                 "am an NPC.                    "
@@ -192,10 +195,30 @@ void handle_player_movement() {
 void test_player_tile_collision() {
 
 	if (playerYVelocity != 0) {
-		collisionTempY = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-		collisionTempX = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED) >> PLAYER_POSITION_SHIFT);
-        collisionTempYBottom = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempXRight = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
+        collisionTempYInt = playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity;
+        collisionTempXInt = playerXPosition + PLAYER_X_OFFSET_EXTENDED;
+
+		collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+		collisionTempX = ((collisionTempXInt) >> PLAYER_POSITION_SHIFT);
+
+        collisionTempYInt += PLAYER_HEIGHT_EXTENDED;
+        collisionTempXInt += PLAYER_WIDTH_EXTENDED;
+
+        collisionTempYBottom = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempXRight = (collisionTempXInt) >> PLAYER_POSITION_SHIFT;
+        
+        // Due to how we are calculating the sprite's position, there is a slight chance we can exceed the area that our
+        // map takes up near screen edges. To compensate for this, we clamp the Y position of our character to the 
+        // window between 0 and 192 pixels, which we can safely test collision within.
+
+        // If collisionTempY is > 240, it can be assumed we calculated a position less than zero, and rolled over to 255
+        if (collisionTempY > 240) {
+            collisionTempY = 0;
+        }
+        // The lowest spot we can test collision is at pixel 192 (the 12th 16x16 tile). If we're past that, bump ourselves back.
+        if (collisionTempYBottom > 190) { 
+            collisionTempYBottom = 190;
+        }
 
 		if (playerYVelocity < 0) {
             // We're going up - test the top left, and top right
@@ -220,10 +243,16 @@ void test_player_tile_collision() {
     }
 
 	if (playerXVelocity != 0) {
-		collisionTempX = (playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity) >> PLAYER_POSITION_SHIFT;
-		collisionTempY = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempYBottom = ((playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity + PLAYER_HEIGHT_EXTENDED) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-        collisionTempXRight = ((playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity + PLAYER_WIDTH_EXTENDED) >> PLAYER_POSITION_SHIFT);
+        collisionTempXInt = playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity;
+        collisionTempYInt = playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity;
+		collisionTempX = (collisionTempXInt) >> PLAYER_POSITION_SHIFT;
+		collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+
+        collisionTempXInt += PLAYER_WIDTH_EXTENDED;
+        collisionTempYInt += PLAYER_HEIGHT_EXTENDED;
+
+        collisionTempYBottom = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempXRight = ((collisionTempXInt) >> PLAYER_POSITION_SHIFT);
 
 
         // Depending on how far to the left/right the player is, there's a chance part of our bounding box falls into
