@@ -140,7 +140,7 @@ matter if they interest you.
 23. [Adding a second map](./guide/section_3/adding_a_second_map.html)
 24. [Saving the Game](./guide/section_3/saving_the_game.html)
 25. [Adding objects that attract or repel the player](./guide/section_3/attract_repel.html)
-26. Adding an enemy that mimics player behavior
+26. [Adding an enemy that mimics player behavior](./guide/section_3/mimic.html)
 
 ### Part 4: Polish and more
 
