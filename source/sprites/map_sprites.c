@@ -33,6 +33,10 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 
 ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
 
+// Forward definition of this method; code is at the bottom of this file. Ignore this for now!
+void do_sprite_movement_with_collision();
+
+// Updates all available map sprites (with movement every other frame)
 void update_map_sprites() {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
     
@@ -219,93 +223,7 @@ void update_map_sprites() {
                         --currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME];
                     }
 
-                    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
-                    // We'll then add/subtract it from sprX and sprY
-                    currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
-                    switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
-                        case SPRITE_DIRECTION_LEFT:
-
-                            sprX -= currentSpriteData;
-                            if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
-                                // Roll back the position since we use sprX to place the sprite
-                                sprX += currentSpriteData;
-                                break;
-                            }
-                            
-                            // If we have not collided, save the new position. Else, just exit.
-                            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
-                            } else {
-                                // Roll back the position since we use sprX to place the sprite
-                                sprX -= currentSpriteData;
-                            }
-
-                            break;
-                        case SPRITE_DIRECTION_RIGHT:
-                            // Set the X position to our new position, plus the full width of the sprite for the collision test
-                            sprX += currentSpriteData + currentSpriteFullTileCollisionWidth;
-                            if (sprX > SCREEN_EDGE_RIGHT << SPRITE_POSITION_SHIFT) {
-                                // Roll back the position since we use sprX to place the sprite
-                                sprX -= currentSpriteData + currentSpriteFullTileCollisionWidth;
-                                break;
-                            }
-        
-                            // If we have not collided, save the new position. Else, just exit.
-                            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
-                                // If we did collide, we added the full width of the sprite to sprX; take that back out.
-                                sprX -= currentSpriteFullTileCollisionWidth;
-
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
-                            } else {
-                                // Roll back the position since we use sprX to place the sprite
-                                sprX -= currentSpriteData + currentSpriteFullTileCollisionWidth;
-                            }
-                            break;
-                        case SPRITE_DIRECTION_UP:
-                            sprY -= currentSpriteData;
-                            if (sprY < SCREEN_EDGE_TOP << SPRITE_POSITION_SHIFT) {
-                                // Roll back the position since we use sprY to place the sprite
-                                sprY += currentSpriteData;
-                                break;
-                            }
-
-                            // If we have not collided, save the new position. Else, just exit.
-                            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX + SPRITE_TILE_HITBOX_OFFSET, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullTileCollisionWidth, sprY)], 0)) {
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
-                            } else {
-                                // Roll back the position since we use sprY to place the sprite
-                                sprY += currentSpriteData;
-                            }
-
-                            break;
-                        case SPRITE_DIRECTION_DOWN:
-                            // Set our Y position to the new position, plus the full height of the sprite for collisions
-                            sprY += currentSpriteData + currentSpriteFullTileCollisionHeight;
-
-                            if (sprY > SCREEN_EDGE_BOTTOM << SPRITE_POSITION_SHIFT) {
-                                // Roll back the position since we use sprY to place the sprite
-                                sprY -= currentSpriteData + currentSpriteFullTileCollisionHeight;
-                                break;
-                            }
-
-                            // If we have not collided, save the new position. Else, just exit.
-                            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX + SPRITE_TILE_HITBOX_OFFSET, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullTileCollisionWidth, sprY)], 0)) {
-                                // Reset sprY to the top of the sprite before we update.
-                                sprY -= currentSpriteFullTileCollisionHeight;
-
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
-                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
-                            } else {
-                                // Roll back the position since we use sprY to place the sprite
-                                sprY -= currentSpriteData + currentSpriteFullTileCollisionHeight;
-                            }
-
-                            break;
-                    }
-
+                    do_sprite_movement_with_collision();
                     break;
 
 
@@ -384,4 +302,95 @@ void update_map_sprites() {
 
         
     }
+}
+
+// Does movement for a sprite given x/y position. 
+void do_sprite_movement_with_collision() {
+    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
+    // We'll then add/subtract it from sprX and sprY
+    currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+    switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+        case SPRITE_DIRECTION_LEFT:
+
+            sprX -= currentSpriteData;
+            if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprX to place the sprite
+                sprX += currentSpriteData;
+                break;
+            }
+            
+            // If we have not collided, save the new position. Else, just exit.
+            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+            } else {
+                // Roll back the position since we use sprX to place the sprite
+                sprX -= currentSpriteData;
+            }
+
+            break;
+        case SPRITE_DIRECTION_RIGHT:
+            // Set the X position to our new position, plus the full width of the sprite for the collision test
+            sprX += currentSpriteData + currentSpriteFullTileCollisionWidth;
+            if (sprX > SCREEN_EDGE_RIGHT << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprX to place the sprite
+                sprX -= currentSpriteData + currentSpriteFullTileCollisionWidth;
+                break;
+            }
+
+            // If we have not collided, save the new position. Else, just exit.
+            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
+                // If we did collide, we added the full width of the sprite to sprX; take that back out.
+                sprX -= currentSpriteFullTileCollisionWidth;
+
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+            } else {
+                // Roll back the position since we use sprX to place the sprite
+                sprX -= currentSpriteData + currentSpriteFullTileCollisionWidth;
+            }
+            break;
+        case SPRITE_DIRECTION_UP:
+            sprY -= currentSpriteData;
+            if (sprY < SCREEN_EDGE_TOP << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprY to place the sprite
+                sprY += currentSpriteData;
+                break;
+            }
+
+            // If we have not collided, save the new position. Else, just exit.
+            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX + SPRITE_TILE_HITBOX_OFFSET, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullTileCollisionWidth, sprY)], 0)) {
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
+            } else {
+                // Roll back the position since we use sprY to place the sprite
+                sprY += currentSpriteData;
+            }
+
+            break;
+        case SPRITE_DIRECTION_DOWN:
+            // Set our Y position to the new position, plus the full height of the sprite for collisions
+            sprY += currentSpriteData + currentSpriteFullTileCollisionHeight;
+
+            if (sprY > SCREEN_EDGE_BOTTOM << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprY to place the sprite
+                sprY -= currentSpriteData + currentSpriteFullTileCollisionHeight;
+                break;
+            }
+
+            // If we have not collided, save the new position. Else, just exit.
+            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX + SPRITE_TILE_HITBOX_OFFSET, sprY)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX + currentSpriteFullTileCollisionWidth, sprY)], 0)) {
+                // Reset sprY to the top of the sprite before we update.
+                sprY -= currentSpriteFullTileCollisionHeight;
+
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y] = (sprY & 0xff);
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y+1] = (sprY >> 8);
+            } else {
+                // Roll back the position since we use sprY to place the sprite
+                sprY -= currentSpriteData + currentSpriteFullTileCollisionHeight;
+            }
+
+            break;
+    }
+
 }

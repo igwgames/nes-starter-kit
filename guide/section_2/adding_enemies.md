@@ -165,6 +165,18 @@ case SPRITE_MOVEMENT_RANDOM_WANDER:
         --currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME];
     }
 
+    do_sprite_movement_with_collision();
+
+    break;
+```
+
+This logic is not extremely complicated - it tests to see how long we have been travelling in the same direction, then
+if it has been a while, we update the sprite to a new direction. After this, we call the 
+`do_sprite_movement_with_collision()` method, which moves the sprite in this direction, if there are no obstacles in
+the way. Here's the source of that: 
+
+```c
+void do_sprite_movement_with_collisions() {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
@@ -190,41 +202,48 @@ case SPRITE_MOVEMENT_RANDOM_WANDER:
             break;
         // ... Same logic as above for RIGHT, UP and DOWN
     }
-
-    break;
 ```
 
+This section breaks the code up into the 4 possible directions, then tests for collision with the background. If we
+hit a collision, we roll back our position by subtracting our current speed from the sprite. Otherwise, we store
+our new position with the sprite, so we find ourselves in the same spot next time. This is the logic we want to change.
+
 There are comments throughout that hopefully break it down enough to make sense. What we want to do is 
-copy this whole thing, and paste it a second time, changing the `SPRITE_MOVEMENT_RANDOM_WANDER` to our 
-new `SPRITE_MOVEMENT_RANDOM_NO_COLLISION`. We now have our own! (As an aside, we could break this into
-a function and avoid repeating code, with some if statements, but this has a performance cost, so it's 
-better to just live with the repeated code in this case.) 
+copy the whole `case SPRITE_MOVEMENT_RANDOM_WANDER` block, and paste it a second time, changing the 
+`SPRITE_MOVEMENT_RANDOM_WANDER` to our  new `SPRITE_MOVEMENT_RANDOM_NO_COLLISION`. We now have our own!
 
 Okay... so we now have a new movement type that behaves exactly like the random movement code. Let's fix
-that! If you look through the code, there are two sections - the first one picks a direction, then the
-second one moves the sprite in the chosen direction. We care about that second part. There should be
-4 sections like the following (one for left, one for right, etc...)
+that! If you look through the code, collisions and movement are all done by the `do_sprite_movement_with_collisions()`
+method, after we pick a direction. If we duplicate this method and strip out the collision code, we should get what
+we want. Here's the code within the `do_sprite_movement_with_collisions()` method again:
 
 ```c
-case SPRITE_DIRECTION_LEFT:
+void do_sprite_movement_with_collision() {
+    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
+    // We'll then add/subtract it from sprX and sprY
+    currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+    switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+        case SPRITE_DIRECTION_LEFT:
 
-    sprX -= currentSpriteData;
-    if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
-        // Roll back the position since we use sprX to place the sprite
-        sprX += currentSpriteData;
-        break;
-    }
-    
-    // If we have not collided, save the new position. Else, just exit.
-    if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
-        currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
-        currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
-    } else {
-        // Roll back the position since we use sprX to place the sprite
-        sprX -= currentSpriteData;
-    }
+            sprX -= currentSpriteData;
+            if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprX to place the sprite
+                sprX += currentSpriteData;
+                break;
+            }
+            
+            // If we have not collided, save the new position. Else, just exit.
+            if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);
+                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X+1] = (sprX >> 8);
+            } else {
+                // Roll back the position since we use sprX to place the sprite
+                sprX -= currentSpriteData;
+            }
 
-    break;
+            break;
+
+        // And the rest of the directions are here...
 ```
 
 This is great, but it does a lot of work to test collisions - everything after this comment: 
@@ -232,22 +251,31 @@ This is great, but it does a lot of work to test collisions - everything after t
 // If we have not collided, save the new position. Else, just exit.
 ```
 
-Soo... let's just remove it. In each of those 4, remove the entire if/else block. The result
+could be skipped. Soo... let's just remove it. In each of those 4, remove the entire if/else block. The result
 should look like this: 
 
 ```c
-case SPRITE_DIRECTION_LEFT:
+void do_sprite_movement_no_collision() {
+    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
+    // We'll then add/subtract it from sprX and sprY
+    currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
+    switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
+        case SPRITE_DIRECTION_LEFT:
 
-    sprX -= currentSpriteData;
-    if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
-        // Roll back the position since we use sprX to place the sprite
-        sprX += currentSpriteData;
-        break;
-    }
-    
-    break;
+            sprX -= currentSpriteData;
+            if (sprX < SCREEN_EDGE_LEFT << SPRITE_POSITION_SHIFT) {
+                // Roll back the position since we use sprX to place the sprite
+                sprX += currentSpriteData;
+                break;
+            }
+            
+            break;
 
+        // Plus the other 3 directions following the same pattern...
 ```
+
+Don't forget to update the code in the `SPRITE_MOVEMENT_RANDOM_NO_COLLISION` section to call your new
+`do_sprite_movement_no_collision()` method!
 
 That should do it! Save and rebuild the game, then put the sprite onto a screen with
 some walls, and you should see it go straight through!
