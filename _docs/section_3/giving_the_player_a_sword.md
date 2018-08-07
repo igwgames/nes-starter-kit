@@ -388,9 +388,9 @@ if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] =
 ```
 
 Finally, we want the sprite to move away from the player much faster than it normally moves - let's shoot for double.
-We can do this by changing how the sprite moves in `source/sprites/map_sprites.c`, within the `update_map_sprites()` 
-method. There's a section where we move the sprite based on its speed in `currentMapSpriteData` - look for some code
-that looks like this: 
+We can do this by changing how the sprite moves in `source/sprites/map_sprites.c`, within the 
+`do_sprite_movement_with_collision()`  method. There's a section where we move the sprite based on its 
+speed in `currentMapSpriteData` - look for some code that looks like this: 
 
 ```c
 currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
@@ -400,7 +400,7 @@ switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT
 
 If the sprite were going just a little faster in our case, that would do it. We just need to know when to double it.
 We set the `MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN` variable earlier to track when the sprite can't be harmed - this
-seems like a clear indicator. We'll check for this, and double the speed before we start our calculations. Here's
+seems like a clear indicator. We'll check for this, and double the speed before we start our calculations.  Here's
 the resulting code: 
 
 ```c
