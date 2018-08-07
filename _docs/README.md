@@ -13,19 +13,6 @@ A Beginner's Guide and toolkit for NES game creation.
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
 
-## **Work in progress** 
-
-This project is very much a work in progress. This readme tries to outline the end product, but please be
-warned that not everything is here yet. Imagine this like the "Under Construction" gifs on
-Tripod and Geocities back in the day ;)
-
-Right now, the tools are set up to work, the project produces a working game, and most of the guide is complete. 
-You should be able to produce a rudimentary game using nes-starter-kit. Consider this like an Beta release.
-
-If you decide to check this out and have thoughts, please share them! You are welcome to open an issue or PR, 
-or even just send me a Tweet/DM/email/whatever. Your input can help shape the outcome of this project. (and is
-very much appreciated!)
-
 ## What is this?
 
 It's a fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the 
@@ -201,6 +188,11 @@ give them credit.
 
 # Contributing
 
-I don't have any set rules around this right now. If you've got something you'd like to add, just send over a pull 
-request, and I'm sure we can get something together. Just try to follow the existing code style as best you can.
+I don't have any set rules around contributions right now, but I absolutely welcome them! Thank you for even considering
+this.
 
+If you've got something you'd like to add, just send over a pull request, and I'm sure we can get something together.
+Just try to follow the existing code style as best you can.
+
+If you run into issues or have feature suggestions, please submit them through the 
+[Github "Issues" tab](https://github.com/cppchriscpp/nes-starter-kit/issues).
