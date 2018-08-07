@@ -227,6 +227,34 @@ void update_map_sprites(void) {
                     do_sprite_movement_with_collision();
                     break;
 
+                case SPRITE_MOVEMENT_MIMIC:
+                    // This sprite is going to just move in the same direction as the player!
+
+                    // First, is the player moving? If not, keep the player stationary.
+                    if (playerXVelocity == 0 && playerYVelocity == 0) { 
+                        currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_STATIONARY; 
+                    } else {
+                        // Otherwise, we need to figure out the player's direction and mirror it.
+                        switch (playerDirection) {
+                            case SPRITE_DIRECTION_LEFT: 
+                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_RIGHT;
+                                break;
+                            case SPRITE_DIRECTION_RIGHT: 
+                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_LEFT;
+                                break;
+                            case SPRITE_DIRECTION_UP:
+                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_DOWN;
+                                break;
+                            case SPRITE_DIRECTION_DOWN:
+                                currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_UP;
+                                break;
+                        }
+                    }
+
+                    do_sprite_movement_with_collision();
+                    break;
+
+
 
                 case SPRITE_MOVEMENT_NONE:
                 default:

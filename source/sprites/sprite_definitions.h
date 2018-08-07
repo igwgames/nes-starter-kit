@@ -29,6 +29,8 @@
 #define SPRITE_MOVEMENT_UP_DOWN 2
 // This is used for sprites that wander in a randomized pattern, with collisions.
 #define SPRITE_MOVEMENT_RANDOM_WANDER 3
+// This is used for sprites that mimic player behavior
+#define SPRITE_MOVEMENT_MIMIC 5
 
 // Use _NOTHING for decoration sprites that don't do anything when collided with.
 // This can be used for decorations, etc...
