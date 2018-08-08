@@ -1,7 +1,13 @@
-# NES Starter Kit
+<div style="float: right"><a href="https://circleci.com/gh/cppchriscpp/nes-starter-kit"><img alt="Build Status" src="https://circleci.com/gh/cppchriscpp/nes-starter-kit.svg?style=shield"></a></div>
+
+# NES Starter Kit 
+
 A Beginner's Guide and toolkit for NES game creation.
 
 [<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px">](http://cpprograms.net/classic-gaming/nes-starter-kit/)
+
+**Current game version:** 1.0.2
+**Current tool zip version:** 1.0.2
 
 [Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
 

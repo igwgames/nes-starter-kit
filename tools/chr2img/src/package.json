@@ -1,6 +1,6 @@
 {
   "name": "chr2img",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Convert NES chr files into bitmap/png images.",
   "main": "index.js",
   "scripts": {

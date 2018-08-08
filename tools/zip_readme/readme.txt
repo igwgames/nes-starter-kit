@@ -10,7 +10,7 @@ reach out. The goal is to simplify environment setup, and as far as I could tell
 for binary distributions as long as the license is included. That said, if you have a reason you
 would prefer your program not be shipped this way, I'm happy to listen!
 
-These tools are not placed directly in the git repo, as it is generally a bad idea to put 
+These tools are not stored in git, as it is generally a bad idea to put 
 large/binary files into git repositories - it slows the entire repository down, and makes
 it harder to access. Apologies for the complicated setup, but I promise it exists for a reason!
 
@@ -31,3 +31,9 @@ Source: https://shiru.untergrund.net/
 
 Finally, cc65 is released under the zlib license. 
 Source: https://www.cc65.org/
+
+
+TOOLS ZIP VERSION
+-----------------
+
+1.0.2
