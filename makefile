@@ -134,6 +134,11 @@ build_tool_zip:
 	-rm -f temp/tools.zip
 	$(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/nesst tools/tmx2c/tmx2c.exe tools/sprite_def2img/sprite_def2img.exe tools/sprite_Def2img/LICENSE tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
 
+# Build up the 3 tools that we use as part of nes-starter-kit - use this when we bump versions
+rebuild_tools:
+	pkg -d --public tools/chr2img/src/index.js --output tools/chr2img/chr2img.exe -t node8-windows-x64
+	pkg -d --public tools/sprite_def2img/src/index.js --output tools/sprite_def2img/sprite_def2img.exe -t node8-windows-x64
+	pkg -d --public tools/tmx2c/src/index.js --output tools/tmx2c/tmx2c.exe -t node8-windows-x64
 
 
 clean:
