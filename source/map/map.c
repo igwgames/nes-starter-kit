@@ -193,8 +193,8 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
     tempArrayIndex = NAMETABLE_UPDATE_PREFIX_LENGTH;
     for (i = 0; i != 192; ++i) {
          // The top 2 bytes of map data are palette data. Skip that for now.
-         
         currentValue = currentMap[i] & 0x3f;
+        // This bumps the tile id up from the id for a 16x16 tile to an 8x8 tile on the real map
         currentValue = (((currentValue & 0xf8)) << 2) + ((currentValue & 0x07) << 1);
 
         if (bufferIndex == 0) {
@@ -269,6 +269,7 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
     while(1) {
          // The top 2 bytes of map data are palette data. Skip that for now.
         currentValue = currentMap[i] & 0x3f;
+        // This bumps the tile id up from the id for a 16x16 tile to an 8x8 tile on the real map
         currentValue = (((currentValue >> 3)) << 5) + ((currentValue % 8) << 1);
 
         if (bufferIndex == 0) {
@@ -343,6 +344,7 @@ void draw_individual_row_offset_y(int nametableAdr, int attributeTableAdr, char 
     while(1) {
          // The top 2 bytes of map data are palette data. Skip that for now.
         currentValue = currentMap[i] & 0x3f;
+        // This bumps the tile id up from the id for a 16x16 tile to an 8x8 tile on the real map
         currentValue = (((currentValue >> 3)) << 5) + ((currentValue % 8) << 1);
 
         if (bufferIndex == 0) {
