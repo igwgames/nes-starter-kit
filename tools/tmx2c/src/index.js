@@ -37,6 +37,7 @@ function printDate() {
 function printUsage() {
     out('tmx2c version ' + VERSION);
     out('Usage: tmx2c [bank number] [variable name] [file to convert] [file to save output to]');
+    out('Note that [bank number] must be a single hexadecimal digit, 0-F.');
 }
 
 function out() {
@@ -94,6 +95,11 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
 
     if (data == null || spriteData == null) {
         out('Failed parsing map - did you remove or rename the "Overworld Tiles" or "Sprite" layer?');
+        process.exit(1);
+    }
+
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'].indexOf(process.argv[2]) === -1) {
+        out('Invalid prg bank specified - please use a bank between 0 and F in hex.');
         process.exit(1);
     }
 

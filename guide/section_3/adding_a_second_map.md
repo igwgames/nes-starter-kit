@@ -73,6 +73,9 @@ to change `currentWorldId` to start as the bank you used above (`5` in the examp
 a constant for that soon!) and see your new world render. Now, we need to make the game do that
 itself!
 
+**NOTE**: The prg bank number here should be a single _hexadecimal_ digit. After `9` comes `A`; `10` is not valid.
+Case also matters; letters must be capitalized.
+
 ## Adding a new "Warp Door" sprite
 
 We now have a second world that we can visit, but we don't have a way to get there yet. To do this,
