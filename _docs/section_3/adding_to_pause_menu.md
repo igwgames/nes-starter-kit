@@ -12,7 +12,9 @@ how we can add those things.
 
 The code for this branch lives in the 
 [pause_improvements](https://github.com/cppchriscpp/nes-starter-kit/compare/pause_improvements)
-branch. You can also try the rom by downloading it from 
+branch. 
+
+You can also try the rom by downloading it from 
 [here](https://s3.amazonaws.com/nes-starter-kit/pause_improvements/starter.latest.nes).
 
 ## Getting started: finding and modifying the existing code
