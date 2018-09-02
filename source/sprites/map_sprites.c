@@ -21,6 +21,7 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define sprY8 tempChar8
 #define sprX tempInt1
 #define sprY tempInt2
+#define tempMapSpriteIndex tempChar9
 // NOTE: width = height for our examples, so both are set to the same value.
 // If you change this, be sure to assign it in the for loop below as well.
 #define currentSpriteFullWidth tempInt3
@@ -235,12 +236,13 @@ void update_map_sprites() {
         
         sprX8 = sprX >> SPRITE_POSITION_SHIFT;
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
+        tempMapSpriteIndex = (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6;
         if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
             oam_spr(
                 sprX8 + (NES_SPRITE_WIDTH/2),
                 sprY8 + (NES_SPRITE_HEIGHT/2),
                 currentSpriteTileId,
-                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                tempMapSpriteIndex,
                 oamMapSpriteIndex
             );
         } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
@@ -248,28 +250,28 @@ void update_map_sprites() {
                 sprX8,
                 sprY8,
                 currentSpriteTileId,
-                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                tempMapSpriteIndex,
                 oamMapSpriteIndex
             );
             oam_spr(
                 sprX8 + NES_SPRITE_WIDTH,
                 sprY8,
                 currentSpriteTileId + 1,
-                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                tempMapSpriteIndex,
                 oamMapSpriteIndex + 4
             );
             oam_spr(
                 sprX8,
                 sprY8 + NES_SPRITE_HEIGHT,
                 currentSpriteTileId + 16,
-                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                tempMapSpriteIndex,
                 oamMapSpriteIndex + 8
             );
             oam_spr(
                 sprX8 + NES_SPRITE_WIDTH,
                 sprY8 + NES_SPRITE_HEIGHT,
                 currentSpriteTileId + 17,
-                (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6,
+                tempMapSpriteIndex,
                 oamMapSpriteIndex + 12
             );
 
