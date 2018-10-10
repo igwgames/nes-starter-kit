@@ -18,7 +18,7 @@ FT_SFX_STREAMS			= 4			;number of sound effects played at once, 1..4
 	.import __STARTUP_LOAD__,__STARTUP_RUN__,__STARTUP_SIZE__
 	.import	__CODE_LOAD__   ,__CODE_RUN__   ,__CODE_SIZE__
 	.import	__RODATA_LOAD__ ,__RODATA_RUN__ ,__RODATA_SIZE__
-	.import NES_MAPPER,NES_PRG_BANKS,NES_CHR_BANKS,NES_MIRRORING
+	.import NES_PRG_BANKS,NES_CHR_BANKS
     .include "tools/cc65/asminc/zeropage.inc"
 
 	.export _frameCount
@@ -282,15 +282,6 @@ detectNTSC:
     .include "source/library/bank_helpers.asm"
 	.include "source/neslib_asm/neslib.asm"
 	.include "source/graphics/palettes.asm"
-	
-
-; Not used; we have the STUB_PRG bit instead which has some reset code in addition to vector stuff
-/*.segment "VECTORS"
-
-    .word nmi	;$fffa vblank nmi
-    .word start	;$fffc reset
-   	.word irq	;$fffe irq / brk*/
-
 
 .segment "CHR_00"
 
