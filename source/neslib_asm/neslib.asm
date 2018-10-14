@@ -1245,7 +1245,7 @@ _music_play:
 	; Being extra careful and setting BP_BANK to ours in case an nmi fires while we're doing this.
 	lda BP_BANK
 	pha
-	lda SOUND_BANK
+	lda #SOUND_BANK
 	sta BP_BANK
 	mmc1_register_write MMC1_PRG
 	txa ; bring back the song number!
