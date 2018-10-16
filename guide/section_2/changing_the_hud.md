@@ -154,7 +154,7 @@ from that value. Here's the new constant:
 
 Let's save this file and start using it. If we reopen `source/graphics/hud.c`, we can start adding code
 for our new value. We can use the key text as an example. We just need to separate out the two digits
-of `frameCounter`. We can get the first digit by shifting down to divide by 16; this will give us our
+of `frameCount`. We can get the first digit by shifting down to divide by 16; this will give us our
 first digit. The second one can be obtained using a logical AND to block out the first value.
 
 Here's what it ends up looking like:
