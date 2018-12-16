@@ -231,7 +231,7 @@ First, we need a variable to store this value in - we'll use an unsigned integer
 Put this into `source/globals.c`:
 
 ```c
-unsigned int, temporarySramChecksum; // NOTE: You could also reuse a tempInt value if you would prefer
+unsigned int temporarySramChecksum; // NOTE: You could also reuse a tempInt value if you would prefer
 SRAM_DEF(unsigned int, sramChecksum);
 ```
 
