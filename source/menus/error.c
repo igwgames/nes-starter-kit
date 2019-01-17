@@ -24,6 +24,9 @@ char buffer[10];
 
 // Separate function so we can put it into a separate prg bank, then call it below. See documentation with public function.
 void _print_static_screen() {
+    set_vram_update(NULL);
+    pal_bright(4);
+
     ppu_wait_frame();
     ppu_off();
     set_chr_bank_0(CHR_BANK_MENU);
