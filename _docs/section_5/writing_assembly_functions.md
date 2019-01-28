@@ -48,7 +48,7 @@ _get_current_frame
     rts
 
 _set_random_seed
-    ; Due to using __fastcall__, your value is in the a register. 2 bit values have their high byte in x.
+    ; Due to using __fastcall__, your value is in the a register. 2 byte values (such as integers) have their high byte in x.
     ; If you have multiple parameters, they are loaded from right to left. A/X will have the far right value,
     ; then you can use the `popa` or `popax` to move left through parameters.
     stx >RAND_SEED
