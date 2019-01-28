@@ -17,7 +17,7 @@ are two functions we will define further down.
 simply examples!
 
 ```c
-unsigned char __fastcall__ get_current_frame();
+unsigned char __fastcall__ get_current_frame(void);
 void __fastcall__ set_random_seed(int seed);
 ```
 
