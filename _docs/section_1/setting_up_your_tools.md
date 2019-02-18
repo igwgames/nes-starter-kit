@@ -7,6 +7,9 @@ permalink: guide/section_1/setting_up_your_tools.html
 You'll need a few tools to get started with NES Game development. I'll list them out, and detail what it is used for.
 Make sure you have installed everything marked as **REQUIRED** before moving on to the next chapter.
 
+**NOTE**: _This tutorial is built entirely for Windows - while things may be compatible with other 
+Operating Systems, they are not supported with this guide._
+
 ## Get the code!
 
 **REQUIRED**
@@ -29,7 +32,7 @@ You should also rename the folder from `nes-starter-kit` to the name of your gam
 
 **REQUIRED**
 
-To make life easier, most of the tools, including cc65 (our c compiler), neslib (The library we use to interface with
+To make life easier, most of the tools, including cc65 v2.14.0 (our c compiler), neslib (The library we use to interface with
 the NES), and various converters are included in the following zip file: 
 
 [Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
@@ -38,7 +41,7 @@ Download this file, and extract it to the base folder within the `nes-starter-ki
 you have done that, follow the steps below. It will replace the `tools` folder and a few things in
 it - that is expected and normal.
 
-**NOTE**: _This tutorial is built entirely for Windows - while things may be compatible with other 
+**REMINDER**: _This tutorial is built entirely for Windows - while things may be compatible with other 
 Operating Systems, they are not supported with this guide._
 
 ## Cygwin, make, and unix tools
@@ -54,15 +57,14 @@ mirror when you get to that step; it does not matter.
 
 **NOTE**: _The script isn't strictly necessary, but it selects the packages we need automatically, in addition to the defaults.
 It is provided merely as a convenience. If you have cygwin installed already, make sure you have `make`, `wget` `chere`, and `curl`
-installed._ Alternatively, if you already have Cygwin installed, the `install_cygwin.bat` script won't delete/change your existing 
-packages, so you can just use it.
+installed._
 
 ## FCEUX (Or another NES Emulator)
 
 **REQUIRED**
 
 You will need an NES emulator to test your game! I typically use FCEUX, but you are welcome to use whatever you are comfortable
-with. Nintendulator is another common option.
+with. Mesen is another common option.
 
 FCEUX is available here: http://www.fceux.com/
 
@@ -80,7 +82,7 @@ emulator you downloaded:
 
 (Note: On Windows 10 you have to click `more apps`, scroll down and find `look for another app on this pc` instead.) 
 
-If you don't do this, you won't be able to easily run your game through the command line, or your IDE.
+If you don't do this, you won't be able to easily run your game with the `make run` command, or your IDE.
 
 ## Tiled
 
