@@ -7,7 +7,9 @@ permalink: guide/section_1/setting_up_your_tools.html
 You'll need a few tools to get started with NES Game development. I'll list them out, and detail what it is used for.
 Make sure you have installed everything marked as **REQUIRED** before moving on to the next chapter.
 
-**IMPORTANT NOTE**: _This tutorial is built entirely for Windows - while things may be compatible with other 
+## Important Note 
+
+_This tutorial is built entirely for Windows - while things may be compatible with other 
 Operating Systems, they are not supported with this guide._
 
 ## Get the code!
