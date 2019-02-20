@@ -19,7 +19,7 @@
 #define HUD_SPRITE_ZERO_TILE_ID 0xfb
 
 // Draw the HUD
-void draw_hud();
+void draw_hud(void);
 
 // Update the number of hearts, coins, etc in the hud.
-void update_hud();
+void update_hud(void);
