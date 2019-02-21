@@ -68,7 +68,7 @@ sets up banking, but you can look at it in the git branch to fill it out. The ex
 `source/map/tile_animation.c` (with defines in the header file of the same name) Here's the method we care about: 
 
 ```c
-void animate_map_tiles() {
+void animate_map_tiles(void) {
     // Using any number that equates to a single binary digit (1, 2, 4, 8, 16, 32, 64, 128) should result in a constant animation.
     if (frameCount & 0x20) {
         set_chr_bank_0(CHR_ANIMATION_BANK_0);

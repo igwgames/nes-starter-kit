@@ -30,7 +30,7 @@ unsigned char currentMapSpritePersistance[64];
 unsigned char mapScreenBuffer[0x55];
 
 
-void init_map() {
+void init_map(void) {
     // Make sure we're looking at the right sprite and chr data, not the ones for the menu.
     set_chr_bank_0(CHR_BANK_TILES);
     set_chr_bank_1(CHR_BANK_SPRITES);
@@ -52,7 +52,7 @@ void init_map() {
 #define tempArrayIndex tempInt3
 
 // Load the sprites from the current map
-void load_sprites() {
+void load_sprites(void) {
     for (i = 0; i != MAP_MAX_SPRITES; ++i) {
         // Each sprite has just 2 bytes stored. The first is the location, and the 2nd is the sprite id in spriteDefinitions.
         spriteDefinitionIndex = currentMap[(MAP_DATA_TILE_LENGTH + 1) + (i<<1)]<<SPRITE_DEF_SHIFT;
@@ -108,7 +108,7 @@ void clear_asset_table(containsHud) {
 
 // Clears the asset table like we do above, but leaves the first row (top *half* of the asset table) blank.
 // Used for proper scrolling animation, since we end up flip-flopping on which row we're on during the scrolling up animation.
-void clear_asset_table_skip_top() {
+void clear_asset_table_skip_top(void) {
     clear_asset_table(0);
     return;
     // Loop over assetTable to clear it out. 
@@ -465,28 +465,28 @@ void draw_current_row_palette_only(int attributeTableAdr) {
 
 }
 
-void draw_current_map_to_a() {
+void draw_current_map_to_a(void) {
     clear_asset_table(1);
     xScrollPosition = -1;
     yScrollPosition = 0;
     draw_current_map_to_nametable(NAMETABLE_A, NAMETABLE_A_ATTRS, 0);
 }
 
-void draw_current_map_to_b() {
+void draw_current_map_to_b(void) {
     clear_asset_table(0);
     xScrollPosition = -1;
     yScrollPosition = 0;
     draw_current_map_to_nametable(NAMETABLE_B, NAMETABLE_B_ATTRS, 0);
 }
 
-void draw_current_map_to_c() {
+void draw_current_map_to_c(void) {
     clear_asset_table(0);
     xScrollPosition = -1;
     yScrollPosition = 0;
     draw_current_map_to_nametable(NAMETABLE_C, NAMETABLE_C_ATTRS, 0);
 }
 
-void draw_current_map_to_d() {
+void draw_current_map_to_d(void) {
     clear_asset_table(0);
     xScrollPosition = -1;
     yScrollPosition = 0;
@@ -494,7 +494,7 @@ void draw_current_map_to_d() {
 }
 
 // A quick, low-tech glamour-free way to transition between screens.
-void do_fade_screen_transition() {
+void do_fade_screen_transition(void) {
     load_map();
     load_sprites();
     clear_asset_table(1);
@@ -524,7 +524,7 @@ void do_fade_screen_transition() {
 }
 
 // Use a scrolling animation to move the player to the next screen.
-void do_scroll_screen_transition() {
+void do_scroll_screen_transition(void) {
     // First, draw the next tile onto b
     xScrollPosition = -1;
     yScrollPosition = 0;

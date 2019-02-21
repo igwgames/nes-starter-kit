@@ -4,7 +4,7 @@
 
 CODE_BANK(PRG_BANK_HUD);
 
-void draw_hud() {
+void draw_hud(void) {
     vram_adr(NAMETABLE_A + HUD_POSITION_START);
     for (i = 0; i != 160; ++i) {
         vram_put(HUD_TILE_BLANK);
@@ -21,7 +21,7 @@ void draw_hud() {
     }
 }
 
-void update_hud() {
+void update_hud(void) {
     // This sets up screenBuffer to print x hearts, then x more empty hearts. 
     // You give it the address, tell it the direction to write, then follow up with
     // Ids, ending with NT_UPD_EOF

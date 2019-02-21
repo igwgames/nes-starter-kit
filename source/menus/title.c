@@ -9,7 +9,7 @@
 
 CODE_BANK(PRG_BANK_TITLE);
 
-void draw_title_screen() {
+void draw_title_screen(void) {
     ppu_off();
 	pal_bg(titlePalette);
 	pal_spr(titlePalette);
@@ -34,7 +34,7 @@ void draw_title_screen() {
 	gameState = GAME_STATE_TITLE_INPUT;
 }
 
-void handle_title_input() {
+void handle_title_input(void) {
 	if (pad_trigger(0) & PAD_START) {
 		gameState = GAME_STATE_POST_TITLE;
 	}

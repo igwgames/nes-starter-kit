@@ -23,7 +23,7 @@ void bank_push(unsigned char bankId) {
 }
 
 // Go back to the last bank pushed on using bank_push.
-void bank_pop() {
+void bank_pop(void) {
     --bankLevel;
     if (bankLevel > 0) {
         set_prg_bank(bankBuffer[bankLevel-1]);

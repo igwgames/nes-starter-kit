@@ -176,9 +176,9 @@ Create `source/graphics/static/custom_title.h`, and add the following code:
 #define PRG_BANK_CUSTOM_TITLE 4
 #define CHR_BANK_CUSTOM_TITLE 3
 
-void draw_custom_title();
+void draw_custom_title(void);
 
-void handle_custom_title_input(); 
+void handle_custom_title_input(void); 
 ```
 
 The two bank `#define`s at the top may need to change if you didn't use the defaults. 

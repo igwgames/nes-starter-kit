@@ -10,7 +10,7 @@
 CODE_BANK(PRG_BANK_PAUSE_MENU);
 
 
-void draw_pause_screen() {
+void draw_pause_screen(void) {
     ppu_off();
     clear_screen_with_border();
     // We reuse the title palette here, though we have the option of making our own if needed.
@@ -32,7 +32,7 @@ void draw_pause_screen() {
     ppu_on_bg();
 }
 
-void handle_pause_input() {
+void handle_pause_input(void) {
     banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
     gameState = GAME_STATE_RUNNING;
 }

@@ -176,7 +176,7 @@ if it has been a while, we update the sprite to a new direction. After this, we 
 the way. Here's the source of that: 
 
 ```c
-void do_sprite_movement_with_collisions() {
+void do_sprite_movement_with_collisions(void) {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
@@ -218,7 +218,7 @@ method, after we pick a direction. If we duplicate this method and strip out the
 we want. Here's the code within the `do_sprite_movement_with_collisions()` method again:
 
 ```c
-void do_sprite_movement_with_collision() {
+void do_sprite_movement_with_collision(void) {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
@@ -255,7 +255,7 @@ could be skipped. Soo... let's just remove it. In each of those 4, remove the en
 should look like this: 
 
 ```c
-void do_sprite_movement_no_collision() {
+void do_sprite_movement_no_collision(void) {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];

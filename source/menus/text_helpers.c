@@ -12,13 +12,13 @@ void put_str(unsigned int adr, const char *str) {
 }
 
 // Blank the screen - uses the 'space' character 
-void clear_screen() {
+void clear_screen(void) {
 	vram_adr(0x2000);
 	vram_fill(' ' - 0x20, 0x0400);
 }
 
 // Clear the screen and put a nice border around it.
-void clear_screen_with_border() {
+void clear_screen_with_border(void) {
 	set_vram_update(NULL);
 	vram_adr(0x2000);
 	vram_fill(' ' - 0x20, 64);

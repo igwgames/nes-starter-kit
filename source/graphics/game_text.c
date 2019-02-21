@@ -24,14 +24,14 @@ void trigger_game_text(const unsigned char* string) {
 
 // private method in the primary bank to load characters from the bank the text resides in. We have to keep
 // this separate so we can limit how much code we put into the primary bank.
-void set_char_at_buffer_index() {
+void set_char_at_buffer_index(void) {
     bank_push(currentBank);
     currentChar = currentText[stringIndex];
     bank_pop();
 }
 
 CODE_BANK(PRG_BANK_GAME_TEXT);
-void draw_game_text() {
+void draw_game_text(void) {
     // Creating a local variable on the stack for the HUD buffer here. It won't be fast, but we don't really need it to be.
     unsigned char buffer[132];
 
