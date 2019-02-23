@@ -5,4 +5,4 @@
 #define CHR_ANIMATION_BANK_0 1
 #define CHR_ANIMATION_BANK_1 3
 
-void animate_map_tiles();
+void animate_map_tiles(void);
