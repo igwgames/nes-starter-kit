@@ -5,10 +5,10 @@
 void put_str(unsigned int adr, const char *str);
 
 // Clear the screen to all space characters. Rendering must be off first!
-void clear_screen();
+void clear_screen(void);
 
 // Clear the screen with a border around it - useful for menus, etc.
-void clear_screen_with_border();
+void clear_screen_with_border(void);
 
 // Constants around some stuff in the text screen
 #define ASCII_TILE_TL   0xe0

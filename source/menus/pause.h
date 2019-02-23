@@ -2,6 +2,6 @@
 #define PRG_BANK_PAUSE_MENU 2
 
 
-void draw_pause_screen();
+void draw_pause_screen(void);
 
-void handle_pause_input();
+void handle_pause_input(void);
