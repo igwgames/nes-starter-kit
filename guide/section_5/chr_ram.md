@@ -119,7 +119,7 @@ each time we need to change it. We can do this by adding two new methods to `sou
 add these two new functions to it at the top:
 
 ```c
-void initialize_chr_ram_menu() {
+void initialize_chr_ram_menu(void) {
     set_chr_bank_0(0);
     set_chr_bank_1(1);
     bank_push(5);
@@ -130,7 +130,7 @@ void initialize_chr_ram_menu() {
     bank_pop();
 }
 
-void initialize_chr_ram_game() {
+void initialize_chr_ram_game(void) {
     set_chr_bank_0(0);
     set_chr_bank_1(1);
     bank_push(5);

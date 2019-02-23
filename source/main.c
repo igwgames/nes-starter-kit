@@ -25,7 +25,7 @@ This has the main loop for the game, which is then used to call out to other cod
 
 // Method to set a bunch of variables to default values when the system starts up.
 // Note that if variables aren't set in this method, they will start at 0 on NES startup.
-void initialize_variables() {
+void initialize_variables(void) {
 
     playerOverworldPosition = 0; // Which tile on the overworld to start with; 0-62
     playerHealth = 5; // Player's starting health - how many hearts to show on the HUD.
@@ -43,7 +43,7 @@ void initialize_variables() {
     bank_spr(1);
 }   
 
-void main() {
+void main(void) {
     fade_out_instant();
     gameState = GAME_STATE_SYSTEM_INIT;
 

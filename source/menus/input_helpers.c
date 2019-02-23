@@ -5,7 +5,7 @@
 #include "source/menus/input_helpers.h"
 
 CODE_BANK(PRG_BANK_MENU_INPUT_HELPERS);
-void wait_for_start() {
+void wait_for_start(void) {
     while (1) {
         lastControllerState = controllerState;
         controllerState = pad_poll(0);

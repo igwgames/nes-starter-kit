@@ -9,7 +9,7 @@
 
 CODE_BANK(PRG_BANK_CREDITS_MENU);
 
-void draw_win_screen() {
+void draw_win_screen(void) {
     ppu_off();
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
@@ -32,7 +32,7 @@ void draw_win_screen() {
 
 }
 
-void draw_credits_screen() {
+void draw_credits_screen(void) {
     ppu_off();
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.

@@ -55,7 +55,7 @@ There is a quick example below: (You can see many real ones by searching for `CO
 ```c
 #define PRG_BANK_EXAMPLE_CODE 6
 
-void do_example_things();
+void do_example_things(void);
 ```
 
 `example.c`:
@@ -64,7 +64,7 @@ void do_example_things();
 
 CODE_BANK(PRG_BANK_EXAMPLE_CODE);
 const char exampleData[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-void do_example_things() {
+void do_example_things(void) {
     // Do something with exampleData here :D
 }
 ```

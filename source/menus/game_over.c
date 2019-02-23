@@ -9,7 +9,7 @@
 
 CODE_BANK(PRG_BANK_GAME_OVER);
 
-void draw_game_over_screen() {
+void draw_game_over_screen(void) {
     ppu_off();
     clear_screen_with_border();
 

@@ -38,7 +38,7 @@ ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
 void do_sprite_movement_with_collision(void);
 
 // Updates all available map sprites (with movement every other frame)
-void update_map_sprites() {
+void update_map_sprites(void) {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
 
     // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
@@ -307,7 +307,7 @@ void update_map_sprites() {
 }
 
 // Does movement for a sprite given x/y position.
-void do_sprite_movement_with_collision() {
+void do_sprite_movement_with_collision(void) {
     // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement)
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];

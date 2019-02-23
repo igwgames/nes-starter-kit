@@ -51,7 +51,7 @@ const unsigned char* movedText =
                                 "screen! Cool!";
 
 // NOTE: This uses tempChar1 through tempChar3; the caller must not use these.
-void update_player_sprite() {
+void update_player_sprite(void) {
     // Calculate the position of the player itself, then use these variables to build it up with 4 8x8 NES sprites.
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
@@ -78,7 +78,7 @@ void update_player_sprite() {
 
 }
 
-void handle_player_movement() {
+void handle_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;
@@ -192,7 +192,7 @@ void handle_player_movement() {
 
 }
 
-void test_player_tile_collision() {
+void test_player_tile_collision(void) {
 
 	if (playerYVelocity != 0) {
         collisionTempYInt = playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity;
@@ -288,7 +288,7 @@ void test_player_tile_collision() {
 }
 
 #define currentMapSpriteIndex tempChar1
-void handle_player_sprite_collision() {
+void handle_player_sprite_collision(void) {
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {
         currentMapSpriteIndex = lastPlayerSpriteCollisionId<<MAP_SPRITE_DATA_SHIFT;
