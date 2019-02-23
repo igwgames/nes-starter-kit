@@ -69,7 +69,7 @@ Next up, we have to change how we use these constants a bit. Open up `source/spr
 `handle_player_movement()` method. At the top of it, you should see a familiar constant being used. 
 
 ```c
-void handle_player_movement() {
+void handle_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;

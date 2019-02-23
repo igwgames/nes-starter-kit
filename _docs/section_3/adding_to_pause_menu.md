@@ -77,7 +77,7 @@ grab all that code, copy it into our `handle_pause_input()` method, and start ha
 Replace your `handle_pause_input()` code with this, to start:
 
 ```c
-void handle_pause_input() {
+void handle_pause_input(void) {
     while (1) {
         lastControllerState = controllerState;
         controllerState = pad_poll(0);
@@ -153,7 +153,7 @@ some logic to modify this array in case our array changes. We'll start with the 
 while loop is started:
 
 ```c
-void handle_pause_input() {
+void handle_pause_input(void) {
     currentMenuItem = 0;
 
     // Fill screenBuffer with the information required to update the menu every tile - we'll then edit this

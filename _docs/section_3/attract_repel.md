@@ -148,7 +148,7 @@ We also should be sure to reset this value before we loop over sprites each fram
 acceleration indefinitely. Add this to the very beginning of `update_map_sprites()` in the same file: 
 
 ```c
-void update_map_sprites() {
+void update_map_sprites(void) {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
     
     // Reset the player's magnet acceleration, so we are only affected by magnets active this frame.
@@ -159,7 +159,7 @@ void update_map_sprites() {
 ```
 
 With that done, all we need to do is make the player move based off of this. The logic to do this isn't too complex. 
-Pop open `source/sprites/player.c` and let's add a little more logic to the `hanle_player_movement()` method. This is
+Pop open `source/sprites/player.c` and let's add a little more logic to the `handle_player_movement()` method. This is
 actually only two lines, which we add after we have finished updating movement based on the player's input: 
 
 ```c

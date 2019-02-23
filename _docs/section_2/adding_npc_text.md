@@ -183,7 +183,7 @@ const unsigned char* secondText = "Second Text!";
 const unsigned char* thirdText = "Third Text!";
 const unsigned char* missingText = "Text for NPC not set!";
 
-void trigger_npc_text() {
+void trigger_npc_text(void) {
     switch (playerOverworldPosition) {
         case 0: 
             trigger_game_text(firstText);

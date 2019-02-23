@@ -55,7 +55,7 @@ Let's add this to our `main()` function in `source/main.c`, to set the value onc
 to the very top of it: 
 
 ```c
-void main() {
+void main(void) {
     gamesBeaten = 0;
 
     fade_out_instant();
@@ -166,7 +166,7 @@ Now, we need to add a way to check the SRAM to see if it needs to be reset. Let'
 not as we'd like: 
 
 ```c
-void test_and_reset_sram() {
+void test_and_reset_sram(void) {
     if (magicValue != EXPECTED_MAGIC_VALUE) {
         // Reset all sram values to their expected state here
         gamesBeaten = 0;
@@ -245,7 +245,7 @@ Now, we need a method to calculate this checksum. For simplicity we can put this
 want to maintain this code, I strongly suggest creating a new file for SRAM data. Create the following method: 
 
 ```c
-void calculateSramChecksum() {
+void calculateSramChecksum(void) {
     temporarySramChecksum = 0;
 
     // Add an entry for every single SRAM value you store here: 
@@ -273,7 +273,7 @@ use something similar to what the magic byte method uses. We will put this in `s
 same separate file as well. Add a new method called `test_and_reset_sram()`: 
 
 ```c
-void test_and_reset_sram() {
+void test_and_reset_sram(void) {
     calculateSramChecksum();
 
     if (temporarySramChecksum != sramChecksum) {
@@ -304,7 +304,7 @@ checksum, or your save data will be marked as corrupted, and reset!!** We thus n
 save ram, and update the checksum. We can create a helper method for this in `source/main.c`: 
 
 ```c
-void update_sram_checksum() {
+void update_sram_checksum(void) {
     calculateSramChecksum();
     sramChecksum = temporarySramChecksum;
 }

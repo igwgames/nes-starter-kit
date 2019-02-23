@@ -82,7 +82,7 @@ per frame. The code that does this lives with the player sprite code in `source/
 the `handle_player_movement()` method, you can see the code that does this. 
 
 ```c
-void handle_player_movement() {
+void handle_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;
