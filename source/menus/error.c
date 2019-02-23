@@ -23,7 +23,7 @@ const char* ERR_GAME_TEXT_MISSING_EXPLANATION = "No game text was specified befo
 char buffer[10];
 
 // Separate function so we can put it into a separate prg bank, then call it below. See documentation with public function.
-void _print_static_screen() {
+void _print_static_screen(void) {
     set_vram_update(NULL);
     pal_bright(4);
 

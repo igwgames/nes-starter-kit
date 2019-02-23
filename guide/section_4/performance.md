@@ -103,7 +103,7 @@ faster.
 ```c
 // This demonstrates our ideal - myNumber is a variable used by the code calling this function. 
 // This should be fast.
-unsigned char multiply_myNumber_by_two() {
+unsigned char multiply_myNumber_by_two(void) {
     return myNumber << 1;
 }
 

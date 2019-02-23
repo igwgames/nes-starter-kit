@@ -22,30 +22,30 @@ void _fade_in(unsigned char speed) {
 
 }
 
-void fade_in() {
+void fade_in(void) {
     _fade_in(2);
 }
 
-void fade_out() {
+void fade_out(void) {
     _fade_out(2);
 }
 
-void fade_out_instant() {
+void fade_out_instant(void) {
     pal_bright(0);
 }
 
-void fade_in_slow() {
+void fade_in_slow(void) {
     _fade_in(5);
 }
 
-void fade_out_slow() {
+void fade_out_slow(void) {
     _fade_out(5);
 }
 
-void fade_in_fast() {
+void fade_in_fast(void) {
     _fade_in(1);
 }
 
-void fade_out_fast() {
+void fade_out_fast(void) {
     _fade_out(1);
 }

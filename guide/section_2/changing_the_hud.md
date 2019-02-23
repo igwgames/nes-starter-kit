@@ -81,7 +81,7 @@ it being slow. Let's just write over the HUD a second time using our new address
 more readable code. Here's the code, with explanation in-line using comments: 
 
 ```c
-void draw_hud() {
+void draw_hud(void) {
     // ... a bunch of other code...
     vram_adr(NAMETABLE_A + HUD_BORDER_START);
     for (i = 0; i != 16; ++i) {
