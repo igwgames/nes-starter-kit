@@ -1,19 +1,19 @@
 // Contains functions to help with working with multle PRG/CHR banks
 
-// Maximum level of recursion to allow with banked_call and similar functions. 
+// Maximum level of recursion to allow with banked_call and similar functions.
 // Note that each one of these is a byte of ram from zeropage!
 #define MAX_BANK_DEPTH 10
 
 // Switch to another bank and call this function.
 // Note: Using banked_call to call a second function from within another banked_call is safe. This will break if you nest
-// more than 10 calls deep. 
+// more than 10 calls deep.
 void banked_call(unsigned char bankId, void (*method)(void));
 
 // Switch to the given bank, and keep track of the current bank, so that we may jump back to it as needed.
 void bank_push(unsigned char bankId);
 
 // Go back to the last bank pushed on using bank_push.
-void bank_pop();
+void bank_pop(void);
 
 
 // ===== nes-c-boilerplate code start
@@ -39,7 +39,7 @@ void __fastcall__ set_chr_bank_0(unsigned char bank_id);
 // Set the current 2nd 4k chr bank to the bank with this id.
 void __fastcall__ set_chr_bank_1(unsigned char bank_id);
 
-// Set the current mirroring mode. Your options are MIRROR_LOWER_BANK, MIRROR_UPPER_BANK, 
+// Set the current mirroring mode. Your options are MIRROR_LOWER_BANK, MIRROR_UPPER_BANK,
 // MIRROR_HORIZONTAL, and MIRROR_VERTICAL.
 // TODO: This could use a better home...
 void __fastcall__ set_mirroring(unsigned char mirroring);
@@ -47,7 +47,7 @@ void __fastcall__ set_mirroring(unsigned char mirroring);
 // ===== nes-c-boilerplate code end
 
 // Set what chr bank to set at the beginning of every nmi. This allows you to wait for a sprite0 hit, then change
-// your chr bank as normal. This allows you to use a separate chr bank for a text engine, or potentially even the 
+// your chr bank as normal. This allows you to use a separate chr bank for a text engine, or potentially even the
 // entire status bar.
 void __fastcall__ set_nmi_chr_tile_bank(unsigned char bank);
 
@@ -57,7 +57,7 @@ void __fastcall__ unset_nmi_chr_tile_bank(void);
 
 // A few defines to make common tasks simpler.
 
-// The zero page is 255 bytes of space at the beginning of RAM that is faster to access. The space is shared with rest of 
+// The zero page is 255 bytes of space at the beginning of RAM that is faster to access. The space is shared with rest of
 // the game engine. Convert your most heavily used variables to zeropage using this method. This can also save rom space.
 // (Usage: ZEROPAGE_DF(type, variableName) ; eg ZEROPAGE_DEF(int, myInt))
 // NOTE: If you call this in a .c file and expose it in `globals.h`, be sure to mark it with `ZEROPAGE_EXTERN` there.
@@ -100,7 +100,7 @@ void __fastcall__ unset_nmi_chr_tile_bank(void);
 #define ZEROPAGE_EXTERN(defa, defb) extern defa defb; _Pragma("zpsym (\"" STR(defb) "\")")
 #define ZEROPAGE_ARRAY_EXTERN(defa, defb, defArr) extern defa defb[defArr]; _Pragma("zpsym (\"" STR(defb) "\")")
 
-// Mark a variable referened in a header file as being SRAM. 
+// Mark a variable referened in a header file as being SRAM.
 // Technically this just creates a regular extern, and you could avoid using this symbol. It is used only for
 // consistency with ZEROPAGE variables, to make the source easier to follow.
 #define SRAM_EXTERN(defa, defb) extern defa defb;

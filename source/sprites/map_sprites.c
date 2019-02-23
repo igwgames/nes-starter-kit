@@ -35,16 +35,16 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
 
 // Forward definition of this method; code is at the bottom of this file. Ignore this for now!
-void do_sprite_movement_with_collision();
+void do_sprite_movement_with_collision(void);
 
 // Updates all available map sprites (with movement every other frame)
 void update_map_sprites() {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
-    
+
     // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
     for (i = 0; i < MAP_MAX_SPRITES; ++i) {
         currentMapSpriteIndex = i << MAP_SPRITE_DATA_SHIFT;
-        
+
         // This switches what position we write the sprite to regularly, so we can maintain a flicker effect instead
         // of having the sprite just randomly disappear. We use 0x02 so it flips every other frame, so flickering is less
         // likely to fail if we lose a frame. (If you have enough sprites to flicker, you may also see slowdown.)
@@ -56,10 +56,10 @@ void update_map_sprites() {
         oamMapSpriteIndex += FIRST_ENEMY_SPRITE_OAM_INDEX;
         sprX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
         sprY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
-        currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK; 
+        currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK;
         currentSpriteTileId = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TILE_ID];
-                
-        // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you 
+
+        // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you
         // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
         if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
             currentSpriteFullWidth = NES_SPRITE_WIDTH << PLAYER_POSITION_SHIFT;
@@ -109,7 +109,7 @@ void update_map_sprites() {
                     currentSpriteTileId += currentSpriteSize == SPRITE_SIZE_16PX_16PX ? 0x04 : 0x02;
                 } // Else, you're facing down, which conveniently is in position zero. So, do nothing!
 
-                // Next, let's animate based on the current frame. 
+                // Next, let's animate based on the current frame.
                 if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
                     currentSpriteTileId += (frameCount & 0x10) >> 3;
                 } else {
@@ -117,11 +117,11 @@ void update_map_sprites() {
                 }
                 break;
             case SPRITE_ANIMATION_NONE:
-            default: 
+            default:
                 break;
 
         }
-        // We only want to do movement once every other frame, to save some cpu time. 
+        // We only want to do movement once every other frame, to save some cpu time.
         // So, split this to update even sprites on even frames, odd sprites on odd frames
         if ((i & 0x01) == everyOtherCycle) {
 
@@ -193,8 +193,8 @@ void update_map_sprites() {
 
                     break;
                 case SPRITE_MOVEMENT_RANDOM_WANDER:
-                    // Okay, we're going to simulate an intelligent enemy. 
-                    
+                    // Okay, we're going to simulate an intelligent enemy.
+
                     // First, how long have we been travelling in the same direction? Is it time for a swap?
                     if (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] == 0) {
                         // Yep. Figure out if direction is: none, left, right, up, or down we do this by getting a random number
@@ -209,7 +209,7 @@ void update_map_sprites() {
                             case 2:
                                 currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_RIGHT;
                                 break;
-                            case 3: 
+                            case 3:
                                 currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION] = SPRITE_DIRECTION_UP;
                                 break;
                             case 4:
@@ -233,7 +233,7 @@ void update_map_sprites() {
                     break;
             }
         }
-        
+
         sprX8 = sprX >> SPRITE_POSITION_SHIFT;
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
         tempMapSpriteIndex = (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6;
@@ -279,7 +279,7 @@ void update_map_sprites() {
         }
 
         // While we have all the data above, let's see if the player hit us.
-        
+
         // Only test collision for sprite types that collide.
         currentSpriteType = currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE];
         if (currentSpriteType != SPRITE_TYPE_NOTHING && currentSpriteType != SPRITE_TYPE_OFFSCREEN) {
@@ -302,13 +302,13 @@ void update_map_sprites() {
             }
         }
 
-        
+
     }
 }
 
-// Does movement for a sprite given x/y position. 
+// Does movement for a sprite given x/y position.
 void do_sprite_movement_with_collision() {
-    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement) 
+    // Set currentSpriteData to the sprite speed for now (NOTE: we overwrite this after the switch statement)
     // We'll then add/subtract it from sprX and sprY
     currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVE_SPEED];
     switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION]) {
@@ -320,7 +320,7 @@ void do_sprite_movement_with_collision() {
                 sprX += currentSpriteData;
                 break;
             }
-            
+
             // If we have not collided, save the new position. Else, just exit.
             if (!test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + SPRITE_TILE_HITBOX_OFFSET)], 0) && !test_collision(currentMap[SPRITE_MAP_POSITION(sprX, sprY + currentSpriteFullTileCollisionHeight)], 0)) {
                 currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X] = (sprX & 0xff);

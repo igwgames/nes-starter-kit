@@ -22,7 +22,7 @@
 // you probably won't notice this outright, but it feels a lot more natural like this.
 // NOTE: The max velocity needs to be evenly divided by the acceleration. (Eg 20/4 = 5)
 #define PLAYER_MAX_VELOCITY 20 // Max speed of the player; we won't let you go past this.
-#define PLAYER_VELOCITY_ACCEL 4 // How quickly do we get up to max velocity? 
+#define PLAYER_VELOCITY_ACCEL 4 // How quickly do we get up to max velocity?
 
 // If the player is damaged, how long do we lock their controls such that they bounce backwards?
 #define PLAYER_DAMAGE_CONTROL_LOCK_TIME 20
@@ -41,13 +41,13 @@ ZEROPAGE_EXTERN(unsigned char, playerDirection);
 #define PLAYER_MAP_POSITION(xPos, yPos) (xPos>>4) + (yPos & 0xf0)
 
 // Move the player around, and otherwise deal with controller input. (NOTE: Pause/etc are handled here too)
-void handle_player_movement();
+void handle_player_movement(void);
 
 // Update the player's sprite, and put it onto the screen as necessary
-void update_player_sprite();
+void update_player_sprite(void);
 
 // Tests if the player is about to collide with any solid tiles, and adjusts the player's velocity to zero if found.
-void test_player_tile_collision();
+void test_player_tile_collision(void);
 
 // The sprite update method gives us an id of a sprite that we most recently hit. This reacts to that appropriately.
-void handle_player_sprite_collision();
+void handle_player_sprite_collision(void);
