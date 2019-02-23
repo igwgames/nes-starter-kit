@@ -124,6 +124,18 @@ Here are a few suggestions to avoid conflicts:
 2. Only use nicknames in functions called directly from the main loop. This way, the situation above is not possible.
 3. Avoid using any of the temp variables in the nmi, or methods called by it. This *will* cause problems eventually.
 
+#### Why do a lot of functions have `void` in the parameters rather than being blank? 
+
+(Or, why use `unsigned char doStuff(void) {` instead of `unsigned char doStuff() {`)
+
+This is because of how C works. While omitting the word `void` works in some cases, having nothing between the parenthesis
+actually means "this function could have any number of parameters" instead of "this function has no parameters". This can 
+confuse the compiler, and also is technically against the rules. 
+
+If you are used to seeing `void myFunction() {` and `unsigned char myFunction() {` in other languages, try to remember
+to use `void myFunction(void) {` and `unsigned char myFunction(void) {` instead.
+
+
 #### What does `Warning: Memory area overflow` mean?
 
 In short, it means you tried to fit too much data/code into the area given. Check out the chapter titled
