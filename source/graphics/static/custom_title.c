@@ -4,7 +4,7 @@
 #include "source/globals.h"
 #include "source/neslib_asm/neslib.h"
 
-void draw_custom_title() {
+void draw_custom_title(void) {
     ppu_off();
     
     // Select our set of chr tiles
@@ -26,7 +26,7 @@ void draw_custom_title() {
     gameState = GAME_STATE_TITLE_INPUT;
 }
 
-void handle_custom_title_input() {
+void handle_custom_title_input(void) {
     if (pad_trigger(0) & PAD_START) {
 		gameState = GAME_STATE_POST_TITLE;
 	}
