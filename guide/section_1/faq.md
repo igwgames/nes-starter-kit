@@ -126,7 +126,7 @@ Here are a few suggestions to avoid conflicts:
 
 This is because of how C works. While omitting the word `void` works in some cases, having nothing between the parenthesis
 actually means "this function could have any number of parameters" instead of "this function has no parameters". This can 
-confuse the compiler, and also is technically against the rules. 
+confuse the compiler, and generally isn't very helpful for NES games. 
 
 If you are used to seeing `void myFunction() {` and `unsigned char myFunction() {` in other languages, try to remember
 to use `void myFunction(void) {` and `unsigned char myFunction(void) {` instead.
