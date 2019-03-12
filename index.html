@@ -41,7 +41,7 @@ layout: default
             <h3 class="text-center">Try it now!</h3>
 
             <div class="text-center">
-                <div class="alert alert-dark" style="width: 540px; height: 540px; line-height: 540px; cursor: pointer; background-color: #d6d8d9; border-color: #c6c8ca; color: #1b1e21; text-align:center; margin: auto;" onclick="$('#tryit').attr('src', 'https://cppchriscpp.github.io/nes-starter-kit/WebNES-gh-pages/index_starter_kit.html'); $('#tryit').show(); $(this).hide();"><h1 style="line-height: 540px;">Click here!</h1></div>
+                <div id="clickMe" class="alert alert-dark" style="width: 540px; height: 540px; line-height: 540px; cursor: pointer; background-color: #d6d8d9; border-color: #c6c8ca; color: #1b1e21; text-align:center; margin: auto;" onclick="startEmulator(event);"><h1 style="line-height: 540px;">Click here!</h1></div>
                 <iframe id="tryit" style="display: none;" width="540px" height="540px"></iframe>
             </div>
             <p>
@@ -56,6 +56,30 @@ layout: default
 
 
 </div>
+
+<script type="text/javascript">
+function startEmulator() {
+    $('#tryit').attr('src', 'https://cppchriscpp.github.io/nez/index_embed.html');
+    var attempts = 0;
+    var waiting = setInterval(function() { 
+        try {
+            attempts++;
+            if (attempts > 20) {
+                console.warn('Failed to start emulator 20 times; giving up.');
+                clearInterval(waiting);
+            }
+            $('#tryit')[0].contentWindow.emu.startFromUrl('https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes');
+            $('#tryit').show(); 
+            $('#clickMe').hide();
+
+            clearInterval(waiting);
+        } catch (e) {
+            console.warn('Failed starting emulator... will retry',e);
+            // Do nothing... try again in a few ms
+        }
+    }, 250);
+}
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@cppchriscpp" />
