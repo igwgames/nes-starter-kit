@@ -58,6 +58,10 @@ layout: default
 </div>
 
 <script type="text/javascript">
+// Set the default buttons if they aren't already set, as the built-in defaults aren't quite what we expect...
+if (!window.localStorage.getItem('p1Buttons')) {
+  window.localStorage.setItem('p1Buttons', '{"13":"8","16":"4","37":"64","38":"16","39":"128","40":"32","88":"2","90":"1"}');
+}
 function startEmulator() {
     $('#tryit').attr('src', 'https://cppchriscpp.github.io/nez/index_embed.html');
     var attempts = 0;
