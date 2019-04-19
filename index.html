@@ -66,7 +66,7 @@ function startEmulator() {
     var waiting = setInterval(function() { 
         try {
             attempts++;
-            if (attempts > 20) {
+            if (attempts > 50) {
                 console.warn('Failed to start emulator 20 times; giving up.');
                 clearInterval(waiting);
             }
@@ -79,7 +79,7 @@ function startEmulator() {
         }
     }, 500);
 }
-    $(document).on('ready', startEmulator);
+startEmulator();
 </script>
 
 <meta name="twitter:card" content="summary" />
