@@ -31,6 +31,11 @@ into the flashing device, and run a special program to write your game's rom to 
 
 [Flashing tool on InfiniteNesLives](http://www.infiniteneslives.com/kazzo.php)
 
+Finally, you should also purchase a cartridge shell to put the board into, unless you want to use one
+from an existing NES game. InfiniteNesLives also has these available 
+[here](http://www.infiniteneslives.com/nessupplies.php#cases). (Bonus points: you can pick a color other
+than gray!)
+
 Once you have these, you will need two pieces of software to do it: a rom splitter, and 
 a flash program. Here are the two I use: 
 
