@@ -41,46 +41,21 @@ layout: default
             <h3 class="text-center">Try it now!</h3>
 
             <div class="text-center">
-                <iframe id="tryit" src="https://cppchriscpp.github.io/nez/index_embed.html" width="542px" height="542px"></iframe>
+                <div class="alert alert-dark" style="width: 540px; height: 540px; line-height: 540px; cursor: pointer; background-color: #d6d8d9; border-color: #c6c8ca; color: #1b1e21; text-align:center; margin: auto;" onclick="$('#tryit').attr('src', 'https://cppchriscpp.github.io/nes-starter-kit/WebNES-gh-pages/index_starter_kit.html'); $('#tryit').show(); $(this).hide();"><h1 style="line-height: 540px;">Click here!</h1></div>
+                <iframe id="tryit" style="display: none;" width="540px" height="540px"></iframe>
             </div>
             <p>
             Try it out for yourself; there should be an emulator with the starter game in it just above this!
             </p>
             <p>
             If that's not working, (or you just prefer a better/faster emulator) 
-            <a href="https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes">download the rom</a>!
+            <a href="https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes">download the rom</a>!
             </p>
         </div>
     </div>
 
 
 </div>
-
-<script type="text/javascript">
-// Set the default buttons if they aren't already set, as the built-in defaults aren't quite what we expect...
-if (!window.localStorage.getItem('p1Buttons')) {
-  window.localStorage.setItem('p1Buttons', '{"13":"8","16":"4","37":"64","38":"16","39":"128","40":"32","88":"2","90":"1"}');
-}
-function startEmulator() {
-    var attempts = 0;
-    var waiting = setInterval(function() { 
-        try {
-            attempts++;
-            if (attempts > 50) {
-                console.warn('Failed to start emulator 20 times; giving up.');
-                clearInterval(waiting);
-            }
-            $('#tryit')[0].contentWindow.emu.preloadUrl('https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes');
-
-            clearInterval(waiting);
-        } catch (e) {
-            console.warn('Failed starting emulator... will retry',e);
-            // Do nothing... try again in a few ms
-        }
-    }, 500);
-}
-startEmulator();
-</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@cppchriscpp" />

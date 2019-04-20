@@ -25,7 +25,7 @@ Both are fantastic pieces of hardware; choose whichever one better suits what yo
 
 The engine is built to be compatible with the MMC1 mapper, and by default uses 128k of PRG rom, 
 and up to 128k of chr rom. This makes it a perfect match for the 
-[SKRom boards by InfiniteNesLives](http://www.infiniteneslives.com/nessupplies.php#MMC1). 
+[SKRom boards by InfiniteNesLives](http://www.infiniteneslives.com/nessupplies.php#SKROM). 
 I suggest going for the 128kb model with battery backing, but the 256kb model can be made
 to work if you double your rom size to 256kb, as described in a later chapter.
 
