@@ -24,12 +24,35 @@ bottom right panel. If you want to change sprites, you want to use the `Sprites`
 
 **If you mix these two, the compiler will fail when it tries to build your levels.**
 
-This is admittedly a pain to work with. I have not found a way to make this more intuitive, however suggestions
-or pull requests are welcome! We need to keep two separate layers, since sprites should be able to appear on
-any type of tile. 
-
 Beyond that, just make the rooms look like you want them to, then save the tmx file and build your game. 
 **Bam!** level designs updated!
+
+#### Tiled extension
+
+I have developed a Tiled extension to make editing maps a bit easier. Its main function is to tell you when you 
+mix up the tile and sprite layers. It does this by showing a little warning in the lower left: 
+
+![Error Messages](../images/tiled_error_preview.png)
+
+Clicking on it will show you details, and let you double click to have the editor try to auto-fix the problem:
+
+![Error Details](../images/tiled_error.png).
+
+Finally, this adds an option to the `Map` menu (and the shortcut `ctrl+shift+k`) to automatically fix any of
+these errors.
+
+##### Tiled Extension Installation
+
+_**Note**: This requires at least version 1.3.1 of Tiled. Earlier versions do not have extension support!_
+
+Convinced? To install it, open Tiled, and follow these steps:
+
+1. Go to the `File` menu, then click `Preferences`. 
+2. Click the `Open...` button. This will is your extension folder for Tiled.
+![Tiled Extensions](../images/tiled_extensions.png) 
+3. In a new explorer window, open the
+[tools/tiled_extension](../../tools/tiled_extension) folder
+4. copy the `nes-starter-kit-tiled` folder from here into the extensions folder you opened in step 2.
 
 ### Sprite limit
 

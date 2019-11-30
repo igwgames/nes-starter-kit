@@ -95,7 +95,7 @@ with map tiles. We won't go into too much detail now; you can probably get by wi
 
 Get it here: http://www.mapeditor.org/
 
-The tools are built for version 1.1.4, however later versions should also be fine.
+The tools are built for version 1.3.1, however later versions should also be fine.
 
 ## Famitracker
 
