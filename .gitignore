@@ -12,6 +12,7 @@ tools/sprite_def2img/src/node_modules
 tools/chr2img/*.exe
 tools/chr2img/src/node_modules
 !tools/zip_readme
+!tools/tiled_extension
 graphics/generated/*.png
 graphics/generated/*.bmp
 rom/*.nes
