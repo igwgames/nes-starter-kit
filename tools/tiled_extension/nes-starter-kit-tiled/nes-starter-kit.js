@@ -59,19 +59,19 @@
         layerArray.forEach(function(layer) {
             var compareWith = null,
                 msgCompareWith = null,
-                msgIsNot = null,
+                msgIs = null,
                 sendTo = null,
                 replaceTile = null;
             if (layer.name.toLowerCase().indexOf('sprite') !== -1) {
                 compareWith = 'tile';
                 msgCompareWith = 'Tile';
-                msgIsNot = 'Sprite';
+                msgIs = 'Sprite';
                 sendTo = firstTileLayer;
                 replaceTile = null;
             } else if (layer.name.toLowerCase().indexOf('tile') !== -1) {
                 compareWith = 'sprite';
                 msgCompareWith = 'Sprite';
-                msgIsNot = 'Tile';
+                msgIs = 'Tile';
                 sendTo = firstSpriteLayer;
                 replaceTile = firstTileTileset.tile(0);
             } else {
@@ -83,12 +83,10 @@
                 var editable = sendTo.edit();
                 editable.setTile(lookupObj.x, lookupObj.y, origTile);
                 editable.apply();
-                tiled.log('Set ' + sendTo.name + ' (' + lookupObj.x + ', ' + lookupObj.y + ') tile to a tile from ' + origTile.tileset.name);
 
                 var otherEditable = layer.edit();
                 otherEditable.setTile(lookupObj.x, lookupObj.y, replaceTile);
                 otherEditable.apply();
-                tiled.log('Set ' + layer.name + ' (' + lookupObj.x + ', ' + lookupObj.y + ') tile to a tile from ' + (replaceTile ? replaceTile.tileset.name : 'null'));
             }
 
             
@@ -102,13 +100,13 @@
                                 y: y
                             };
                             doFix(origTile, lookupObj);
-                            log(msgCompareWith + ' on layer ' + layer.name + ' at (' + lookupObj.x + ', ' + lookupObj.y + ') automatically moved to ' + sendTo.name + '.');
+                            log(msgIs + ' on layer "' + layer.name + '" at (' + lookupObj.x + ', ' + lookupObj.y + ') appears to be a ' + msgCompareWith + '. This should be moved to a ' + msgCompareWith + ' layer. Double-click to move it to "' + sendTo.name + '".');
                         } else {
                             var lookupObj = {
                                 x: x,
                                 y: y
                             };
-                            tiled.warn('[nes-starter-kit] ' + msgCompareWith + ' on layer ' + layer.name + ' at (' + lookupObj.x + ', ' + lookupObj.y + ') appears to be a ' + msgIsNot + '. This should be moved to a ' + msgIsNot + ' layer. Double-click to move it to ' + sendTo.name + '.', function() {
+                            tiled.warn('[nes-starter-kit] ' + msgIs + ' on layer "' + layer.name + '" at (' + lookupObj.x + ', ' + lookupObj.y + ') appears to be a ' + msgCompareWith + '. This should be moved to a ' + msgCompareWith + ' layer. Double-click to move it to "' + sendTo.name + '".', function() {
                                 doFix(origTile, lookupObj);
                             });
                         }
