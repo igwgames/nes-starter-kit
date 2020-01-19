@@ -171,6 +171,7 @@ void trigger_npc_text(void);
 ```c
 #include "source/map/map.h"
 #include "source/graphics/game_text.h"
+#include "source/sprites/map_sprites.h"
 
 CODE_BANK(PRG_BANK_NPC_TEXT);
 

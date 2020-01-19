@@ -6,7 +6,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](http://cpprograms.net/classic-gaming/nes-starter-kit/)
 
-**Current game version:** 1.0.4
+**Current game version:** 1.0.5
 
 **Current tool zip version:** 1.0.2
 
