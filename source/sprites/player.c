@@ -11,6 +11,7 @@
 #include "source/menus/error.h"
 #include "source/graphics/hud.h"
 #include "source/graphics/game_text.h"
+#include "source/sprites/map_sprites.h"
 
 CODE_BANK(PRG_BANK_PLAYER_SPRITE);
 
@@ -287,7 +288,6 @@ void test_player_tile_collision(void) {
 
 }
 
-#define currentMapSpriteIndex tempChar1
 void handle_player_sprite_collision(void) {
     // We store the last sprite hit when we update the sprites in `map_sprites.c`, so here all we have to do is react to it.
     if (lastPlayerSpriteCollisionId != NO_SPRITE_HIT) {

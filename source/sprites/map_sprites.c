@@ -11,7 +11,6 @@
 
 CODE_BANK(PRG_BANK_MAP_SPRITES);
 
-#define currentMapSpriteIndex tempChar1
 #define currentSpriteSize tempChar2
 #define currentSpriteTileId tempChar3
 #define oamMapSpriteIndex tempChar4
@@ -33,6 +32,7 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 
 
 ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
+ZEROPAGE_DEF(unsigned char, currentMapSpriteIndex);
 
 // Forward definition of this method; code is at the bottom of this file. Ignore this for now!
 void do_sprite_movement_with_collision(void);
