@@ -182,6 +182,18 @@ file yourself. (Or create one, if this is a new method!)
 There is a quick explanation of header files in C available 
 [here](https://www.quora.com/What-is-the-use-of-header-files-in-C-language).
 
+#### I got an error like `Unresolved external _variable referenced in temp/my_file.s`. What do I do?
+
+This error is a bit confusing, but usually means there's a problem somewhere in your C code. Usually,
+it means you have an extern variable (or one defined with `ZEROPAGE_EXTERN`) defined in a header file 
+without having a matching variable definition in a c file. 
+
+`extern` basically tells C "I defined this somewhere... just trust me, it's there!" The variable or 
+function has to be defined in a C file. (or asm file, technically) If the variable you reference with
+`extern` isn't found, the error only comes up at the very end when the linker combines all of your 
+files. This is after C is compiled down to assembly, hence the error showing up in an assembly file.
+
+
 #### Why are the tools for flashing my NES cartridge not included in the tool zip?
 
 There are two reasons why these tools were excluded. The first one is that, simply, not everyone 
