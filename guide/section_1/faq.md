@@ -193,6 +193,8 @@ function has to be defined in a C file. (or asm file, technically) If the variab
 `extern` isn't found, the error only comes up at the very end when the linker combines all of your 
 files. This is after C is compiled down to assembly, hence the error showing up in an assembly file.
 
+You'll need to add a definition for the variable matching the extern. (Or a `ZEROPAGE_DEF` if you 
+used a `ZEROPAGE_EXTERN`.)
 
 #### Why are the tools for flashing my NES cartridge not included in the tool zip?
 
