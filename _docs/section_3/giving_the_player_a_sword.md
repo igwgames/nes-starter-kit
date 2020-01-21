@@ -84,8 +84,20 @@ The tile ids are simply the ids gotten from NES Screen Tool, like we've done bef
 last two digits of the address we want to use. (Since all sprites are between `0x200` and `0x2ff` we can use one byte
 to store it.)
 
-Also of note, we added a `swordPosition` variable into here and `source/sprite/player.c` so we can know when the sword
-is out. Next, let's start using it. 
+Also of note, we need to add a `swordPosition` variable into both `source/sprite/player.h` 
+and `source/sprite/player.c` so we can know when the sword is out.
+
+`source/sprite/player.h`:
+```c
+ZEROPAGE_EXTERN(unsigned char, swordPosition);
+```
+
+`source/sprite/player.c`:
+```c
+ZEROPAGE_DEF(unsigned char, swordPosition);
+```
+
+Next, let's start using it. 
 
 -----
 
