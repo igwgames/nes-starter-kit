@@ -62,6 +62,11 @@ void update_player_sprite(void) {
         // Does some math with the current NES frame to add either 2 or 0 to the tile id, animating the sprite.
         rawTileId += ((frameCount >> SPRITE_ANIMATION_SPEED_DIVISOR) & 0x01) << 1;
     }
+
+    // Clamp the player's sprite X Position to 0 to make sure we don't loop over, even if technically we have.
+    if (rawXPosition > (SCREEN_EDGE_RIGHT + 4)) {
+        rawXPosition = 0;
+    }
     
     if (playerInvulnerabilityTime && frameCount & PLAYER_INVULNERABILITY_BLINK_MASK) {
         // If the player is invulnerable, we hide their sprite about half the time to do a flicker animation.
@@ -95,7 +100,7 @@ void handle_player_movement(void) {
         // If your controls are locked, just tick down the timer until they stop being locked. Don't read player input.
         playerControlsLockTime--;
     } else {
-        if (controllerState & PAD_RIGHT && playerXVelocity >= 0) {
+        if (controllerState & PAD_RIGHT && playerXVelocity >= (0 - PLAYER_VELOCITY_NUDGE)) {
             // If you're moving right, and you're not at max, speed up.
             if (playerXVelocity < maxVelocity) {
                 playerXVelocity += PLAYER_VELOCITY_ACCEL;
@@ -103,7 +108,7 @@ void handle_player_movement(void) {
             } else if (playerXVelocity > maxVelocity) {
                 playerXVelocity -= PLAYER_VELOCITY_ACCEL;
             }
-        } else if (controllerState & PAD_LEFT && playerXVelocity <= 0) {
+        } else if (controllerState & PAD_LEFT && playerXVelocity <= (0 + PLAYER_VELOCITY_NUDGE)) {
             // If you're moving left, and you're not at max, speed up.
             if (ABS(playerXVelocity) < maxVelocity) {
                 playerXVelocity -= PLAYER_VELOCITY_ACCEL;
@@ -120,13 +125,13 @@ void handle_player_movement(void) {
             }
         }
 
-        if (controllerState & PAD_UP && playerYVelocity <= 0) {
+        if (controllerState & PAD_UP && playerYVelocity <= (0 + PLAYER_VELOCITY_NUDGE)) {
             if (ABS(playerYVelocity) < maxVelocity) {
                 playerYVelocity -= PLAYER_VELOCITY_ACCEL;
             } else if (ABS(playerYVelocity) > maxVelocity) {
                 playerYVelocity += PLAYER_VELOCITY_ACCEL;
             }
-        } else if (controllerState & PAD_DOWN && playerYVelocity >= 0) {
+        } else if (controllerState & PAD_DOWN && playerYVelocity >= (0 - PLAYER_VELOCITY_NUDGE)) {
             if (playerYVelocity < maxVelocity) {
                 playerYVelocity += PLAYER_VELOCITY_ACCEL;
             } else if (playerYVelocity > maxVelocity) {
@@ -139,6 +144,26 @@ void handle_player_movement(void) {
                 playerYVelocity += PLAYER_VELOCITY_ACCEL;
             }
         }
+        
+        // Now, slowly adjust to the grid as possible, if the player isn't pressing a direction. 
+        #if PLAYER_MOVEMENT_STYLE == MOVEMENT_STYLE_GRID
+        if (playerYVelocity != 0 && playerXVelocity == 0 && (controllerState & (PAD_LEFT | PAD_RIGHT)) == 0) {
+            if ((char)((playerXPosition + PLAYER_POSITION_TILE_MASK_MIDDLE) & PLAYER_POSITION_TILE_MASK) > (char)(PLAYER_POSITION_TILE_MASK_MIDDLE)) {
+                playerXVelocity = 0-PLAYER_VELOCITY_NUDGE;
+            } else if ((char)((playerXPosition + PLAYER_POSITION_TILE_MASK_MIDDLE) & PLAYER_POSITION_TILE_MASK) < (char)(PLAYER_POSITION_TILE_MASK_MIDDLE)) {
+                playerXVelocity = PLAYER_VELOCITY_NUDGE;
+            } // If equal, do nothing. That's our goal.
+        }
+
+        if (playerXVelocity != 0 && playerYVelocity == 0 && (controllerState & (PAD_UP | PAD_DOWN)) == 0) {
+            if ((char)((playerYPosition + PLAYER_POSITION_TILE_MASK_MIDDLE + PLAYER_POSITION_TILE_MASK_EXTRA_NUDGE) & PLAYER_POSITION_TILE_MASK) > (char)(PLAYER_POSITION_TILE_MASK_MIDDLE)) {
+                playerYVelocity = 0-PLAYER_VELOCITY_NUDGE;
+            } else if ((char)((playerYPosition + PLAYER_POSITION_TILE_MASK_MIDDLE + PLAYER_POSITION_TILE_MASK_EXTRA_NUDGE) & PLAYER_POSITION_TILE_MASK) < (char)(PLAYER_POSITION_TILE_MASK_MIDDLE)) {
+                playerYVelocity = PLAYER_VELOCITY_NUDGE;
+            } // If equal, do nothing. That's our goal.
+        }
+        #endif
+
     }
 
     // While we're at it, tick down the invulnerability timer if needed
@@ -152,17 +177,9 @@ void handle_player_movement(void) {
 
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
-        if (rawXPosition > SCREEN_EDGE_RIGHT) {
+    // The X Position has to wrap to allow us to snap to the grid. This makes us shift when you wrap around to 255, down to 240-ish
+    if (rawXPosition > (SCREEN_EDGE_RIGHT+4) && rawXPosition < SCREEN_EDGE_LEFT) {
         // We use sprite direction to determine which direction to scroll in, so be sure this is set properly.
-        if (playerInvulnerabilityTime) {
-            playerXPosition -= playerXVelocity;
-            rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
-        } else {
-            playerDirection = SPRITE_DIRECTION_RIGHT;
-            gameState = GAME_STATE_SCREEN_SCROLL;
-            playerOverworldPosition++;
-        }
-    } else if (rawXPosition < SCREEN_EDGE_LEFT) {
         if (playerInvulnerabilityTime) {
             playerXPosition -= playerXVelocity;
             rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
@@ -170,6 +187,15 @@ void handle_player_movement(void) {
             playerDirection = SPRITE_DIRECTION_LEFT;
             gameState = GAME_STATE_SCREEN_SCROLL;
             playerOverworldPosition--;
+        }
+    } else if (rawXPosition > SCREEN_EDGE_RIGHT && rawXPosition < (SCREEN_EDGE_RIGHT+4)) {
+        if (playerInvulnerabilityTime) {
+            playerXPosition -= playerXVelocity;
+            rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
+        } else {
+            playerDirection = SPRITE_DIRECTION_RIGHT;
+            gameState = GAME_STATE_SCREEN_SCROLL;
+            playerOverworldPosition++;
         }
     } else if (rawYPosition > SCREEN_EDGE_BOTTOM) {
         if (playerInvulnerabilityTime) {
@@ -227,7 +253,7 @@ void test_player_tile_collision(void) {
                 playerYVelocity = 0;
                 playerControlsLockTime = 0;
             }
-            if (!playerControlsLockTime) {
+            if (!playerControlsLockTime && playerYVelocity < (0-PLAYER_VELOCITY_NUDGE)) {
                 playerDirection = SPRITE_DIRECTION_UP;
             }
 		} else {
@@ -237,7 +263,7 @@ void test_player_tile_collision(void) {
                 playerControlsLockTime = 0;
 
 			}
-            if (!playerControlsLockTime) {
+            if (!playerControlsLockTime && playerYVelocity > PLAYER_VELOCITY_NUDGE) {
                 playerDirection = SPRITE_DIRECTION_DOWN;
             }
 		}
@@ -254,6 +280,11 @@ void test_player_tile_collision(void) {
 
         collisionTempYBottom = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
         collisionTempXRight = ((collisionTempXInt) >> PLAYER_POSITION_SHIFT);
+        // The lowest spot we can test collision is at pixel 192 (the 12th 16x16 tile). If we're past that, bump ourselves back.
+        if (collisionTempYBottom > 190) {
+            collisionTempYBottom = 190;
+        }
+
 
 
         // Depending on how far to the left/right the player is, there's a chance part of our bounding box falls into
@@ -266,7 +297,7 @@ void test_player_tile_collision(void) {
                     playerControlsLockTime = 0;
 
                 }
-                if (!playerControlsLockTime) {
+                if (!playerControlsLockTime && playerXVelocity < (0-PLAYER_VELOCITY_NUDGE)) {
                     playerDirection = SPRITE_DIRECTION_LEFT;
                 }
             } else {
@@ -276,7 +307,7 @@ void test_player_tile_collision(void) {
                     playerControlsLockTime = 0;
 
                 }
-                if (!playerControlsLockTime) {
+                if (!playerControlsLockTime && playerXVelocity > PLAYER_VELOCITY_NUDGE) {
                     playerDirection = SPRITE_DIRECTION_RIGHT;
                 }
             }
