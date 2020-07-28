@@ -10,6 +10,7 @@
 CODE_BANK(PRG_BANK_CREDITS_MENU);
 
 void draw_win_screen(void) {
+    set_vram_update(NULL);
     ppu_off();
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
@@ -33,6 +34,7 @@ void draw_win_screen(void) {
 }
 
 void draw_credits_screen(void) {
+    set_vram_update(NULL);
     ppu_off();
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
