@@ -293,10 +293,10 @@ void update_map_sprites(void) {
             // Collision test... see here for a clear explanation: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
             // rect1=player position, rect2=sprite position
             if (
-                playerXPosition < sprX + currentSpriteFullWidth &&
-                playerXPosition + PLAYER_WIDTH_EXTENDED > sprX &&
-                playerYPosition < sprY + currentSpriteFullHeight &&
-                playerYPosition + PLAYER_HEIGHT_EXTENDED > sprY
+                (playerXPosition + PLAYER_X_OFFSET_EXTENDED) < sprX + currentSpriteFullWidth &&
+                playerXPosition + (PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) > sprX &&
+                (playerYPosition + PLAYER_Y_OFFSET_EXTENDED) < sprY + currentSpriteFullHeight &&
+                playerYPosition + (PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED) > sprY
             ) {
                 lastPlayerSpriteCollisionId = i;
             }
