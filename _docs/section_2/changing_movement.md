@@ -100,7 +100,7 @@ than without.
 
 One other thing that matters is the player hitbox. If you change the player sprite at all, you may find that parts
 of it overlap the walls, or perhaps don't get as close to the walls as you expect. You might also find that sprite
-collisions are too big. If so, the reason is your hitbox.
+collisions are too small. If so, the reason is your hitbox.
 
 If you aren't familiar with the concept, a hitbox is like an imaginary rectangle around your sprite that is used
 for collisions. We do this because testing each pixel is far too slow, as are many other methods. This is a quick
@@ -118,28 +118,56 @@ to make collisions feel more accurate. The constants for this are in `source/spr
 // This is the width and height of player as used in collisions. This is shifted by 4 to allow for sub-pixel
 // sizes. (And smoother acceleration/deceleration.) A 16px wide sprite is 256 units here.
 #define PLAYER_WIDTH_EXTENDED 205
+#define PLAYER_HEIGHT_EXTENDED 120
+#define PLAYER_X_OFFSET_EXTENDED 28
+#define PLAYER_Y_OFFSET_EXTENDED 136
+
+```
+
+This basically means that on the Y axis, we're starting your hitbox 8.5 pixels below the main sprite, and ending it 
+at the bottom of the sprite itself. We're cutting just shy of 2 pixels off the left of the sprite, and a little bit less 
+on the right. You can change these values to suit any different character sprites you add.
+
+As an example, let's dramatically increase the player's hitbox to the height of the full sprite. Let's use 15px as the
+height. We also have to adjust the Y offset to be much smaller. (in this case 1px) Here is what that could look like: 
+
+```c
+#define PLAYER_WIDTH_EXTENDED 205
 #define PLAYER_HEIGHT_EXTENDED 240
 #define PLAYER_X_OFFSET_EXTENDED 28
 #define PLAYER_Y_OFFSET_EXTENDED 16
 ```
 
-This basically means we're starting your hitbox 1 pixel below the main sprite, and ending it at the bottom of the
-sprite itself. We're cutting just shy of 2 pixels off the left of the sprite, and a little bit less on the right. 
-You can change these values to suit any different character sprites you add.
+If you build your game and run it like this, you should see the player sprite collide with walls at its full height,
+instead of the half height that we use by default. Hopefully this makes it a little clearer.
 
-As an example, let's dramatically shrink the player's hitbox and see what it does. Let's pretend our player sprite
-is 10 pixels by 10 pixels, in the middle of the sprite. (So, 3 pixels of padding on all sides. Here is what that
-could look like: 
+## Breaking out of the grid
+
+By default, the engine guides the player onto an 8px grid when moving. This allows the player to navigate around 
+objects more consistently. A similar tactic is used in the original Legend of Zelda. If you change the size of the
+main sprite, or otherwise tweak the hitbox in the above section, this might not work.
+
+We make this configurable with a piece of configuration named `PLAYER_MOVEMENT_STYLE` in `source/sprites/player.h`:
 
 ```c
-#define PLAYER_WIDTH_EXTENDED 160
-#define PLAYER_HEIGHT_EXTENDED 160
-#define PLAYER_X_OFFSET_EXTENDED 48
-#define PLAYER_Y_OFFSET_EXTENDED 48
+// This is simple movement style that leaves everything up to the player.
+#define MOVEMENT_STYLE_LOOSE 0
+// This is a movement style that guides the player onto an 8px "grid", to make it harder to get
+// stuck on edges. 
+#define MOVEMENT_STYLE_GRID 1
+
+// This define changes how the player moves to be one of the two movement styles above.
+#define PLAYER_MOVEMENT_STYLE MOVEMENT_STYLE_GRID
 ```
 
-If you build your game and run it like this, you should see the player sprite starts to phase through objects. (Unless
-you take the time to make a 10x10 sprite!) Hopefully this helps make it a little clearer.
+If you swap that last line to be: 
+```c
+#define PLAYER_MOVEMENT_STYLE MOVEMENT_STYLE_LOOSE
+```
+
+the player will no longer be confined to the grid. For the curious, the code this effects is in 
+[source/sprites/player.c](../../source/sprites/player.c) - search for `PlAYER_MOVEMENT_STYLE` to find it.
+
 
 With that, you've made it through chapter two! (Or at least this part of it.) Next up, we'll start adding some new
 features in. 
