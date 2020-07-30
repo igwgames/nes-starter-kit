@@ -40,10 +40,14 @@
 // Change this to change how fast sprites animate; values are from 0-6. 0 is fast. 6 is slow.
 #define SPRITE_ANIMATION_SPEED_DIVISOR 3
 
-#define SCREEN_EDGE_LEFT 255
+#define SCREEN_EDGE_LEFT 2
 #define SCREEN_EDGE_RIGHT 240
 #define SCREEN_EDGE_TOP HUD_PIXEL_HEIGHT-3
 #define SCREEN_EDGE_BOTTOM 224
+
+// Special case: For collisions we actually have to let the player go past the edge of the screen,
+// so we wrap this to the very far right edge of the screen, making collisions simpler.
+#define SCREEN_EDGE_LEFT_WRAPPED 255
 
 // Data included before a nametable update if done mid-frame.
 #define NAMETABLE_UPDATE_PREFIX_LENGTH 3
