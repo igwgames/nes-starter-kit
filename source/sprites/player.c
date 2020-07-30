@@ -178,7 +178,7 @@ void handle_player_movement(void) {
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
     // The X Position has to wrap to allow us to snap to the grid. This makes us shift when you wrap around to 255, down to 240-ish
-    if (rawXPosition > (SCREEN_EDGE_RIGHT+4) && rawXPosition < SCREEN_EDGE_LEFT) {
+    if (rawXPosition > (SCREEN_EDGE_RIGHT+4) && rawXPosition < SCREEN_EDGE_LEFT_WRAPPED) {
         // We use sprite direction to determine which direction to scroll in, so be sure this is set properly.
         if (playerInvulnerabilityTime) {
             playerXPosition -= playerXVelocity;
