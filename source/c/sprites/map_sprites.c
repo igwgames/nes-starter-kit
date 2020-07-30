@@ -53,26 +53,26 @@ void update_map_sprites(void) {
         playerSwordY = playerYPosition;
         switch (playerDirection) {
             case SPRITE_DIRECTION_RIGHT:
-                playerSwordX += PLAYER_WIDTH_EXTENDED;
-                playerSwordY += (PLAYER_HEIGHT_EXTENDED / 2);
+                playerSwordX += (PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) + PLAYER_SWORD_SIZE_LONG;
+                playerSwordY += ((PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED) / 2);
                 playerSwordWidth = PLAYER_SWORD_SIZE_LONG;
                 playerSwordHeight = PLAYER_SWORD_SIZE_SHORT;
                 break;
             case SPRITE_DIRECTION_LEFT:
-                playerSwordX -= PLAYER_WIDTH_EXTENDED;
-                playerSwordY += (PLAYER_HEIGHT_EXTENDED / 2);
+                playerSwordX -= PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED;
+                playerSwordY += ((PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED) / 2);
                 playerSwordWidth = PLAYER_SWORD_SIZE_LONG;
                 playerSwordHeight = PLAYER_SWORD_SIZE_SHORT;
                 break;
             case SPRITE_DIRECTION_DOWN:
-                playerSwordX += (PLAYER_WIDTH_EXTENDED / 2);
-                playerSwordY += PLAYER_HEIGHT_EXTENDED;
+                playerSwordX += ((PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) / 2);
+                playerSwordY += (PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED);
                 playerSwordWidth = PLAYER_SWORD_SIZE_SHORT;
                 playerSwordHeight = PLAYER_SWORD_SIZE_LONG;
                 break;
             case SPRITE_DIRECTION_UP:
-                playerSwordX += (PLAYER_WIDTH_EXTENDED / 2);
-                playerSwordY -= PLAYER_HEIGHT_EXTENDED;
+                playerSwordX += ((PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) / 2);
+                playerSwordY -= (PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED);
                 playerSwordWidth = PLAYER_SWORD_SIZE_SHORT;
                 playerSwordHeight = PLAYER_SWORD_SIZE_LONG;
                 break;
