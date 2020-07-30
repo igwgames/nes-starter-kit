@@ -4,13 +4,13 @@
 
 A Beginner's Guide and toolkit for NES game creation.
 
-[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](http://cpprograms.net/classic-gaming/nes-starter-kit/)
+[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://cppchriscpp.github.io/nes-starter-kit/)
 
-**Current game version:** 1.0.5
+**Current game version:** 1.0.6
 
 **Current tool zip version:** 1.0.2
 
-[Click here](http://cpprograms.net/classic-gaming/nes-starter-kit/) to try the example game!
+[Click here](https://cppchriscpp.github.io/nes-starter-kit/) to try the example game!
 
 [Download the example rom](https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes)
 
