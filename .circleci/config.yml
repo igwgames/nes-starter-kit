@@ -40,12 +40,12 @@ workflows:
   build:
     jobs: 
       - build
-    triggers:
-      # In addition to pushes to master, run a build once a week just to make sure nothing randomly breaks.
-      # This also ensures cc65-node continues to see use (dockerhub will knock this out after a period of non-use, which would stink)
-      - schedule:
-        cron: "0 0 * * 5"
-        filters:
-          branches:
-            only: 
-              - master
+  triggers:
+    # In addition to pushes to master, run a build once a week just to make sure nothing randomly breaks.
+    # This also ensures cc65-node continues to see use (dockerhub will knock this out after a period of non-use, which would stink)
+    - schedule:
+      cron: "0 0 * * 5"
+      filters:
+        branches:
+          only: 
+            - master
