@@ -25,4 +25,5 @@ that changes, it may make sense to put a nice script into the tools dir.
 
 ## Potential Improvements
 
-- This process could very well be automated - especially the building of the modules. 
+- This process could very well be automated - especially the building of the modules.
+- The branch thing is annoying and repetitive, but also dangerous. Can we automate without taking away control?

@@ -6,7 +6,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://cppchriscpp.github.io/nes-starter-kit/)
 
-**Current game version:** 1.0.7
+**Current game version:** 1.0.8
 
 **Current tool zip version:** 1.0.2
 
