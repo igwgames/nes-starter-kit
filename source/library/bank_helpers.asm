@@ -14,15 +14,38 @@
 .export _set_mirroring
 
 _set_prg_bank:
-    ; Grab old bank and store it temporarily.
-    ldx BP_BANK
     ; Store new bank into BP_BANK
     sta BP_BANK
 
-    ; Write it to the reg (destroys a)
-    mmc1_register_write MMC1_PRG
-    txa ; Old bank's back!
+    ; Set a flag for the nmi method to check, so if it runs in the middle of us writing 
+    ; this bank, we can finish what we were doing first.
+    ldx #1
+    stx BANK_WRITE_IP
 
+
+    ; Write the new bank to the register (destroys a)
+    jsr _set_prg_bank_raw
+
+    ; See if nmi interrupted us mid-update.
+    ldx BANK_WRITE_IP
+    cpx #2
+    bne @no_nmi
+        ; Yep, we got interrupted. We need to run the normal nmi method now that we have switched.
+        ldx #0
+        stx BANK_WRITE_IP
+        jsr nmi_update
+        rts
+    @no_nmi:
+    ; We didn't get interrupted, so mark it as complete and move on.
+    ldx #0
+    stx BANK_WRITE_IP
+
+    rts
+
+_set_prg_bank_raw:
+    ; Set PRG bank without any of the nmi safety or variable modifying from above. 
+    ; You probably don't want to call this one!
+    mmc1_register_write MMC1_PRG
     rts
 
 _get_prg_bank:

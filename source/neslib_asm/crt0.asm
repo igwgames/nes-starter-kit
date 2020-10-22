@@ -77,6 +77,7 @@ PPU_MASK_VAR: 		.res 1
 RAND_SEED: 			.res 2
 BP_BANK:            .res 1
 BP_BANK_TEMP:       .res 1
+BANK_WRITE_IP:		.res 1
 NMI_BANK_TEMP:      .res 1
 FT_TEMP: 			.res 3
 
