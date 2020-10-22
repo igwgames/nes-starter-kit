@@ -29,12 +29,34 @@
 	.export _vram_adr,_vram_put,_vram_fill,_vram_inc,_vram_unrle
 	.export _set_vram_update,_flush_vram_update
 	.export _memcpy,_memfill,_delay
+	.export nmi_update
 
 	.export _split_y,_reset,_wait_for_sprite0_hit
 
 ;NMI handler
 
 nmi:
+	; Due to quirks of the MMC1 mapper, there's a chance this flips when we're in the middle of switching PRG banks.
+	; If this happens, we need to catch it, quickly return to what we were doing, then re-trigger the nmi update.
+	pha 
+	lda BANK_WRITE_IP
+	cmp #1
+	bne @continue
+		; If we were in the middle of switching banks, set a flag to check later...
+		inc BANK_WRITE_IP
+		pla
+		; then return from the interrupt without doing anything else.
+		rti
+
+	@continue:
+	; Not in the middle of a bank switch, so run the nmi_update method as normal.
+	pla
+	jsr nmi_update
+	
+	rti
+
+nmi_update:
+
 	pha
 	txa
 	pha
@@ -143,7 +165,8 @@ nmi:
     lda BP_BANK
     sta NMI_BANK_TEMP
     lda #SOUND_BANK
-    jsr _set_prg_bank
+	sta BP_BANK
+    jsr _set_prg_bank_raw
 
 	;play music, the code is modified to put data into output buffer instead of APU registers
     
@@ -233,7 +256,8 @@ nmi:
 	sta $400F
 
     lda NMI_BANK_TEMP
-    jsr _set_prg_bank
+	sta BP_BANK
+	jsr _set_prg_bank_raw
 
 	pla
 	tay
@@ -243,7 +267,7 @@ nmi:
 
 irq:
 
-    rti
+    rts
 
 
 

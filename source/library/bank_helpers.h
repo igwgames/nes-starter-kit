@@ -26,8 +26,7 @@ void bank_pop(void);
 
 // Switch to the given bank. Your prior bank is not saved, so be sure to save it if you need to switch back.
 // bank_id: The bank to switch to.
-// returns: The current bank.
-unsigned char __fastcall__ set_prg_bank(unsigned char bank_id);
+void __fastcall__ set_prg_bank(unsigned char bank_id);
 
 // Get the current bank.
 // returns: The current bank.
