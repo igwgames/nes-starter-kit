@@ -65,3 +65,14 @@ There is also a layer called `Room Grid` - this layer just has the faint outline
 layer is locked, so you can't accidentally place tiles/sprites on it. (To unlock it, just push the lock icon in 
 the `layers` section.) The grid lines appear on the bottom and right of each room. This layer is ignored when 
 creating the rom.
+
+## Can I change the size of the map?
+
+Unfortunately, right now the size of the map is fixed at 128x96 tiles. If you want to change this, you would have
+to change a few pieces of code in [map.c](../../source/map/map.c), as well as some of the logic in the map conversion
+tool [tmx2c](../../tools/tmx2c). This is a rather advanced topic, and there is no guide on how to go about this yet. 
+
+If you want a smaller map, your easiest solution is to build your map within the 128x96 tile grid. If you want something
+smaller, you can always fill the extra space with blank tiles. Alternatively, you can create one map with multiple sub-maps
+within it. This is the approach the original Legend of Zelda took. (See the "Dungeons (unified)" map on 
+[this page](https://ian-albert.com/games/legend_of_zelda_maps/). 
