@@ -56,17 +56,7 @@ By default, you can put a maximum of 8 sprites on a single map tile. If you add 
 few will be skipped, and your build command will output warnings. Try to keep this limit in mind while 
 adding to your map! 
 
-_If this limit is really constraining, there is a constant you can change to get up to 12, however there
-are some side-effects to doing that, and you will have to sort those out._
-
-## The room grid
-
-There is also a layer called `Room Grid` - this layer just has the faint outlines that separates the rooms. This
-layer is locked, so you can't accidentally place tiles/sprites on it. (To unlock it, just push the lock icon in 
-the `layers` section.) The grid lines appear on the bottom and right of each room. This layer is ignored when 
-creating the rom.
-
-## Can I change the size of the map?
+### Can I change the size of the map?
 
 Unfortunately, right now the size of the map is fixed at 128x96 tiles. If you want to change this, you would have
 to change a few pieces of code in [map.c](../../source/map/map.c), as well as some of the logic in the map conversion
@@ -76,3 +66,10 @@ If you want a smaller map, your easiest solution is to build your map within the
 smaller, you can always fill the extra space with blank tiles. Alternatively, you can create one map with multiple sub-maps
 within it. This is the approach the original Legend of Zelda took. (See the "Dungeons (unified)" map on 
 [this page](https://ian-albert.com/games/legend_of_zelda_maps/). 
+
+## The room grid
+
+There is also a layer called `Room Grid` - this layer just has the faint outlines that separates the rooms. This
+layer is locked, so you can't accidentally place tiles/sprites on it. (To unlock it, just push the lock icon in 
+the `layers` section.) The grid lines appear on the bottom and right of each room. This layer is ignored when 
+creating the rom.
