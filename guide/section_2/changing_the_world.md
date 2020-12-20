@@ -20,6 +20,9 @@ bottom right panel. If you want to change sprites, you want to use the `Sprites`
 
 **If you mix these two, the compiler will fail when it tries to build your levels.**
 
+The engine doesn't handle empty tiles, so it is suggested that you avoid leaving any gaps in the `Overworld Tiles`
+part of the map. Any blank spaces will be filled in with the very first tile in your tile list.
+
 Beyond that, just make the rooms look like you want them to, then save the tmx file and build your game. 
 **Bam!** level designs updated!
 

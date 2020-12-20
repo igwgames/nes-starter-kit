@@ -128,13 +128,14 @@ tmxParse.parseFile(process.argv[4], function(err, tmxData) {
 
                     var pos = (x * SCREEN_WIDTH) + (y * (roomsWide*SCREEN_WIDTH)*SCREEN_HEIGHT) + (yy * width) + xx;
                     if (!data[pos]) {
+                        containsWarnings = true;
                         out('WARNING: Blank tile found at position (' + x + ', ' + y + ') - trying to replace it with the first tile.');
                         data[pos] = { gid: 1 };
                     }
-                    if (data[pos].gid < 0 || data[pos].gid > 256) {
+                    if (data[pos].gid < 1 || data[pos].gid > 256) {
                         containsWarnings = true;
                         out('WARNING: Sprite (id: ' + data[pos].gid + ') found on map layer in room ( ' + x + ', ' + y + ') - this sprite will be skipped! Please move it to the sprite layer.');
-                        data[pos].gid = 0;
+                        data[pos].gid = 1;
                     }
                     mapData += data[pos].gid - 1;
 
