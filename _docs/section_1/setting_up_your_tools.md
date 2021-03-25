@@ -37,7 +37,7 @@ You should also rename the folder from `nes-starter-kit` to the name of your gam
 To make life easier, most of the tools, including cc65 v2.14.0 (our c compiler), neslib (The library we use to interface with
 the NES), and various converters are included in the following zip file: 
 
-[Download Tools](http://cpprograms.net/devnull/nes_starter_kit_tools.zip)
+[Download Tools](https://devnull.nes.science/nes_starter_kit_tools.zip)
 
 Download this file, and extract it to the base folder within the `nes-starter-kit` folder. Once 
 you have done that, follow the steps below. It will replace the `tools` folder and a few things in
