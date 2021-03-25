@@ -19,7 +19,7 @@ that changes, it may make sense to put a nice script into the tools dir.
     # If there are any conflicts, or this change is big, run `make clean && make && make run` then test the rom.
     git push --force origin BRANCHNAME
     ```
-10. IF CHANGED, Build a new zip file using `make build_tool_zip` and upload this to `cpprograms.net`, replacing the old
+10. IF CHANGED, Build a new zip file using `make build_tool_zip` and upload this to `cpprograms.net`, replacing the old (Note: now referenced through devnull.nes.science with https, but old link is still there)
    one. (The old one should be renamed with its version number; IE `nes_starter_kit_tools.1.0.2.zip`)
 11. IF ANY BREAKING CHANGES WERE MADE, update the README and state them, as well as the version people can go back to.
 
