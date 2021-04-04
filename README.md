@@ -133,6 +133,7 @@ matter if they interest you.
 24. [Saving the Game](./guide/section_3/saving_the_game.md)
 25. [Adding objects that attract or repel the player](./guide/section_3/attract_repel.md)
 26. [Adding an enemy that mimics player behavior](./guide/section_3/mimic.md)
+27. [Adding a new sprite size](./guide/section_3/adding_new_sprite_sizes.md)
 
 ### Part 4: Polish and more
 
