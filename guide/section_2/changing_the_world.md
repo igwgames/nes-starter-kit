@@ -18,6 +18,9 @@ The first thing to be aware of is which layer you have selected on the top right
 be sure to select `Overworld Tiles`. You have to pair this with tiles from the `Overworld Tiles` tileset on the
 bottom right panel. If you want to change sprites, you want to use the `Sprites` layer, and the `Sprites` tileset. 
 
+It can be hard to tell which layer you are on - turning on the "Highlight current layer" option in the "View" 
+menu can help.
+
 **If you mix these two, the compiler will fail when it tries to build your levels.**
 
 The engine doesn't handle empty tiles, so it is suggested that you avoid leaving any gaps in the `Overworld Tiles`
