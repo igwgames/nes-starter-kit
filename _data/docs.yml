@@ -77,6 +77,9 @@
   - title: "26. Adding an enemy that mimics player behavior"
     url: "/guide/section_3/mimic.html"
 
+  - title: "27. Adding a new sprite size"
+    url: "/guide/section_3/adding_new_sprite_sizes.html"
+
 - title: " Part 4: Polish and more"
   docs:
 
