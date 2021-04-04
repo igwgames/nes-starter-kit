@@ -11,7 +11,6 @@
 
 CODE_BANK(PRG_BANK_MAP_SPRITES);
 
-#define currentSpriteSize tempChar2
 #define currentSpriteTileId tempChar3
 #define oamMapSpriteIndex tempChar4
 #define currentSpriteType tempChar5
@@ -24,15 +23,19 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 // NOTE: width = height for our examples, so both are set to the same value.
 // If you change this, be sure to assign it in the for loop below as well.
 #define currentSpriteFullWidth tempInt3
-#define currentSpriteFullHeight tempInt3
+#define currentSpriteFullHeight tempInt4
 // Same story, but corrected for tile collisions
-#define currentSpriteFullTileCollisionWidth tempInt4
-#define currentSpriteFullTileCollisionHeight tempInt4
+#define currentSpriteFullTileCollisionWidth tempInt5
+#define currentSpriteFullTileCollisionHeight tempInt6
 
 
 
 ZEROPAGE_DEF(unsigned char, lastPlayerSpriteCollisionId);
 ZEROPAGE_DEF(unsigned char, currentMapSpriteIndex);
+ZEROPAGE_DEF(unsigned char, currentSpriteSizeName);
+ZEROPAGE_DEF(unsigned char, currentSpriteWidth);
+ZEROPAGE_DEF(unsigned char, currentSpriteHeight);
+ZEROPAGE_DEF(unsigned char, currentSpriteDirection);
 
 // Forward definition of this method; code is at the bottom of this file. Ignore this for now!
 void do_sprite_movement_with_collision(void);
@@ -56,19 +59,33 @@ void update_map_sprites(void) {
         oamMapSpriteIndex += FIRST_ENEMY_SPRITE_OAM_INDEX;
         sprX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
         sprY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
-        currentSpriteSize = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK;
+        currentSpriteSizeName = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK;
         currentSpriteTileId = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_TILE_ID];
+        currentSpriteDirection = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION];
 
-        // NOTE: we're only setting currentSpriteFullWidth here because our code assumes everything is a square. If you
-        // change that, be sure to change currentSpriteFullHeight here, and give it a new variable above.
-        if ((currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_SIZE_MASK) == SPRITE_SIZE_8PX_8PX) {
+        if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
             currentSpriteFullWidth = NES_SPRITE_WIDTH << PLAYER_POSITION_SHIFT;
-        } else {
+            currentSpriteFullHeight = currentSpriteFullWidth;
+        } else if (currentSpriteSizeName == SPRITE_SIZE_16PX_16PX) {
             currentSpriteFullWidth = NES_SPRITE_WIDTH << (PLAYER_POSITION_SHIFT+1);
+            currentSpriteFullHeight = currentSpriteFullWidth;
 
             // For 16x16 sprites, we reduce the sprite hitbox a bit. We also subtract this offset from X/y in-place
             currentSpriteFullTileCollisionWidth = currentSpriteFullWidth - (2*SPRITE_TILE_HITBOX_OFFSET);
+            currentSpriteFullTileCollisionHeight = currentSpriteFullTileCollisionWidth;
 
+        } else if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+            if (currentSpriteDirection == SPRITE_DIRECTION_LEFT || currentSpriteDirection == SPRITE_DIRECTION_RIGHT) {
+                currentSpriteFullWidth = (NES_SPRITE_WIDTH*3) << PLAYER_POSITION_SHIFT;
+                currentSpriteFullHeight = (NES_SPRITE_WIDTH) << PLAYER_POSITION_SHIFT;
+                currentSpriteFullTileCollisionWidth = currentSpriteFullWidth - (3*SPRITE_TILE_HITBOX_OFFSET);
+                currentSpriteFullTileCollisionHeight = currentSpriteFullHeight - (SPRITE_TILE_HITBOX_OFFSET);
+            } else {
+                currentSpriteFullWidth = (NES_SPRITE_WIDTH) << PLAYER_POSITION_SHIFT;
+                currentSpriteFullHeight = (NES_SPRITE_WIDTH*3) << PLAYER_POSITION_SHIFT;
+                currentSpriteFullTileCollisionWidth = currentSpriteFullWidth - (SPRITE_TILE_HITBOX_OFFSET);
+                currentSpriteFullTileCollisionHeight = currentSpriteFullHeight - (3*SPRITE_TILE_HITBOX_OFFSET);
+            }
         }
 
 
@@ -84,34 +101,60 @@ void update_map_sprites(void) {
         switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_ANIMATION_TYPE]) {
             case SPRITE_ANIMATION_SWAP:
 
-                if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+                if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
                     currentSpriteTileId += ((frameCount & 0x10) >> 4);
-                } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+                } else if (currentSpriteSizeName == SPRITE_SIZE_16PX_16PX) {
                     currentSpriteTileId += ((frameCount & 0x10) >> 3);
                 }
 
                 break;
             case SPRITE_ANIMATION_SWAP_FAST:
-                if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+                if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
                     currentSpriteTileId += ((frameCount & 0x08) >> 3);
-                } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+                } else if (currentSpriteSizeName == SPRITE_SIZE_16PX_16PX) {
                     currentSpriteTileId += ((frameCount & 0x08) >> 2);
                 }
                 break;
             case SPRITE_ANIMATION_FULL:
                 // This is for sprites that can face up/down/left/right, and are animated while they do so.
-                currentSpriteData = currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_CURRENT_DIRECTION];
-                if (currentSpriteData == SPRITE_DIRECTION_LEFT) {
-                    currentSpriteTileId += currentSpriteSize == SPRITE_SIZE_16PX_16PX ? 0x24 : 0x12;
-                } else if (currentSpriteData == SPRITE_DIRECTION_RIGHT) {
-                    currentSpriteTileId += currentSpriteSize == SPRITE_SIZE_16PX_16PX ? 0x20 : 0x10;
-                } else if (currentSpriteData == SPRITE_DIRECTION_UP) {
-                    currentSpriteTileId += currentSpriteSize == SPRITE_SIZE_16PX_16PX ? 0x04 : 0x02;
-                } // Else, you're facing down, which conveniently is in position zero. So, do nothing!
+                if (currentSpriteDirection == SPRITE_DIRECTION_LEFT) {
+                    if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+                        currentSpriteTileId += 0x12;
+                    } else if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
+                        currentSpriteTileId += 0x12;
+                    } else {
+                        currentSpriteTileId += 0x24;
+                    }
+                } else if (currentSpriteDirection == SPRITE_DIRECTION_RIGHT) {
+                    if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+                        currentSpriteTileId += 0x02;
+                    } else if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
+                        currentSpriteTileId += 0x10;
+                    } else {
+                        currentSpriteTileId += 0x20;
+                    }
+                } else if (currentSpriteDirection == SPRITE_DIRECTION_UP) {
+                    if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+                        currentSpriteTileId += 0x30;
+                    } else if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
+                        currentSpriteTileId += 0x02;
+                    } else {
+                        currentSpriteTileId += 0x04;
+                    }
+
+                } else {
+                    // Else, you're facing down, which conveniently is in position zero for all sprites
+                }
 
                 // Next, let's animate based on the current frame.
-                if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+                if (currentSpriteSizeName == SPRITE_SIZE_16PX_16PX) {
                     currentSpriteTileId += (frameCount & 0x10) >> 3;
+                } else if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+                    if (currentSpriteDirection == SPRITE_DIRECTION_LEFT || currentSpriteDirection == SPRITE_DIRECTION_RIGHT) {
+                        currentSpriteTileId += ((frameCount & 0x08) >> 3)*3;
+                    } else {
+                        currentSpriteTileId += (frameCount & 0x08) >> 3;
+                    }
                 } else {
                     currentSpriteTileId += (frameCount & 0x08) >> 3;
                 }
@@ -237,7 +280,7 @@ void update_map_sprites(void) {
         sprX8 = sprX >> SPRITE_POSITION_SHIFT;
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
         tempMapSpriteIndex = (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_SIZE_PALETTE] & SPRITE_PALETTE_MASK) >> 6;
-        if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
+        if (currentSpriteSizeName == SPRITE_SIZE_8PX_8PX) {
             oam_spr(
                 sprX8 + (NES_SPRITE_WIDTH/2),
                 sprY8 + (NES_SPRITE_HEIGHT/2),
@@ -245,7 +288,7 @@ void update_map_sprites(void) {
                 tempMapSpriteIndex,
                 oamMapSpriteIndex
             );
-        } else if (currentSpriteSize == SPRITE_SIZE_16PX_16PX) {
+        } else if (currentSpriteSizeName == SPRITE_SIZE_16PX_16PX) {
             oam_spr(
                 sprX8,
                 sprY8,
@@ -276,6 +319,54 @@ void update_map_sprites(void) {
             );
 
 
+        } else if (currentSpriteSizeName == SPRITE_SIZE_24PX_8PX) {
+            oam_spr(
+                sprX8,
+                sprY8,
+                currentSpriteTileId,
+                tempMapSpriteIndex,
+                oamMapSpriteIndex
+            );
+            if (currentSpriteDirection == SPRITE_DIRECTION_LEFT || currentSpriteDirection == SPRITE_DIRECTION_RIGHT) {
+                oam_spr(
+                    sprX8 + NES_SPRITE_WIDTH,
+                    sprY8,
+                    currentSpriteTileId + 1,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 4
+                );
+                oam_spr(
+                    sprX8 + (NES_SPRITE_WIDTH*2),
+                    sprY8,
+                    currentSpriteTileId + 2,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 8
+                );
+            } else {
+                oam_spr(
+                    sprX8,
+                    sprY8 + NES_SPRITE_HEIGHT,
+                    currentSpriteTileId + 16,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 4
+                );
+                oam_spr(
+                    sprX8,
+                    sprY8 + (NES_SPRITE_HEIGHT*2),
+                    currentSpriteTileId + 32,
+                    tempMapSpriteIndex,
+                    oamMapSpriteIndex + 8
+                );
+            }
+
+            // Hide the last sprite, since we don't use it.
+            oam_spr(
+                SPRITE_OFFSCREEN,
+                SPRITE_OFFSCREEN,
+                SPRITE_OFFSCREEN,
+                tempMapSpriteIndex,
+                oamMapSpriteIndex + 12
+            );
         }
 
         // While we have all the data above, let's see if the player hit us.
