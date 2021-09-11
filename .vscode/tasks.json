@@ -2,9 +2,17 @@
     // We opt to use cygwin's bash here directly instead of the terminal because of some weird issues with setting
     // the working directory while also passing a command through. This could probably be fixed pretty easily;
     //  if you find a way feel free to submit a pr!
-    "version": "0.1.0",
-    "command": "C:\\cygwin64\\bin\\bash.exe",
-    "isShellCommand": false,
-    "args": ["-c", "\"/usr/bin/make build run\""],
-    "showOutput": "always"
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "/usr/bin/make build run",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+            }
+        }
+    ]
 }
