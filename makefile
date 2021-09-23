@@ -95,7 +95,7 @@ build-tiles: graphics/generated/tiles.png
 build-sprites: graphics/generated/sprites.png
 
 temp/base.asm: $(CONFIG_ASM)
-	printf ".include \"$(CONFIG_ASM)\"" > temp/base.asm
+	printf ".include \"$(CONFIG_ASM)\"\n" > temp/base.asm
 	printf ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
 
 temp/crt0.o: source/neslib_asm/crt0.asm source/neslib_asm/neslib.asm temp/base.asm $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
@@ -147,9 +147,9 @@ clean:
 	-rm -f temp/*
 	-rm -f sounds/sfx/generated/*.s
 	-rm -f graphics/generated/*.png
-	mkdir temp/levels
-	touch temp/empty
-	touch temp/levels/empty
+	-mkdir temp/levels
+	-touch temp/empty
+	-touch temp/levels/empty
 
 run:
 	$(MAIN_EMULATOR) rom/$(ROM_NAME).nes
