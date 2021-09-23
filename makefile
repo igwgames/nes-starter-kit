@@ -95,8 +95,8 @@ build-tiles: graphics/generated/tiles.png
 build-sprites: graphics/generated/sprites.png
 
 temp/base.asm: $(CONFIG_ASM)
-	echo ".include \"$(CONFIG_ASM)\"" > temp/base.asm
-	echo ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
+	printf ".include \"$(CONFIG_ASM)\"" > temp/base.asm
+	printf ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
 
 temp/crt0.o: source/neslib_asm/crt0.asm source/neslib_asm/neslib.asm temp/base.asm $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
 	$(MAIN_ASM_COMPILER) temp/base.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
