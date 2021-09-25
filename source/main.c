@@ -45,7 +45,6 @@ void initialize_variables(void) {
 
 void initialize_chr_ram_menu(void) {
     set_chr_bank_0(0);
-    set_chr_bank_1(1);
     bank_push(5);
     vram_adr(PPU_PATTERN_TABLE_0_ADDRESS);
     vram_write((unsigned char*)ascii_tiles, PPU_PATTERN_TABLE_LENGTH);
@@ -57,7 +56,6 @@ void initialize_chr_ram_menu(void) {
 
 void initialize_chr_ram_game(void) {
     set_chr_bank_0(0);
-    set_chr_bank_1(1);
     bank_push(5);
     vram_adr(PPU_PATTERN_TABLE_0_ADDRESS);
     vram_write((unsigned char*)main_tiles, PPU_PATTERN_TABLE_LENGTH);

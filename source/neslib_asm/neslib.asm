@@ -36,21 +36,6 @@
 ;NMI handler
 
 nmi:
-	; Due to quirks of the MMC1 mapper, there's a chance this flips when we're in the middle of switching PRG banks.
-	; If this happens, we need to catch it, quickly return to what we were doing, then re-trigger the nmi update.
-	pha 
-	lda BANK_WRITE_IP
-	cmp #1
-	bne @continue
-		; If we were in the middle of switching banks, set a flag to check later...
-		inc BANK_WRITE_IP
-		pla
-		; then return from the interrupt without doing anything else.
-		rti
-
-	@continue:
-	; Not in the middle of a bank switch, so run the nmi_update method as normal.
-	pla
 	jsr nmi_update
 	
 	rti
@@ -166,7 +151,7 @@ nmi_update:
     sta NMI_BANK_TEMP
     lda #SOUND_BANK
 	sta BP_BANK
-    jsr _set_prg_bank_raw
+    jsr _set_prg_bank
 
 	;play music, the code is modified to put data into output buffer instead of APU registers
     
@@ -257,7 +242,7 @@ nmi_update:
 
     lda NMI_BANK_TEMP
 	sta BP_BANK
-	jsr _set_prg_bank_raw
+	jsr _set_prg_bank
 
 	pla
 	tay
@@ -1338,7 +1323,7 @@ _sfx_play:
 	pha
 	lda #SOUND_BANK
 	sta BP_BANK
-	mmc1_register_write MMC1_PRG
+	jsr _set_prg_bank
 	tya ; bring back the song number!
 
 	and #$03
@@ -1351,7 +1336,7 @@ _sfx_play:
 	; Remember when we stored the old bank into BP_BANK and swapped? Time to roll back.
 	pla
 	sta BP_BANK
-	mmc1_register_write MMC1_PRG
+	jsr _set_prg_bank
 
 	rts
 

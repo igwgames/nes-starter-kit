@@ -19,7 +19,6 @@ void draw_pause_screen(void) {
     scroll(0, 0);
 
 	set_chr_bank_0(CHR_BANK_MENU);
-    set_chr_bank_1(CHR_BANK_MENU);
 
     // Just write "- Paused -" on the screen... there's plenty of nicer things you could do if you wanna spend time!
     put_str(NTADR_A(11, 13), "- Paused -");

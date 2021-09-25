@@ -128,8 +128,8 @@ RLE_BYTE	=TEMP+3
     .byte $4e,$45,$53,$1a
 	.byte <NES_PRG_BANKS
 	.byte <NES_CHR_BANKS
-	.byte $12
-	.byte 0
+	.byte %11100011
+	.byte $10
 	.res 8,0
 
 
@@ -261,11 +261,6 @@ detectNTSC:
 	sta PPU_SCROLL			
 	sta PPU_OAM_ADDR
 
-	lda #%11111
-	mmc1_register_write MMC1_CTRL
-	lda #0
-	mmc1_register_write MMC1_PRG
-	mmc1_register_write MMC1_CHR0
 
 	lda #0
 	ldx #0
@@ -278,6 +273,25 @@ detectNTSC:
 
 
 	jmp _main			;no parameters
+
+
+; Throw a single jmp to reset in every bank other than the main PRG bank. This accomplishes 2 things:
+; 1) Puts something in the bank, so we avoid warnings
+; 2) If we somehow end up here by accident, we'll reset correctly.
+.repeat (SYS_PRG_BANKS-1), I
+	first_byte_reset_in .concat("ROM_", .sprintf("%02X", I))
+.endrepeat
+
+.segment "STUB"
+	resetstub:
+		sei
+		ldx #$ff
+		txs
+		stx $C000
+		jmp start
+		.addr nmi, resetstub, irq
+	
+
 
 	.include "source/neslib_asm/ft_drv/driver.s"
     .include "source/library/bank_helpers.asm"
@@ -297,20 +311,6 @@ detectNTSC:
 .segment "CODE"
 	_ocean_tiles: 
 		.incbin "graphics/ocean_tiles.chr"
-
-
-; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
-.repeat (SYS_PRG_BANKS-1), I
-	resetstub_in .concat("STUB_", .sprintf("%02X", I))
-.endrepeat 
-resetstub_in "STUB_PRG"
-
-; Throw a single jmp to reset in every bank other than the main PRG bank. This accomplishes 2 things:
-; 1) Puts something in the bank, so we avoid warnings
-; 2) If we somehow end up here by accident, we'll reset correctly.
-.repeat (SYS_PRG_BANKS-1), I
-	first_byte_reset_in .concat("ROM_", .sprintf("%02X", I))
-.endrepeat
 
 
 .segment "ROM_00"
