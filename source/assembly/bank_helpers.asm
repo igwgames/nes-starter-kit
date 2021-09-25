@@ -5,7 +5,8 @@
 
 .segment "ZEROPAGE"
     nmiChrTileBank: .res 1
-    .exportzp nmiChrTileBank
+    regCurrentState: .res 1
+    .exportzp nmiChrTileBank, regCurrentState
 
 .segment "CODE"
 
@@ -17,14 +18,21 @@ _set_prg_bank:
     ; Store new bank into BP_BANK
     sta BP_BANK
 
-    jsr mmc1_set_prg_bank
+    ; Set a flag for the nmi method to check, so if it runs in the middle of us writing 
+    ; this bank, we can finish what we were doing first.
+    lda regCurrentState
+    and #%11100000
+    clc
+    adc BP_BANK
+    sta regCurrentState
+    sta $C000
 
     rts
 
 _set_prg_bank_raw:
     ; Set PRG bank without any of the nmi safety or variable modifying from above. 
     ; You probably don't want to call this one!
-    jsr mmc1_set_prg_bank
+    sta $C000
     rts
 
 _get_prg_bank:
@@ -32,11 +40,22 @@ _get_prg_bank:
     rts
 
 _set_chr_bank_0:
-    jsr mmc1_set_chr_bank_0
+    pha
+    lda regCurrentState
+    and #%10011111
+    sta regCurrentState
+    pla
+    .repeat 5
+        asl
+    .endrepeat
+    clc
+    adc regCurrentState
+    sta regCurrentState
+    sta $C000
     rts
 
 _set_chr_bank_1:
-    jsr mmc1_set_chr_bank_1
+    ; Not supported!
     rts
 
 ; Both of these just set/unset a varible used in `neslib.asm` to trigger this during nmi.
@@ -50,8 +69,5 @@ _unset_nmi_chr_tile_bank:
     rts
 
 _set_mirroring:
-    ; Limit this to mirroring bits, so we can add our bytes safely.
-    and #%00000011
-    ; Bombs away!
-    jsr mmc1_set_mirroring
+    ; Unsupported!
     rts

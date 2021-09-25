@@ -101,33 +101,18 @@
 .segment "ROM_06" 
     jmp reset
 
-; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
-.macro resetstub_in segname
-    .segment segname
-        .scope
-        
-            resetstub_entry:
-                sei
-                ldx #$FF
-                txs
-                stx MMC1_CTRL  ; Writing $80-$FF anywhere in $8000-$FFFF resets MMC1
-                jmp start
-                .addr nmi, resetstub_entry, $0000
-        .endscope
-.endmacro
-
-; mmc1 requires in a reset stub in the last bank in the last 16 bytes to boot.
-; NOTE: If you want to work with all versions of mmc1 (Namely 1C) you'll need to add this stub to every single rom bank.
-; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
-.repeat (SYS_PRG_BANKS-1), I
-    resetstub_in .concat("STUB_", .sprintf("%02X", I))
-.endrepeat 
-resetstub_in "STUB_PRG"
-
 ; Throw a single jmp to reset in every bank other than the main PRG bank. This accomplishes 2 things:
 ; 1) Puts something in the bank, so we avoid warnings
 ; 2) If we somehow end up here by accident, we'll reset correctly.
 .repeat (SYS_PRG_BANKS-1), I
-    first_byte_reset_in .concat("ROM_", .sprintf("%02X", I))
+	first_byte_reset_in .concat("ROM_", .sprintf("%02X", I))
 .endrepeat
 
+.segment "STUB"
+	resetstub:
+		sei
+		ldx #$ff
+		txs
+		stx $C000
+		jmp start
+		.addr nmi, resetstub, irq

@@ -131,8 +131,8 @@ RLE_BYTE       =TEMP+3
     .byte $4e,$45,$53,$1a
     .byte <NES_PRG_BANKS
     .byte <NES_CHR_BANKS
-    .byte $12
-    .byte 0
+	.byte %11100011
+	.byte $10
     .res 8,0
 
 

@@ -1,13 +1,7 @@
-<<<<<<< HEAD:source/c/graphics/hud.c
 #include "source/c/neslib.h"
 #include "source/c/graphics/hud.h"
 #include "source/c/globals.h"
-=======
-#include "source/neslib_asm/neslib.h"
-#include "source/graphics/hud.h"
-#include "source/globals.h"
-#include "source/configuration/system_constants.h"
->>>>>>> 7e6f6d7... Ocean tile animation example:source/graphics/hud.c
+#include "source/c/configuration/system_constants.h"
 
 CODE_BANK(PRG_BANK_HUD);
 
