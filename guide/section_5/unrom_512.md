@@ -25,14 +25,14 @@ chr ram also apply here, so be sure to read that chapter!
     * Some explanation and example (asm) code is available [on the nesdev wiki](https://wiki.nesdev.org/w/index.php/UNROM_512)
 * Mirroring isn't switchable - you have to specify horizontal or vertical in the rom header
 
-# What do I have to know to start using it?
+## What do I have to know to start using it?
 
 Not much - I would strongly recommend reading the chr ram chapter first, since that is a requirement here. Otherwise, 
 the branch should get you up and running!
 
-# What extra helpers are available?
+## What extra helpers are available?
 
-## Changing chr ram banks
+### Changing chr ram banks
 
 You can switch what chr ram bank you are looking at with the `set_chr_bank_0(id)` method, included in 
 `library/bank_helpers.h`. `set_chr_bank_1` is disabled, since you have to switch both banks at once.
