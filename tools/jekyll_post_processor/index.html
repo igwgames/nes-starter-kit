@@ -41,8 +41,7 @@ layout: default
             <h3 class="text-center">Try it now!</h3>
 
             <div class="text-center">
-                <div class="alert alert-dark" style="width: 540px; height: 540px; line-height: 540px; cursor: pointer; background-color: #d6d8d9; border-color: #c6c8ca; color: #1b1e21; text-align:center; margin: auto;" onclick="$('#tryit').attr('src', 'https://cppchriscpp.github.io/nes-starter-kit/WebNES-gh-pages/index_starter_kit.html'); $('#tryit').show(); $(this).hide();"><h1 style="line-height: 540px;">Click here!</h1></div>
-                <iframe id="tryit" style="display: none;" width="540px" height="540px"></iframe>
+                <iframe id="tryit" src="https://cpprograms.net/devnull/nez_hosted/index_embed.html"></iframe>
             </div>
             <p>
             Try it out for yourself; there should be an emulator with the starter game in it just above this!
@@ -62,3 +61,50 @@ layout: default
 <meta name="twitter:title" content="NES Starter Kit" />
 <meta name="twitter:description" content="Make your own game for the NES using C!" />
 <meta name="twitter:image" content="https://cppchriscpp.github.io/nes-starter-kit//guide/images/its_a_game.png" />
+
+<script type="text/javascript">
+var romUrl = 'https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes';
+
+// Set the default buttons if they aren't already set, as the built-in defaults aren't quite what we expect...
+if (!window.localStorage.getItem('p1Buttons')) {
+  window.localStorage.setItem('p1Buttons', '{"13":"8","16":"4","37":"64","38":"16","39":"128","40":"32","88":"2","90":"1"}');
+}
+
+
+function startEmulator() {
+    var attempts = 0;
+    var waiting = setInterval(function() { 
+        try {
+            attempts++;
+            if (attempts > 20) {
+                console.warn('Failed to start emulator 20 times; giving up.');
+                clearInterval(waiting);
+            }
+            $('#tryit')[0].contentWindow.emu.preloadUrl(romUrl);
+            clearInterval(waiting);
+        } catch (e) {
+            console.warn('Failed starting emulator... will retry',e);
+            // Do nothing... try again in a few ms
+        }
+    }, 250);
+}
+startEmulator();
+
+// Disable the pinch-to-zoom behavior on ios. As nice as it is for reading, it's extremely easy to trigger this
+// while trying to play a game, and that ends up ruining the experience.
+$('.controllerDisp,.controllerDisp *').on('gesturestart', function(e) {
+    e.preventDefault();
+    document.body.style.zoom = 1;
+});
+
+$('.controllerDisp,.controllerDisp *').on('gesturechange', function(e) {
+    e.preventDefault();
+    document.body.style.zoom = 1;
+});
+
+$('.controllerDisp,.controllerDisp *').on('gestureend', function(e) {
+    e.preventDefault();
+    document.body.style.zoom = 1;
+});
+
+</script>
