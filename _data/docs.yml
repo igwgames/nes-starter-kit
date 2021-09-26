@@ -122,3 +122,6 @@
   - title: "47. Automatic builds with CircleCI"
     url: "/guide/section_5/automatic_builds.html"
 
+  - title: "48. Switching to unrom 512 for advanced features"
+    url: "/guide/section_5/unrom_512.html"
+

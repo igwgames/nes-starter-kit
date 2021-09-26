@@ -159,6 +159,7 @@ need these things for most games, but if you do, this is a place to learn!_
 45. [Getting finer control over graphics with chr ram](./guide/section_5/chr_ram.html)
 46. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.html)
 47. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.html)
+48. [Switching to unrom 512 for advanced features](./guide/section_5/unrom_512.html)
 
 <!-- TOC END -->
 
