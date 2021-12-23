@@ -9,11 +9,7 @@
             "type": "shell",
             "command": "/usr/bin/make build run",
             "problemMatcher": [],
-            "options": {
-                "shell": {
-                    "executable": "C:\\cygwin64\\bin\\mintty.exe"
-                }
-            },
+
             "group": {
                 "kind": "build",
                 "isDefault": true,
