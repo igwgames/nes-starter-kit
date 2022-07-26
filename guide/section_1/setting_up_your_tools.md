@@ -139,7 +139,7 @@ This is already set up for you too! You can change how this works by editing `ne
 These extensions aren't required at all, but add features that could make development more pleasant. 
 Check out the store pages, then make the call for yourself!
 
-##### C/C++ (Miscrosoft)
+##### C/C++ (Microsoft)
 
 This provides C and C++ syntax highlighting for VS Code. You probably want this one! To note, the application will suggest
 installing this automatically when you open a `.c` or `.h.` file for the first time. You don't need to find this one
