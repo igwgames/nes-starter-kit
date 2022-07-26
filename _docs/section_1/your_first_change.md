@@ -34,7 +34,7 @@ identified.
 The line after is a way to contact you - we used Twitter in our example, but change this to whatever
 you like! Or, set it to an empty string (`""`) to remove it entirely.
 
-_If you want to see the code that uses this, look at `source/menus/credits.c`. No need to change 
+_If you want to see the code that uses this, look at `source/menus/title.c`. No need to change
 it yet!_
 
 Now, compile and run the game again (Press `ctrl+shift+b` in Visual Studio Code, or run 
