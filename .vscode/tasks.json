@@ -1,13 +1,10 @@
 {
-    // We opt to use cygwin's bash here directly instead of the terminal because of some weird issues with setting
-    // the working directory while also passing a command through. This could probably be fixed pretty easily;
-    //  if you find a way feel free to submit a pr!
     "version": "2.0.0",
     "tasks": [
         {
             "label": "build",
             "type": "shell",
-            "command": "/usr/bin/make build run",
+            "command": "create-nes-game build && create-nes-game run",
             "problemMatcher": [],
 
             "group": {
