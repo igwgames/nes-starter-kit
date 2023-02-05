@@ -15,10 +15,10 @@ void draw_win_screen(void) {
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
     pal_bg(titlePalette);
-	pal_spr(titlePalette);
+    pal_spr(titlePalette);
     scroll(0, 0);
 
-	set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_0(CHR_BANK_MENU);
     set_chr_bank_1(CHR_BANK_MENU);
 
     // Add whatever you want here; NTADR_A just picks a position on the screen for you. Your options are 0, 0 to 32, 30
@@ -39,10 +39,10 @@ void draw_credits_screen(void) {
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
     pal_bg(titlePalette);
-	pal_spr(titlePalette);
+    pal_spr(titlePalette);
     scroll(0, 0);
 
-	set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_0(CHR_BANK_MENU);
     set_chr_bank_1(CHR_BANK_MENU);
 
     // Add whatever you want here; NTADR_A just picks a position on the screen for you. Your options are 0, 0 to 32, 30

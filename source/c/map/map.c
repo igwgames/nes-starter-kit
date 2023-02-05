@@ -214,9 +214,9 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
 
         // Update where we are going to update with the palette data, which we store in the buffer.
         if ((i & 0x1f) == (reverseAttributes ? 0 : 16)) 
-			j -= 8;
-		if ((i & 0x01) == 0) 
-			j++;
+            j -= 8;
+        if ((i & 0x01) == 0) 
+            j++;
 
         // Now based on where we are in the map, shift them appropriately.
         // This builds up the palette bytes - which comprise of 2 bits per 16x16 tile. It's a bit confusing...
@@ -292,9 +292,9 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
 
         // Update where we are going to update with the palette data, which we store in the buffer.
         if (i % 32 == 16) 
-			j -= 8;
-		if ((i & 0x01) == 0) 
-			j++;
+            j -= 8;
+        if ((i & 0x01) == 0) 
+            j++;
 
         // Now based on where we are in the map, shift them appropriately.
         // This builds up the palette bytes - which comprise of 2 bits per 16x16 tile. It's a bit confusing...
@@ -367,9 +367,9 @@ void draw_individual_row_offset_y(int nametableAdr, int attributeTableAdr, char 
 
         // Update where we are going to update with the palette data, which we store in the buffer.
         if (i % 32 == 0) 
-			j -= 8;
-		if ((i & 0x01) == 0) 
-			j++;
+            j -= 8;
+        if ((i & 0x01) == 0) 
+            j++;
 
         // Now based on where we are in the map, shift them appropriately.
         // This builds up the palette bytes - which comprise of 2 bits per 16x16 tile. It's a bit confusing...
@@ -432,9 +432,9 @@ void draw_current_row_palette_only(int attributeTableAdr) {
 
         // Update where we are going to update with the palette data, which we store in the buffer.
         if (i % 32 == 0) 
-			j -= 8;
-		if ((i & 0x01) == 0) 
-			j++;
+            j -= 8;
+        if ((i & 0x01) == 0) 
+            j++;
 
         // Now based on where we are in the map, shift them appropriately.
         // This builds up the palette bytes - which comprise of 2 bits per 16x16 tile. It's a bit confusing...

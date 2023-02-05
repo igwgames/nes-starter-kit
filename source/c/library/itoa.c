@@ -2,7 +2,7 @@
 char* itoa(int i, char b[]){
     char const digit[] = "0123456789";
     char* p = b;
-	int shifter;
+    int shifter;
     if(i<0){
         *p++ = '-';
         i *= -1;

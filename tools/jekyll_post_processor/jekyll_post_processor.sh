@@ -34,20 +34,20 @@ permalink: /home.html
 
 # For every single markdown file in our guide...
 for i in guide/**/*.md; do
-	# Parse the name from the first line starting with a #
-	TITLE=`grep "^#" $i | head -n1`
-	# And take out the # and the space.
-	TITLE=`echo ${TITLE:2}`
-	
-	# Find the location for the new file in our _docs folder.
-	NEWFILE="${i/guide/_docs}"
+    # Parse the name from the first line starting with a #
+    TITLE=`grep "^#" $i | head -n1`
+    # And take out the # and the space.
+    TITLE=`echo ${TITLE:2}`
+    
+    # Find the location for the new file in our _docs folder.
+    NEWFILE="${i/guide/_docs}"
 
-	# And also what to name the file such that our links to it work.
-	FILEURL="${NEWFILE/.md/.html}"
-	FILEURL=${FILEURL/_docs/guide}
+    # And also what to name the file such that our links to it work.
+    FILEURL="${NEWFILE/.md/.html}"
+    FILEURL=${FILEURL/_docs/guide}
 
-	# Create the pre-text for this chapter too.
-	FULLHEAD="---
+    # Create the pre-text for this chapter too.
+    FULLHEAD="---
 title: $TITLE
 permalink: $FILEURL
 ---"
@@ -55,7 +55,7 @@ permalink: $FILEURL
 echo "Parsed $i as (title: $TITLE; link: $NEWFILE)"
 
 # Output the file alongside its header text.
-	(echo "$FULLHEAD"; cat $i) > $NEWFILE
+    (echo "$FULLHEAD"; cat $i) > $NEWFILE
 
 done
 

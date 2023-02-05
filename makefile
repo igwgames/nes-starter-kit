@@ -70,13 +70,13 @@ CONFIG_ASM=$(CONFIG_FILE_PATH)_constants.asm
 # Tweak a bunch of stuff to use circleci settings
 # These might get you running in a limited fashion on non-windows systems too...
 ifdef CIRCLECI
-	# SFX and music are committed to git, so we don't use these tools. They're sadly windows-only anyway...
-	SFX_CONVERTER=echo -q
-	AFTER_SFX_CONVERTER=echo Skipping SFX Generation...
-	# We don't have our nice toolkit here, so we have to use node directly
-	CHR2IMG=node tools/chr2img/src/index.js
-	TMX2C=node tools/tmx2c/src/index.js
-	SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
+    # SFX and music are committed to git, so we don't use these tools. They're sadly windows-only anyway...
+    SFX_CONVERTER=echo -q
+    AFTER_SFX_CONVERTER=echo Skipping SFX Generation...
+    # We don't have our nice toolkit here, so we have to use node directly
+    CHR2IMG=node tools/chr2img/src/index.js
+    TMX2C=node tools/tmx2c/src/index.js
+    SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
 
 endif
 
@@ -95,64 +95,64 @@ build-tiles: graphics/generated/tiles.png
 build-sprites: graphics/generated/sprites.png
 
 temp/base.asm: $(CONFIG_ASM)
-	printf ".include \"$(CONFIG_ASM)\"\n" > temp/base.asm
-	printf ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
+    printf ".include \"$(CONFIG_ASM)\"\n" > temp/base.asm
+    printf ".include \"source/neslib_asm/crt0.asm\"" >> temp/base.asm
 
 temp/crt0.o: source/neslib_asm/crt0.asm source/neslib_asm/neslib.asm temp/base.asm $(SOURCE_CRT0_GRAPHICS) sound/music/music.bin sound/music/samples.bin sound/sfx/generated/sfx.s
-	$(MAIN_ASM_COMPILER) temp/base.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
+    $(MAIN_ASM_COMPILER) temp/base.asm -o temp/crt0.o -D SOUND_BANK=$(SOUND_BANK)
 
 # This bit is a little cheap... any time a header file changes, just recompile all C files. There might
 # be some trickery we could do to find all C files that actually care, but this compiles fast enough that 
 # it shouldn't be a huge deal.
 temp/%.s: %.c $(SOURCE_HEADERS)
-	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
+    $(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
 temp/%.o: temp/%.s
-	$(MAIN_ASM_COMPILER) $< 
+    $(MAIN_ASM_COMPILER) $< 
 
 temp/%.s: temp/%.c
-	$(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
+    $(MAIN_COMPILER) -Oi $< --add-source --include-dir ./tools/cc65/include -o $(patsubst %.o, %.s, $@)
 
 temp/level_overworld.c: levels/overworld.tmx
-	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
+    $(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
 
 graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal
-	$(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
+    $(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 
 graphics/generated/sprites.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_sprite.pal source/sprites/sprite_definitions.c
-	$(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
+    $(SPRITE_DEF2IMG) ./source/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png
 
 sound/sfx/generated/sfx.s: sound/sfx/sfx.nsf
-	$(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && sleep 1 && $(AFTER_SFX_CONVERTER)
+    $(SFX_CONVERTER) sound/sfx/sfx.nsf -ca65 -ntsc && sleep 1 && $(AFTER_SFX_CONVERTER)
 
 rom/$(ROM_NAME).nes: temp/crt0.o $(SOURCE_O)
-	$(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib
+    $(MAIN_LINKER) -C $(CONFIG_FILE) -o rom/$(ROM_NAME).nes temp/*.o tools/neslib_famitracker/runtime.lib
 
 # Build up the tool zip that's saved on the website/etc. There's a 99.9% chance you don't care about this.
 # Meant to be run from the base folder of nes-starter-kit - all node stuff must be compiled!
 build_tool_zip: 
-	-rm -f temp/tools.zip
-	$(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/nesst tools/tmx2c/tmx2c.exe tools/sprite_def2img/sprite_def2img.exe tools/sprite_Def2img/LICENSE tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
+    -rm -f temp/tools.zip
+    $(7ZIP) a temp/tools.zip tools/cc65 tools/chr2img/chr2img.exe tools/chr2img/LICENSE tools/nessc tools/nesst tools/tmx2c/tmx2c.exe tools/sprite_def2img/sprite_def2img.exe tools/sprite_Def2img/LICENSE tools/tmx2c/LICENSE tools/neslib_famitracker tools/misc tools/install_cygwin.bat ./tools/zip_readme/readme.txt
 
 # Build up the 3 tools that we use as part of nes-starter-kit - use this when we bump versions
 rebuild_tools:
-	pkg -d --public tools/chr2img/src/index.js --output tools/chr2img/chr2img.exe -t node8-windows-x64
-	pkg -d --public tools/sprite_def2img/src/index.js --output tools/sprite_def2img/sprite_def2img.exe -t node8-windows-x64
-	pkg -d --public tools/tmx2c/src/index.js --output tools/tmx2c/tmx2c.exe -t node8-windows-x64
+    pkg -d --public tools/chr2img/src/index.js --output tools/chr2img/chr2img.exe -t node8-windows-x64
+    pkg -d --public tools/sprite_def2img/src/index.js --output tools/sprite_def2img/sprite_def2img.exe -t node8-windows-x64
+    pkg -d --public tools/tmx2c/src/index.js --output tools/tmx2c/tmx2c.exe -t node8-windows-x64
 
 
 clean:
-	-rm -f rom/*.nes
-	-rm -rf temp/levels
-	-rm -f temp/*
-	-rm -f sounds/sfx/generated/*.s
-	-rm -f graphics/generated/*.png
-	-mkdir temp/levels
-	-touch temp/empty
-	-touch temp/levels/empty
+    -rm -f rom/*.nes
+    -rm -rf temp/levels
+    -rm -f temp/*
+    -rm -f sounds/sfx/generated/*.s
+    -rm -f graphics/generated/*.png
+    -mkdir temp/levels
+    -touch temp/empty
+    -touch temp/levels/empty
 
 run:
-	$(MAIN_EMULATOR) rom/$(ROM_NAME).nes
+    $(MAIN_EMULATOR) rom/$(ROM_NAME).nes
 
 space_check:
-	$(SPACE_CHECKER) rom/$(ROM_NAME).nes
+    $(SPACE_CHECKER) rom/$(ROM_NAME).nes

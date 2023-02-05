@@ -221,12 +221,12 @@ void handle_player_movement(void) {
 
 void test_player_tile_collision(void) {
 
-	if (playerYVelocity != 0) {
+    if (playerYVelocity != 0) {
         collisionTempYInt = playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity;
         collisionTempXInt = playerXPosition + PLAYER_X_OFFSET_EXTENDED;
 
-		collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
-		collisionTempX = ((collisionTempXInt) >> PLAYER_POSITION_SHIFT);
+        collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempX = ((collisionTempXInt) >> PLAYER_POSITION_SHIFT);
 
         collisionTempYInt += PLAYER_HEIGHT_EXTENDED;
         collisionTempXInt += PLAYER_WIDTH_EXTENDED;
@@ -247,33 +247,33 @@ void test_player_tile_collision(void) {
             collisionTempYBottom = 190;
         }
 
-		if (playerYVelocity < 0) {
+        if (playerYVelocity < 0) {
             // We're going up - test the top left, and top right
-			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1)) {
+            if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempY)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempY)], 1)) {
                 playerYVelocity = 0;
                 playerControlsLockTime = 0;
             }
             if (!playerControlsLockTime && playerYVelocity < (0-PLAYER_VELOCITY_NUDGE)) {
                 playerDirection = SPRITE_DIRECTION_UP;
             }
-		} else {
+        } else {
             // Okay, we're going down - test the bottom left and bottom right
-			if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
+            if (test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempX, collisionTempYBottom)], 1) || test_collision(currentMap[PLAYER_MAP_POSITION(collisionTempXRight, collisionTempYBottom)], 1)) {
                 playerYVelocity = 0;
                 playerControlsLockTime = 0;
 
-			}
+            }
             if (!playerControlsLockTime && playerYVelocity > PLAYER_VELOCITY_NUDGE) {
                 playerDirection = SPRITE_DIRECTION_DOWN;
             }
-		}
+        }
     }
 
-	if (playerXVelocity != 0) {
+    if (playerXVelocity != 0) {
         collisionTempXInt = playerXPosition + PLAYER_X_OFFSET_EXTENDED + playerXVelocity;
         collisionTempYInt = playerYPosition + PLAYER_Y_OFFSET_EXTENDED + playerYVelocity;
-		collisionTempX = (collisionTempXInt) >> PLAYER_POSITION_SHIFT;
-		collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
+        collisionTempX = (collisionTempXInt) >> PLAYER_POSITION_SHIFT;
+        collisionTempY = ((collisionTempYInt) >> PLAYER_POSITION_SHIFT) - HUD_PIXEL_HEIGHT;
 
         collisionTempXInt += PLAYER_WIDTH_EXTENDED;
         collisionTempYInt += PLAYER_HEIGHT_EXTENDED;
@@ -312,7 +312,7 @@ void test_player_tile_collision(void) {
                 }
             }
         }
-	}
+    }
 
     playerXPosition += playerXVelocity;
     playerYPosition += playerYVelocity;

@@ -15,10 +15,10 @@ void draw_game_over_screen(void) {
 
     // We reuse the title palette here, though we have the option of making our own if needed.
     pal_bg(titlePalette);
-	pal_spr(titlePalette);
+    pal_spr(titlePalette);
     scroll(0, 0);
 
-	set_chr_bank_0(CHR_BANK_MENU);
+    set_chr_bank_0(CHR_BANK_MENU);
     set_chr_bank_1(CHR_BANK_MENU);
 
     // Just write "- Paused -" on the screen... there's plenty of nicer things you could do if you wanna spend time!
