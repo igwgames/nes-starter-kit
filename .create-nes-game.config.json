@@ -1,0 +1,22 @@
+{
+    "configVersion": 10000,
+    "configVersionString": "1.0.0",
+    "name": "nes-starter-kit-example",
+    "mapper": "mmc1 (skrom)",
+    "mirroring": "horizontal",
+    "useChrRam": false,
+    "useSram": true,
+    "sramSize": 8,
+    "chrBanks": 16,
+    "prgBanks": 8,
+    "includeC": true,
+    "ciProvider": "github",
+    "testProvider": "nes-test",
+    "installEmulator": "mesen",
+    "includeCLibrary": "neslib with famitracker",
+    "neslibNtscPal": "both",
+    "useTutorial": false,
+    "tutorialGroup": null,
+    "tutorialId": null,
+    "console": "nes"
+}

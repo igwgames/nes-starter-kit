@@ -1,28 +1,51 @@
-tools/*
-!tools/README.md
-!tools/cc65_config
-!tools/jekyll_post_processor
-!tools/tmx2c
+# Tools are installed by the download-dependencies sub-command
+tools/cc65
+tools/emulators
+tools/nes-test
+tools/famitone2
+
+# Tools for the built-in tools
 tools/tmx2c/*.exe
+tools/tmx2c/tmx2c
 tools/tmx2c/src/node_modules
-!tools/sprite_def2img
 tools/sprite_def2img/*.exe
 tools/sprite_def2img/src/node_modules
-!tools/chr2img
+tools/sprite_def2img/sprite_def2img
 tools/chr2img/*.exe
 tools/chr2img/src/node_modules
-!tools/zip_readme
-!tools/tiled_extension
+tools/chr2img/chr2img
 graphics/generated/*.png
 graphics/generated/*.bmp
+
+# If you have this tool in the folder, don't commit it!
+./create-nes-game.exe
+./create-nes-game-win.exe
+./create-nes-game
+./create-nes-game-*
+
+# Don't commit the rom
+*.nes
 rom/*.nes
+
+# Run-length encoded files
+graphics/*.rle.nam
+graphics/*.rle.bin
+graphics/*.rle.chr
+
 temp/*
-!temp/empty
 todo.md
+
+# Stuff for the guide
 _site/
 .sass-cache/
 .jekyll-metadata
 _pdf
+
+# Other junk
 .DS_Store
 .idea
 .vscode/ipch
+
+# Using this while I move things over, for comparison. 
+# If I forget to remove this, it's safe to ignore!
+nes-starter-kit-example
