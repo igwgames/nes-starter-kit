@@ -1,11 +1,11 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/menus/title.h"
-#include "source/globals.h"
-#include "source/configuration/game_states.h"
-#include "source/configuration/system_constants.h"
-#include "source/menus/text_helpers.h"
-#include "source/graphics/palettes.h"
-#include "source/configuration/game_info.h"
+#include "source/c/neslib.h"
+#include "source/c/menus/title.h"
+#include "source/c/globals.h"
+#include "source/c/configuration/game_states.h"
+#include "source/c/configuration/system_constants.h"
+#include "source/c/menus/text_helpers.h"
+#include "source/c/graphics/palettes.h"
+#include "source/c/configuration/game_info.h"
 
 CODE_BANK(PRG_BANK_TITLE);
 

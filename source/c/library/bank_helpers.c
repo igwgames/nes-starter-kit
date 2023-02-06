@@ -1,5 +1,5 @@
-#include "source/library/bank_helpers.h"
-#include "source/menus/error.h"
+#include "source/c/library/bank_helpers.h"
+#include "source/c/menus/error.h"
 
 ZEROPAGE_DEF(char, bankLevel);
 ZEROPAGE_ARRAY_DEF(unsigned char, bankBuffer, MAX_BANK_DEPTH);

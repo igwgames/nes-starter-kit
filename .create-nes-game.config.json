@@ -18,5 +18,18 @@
     "useTutorial": false,
     "tutorialGroup": null,
     "tutorialId": null,
-    "console": "nes"
+    "console": "nes",
+    "beforeStepActions": {
+        "build": [
+            "tools/create-nes-game-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld"
+        ]
+    },
+    "afterStepActions": {
+    },
+    "extraDependencies": [{
+        "name": "create-nes-game-tools",
+        "win32-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/windows-x64.zip",
+        "linux-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-x64.tar.gz",
+        "linux-arm64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-arm64.tar.gz"
+    }]
 }

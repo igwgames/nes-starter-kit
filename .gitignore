@@ -4,7 +4,8 @@ tools/emulators
 tools/nes-test
 tools/famitone2
 
-# Tools for the built-in tools
+# Ignore binaries for the built-in tools
+# FIXME: These tools should have been removed.
 tools/tmx2c/*.exe
 tools/tmx2c/tmx2c
 tools/tmx2c/src/node_modules
@@ -14,6 +15,9 @@ tools/sprite_def2img/sprite_def2img
 tools/chr2img/*.exe
 tools/chr2img/src/node_modules
 tools/chr2img/chr2img
+tools/create-nes-game-tools
+
+# Ignore generated graphics
 graphics/generated/*.png
 graphics/generated/*.bmp
 
@@ -26,11 +30,20 @@ graphics/generated/*.bmp
 # Don't commit the rom
 *.nes
 rom/*.nes
+rom/*.dbg
 
 # Run-length encoded files
 graphics/*.rle.nam
 graphics/*.rle.bin
 graphics/*.rle.chr
+
+# Automatically generated music files
+sound/music.asm
+sound/sfx.asm
+
+# Generated level data
+source/c/generated/*
+!source/c/generated/empty
 
 temp/*
 todo.md

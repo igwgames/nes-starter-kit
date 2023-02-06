@@ -1,11 +1,11 @@
-#include "source/menus/pause.h"
-#include "source/graphics/palettes.h"
-#include "source/configuration/system_constants.h"
-#include "source/globals.h"
-#include "source/neslib_asm/neslib.h"
-#include "source/configuration/game_states.h"
-#include "source/menus/text_helpers.h"
-#include "source/menus/input_helpers.h"
+#include "source/c/menus/pause.h"
+#include "source/c/graphics/palettes.h"
+#include "source/c/configuration/system_constants.h"
+#include "source/c/globals.h"
+#include "source/c/neslib.h"
+#include "source/c/configuration/game_states.h"
+#include "source/c/menus/text_helpers.h"
+#include "source/c/menus/input_helpers.h"
 
 CODE_BANK(PRG_BANK_PAUSE_MENU);
 

@@ -1,6 +1,6 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/graphics/hud.h"
-#include "source/globals.h"
+#include "source/c/neslib.h"
+#include "source/c/graphics/hud.h"
+#include "source/c/globals.h"
 
 CODE_BANK(PRG_BANK_HUD);
 

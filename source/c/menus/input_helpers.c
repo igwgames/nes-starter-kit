@@ -1,8 +1,8 @@
-#include "source/globals.h"
-#include "source/configuration/game_states.h"
-#include "source/neslib_asm/neslib.h"
-#include "source/library/bank_helpers.h"
-#include "source/menus/input_helpers.h"
+#include "source/c/globals.h"
+#include "source/c/configuration/game_states.h"
+#include "source/c/neslib.h"
+#include "source/c/library/bank_helpers.h"
+#include "source/c/menus/input_helpers.h"
 
 CODE_BANK(PRG_BANK_MENU_INPUT_HELPERS);
 void wait_for_start(void) {

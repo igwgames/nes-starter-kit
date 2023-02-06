@@ -124,7 +124,7 @@ the bottom you should see a bunch of `.include` statements. Like this:
 
 ```asm
     .include "source/library/bank_helpers.asm"
- 	.include "source/neslib_asm/neslib.asm"
+ 	.include "source/assembly/neslib.asm"
  	.include "source/graphics/palettes.asm"
 ```
 Add a reference to our new file after this: 

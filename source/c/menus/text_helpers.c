@@ -1,6 +1,6 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/menus/text_helpers.h"
-#include "source/globals.h"
+#include "source/c/neslib.h"
+#include "source/c/menus/text_helpers.h"
+#include "source/c/globals.h"
 
 // Put a string on the screen at X/Y coordinates given in adr.
 void put_str(unsigned int adr, const char *str) {

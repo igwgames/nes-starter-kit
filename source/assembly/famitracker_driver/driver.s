@@ -445,11 +445,11 @@ ft_channel_mask:
 .endif
 
 ; The rest of the code
-    .include "source/neslib_asm/ft_drv/init.s"
-    .include "source/neslib_asm/ft_drv/player.s"
-    .include "source/neslib_asm/ft_drv/effects.s"
-    .include "source/neslib_asm/ft_drv/instrument.s"
-    .include "source/neslib_asm/ft_drv/apu.s"
+    .include "source/assembly/famitracker_driver/init.s"
+    .include "source/assembly/famitracker_driver/player.s"
+    .include "source/assembly/famitracker_driver/effects.s"
+    .include "source/assembly/famitracker_driver/instrument.s"
+    .include "source/assembly/famitracker_driver/apu.s"
 
 .ifdef USE_VRC6
 	.include "vrc6.s"
@@ -555,7 +555,7 @@ ft_channel_type:
 .endif
 
 ; Include period tables
-.include "source/neslib_asm/ft_drv/periods.s"
+.include "source/assembly/famitracker_driver/periods.s"
 
 ; Vibrato table (256 bytes)
 ft_vibrato_table:

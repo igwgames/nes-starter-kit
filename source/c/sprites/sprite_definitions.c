@@ -1,4 +1,4 @@
-#include "source/sprites/sprite_definitions.h"
+#include "source/c/sprites/sprite_definitions.h"
 
 // NOTE: All of this data is in the primary bank.
 

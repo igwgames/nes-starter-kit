@@ -1,4 +1,4 @@
-#include "source/library/bank_helpers.h"
+#include "source/c/library/bank_helpers.h"
 #define PRG_BANK_PLAYER_SPRITE 2
 
 // Top-left tile of the sprite of the player facing downward.

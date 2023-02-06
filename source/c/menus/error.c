@@ -1,10 +1,10 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/library/bank_helpers.h"
-#include "source/menus/text_helpers.h"
-#include "source/library/itoa.h"
-#include "source/menus/error.h"
-#include "source/graphics/palettes.h"
-#include "source/configuration/system_constants.h"
+#include "source/c/neslib.h"
+#include "source/c/library/bank_helpers.h"
+#include "source/c/menus/text_helpers.h"
+#include "source/c/library/itoa.h"
+#include "source/c/menus/error.h"
+#include "source/c/graphics/palettes.h"
+#include "source/c/configuration/system_constants.h"
 
 // Store most of our data in the given bank.
 CODE_BANK(PRG_BANK_ERROR);

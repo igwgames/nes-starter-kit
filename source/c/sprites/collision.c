@@ -1,5 +1,5 @@
-#include "source/sprites/collision.h"
-#include "source/library/bank_helpers.h"
+#include "source/c/sprites/collision.h"
+#include "source/c/library/bank_helpers.h"
 
 CODE_BANK(PRG_BANK_SPRITE_COLLISION);
 ZEROPAGE_DEF(unsigned char, collisionTemp);

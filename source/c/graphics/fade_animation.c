@@ -1,6 +1,6 @@
-#include "source/graphics/fade_animation.h"
-#include "source/globals.h"
-#include "source/neslib_asm/neslib.h"
+#include "source/c/graphics/fade_animation.h"
+#include "source/c/globals.h"
+#include "source/c/neslib.h"
 
 // This file purposely left in the kernel so it can easily be called from anywhere without a bank swap.
 

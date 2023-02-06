@@ -3,7 +3,7 @@
 // Convert your most heavily used variables using the ZEROPAGE_DEF method. 
 // (Usage: ZEROPAGE_DEF(type, variableName) ; eg ZEROPAGE_DEF(int, myInt))
 // Note: Be sure to also update `globals.h` with these variables, so you can use them everywhere.
-#include "source/library/bank_helpers.h"
+#include "source/c/library/bank_helpers.h"
 
 ZEROPAGE_DEF(unsigned char, i);
 ZEROPAGE_DEF(unsigned char, j);

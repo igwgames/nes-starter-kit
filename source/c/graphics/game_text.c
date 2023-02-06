@@ -1,11 +1,11 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/globals.h"
-#include "source/configuration/system_constants.h"
-#include "source/configuration/game_states.h"
-#include "source/library/bank_helpers.h"
-#include "source/menus/error.h"
-#include "source/graphics/game_text.h"
-#include "source/graphics/hud.h"
+#include "source/c/neslib.h"
+#include "source/c/globals.h"
+#include "source/c/configuration/system_constants.h"
+#include "source/c/configuration/game_states.h"
+#include "source/c/library/bank_helpers.h"
+#include "source/c/menus/error.h"
+#include "source/c/graphics/game_text.h"
+#include "source/c/graphics/hud.h"
 
 unsigned char* currentText;
 unsigned char currentBank;

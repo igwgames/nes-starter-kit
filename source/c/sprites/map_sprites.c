@@ -1,13 +1,13 @@
-#include "source/neslib_asm/neslib.h"
-#include "source/globals.h"
-#include "source/configuration/system_constants.h"
-#include "source/sprites/map_sprites.h"
-#include "source/sprites/player.h"
-#include "source/sprites/sprite_definitions.h"
-#include "source/map/map.h"
-#include "source/library/bank_helpers.h"
-#include "source/menus/error.h"
-#include "source/sprites/collision.h"
+#include "source/c/neslib.h"
+#include "source/c/globals.h"
+#include "source/c/configuration/system_constants.h"
+#include "source/c/sprites/map_sprites.h"
+#include "source/c/sprites/player.h"
+#include "source/c/sprites/sprite_definitions.h"
+#include "source/c/map/map.h"
+#include "source/c/library/bank_helpers.h"
+#include "source/c/menus/error.h"
+#include "source/c/sprites/collision.h"
 
 CODE_BANK(PRG_BANK_MAP_SPRITES);
 
