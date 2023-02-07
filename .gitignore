@@ -5,16 +5,6 @@ tools/nes-test
 tools/famitone2
 
 # Ignore binaries for the built-in tools
-# FIXME: These tools should have been removed.
-tools/tmx2c/*.exe
-tools/tmx2c/tmx2c
-tools/tmx2c/src/node_modules
-tools/sprite_def2img/*.exe
-tools/sprite_def2img/src/node_modules
-tools/sprite_def2img/sprite_def2img
-tools/chr2img/*.exe
-tools/chr2img/src/node_modules
-tools/chr2img/chr2img
 tools/create-nes-game-tools
 
 # Ignore generated graphics

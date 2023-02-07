@@ -1,0 +1,28 @@
+{
+    "activeFile": "overworld.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "overworld.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 71.5,
+                "y": 174.75
+            }
+        },
+        "overworld.tmx#Overworld Tiles": {
+            "scaleInDock": 1
+        },
+        "overworld.tmx#Sprites": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+        "overworld.tmx"
+    ],
+    "project": "game.tiled-project",
+    "recentFiles": [
+        "overworld.tmx"
+    ]
+}

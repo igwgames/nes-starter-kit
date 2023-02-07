@@ -4,7 +4,7 @@ Changing the map is one of the simplest changes we can make. The game works off 
 which themselves are made up of 16x12 tile rooms. These can be edited graphically using Tiled, which
 you should have installed in chapter 1.
 
-To start, open `Tiled`, then select `Open` from the file menu, and find `levels/overworld.tmx`. You should see
+To start, open `Tiled`, then select `Open` from the file menu, and find `levels/game.tiled-project`. You should see
 a screen like this: 
 
 ![Tiled](../images/tiled.png)
@@ -43,18 +43,9 @@ Clicking on it will show you details, and let you double click to have the edito
 Finally, this adds an option to the `Map` menu (and the shortcut `ctrl+shift+k`) to automatically fix any of
 these errors.
 
-##### Tiled Extension Installation
-
-_**Note**: This requires at least version 1.3.1 of Tiled. Earlier versions do not have extension support!_
-
-Convinced? To install it, open Tiled, and follow these steps:
-
-1. Go to the `File` menu, then click `Preferences`. 
-2. Click the `Open...` button. This will is your extension folder for Tiled.
-![Tiled Extensions](../images/tiled_extensions.png) 
-3. In a new explorer window, open the
-[tools/tiled_extension](../../tools/tiled_extension) folder
-4. copy the `nes-starter-kit-tiled` folder from here into the extensions folder you opened in step 2.
+This extension is installed in the `levels/tiled-extensions/` folder, which will be
+automatically loaded with the project. You can disable it in settings, or just delete
+it if you don't want this functionality.
 
 ### Sprite limit
 
