@@ -140,6 +140,7 @@ RLE_BYTE       =TEMP+3
 .segment "STARTUP"
 
 start:
+reset:
 _exit:
 
     sei
@@ -265,10 +266,12 @@ detectNTSC:
     sta PPU_OAM_ADDR
 
     lda #%11111
-    mmc1_register_write MMC1_CTRL
+    jsr mmc1_set_mirroring
     lda #0
-    mmc1_register_write MMC1_PRG
-    mmc1_register_write MMC1_CHR0
+    jsr mmc1_set_prg_bank
+    jsr mmc1_set_chr_bank_0
+    lda #1 
+    jsr mmc1_set_chr_bank_1
 
     lda #0
     ldx #0
@@ -283,94 +286,14 @@ detectNTSC:
     jmp _main            ;no parameters
 
     .include "source/assembly/famitracker_driver/driver.s"
+    .include "source/assembly/mapper.asm"
     .include "source/assembly/bank_helpers.asm"
+    ; Put neslib into the primary bank
+    .segment "CODE"
     .include "source/assembly/neslib.asm"
-    .include "source/assembly/graphics/palettes.asm"
 
-.segment "CHR_00"
-
-    ; We just put the ascii tiles into both sprites and tiles. If you want to get more clever you could do something else.
-    .incbin "graphics/ascii.chr"
-.segment "CHR_01"
-    .incbin "graphics/tiles.chr"
-
-; Note: You can put your own separate chr files here to use them... we only use 3 in the demo. This is to avoid warnings,
-; and make the rom a predictable size. Note that if you do this you'll have to tweak the engine to support it! There's
-; hopefully a guide on how to do this in the repo.
-.segment "CHR_02"
-    .incbin "graphics/sprites.chr"
-.segment "CHR_03"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_04"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_05"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_06"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_07"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_08"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_09"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0A"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0B"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0C"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0D"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0E"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_0F"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_10"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_11"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_12"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_13"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_14"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_15"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_16"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_17"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_18"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_19"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1A"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1B"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1C"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1D"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1E"
-    .incbin "graphics/tiles.chr"
-.segment "CHR_1F"
-    .incbin "graphics/tiles.chr"
-
-; MMC1 needs a reset stub in every bank that will put us into a known state. This defines it for all banks.
-.repeat (SYS_PRG_BANKS-1), I
-    resetstub_in .concat("STUB_", .sprintf("%02X", I))
-.endrepeat 
-resetstub_in "STUB_PRG"
-
-; Throw a single jmp to reset in every bank other than the main PRG bank. This accomplishes 2 things:
-; 1) Puts something in the bank, so we avoid warnings
-; 2) If we somehow end up here by accident, we'll reset correctly.
-.repeat (SYS_PRG_BANKS-1), I
-    first_byte_reset_in .concat("ROM_", .sprintf("%02X", I))
-.endrepeat
-
+    .include "graphics/graphics.config.asm"
+    .include "graphics/palettes/palettes.config.asm"
 
 .segment "ROM_00"
 
