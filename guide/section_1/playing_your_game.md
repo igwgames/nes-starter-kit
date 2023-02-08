@@ -10,5 +10,5 @@ The controls are pretty straightforward.
 - The `A` button is currently unused
 - The `B` button is currently unused
 
-To start the game, you can either run the `make run` command, or double-click the `.nes` file in the `rom/` folder
+To start the game, you can either run the `create-nes-game run` command, or double-click the `.nes` file in the `rom/` folder
 after building the game.

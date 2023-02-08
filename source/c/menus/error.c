@@ -3,7 +3,7 @@
 #include "source/c/menus/text_helpers.h"
 #include "source/c/library/itoa.h"
 #include "source/c/menus/error.h"
-#include "source/c/graphics/palettes.h"
+#include "graphics/palettes/palettes.config.h"
 #include "source/c/configuration/system_constants.h"
 
 // Store most of our data in the given bank.

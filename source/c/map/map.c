@@ -5,7 +5,7 @@
 #include "source/c/configuration/game_states.h"
 #include "source/c/globals.h"
 #include "source/c/configuration/system_constants.h"
-#include "source/c/graphics/palettes.h"
+#include "graphics/palettes/palettes.config.h"
 #include "source/c/graphics/hud.h"
 #include "source/c/graphics/fade_animation.h"
 #include "source/c/sprites/player.h"

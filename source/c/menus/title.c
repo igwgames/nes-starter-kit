@@ -4,7 +4,7 @@
 #include "source/c/configuration/game_states.h"
 #include "source/c/configuration/system_constants.h"
 #include "source/c/menus/text_helpers.h"
-#include "source/c/graphics/palettes.h"
+#include "graphics/palettes/palettes.config.h"
 #include "source/c/configuration/game_info.h"
 
 CODE_BANK(PRG_BANK_TITLE);
