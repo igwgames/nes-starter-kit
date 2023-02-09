@@ -32,7 +32,7 @@ Beyond that, just make the rooms look like you want them to, then save the tmx f
 #### Tiled extension
 
 I have developed a Tiled extension to make editing maps a bit easier. Its main function is to tell you when you 
-mix up the tile and sprite layers. It does this by showing a little warning in the lower left: 
+mix up the tile and sprite layers. It does this by showing a little warning in the lower left when you save: 
 
 ![Error Messages](../images/tiled_error_preview.png)
 
@@ -56,8 +56,9 @@ adding to your map!
 ### Can I change the size of the map?
 
 Unfortunately, right now the size of the map is fixed at 128x96 tiles. If you want to change this, you would have
-to change a few pieces of code in [map.c](../../source/map/map.c), as well as some of the logic in the map conversion
-tool [tmx2c](../../tools/tmx2c). This is a rather advanced topic, and there is no guide on how to go about this yet. 
+to change a few pieces of code in [map.c](../../source/c/map/map.c), as well as some of the logic in the map conversion
+tool [tmx2c](https://github.com/cppchriscpp/nes-starter-kit-tools/tree/main/tmx2c). 
+This is a rather advanced topic, and there is no guide on how to go about this yet. 
 
 If you want a smaller map, your easiest solution is to build your map within the 128x96 tile grid. If you want something
 smaller, you can always fill the extra space with blank tiles. Alternatively, you can create one map with multiple sub-maps

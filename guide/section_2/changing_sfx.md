@@ -6,8 +6,8 @@ sort of sound. So, how can you add sounds to your game? Let's find out!
 
 ## Creating new sounds
 
-Much like creating music, sound effects are created with Famitracker. Famitracker should have been installed as part of
-chapter 1. If you do not have it installed, go get it from the [Famitrack website](http://famitracker.org) now.
+Much like creating music, sound effects are created with Famitracker. Famitracker may have been installed as part of
+chapter 1. If you do not have it installed, go get it from the [Famitracker website](http://famitracker.org) now.
 
 If you have not gone through the tutorial from the music section, here it is again: 
 [How to use Famitracker](http://btothethree.tumblr.com/post/104644129447/how-to-use-famitracker-chapter-1-introduction)
@@ -16,7 +16,7 @@ Creating the actual sound effects is outside the scope of this tutorial - the li
 have found that using instruments to create a sound effect works well. I create an instrument I like, enter one note
 of it as the sound effect, then enter a rest note (`-`) a line or two later and that's that.
 
-Sound effects for the example game are stored in `sound/sfx/sfx.ftm`, and it's easiest to keep using this file.
+Sound effects for the example game are stored in `sound/sfx.ftm`, and it's easiest to keep using this file.
 
 There are a few special things you have to do with sound effects to make them work with the sfx library we use
 (famitone2): 
@@ -35,7 +35,7 @@ Once you have a few sounds you like in famitracker, you need to do an export to 
 will be really similar to what you did with music, but the type changes. Note that this process is _manual_, and
 you have to remember to do this any time you want to update your game's sound effects.
 
-You're presumably already editing `sound/sfx/sfx.ftm` in famitracker - we need to save this file into a format
+You're presumably already editing `sound/sfx.ftm` in famitracker - we need to save this file into a format
 our game recognizes, as it does not understand .ftm files. In the famitracker ui go to the `File` menu,
 and choose `Create nsf...` You should see a screen like this: 
 
@@ -43,7 +43,7 @@ and choose `Create nsf...` You should see a screen like this:
 
 From the dropdown, select "NSF - Nintendo Sound File" (NOTE: This is different to what you had to do with music!)
 You can also enter some information about your game on this screen. Next, hit "Export" and you will get a file save
-dialog. Save this file as `sound/sfx/sfx.nsf`.
+dialog. Save this file as `sound/sfx.nsf`.
 
 That should be all there is to it. If you rebuild your game, it should have your new music available. If you
 replaced one of the built-in sfx, you will be able to hear it immediately. If not, read on...
@@ -56,12 +56,12 @@ As an example, we will walk through adding a sound effect for when the game is p
 this logic anywhere, though.
 
 First, we need to tell the engine how to find our new effect. Sound effects are defined in
-`source/configuration/system_constants.h`. Look for definitions like this: 
+`source/c/configuration/system_constants.h`. Look for definitions like this: 
 
 ```c
 // Constants for sound effects we play in the game
 #define SFX_HURT 0
-// ... more
+// ... more sfx definitions
 #define SFX_WIN 4
 ```
 
@@ -79,7 +79,7 @@ with the lower priority number will play over the one with higher priority. (If 
 also just use `SFX_CHANNEL_1` for everything. Priority is nice to have, though.)
 
 Next, we need to use it somewhere. We are trying to add a pause sound effect, so let's find where we trigger
-the pause menu. This happens to be in `source/sprites/player.c`, in the `handle_player_movement()` method. 
+the pause menu. This happens to be in `source/c/sprites/player.c`, in the `handle_player_movement()` method. 
 Right at the top, you should see some logic like this: 
 
 ```c

@@ -8,7 +8,7 @@ We will add a simple enemy, and also go over how to add new movement types.
 Let's start off strong - right now, the game has two slime sprites that you can add to your levels. To start, let's
 open `graphics/sprites.chr` in NES Screen Tool. (Load up `graphics/palettes/main_sprite.pal` from the Palettes menu
 too!) In addition to your slime sprites, there should be another sprite that looks like a dumb smiley face. (Graphic
-courtesy the author, hence it looking silly!) 
+courtesy the tutorial author, hence it looking silly!) 
 
 ![were gonna add a smiley](../images/add_a_smiley.png) 
 
@@ -19,9 +19,9 @@ states for each direction. The positions matter, as our code expects the sprites
 It is also worth noting that for animated sprites that only show two frames (don't pay attention to direction) you want
 the two animation frames to be next to each other. 
 
-Moving on, we need to add our new sprite to the list. Open up `source/sprites/sprite_definitions.c` to see the list of 
+Moving on, we need to add our new sprite to the list. Open up `source/c/sprites/sprite_definitions.c` to see the list of 
 sprites. (This will be familiar if you looked at the last chapter.) You should see a couple of enemies in this list, 
-easily identified by their type of SPRITE_TYPE_REGULAR_ENEMY. Here's an excerpt from that file: 
+easily identified by their type of `SPRITE_TYPE_REGULAR_ENEMY`. Here's an excerpt from that file: 
 
 ```c
 const unsigned char spriteDefinitions[] = {
@@ -52,7 +52,7 @@ heart of damage. Here's our new line after those changes:
     SPRITE_TYPE_REGULAR_ENEMY, 0x88, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_FULL, SPRITE_MOVEMENT_RANDOM_WANDER, 0x00, 20, 0x01
 ```
 
-If you save, then either build your game or run `make build-sprites`, you should see your new sprite available 
+If you save, then build your game, you should see your new sprite available 
 in Tiled. Add it to the `Sprites` layer (like we did in the 
 [adding collectible sprites chapter](./collectible_sprites.md) and run the game. You're done; your 
 sprite should be running around, and causing the player pain when you hit it. Grand!
@@ -67,7 +67,7 @@ to sprites? You can do that too! There are a few things that can be easily tweak
 ### Adding a new animation type
 
 We have two animation types that flip between sprites right now - one slow and one fast. Let's add one 
-that is _very_ slow to demonstrate. If you open `source/sprites/sprite_definitions.h`, you will see
+that is _very_ slow to demonstrate. If you open `source/c/sprites/sprite_definitions.h`, you will see
 a list of animation types like this: 
 
 ```c
@@ -82,10 +82,10 @@ a list of animation types like this:
 ```
 
 Let's add a new `SPRITE_ANIMATION_SWAP_SLOW` as 12. Don't forget to update 
-`source/sprites_sprite_definitions.c` with this new animation value for one of your sprites! We can
+`source/c/sprites/sprite_definitions.c` with this new animation value for one of your sprites! We can
 use it for one of the ball sprites. 
 
-Next, we need to update the logic that shows which sprite is which. Open up `source/sprites/map_sprites.c`,
+Next, we need to update the logic that shows which sprite is which. Open up `source/c/sprites/map_sprites.c`,
 and find the part of the `update_map_sprites()` function that references `SPRITE_ANIMATION_SWAP`. It should
 look like this: 
 
@@ -106,8 +106,9 @@ There is also another `SPRITE_ANIMATION_SWAP_FAST` below this that changes the s
 the same way but changes a couple values. 
 
 This works by using the `frameCount` variable, and sets a single bit on the value to 1, then does a bit
-shift to switch this to 1 or 2, depending on sprite size. We can make it faster by using a larger value
-for the bit, and shifting by more. Here's one way to do it: 
+shift to switch this to 1 or 2, depending on sprite size. (Note: `frameCount` is the number of frames that
+have run since the console started, and 60 frames happen per second.) 
+We can make it faster by using a larger value for the bit, and shifting by more. Here's one way to do it: 
 
 ```c
 case SPRITE_ANIMATION_SWAP_SLOW:
@@ -128,8 +129,8 @@ That's it; save the game and run it, and you should see the sprite animate much 
 Let's say we want our smiley face to ignore physics, and walk through walls. We can make that happen!
 
 First, let's add a new constant called `SPRITE_MOVEMENT_RANDOM_NO_COLLISION` for this sprite. Update 
-`source/sprites/sprite_definitions.c` to have this instead of `SPRITE_MOVEMENT_RANDOM_WANDER` before you 
-move on. Next, open up `source/sprites_sprite_definitions.h`. There should be a list of movement types
+`source/c/sprites/sprite_definitions.c` to have this instead of `SPRITE_MOVEMENT_RANDOM_WANDER` before you 
+move on. Next, open up `source/c/sprites/sprite_definitions.h`. There should be a list of movement types
 like this: 
 
 ```c
@@ -158,7 +159,7 @@ case SPRITE_MOVEMENT_RANDOM_WANDER:
         // Yep. Figure out if direction is: none, left, right, up, or down we do this by getting a random number
         // between 0 and 8 with bit masking. If it's 0, stop for a bit... if it's 1, left... 4 down, or 5-7, maintain.
         switch (rand8() & 0x07) {
-            // Bunch of logic
+            // ... a whole bunch of code was left out here...
         }
         currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] = 20 + (rand8() & 31);
     } else {
