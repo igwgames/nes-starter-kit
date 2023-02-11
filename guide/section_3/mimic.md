@@ -17,7 +17,7 @@ If you want to try it yourself,
 ## Getting started
 
 Once again, we need to add a new sprite. We've done this a few times before - we need to put a new line in
-`source/sprites/sprite_definitions.c` for our sprite. We also use a new movement type `SPRITE_MOVEMENT_MIMIC`, 
+`source/c/sprites/sprite_definitions.c` for our sprite. We also use a new movement type `SPRITE_MOVEMENT_MIMIC`, 
 which we define in the header file. 
 
 Here it is, at the bottom of the list:
@@ -36,7 +36,7 @@ Next, let's make it mimic our movement!
 ## Adding the new movement type
 
 In order to mimic the player's movement, we need to add code for our new `SPRITE_MOVEMENT_MIMIC` type. The code for the
-current movement types is in `source/sprites/map_sprites.c`, so we'll add it in there. We need to look at the 
+current movement types is in `source/c/sprites/map_sprites.c`, so we'll add it in there. We need to look at the 
 `update_map_sprites()` method, partway down. Look for the `case SPRITE_MOVEMENT_RANDOM_WANDER` text. Here's what
 we do for regular moving sprites: 
 

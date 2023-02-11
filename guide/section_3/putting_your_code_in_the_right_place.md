@@ -38,9 +38,34 @@ kernel and the rest can be switched out. We allocate one bank for the map, and a
 and player code. One final bank is used to store music and sound effect data. This leaves 4 banks (mostly) free
 for your code and data. (The ROM can also be extended to have 16 banks; see part 5 of the guide.)
 
-The library includes a tool for viewing available/free memory, called NES Space Checker (nessc). The makefile
-actually has a way to open this for you. Run `make space_check` and look at the program to see the results. 
-Here's an example with the base rom. (At the time of this writing)
+Our build tool, `create-nes-game`, will show you stats about how much space is used when you build the game. You
+likely have already noticed this. This is a simplified view, but should tell you what you need to know. Here's an
+example:
+
+```
+$ create-nes-game build
+... Build details skipped
+[create-nes-game] [info] Game built successfully: rom\nes-starter-kit-example.nes 
+[create-nes-game] [info] ==================== 
+[create-nes-game] [info] Stats for: nes-starter-kit-example.nes
+[create-nes-game] [info] Mapper: mmc1 (skrom) | Rom Size: 262160 bytes. (16b header, 131072b prg, 131072b chr)
+[create-nes-game] [info] 89984/131072 bytes free
+[create-nes-game] [info] Bank Breakdown:
+[create-nes-game] [info] Bank 01: 14002/16384 bytes free
+[create-nes-game] [info] Bank 02: 11228/16384 bytes free
+[create-nes-game] [info] Bank 03: 8901/16384 bytes free
+[create-nes-game] [info] Bank 04: 2250/16384 bytes free
+[create-nes-game] [info] Bank 05: 16362/16384 bytes free
+[create-nes-game] [info] Bank 06: 16362/16384 bytes free
+[create-nes-game] [info] Bank 07: 16362/16384 bytes free
+[create-nes-game] [info] Bank 08: 4517/16384 bytes free
+[create-nes-game] [info] [afterStepActions build] [sprite_def2img]  [Sat, 11 Feb 2023 05:54:55 GMT]  Success! Image written to graphics/generated/sprites.png 
+```
+
+If you'd like a more visual view, there is a great tool called NES Space Checker which can show you this as well. 
+You can download this from Shiru's website: [Shiru's Software](http://shiru.untergrund.net/software.shtml).
+
+Here's an example of what the base rom looks like in the tool:
 
 ![nessc](../images/nessc.png)
 
@@ -98,7 +123,7 @@ There are only two major caveats to this, but they are definitely worth knowing 
 First, there is a limit to the number of layers deep you can go with banking. If you call
 one banked function from another banked function, that is fine, but we have to keep track of 
 each bank, and we by default can only track 10 prior banks. This can be increased by changing
-`MAX_BANK_DEPTH` in `source/library/bank_helpers.h`. (But it will take up more zeropage variables!)
+`MAX_BANK_DEPTH` in `source/c/library/bank_helpers.h`. (But it will take up more zeropage variables!)
 
 Second, there is no *easy* way to pass through parameters to a method like this. That generally
 should be ok, as we want to stick to global variables where possible anyway. If you need to do
@@ -136,5 +161,5 @@ case DO_EXAMPLE:
     break;
 ```
 
-If you would like to look at a real example, the `load_map()` method in `source/map/load_map.c`
+If you would like to look at a real example, the `load_map()` method in `source/c/map/load_map.c`
 does exactly this.

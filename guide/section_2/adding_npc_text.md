@@ -156,11 +156,11 @@ in addition you might find yourself filling most of a bank with text. There are 
 situation a bit better.
 
 The first thing you can do is move this logic to a separate function in a new file. You would want to name this file
-clearly, something like `source/c/sprites/npc_text.c` with a `source/sprites/npc_text.h` file to go  with. You also will
-want to put this into a separate code bank, using `CODE_BANK()`. You then would have to use `banked_call()` to call
+clearly, something like `source/c/sprites/npc_text.c` with a `source/c/sprites/npc_text.h` file to go  with. You also 
+will want to put this into a separate code bank, using `CODE_BANK()`. You then would have to use `banked_call()` to call
 this code. Here's an example of what it might look like: 
 
-`source/sprites/npc_text.h`:
+`source/c/sprites/npc_text.h`:
 ```c
 #define PRG_BANK_NPC_TEXT 6
 
@@ -169,9 +169,9 @@ void trigger_npc_text(void);
 
 `source/sprites/npc_text.c`: 
 ```c
-#include "source/map/map.h"
-#include "source/graphics/game_text.h"
-#include "source/sprites/map_sprites.h"
+#include "source/c/map/map.h"
+#include "source/c/graphics/game_text.h"
+#include "source/c/sprites/map_sprites.h"
 
 CODE_BANK(PRG_BANK_NPC_TEXT);
 
@@ -199,9 +199,9 @@ void trigger_npc_text(void) {
 }
 ```
 
-`source/sprites/player.c`:
+`source/c/sprites/player.c`:
 ```c
-    // Add the #include for "source/sprites/npc_text.h" to the top; don't forget!
+    // Add the #include for "source/c/sprites/npc_text.h" to the top; don't forget!
     if (controllerState & PAD_A && !(lastControllerState & PAD_A)) {
         banked_call(PRG_BANK_NPC_TEXT, trigger_npc_text);
     }

@@ -5,10 +5,10 @@
 Up to this point, our main character has been completely defenseless. It's probably time to change that, 
 huh? This chapter will help you create a weapon for your main character and start using it. This chapter is
 broken into a few pieces, but the end result is available in the 
-[add_sword branch](https://github.com/cppchriscpp/nes-starter-kit/compare/add_sword).
+[section3_add_sword branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_add_sword).
 
 The rom is also available
-[here](https://s3.amazonaws.com/nes-starter-kit/add_sword/starter.latest.nes).
+[here](https://s3.amazonaws.com/nes-starter-kit/section3_add_sword/starter.latest.nes).
 
 ## Getting started: showing the sword
 
@@ -25,7 +25,7 @@ know what is going on behind the scenes.
 ![sword_sprite](../images/sword_sprite.png)
 
 At any rate, we need to find a place to put our new sword meta-sprite. If you look at the graphics, you can see that
-it takes up a 16x8 space, or 2 sprites. the player takes up 4 sprites, and each enemy also takes up 4 sprites. The 
+it is a 16x8 sprite, or 2 hardware sprites. the player takes up 4 sprites, and each enemy also takes up 4 sprites. The 
 first sprite is also special, and is used for engine stuff. (This is known as `Sprite 0` - we need to avoid using it). 
 All sprites take up space between addresses `0x200` to `0x2ff` - the table below shows all of the available sprite
 space; we can use it to pick a place for our new sprites.
@@ -55,7 +55,7 @@ In our case, we've chosen `0x220`, but we could also choose any of the other spo
 only using 2 of the 4 hardware sprites here; we could use the other two for another weapon if we wanted to.
 
 At any rate, we need to add all of this information into our game. We add the following code to 
-`source/sprite/player.h` to let us use this information:
+`source/c/sprite/player.h` to let us use this information:
 
 ```c
 // We hve a few free sprite slots before the map sprites start - the weapon (sword) the player has will
@@ -80,15 +80,15 @@ The tile ids are simply the ids gotten from NES Screen Tool, like we've done bef
 last two digits of the address we want to use. (Since all sprites are between `0x200` and `0x2ff` we can use one byte
 to store it.)
 
-Also of note, we need to add a `swordPosition` variable into both `source/sprite/player.h` 
-and `source/sprite/player.c` so we can know when the sword is out.
+Also of note, we need to add a `swordPosition` variable into both `source/c/sprite/player.h` 
+and `source/c/sprite/player.c` so we can know when the sword is out.
 
-`source/sprite/player.h`:
+`source/c/sprite/player.h`:
 ```c
 ZEROPAGE_EXTERN(unsigned char, swordPosition);
 ```
 
-`source/sprite/player.c`:
+`source/c/sprite/player.c`:
 ```c
 ZEROPAGE_DEF(unsigned char, swordPosition);
 ```
@@ -97,7 +97,7 @@ Next, let's start using it.
 
 -----
 
-Next, we need to start testing for collisions. We're going to make a lot of changes to `source/sprites/player.c`.
+Next, we need to start testing for collisions. We're going to make a lot of changes to `source/c/sprites/player.c`.
 
 First, let's actually set our `swordPosition` variable whenever the player presses A. We include a little special
 logic to only trigger this if the sword button is initially pressed down by checking if the button was pressed
@@ -146,7 +146,7 @@ lines from `if (playerInvulnerabilityTime)` to `if (playerInvulnerabilityTime ||
 
 Okay, so we have a nice looking sword that we can slash, but it doesn't really do anything. Our next step is to make
 the sword actually hurt enemies. We have some collision logic for the player and sprites right now in the
-`source/sprites/map_sprites.c` file, specifically in the `update_map_sprites()` method. This then gets picked
+`source/c/sprites/map_sprites.c` file, specifically in the `update_map_sprites()` method. This then gets picked
 up later in the `handler_player_sprite_collision()`. This will be passed around using a new variable called 
 `lastPlayerWeaponCollisionId`, which we define in `map_sprites.c`. We'll be modifying both of these, but we will 
 start in the `update_map_sprites()` method in `map_sprites.c`.
@@ -180,7 +180,7 @@ Here's what that calculation looks like:
 After we've done this, we will want to actually test collision. Below where we added this, a loop is started that 
 goes through all of the sprites on the screen and tests collision with them. (Note: if you are looking at the git
 branch you will also see some changes about invulnerability in this area. Ignore those for now; we'll get to them
-in the next section!)
+in the next part!)
 
 Towards the bottom of the loop, you will find some logic that shrinks the hitbox of enemy sprites, then tests
 collision with them. That looks a bit like this: 
@@ -217,7 +217,7 @@ if (swordPosition > 4) {
 ```
 
 There's nothing really special going on here - we are just setting a different variable to tell us that the sword
-collided with something, assuming it did. We then move on to update `source/sprites/player.c`, updating the 
+collided with something, assuming it did. We then move on to update `source/c/sprites/player.c`, updating the 
 `handle_player_sprite_collision()` method to handle collisions with the sword. We actually put this at the very
 start of the function, so that if a sprite is killed by the player's sword, this happens before the enemy can hit
 the player. Here's the new code: 
@@ -256,10 +256,11 @@ duplicating that logic.
 For enemy sprites, we do a little bit of weird logic, as described in the comment. In the if statement itself,
 we subtract one from the enemy's health. We then immediately compare this value to 0, and if we hit zero, then
 the code in the if statement hides the sprite. The code also marks the sprite as having been defeated, so it will
-not come back if you leave the screen then come back.
+not come back if you leave the screen then come back. (If you wanted to, you could change the sprite to an 
+explosion before removing the sprites, but that is not covered here.)
 
 You may be wondering where the enemy's health comes from. This is actually defined in the sprite's definition back
-in `source/sprites/sprite_definitions.c` and copied over with a bunch of other values. Since health is a common
+in `source/c/sprites/sprite_definitions.c` and copied over with a bunch of other values. Since health is a common
 thing used in games, this piece is built into the engine. It is the last parameter in the `spriteDefinitions`
 array.
 
@@ -274,12 +275,12 @@ this timer is active.
 
 First off, we need a new constant for invulnerability time for sprites. For simplicity, we will use the same
 value for all sprites. For this, we add a new constant called `SPRITE_INVULNERABILITY_TIME` to
-`source/player/map_sprites.c`. In our case we're waiting about 60 frames, but you can tweak this number to 
+`source/c/player/map_sprites.h`. In our case we're waiting about 60 frames, but you can tweak this number to 
 change the amount of time to wait. 
 
 We also need to store this somewhere. Each sprite on the map has 16 bytes of information associated with it
 that we can look up in the `currentMapSpriteData` array. We look things up with a bunch of contants that are
-defined in `source/map/map.h` - they start with `MAP_SPRITE_DATA_POS_`. In this case, we added the following:
+defined in `source/c/map/map.h` - they start with `MAP_SPRITE_DATA_POS_`. In this case, we added the following:
 
 ```c
 #define MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN    14
@@ -293,7 +294,7 @@ currentMapSpriteData[mapSpriteDataIndex + MAP_SPRITE_DATA_POS_INVULN_COUNTDOWN] 
 ```
 
 Next, we need to update this each time an enemy is hit. We do this by modifying the logic from the last section
-slightly. In the `handle_player_sprite_collision()` method in `source/sprites/player.c`, we do a couple new
+slightly. In the `handle_player_sprite_collision()` method in `source/c/sprites/player.c`, we do a couple new
 things: first, we skip out on this method if the invulnerability countdown is going. This prevents the sprite from
 taking any damage while it is invulnerable. Second, we set it whenever an enemy is hit, but not killed. 
 Here's the updated code: 
@@ -316,7 +317,7 @@ case SPRITE_TYPE_REGULAR_ENEMY:
 ```
 
 With this added, there are two things left to do: make the sprites flash when this is active, then decrease it
-once every frame. Luckily, these both live in the same file! Pop open `source/sprites/map_sprites.c`, and we will
+once every frame. Luckily, these both live in the same file! Pop open `source/c/sprites/map_sprites.c`, and we will
 make a couple tweaks to make this happen. First, we need to update the sprite drawing method, so that it hides
 sprites every other frame when invulnerability is active. Find the `update_map_sprites()` method, and towards the
 top, you should see some code that looks like this: 
@@ -366,7 +367,7 @@ them, and also gives you a little bit of a feeling of power. We can add that her
 Above, we had an if/else statement that would remove an enemy that had been defeated, and make the enemy invincible
 for a short period if they were not defeated. We'll need to tack a little extra logic onto that. We want to point
 the enemy in the same direction the player is facing, then keep them facing that direction for a little while. We
-are back to editing `source/sprite/player.c` in the `handle_player_sprite_collision()` method.
+are back to editing `source/c/sprite/player.c` in the `handle_player_sprite_collision()` method.
 
 Locking the enemy sprite into a direction just requires setting their `MAP_SPRITE_DATA_POS_DIRECTION_TIME` variable to
 the same amount of time the sprite is invulnerable. That looks like this: 
@@ -399,7 +400,7 @@ if (--currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_HEALTH] =
 ```
 
 Finally, we want the sprite to move away from the player much faster than it normally moves - let's shoot for double.
-We can do this by changing how the sprite moves in `source/sprites/map_sprites.c`, within the 
+We can do this by changing how the sprite moves in `source/c/sprites/map_sprites.c`, within the 
 `do_sprite_movement_with_collision()`  method. There's a section where we move the sprite based on its 
 speed in `currentMapSpriteData` - look for some code that looks like this: 
 
@@ -431,10 +432,10 @@ them. (Only works on enemies that take more than one hit; find the red enemies!
 
 Well, that's it! Your enemies can now be hit, and the ones with more than 1 health will be invulnerable for a short
 period after each hit. The red slimes in the example map take 2 hits to kill, if you want to try it! You can also tweak
-enemy health in `source/sprites/sprite_definitions.c`. 
+enemy health in `source/c/sprites/sprite_definitions.c`. 
 
 A logical next step might be to add a sound effect for when enemies are hit and/or killed. You could also update 
 `currentMapSpriteData` to replace your enemy sprite with a heart in some cases, with a bit of extra tweaking. That
 was a bit of a long chapter, but hopefully everything made sense! 
 
-This may be one of the most challenging chapters in the book, so congratulations on finishing it!
+This may be one of the most challenging chapters in the guide, so congratulations on finishing it!
