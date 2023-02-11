@@ -40,27 +40,24 @@ been scared off yet, read on!
 
 ## Making the switch
 
-The code behind this is available in the [chr_ram](https://github.com/cppchriscpp/nes-starter-kit/compare/chr_ram)
+The code behind this is available in the [section5_chr_ram](https://github.com/cppchriscpp/nes-starter-kit/compare/section5_chr_ram)
 branch in github. Feel free to use it to follow along! The completed rom is also available 
-[here](https://s3.amazonaws.com/nes-starter-kit/chr_ram/starter.latest.nes).
+[here](https://s3.amazonaws.com/nes-starter-kit/section5_chr_ram/starter.latest.nes).
 
 We need to do a few things to start using chr ram. The first thing is to make some configuration changes to 
-use CHR ram in both our rom configuration and within the C startup file. For the configuration, there is
-already a configuration file ready-to-go in the config directory. Open `makefile` and change this line to use it:
+use CHR ram in both our rom configuration and within the C startup file. For the configuration, there are
+already configuration files ready-to-go in the config directory. 
 
-```makefile
-# Which configuration file to use. Lets you add more PRG banks and/or SRAM.
-CONFIG_FILE_PATH=tools/cc65_config/game
+Rename the following files in the `config/` directory: 
+
+```
+ca65.cfg -> ca65.cfg.backup
+ca65_constants.asm -> ca65_constants.asm.backup
+ca65_chr_ram.cfg -> ca65.cfg
+ca65_chr_ram_constants.asm -> ca65_constants.asm
 ```
 
-to
-
-```makefile
-# Which configuration file to use. Lets you add more PRG banks and/or SRAM.
-CONFIG_FILE_PATH=tools/cc65_config/game_chr_ram
-```
-
-Next, we need to stop loading the chr files in our C startup file. Open `source/neslib_asm/crt0.asm` and look for 
+Next, we need to stop loading the chr files in our C startup file. Open `source/c/system-runtime.asm` and look for 
 the following code:
 
 ```asm
@@ -105,7 +102,7 @@ a good idea to compress this data, but this tutorial will not cover that. This w
 Next, we need to actually load this data onto the system. Right now it is sitting on our cartridge doing nothing. If
 you were to run the game, you would not actually see anything!
 
-First we need to make these variables accessible. Add the following to `source/globals.h`: 
+First we need to make these variables accessible. Add the following to `source/c/globals.h`: 
 
 ```c
 // CHR data loaded in crt0.asm
@@ -115,7 +112,7 @@ extern const unsigned char main_sprites[];
 ```
 
 There might be a nicer home for this information, but for now that will do. We also need to load the data into chr
-each time we need to change it. We can do this by adding two new methods to `source/main.c`. Open that file up, and 
+each time we need to change it. We can do this by adding two new methods to `source/c/main.c`. Open that file up, and 
 add these two new functions to it at the top:
 
 ```c
@@ -144,7 +141,7 @@ void initialize_chr_ram_game(void) {
 
 These two functions will load the chr data from the crt0 file we loaded it from, in the prg bank we chose. This is like
 a bank switch, but is slower and requires the ppu to be off. (NOTE: You may wish to put these into their own file, 
-perhaps  somewhere in `source/graphics` - this likely makes more sense for a real project! We're using `main.c` for 
+perhaps  somewhere in `source/c/graphics` - this likely makes more sense for a real project! We're using `main.c` for 
 simplicity.) 
 
 You may not have seen the `bank_push` and `bank_pop` methods before - they are the functions that work behind the
@@ -154,13 +151,13 @@ main prg bank, but the data is in a different bank.
 
 **Important**: We now have to call these functions **instead of switching chr banks**,
 since we no longer have any extra banks to switch with. Rendering also has to be off each time we call them. We end up
-writing this into most of the sections in the `switch` statement in `source/main.c`. Please look at this in the branch-
+writing this into most of the sections in the `switch` statement in `source/c/main.c`. Please look at this in the branch-
 there is too much code to duplicate here.
 
 The last thing we need to do is find all instances of calling `set_chr_bank_0` and `set_chr_bank_1` and remove them -
 there is no longer any reason to do this in our code. (With the exception of in the two functions we just added.)
 
-Once you have made all of these changes (or just checked out the git branch `chr_ram`) you should see the game running
+Once you have made all of these changes (or just checked out the git branch `section4_chr_ram`) you should see the game running
 as before, though if you pay attention you may find that switching in/out of menus is just a little slower. That's all
 great, but how can we actually take advantage of chr ram? Read on!
 
@@ -177,14 +174,14 @@ is not a great use of chr ram in general.
 
 First, we need a tile to animate. We'll use the water again. Copy the first corner of the water tile into a set of 
 blank tiles, then create a second animation tile next to it. This time, we will want to put 
-these files into a separate file from our other chr data. NES Screen tool has an option under the `Patterns` -> 
+these files into a separate file from our other chr data. NEXXT has an option under the `Patterns` submenu -> 
 `Save Chr` menu to `Save Selection`. Select both 8x8 tiles, and choose to save these into the `graphics` 
 folder as `graphics/ocean_tiles.chr`. 
 
 ![ocean tiles](../images/ocean_tiles_wont_you_take_me_by_the_files_take_me_to_uhh_idk.png)
 
 Now, we need to put those tiles into the game. To keep the code simple, we will put this data into the main code bank -
-for your game you may want to use another bank. At any rate, add the following code into `source/neslib_asm/crt0.asm`,
+for your game you may want to use another bank. At any rate, add the following code into `graphics/graphics.config.asm`,
 around our other chr code: 
 
 ```asm
@@ -194,7 +191,7 @@ around our other chr code:
         .incbin "graphics/ocean_tiles.chr"
 ```
 
-We also have to add it to `source/globals.h` (or another header file) to make this accessible to our code: 
+We also have to add it to `source/c/globals.h` (or another header file) to make this accessible to our code: 
 
 ```c
 extern const unsigned char ocean_tiles[];
@@ -202,7 +199,7 @@ extern const unsigned char ocean_tiles[];
 
 Now that the tiles are available, we have to do some trickery every few frames to load this information into the 
 chr memory, so people see it. We are already modifying other parts of the memory map in our `update_hud` method in
-`source/graphics/hud.c`, so the easiest thing we can do is tack our new code onto this. 
+`source/c/graphics/hud.c`, so the easiest thing we can do is tack our new code onto this. 
 
 We only want to update a few tiles any given frame, so we will use our `frameCount` variable to update the hud most
 frames, then update our ocean tiles every 32 frames. Here's what that code looks like - we wrap the existing

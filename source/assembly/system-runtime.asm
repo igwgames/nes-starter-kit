@@ -10,7 +10,7 @@ FT_SFX_STREAMS            = 4            ;number of sound effects played at once
 
 .include "source/assembly/mmc1_macros.asm"
 ; FIXME: Loss of functionality, the choice was automated here. Need to tell user what to do.
-.include "config/game_constants.asm"
+.include "config/ca65_constants.asm"
 
     .export _exit,__STARTUP__:absolute=1
     .import initlib,push0,popa,popax,_main,zerobss,copydata

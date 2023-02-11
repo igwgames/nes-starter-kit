@@ -25,21 +25,18 @@ detail here, but computer memory goes up in powers of two - like: `1, 2, 4, 8, 1
 while it is possible to combine two smaller sizes, it is much easier to just go up to the next size. Since we
 currently have 128kb of prg, we probably want to jump up to 256kb. This will give us 16 8kb banks in place of our 8.
 
-This engine actually ships with a pre-built configuration file for this case. You can use it by updating `makefile`
-to point at the new file. Look for this line: 
+This engine actually ships with a pre-built configuration file for this case. You can use it by 
+renaming some configuration files, as follows: 
 
-```makefile
-CONFIG_FILE_PATH=tools/cc65_config/game
+```
+ca65.cfg -> ca65.cfg.backup
+ca65_constants.asm -> ca65_constants.asm.backup
+ca65_256k.cfg -> ca65.cfg
+ca65_256k_constants.asm -> ca65_constants.asm
 ```
 
-Change that to this to use the larger rom file configuration: 
-
-```makefile
-CONFIG_FILE_PATH=tools/cc65_config/game_256k
-```
-
-That should actually do it. Run a `make clean` to get rid of existing code, then build your game as normal to
-get it up and running with its new size. You can run `make space_check` to verify. You can now put code into banks
+That should actually do it. Run a `create-nes-game clean` to get rid of existing code, then build your game as normal to
+get it up and running with its new size. The build should print the new number of banks. You can now put code into banks
 7-15!
 
 This will also allow you to use the 256kb 
@@ -50,13 +47,13 @@ that explains it in detail.
 
 ## Updating the configuration manually to resize your rom banks
 
-**NOTE**: If you did the steps above to update your makefile, **you do not need to do this**. Just skip to the 
+**NOTE**: If you did the steps above, **you do not need to do this**. Just skip to the 
 next chapter.  This is here for anyone who wants to understand the configuration file better, and make their 
 own custom rom size that we don't natively support. 
 
 The first thing we need to do is update the config file for the game. (If you are not using git, back up your
 original file now! You will want a working configuration to go back to if things go wrong.) Open up
-`tools/cc65_config/game.cfg`. This is gonna look a bit foreign, but it's pretty simple. Here's the parts we
+`config/ca65.cfg`. This is gonna look a bit foreign, but it's pretty simple. Here's the parts we
 care about: 
 
 ```
@@ -113,16 +110,12 @@ SEGMENTS {
 # More "feature" stuff ommitted here
 
 SYMBOLS {
-
-    __STACKSIZE__ = $0500;  	# 5 pages stack
-	
-    # WARNING: IF you change this next variable, you also need to update source/neslib_asm/crt0.asm - there is a similarly
-    # named constant SYS_PRG_BANKS towards the top. Set it to the same value.
-	NES_PRG_BANKS = 8; 			# number of 16K PRG banks, change to 2 for NROM256
-	NES_CHR_BANKS = 16; 			# number of 8K CHR banks (If using 4k, divide by 2!)
-    NES_MAPPER	  = 0; 			# mapper number
-    NES_MIRRORING = 0;
-
+    __STACKSIZE__: value = $0500, type = weak; # 5 pages stack
+    
+    # WARNING: If you change this next variable, you also need to update its sibling _contants.asm file, in the same
+    #          folder. The value of SYS_PRG_BANKS must equal the value of NES_PRG_BANKS
+    NES_PRG_BANKS: value = 8, type = weak;   # number of 16K PRG banks, change to 2 for NROM256
+    NES_CHR_BANKS: value = 16, type = weak;  # number of 8K CHR banks (If using 4k, divide by 2!)
 }
 ```
 
@@ -139,7 +132,7 @@ rom that is required by the mapper.
 After this, in the `SYMBOLS` section at the bottom, we have to change `NES_PRG_BANKS` to `16` to reflect our higher
 bank count.
 
-Finally, there is a file named `tools/cc65_tools/game_constants.asm` - the value `SYS_PRG_BANKS` has to be changed to
+Finally, there is a file named `config/ca65_constants.asm` - the value `SYS_PRG_BANKS` has to be changed to
 `16` to match the value we set above. (The .asm file explains why this is)
 
 This should do it; you have manually resized your rom. There is more detail on the syntax of the .cfg file here:
