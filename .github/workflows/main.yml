@@ -31,7 +31,7 @@ jobs:
           cp rom/nes-starter-kit-example.nes s3-rom/nes-starter-kit-example.latest.nes && 
           cp rom/nes-starter-kit-example.dbg s3-rom/nes-starter-kit-example.latest.dbg && 
           cp rom/nes-starter-kit-example.nes s3-rom/nes-starter-kit-example.${{ github.run_number }}.nes && 
-          cp rom/nes-starter-kit-example.dbg s3-rom/nes-starter-kit-example.${{ github.run_number }}.dbg && 
+          cp rom/nes-starter-kit-example.dbg s3-rom/nes-starter-kit-example.${{ github.run_number }}.dbg
           
       - name: Copy artifacts into s3
         uses: shallwefootball/s3-upload-action@master
