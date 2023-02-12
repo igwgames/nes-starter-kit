@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies
         run: create-nes-game download-dependencies --assume-yes
       - name: Figure out whats going on
-        run: ls -lah . && las -lah ./tools && cat ./create-nes-game.config.json
+        run: ls -lah . && ls -lah ./tools && cat ./create-nes-game.config.json
       - name: Build the game
         run: create-nes-game build --verbose
       - name: Start xvfb 
