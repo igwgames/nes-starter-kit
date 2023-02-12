@@ -25,3 +25,19 @@ jobs:
         with:
           name: Game Download
           path: rom
+      - name: Prep for s3
+        run: |
+          mkdir s3-rom && 
+          cp rom/nes-starter-kit-example.nes s3-rom/nes-starter-kit-example.latest.nes && 
+          cp rom/nes-starter-kit-example.dbg s3-rom/nes-starter-kit-example.latest.dbg && 
+          cp rom/nes-starter-kit-example.nes s3-rom/nes-starter-kit-example.${{ github.run_number }}.nes && 
+          cp rom/nes-starter-kit-example.dbg s3-rom/nes-starter-kit-example.${{ github.run_number }}.dbg && 
+          
+      - name: Copy artifacts into s3
+        uses: uses: shallwefootball/s3-upload-action@master
+        with: 
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_bucket: nes-starter-kit
+          source_dir: s3-rom
+          destination_dir: ${{ github.ref_name }}
