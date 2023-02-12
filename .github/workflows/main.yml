@@ -11,9 +11,7 @@ jobs:
       - name: Move things into the spots github CI expects them in
         run: "cp -a /root/. /github/home"
       - name: Install dependencies
-        run: create-nes-game download-dependencies --assume-yes --verbose
-      - name: Figure out whats going on
-        run: ls -lah . && ls -lah ./tools/create-nes-game-tools && cat ./.create-nes-game.config.json && create-nes-game --help
+        run: create-nes-game download-dependencies --assume-yes
       - name: Build the game
         run: create-nes-game build
       - name: Start xvfb 
