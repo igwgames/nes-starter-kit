@@ -1052,13 +1052,6 @@ _wait_for_sprite0_hit:
     bit PPU_STATUS
     bvc @4
 
-    ; Wait a few cycles to align with the *next* line.
-    ; @cppchriscpp hack
-    ldx #0
-    @looper:
-        inx
-        cpx #44
-        bne @looper
     rts
 
 
