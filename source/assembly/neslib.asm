@@ -1269,10 +1269,12 @@ _music_play:
     ; Being extra careful and setting BP_BANK to ours in case an nmi fires while we're doing this.
     lda BP_BANK
     pha
+    txa
+    pha
     lda #SOUND_BANK
     sta BP_BANK
     jsr mmc1_set_prg_bank
-    txa ; bring back the song number!
+    pla ; bring back the song number!
 
 
     ldx #<music_data
