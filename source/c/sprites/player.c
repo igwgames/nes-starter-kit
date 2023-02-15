@@ -216,7 +216,6 @@ void handle_player_movement(void) {
             playerOverworldPosition -= 8;
         }
     }
-
 }
 
 void test_player_tile_collision(void) {

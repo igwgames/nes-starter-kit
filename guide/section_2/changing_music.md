@@ -74,7 +74,7 @@ a new song, you can define `SONG_MY_NEW_SONG` as `0` to reuse the title song.)
 ```
 
 Now, we just have to use it somewhere. We decided we want to change songs on input. We read player input once
-per frame. The code that does this lives with the player sprite code in `source/sprites/player.c`. If you find
+per frame. The code that does this lives with the player sprite code in `source/c/sprites/player.c`. If you find
 the `handle_player_movement()` method, you can see the code that does this. 
 
 ```c

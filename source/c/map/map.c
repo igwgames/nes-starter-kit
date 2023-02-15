@@ -201,8 +201,6 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
             currentMemoryLocation = nametableAdr +  ((i & 0xf0) << 2) + ((i % 16) << 1);
         }
 
-        
-
         mapScreenBuffer[tempArrayIndex] = currentValue;
         mapScreenBuffer[tempArrayIndex + 1] = currentValue + 1;
         mapScreenBuffer[tempArrayIndex + 32] = currentValue + 16;
@@ -213,10 +211,18 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
         currentValue = currentMap[i] & 0xc0;
 
         // Update where we are going to update with the palette data, which we store in the buffer.
-        if ((i & 0x1f) == (reverseAttributes ? 0 : 16)) 
-            j -= 8;
+        if (reverseAttributes) {
+            if ((i & 0x1f) == 0) {
+                j -= 8;
+            }
+        } else {
+            if ((i & 0x1f) == 16) {
+                j -= 8;
+            }
+        }
         if ((i & 0x01) == 0) 
             j++;
+
 
         // Now based on where we are in the map, shift them appropriately.
         // This builds up the palette bytes - which comprise of 2 bits per 16x16 tile. It's a bit confusing...
@@ -231,14 +237,14 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
             // Bunch of messy-looking stuff that tells neslib where to write this to the nametable, and how.
             mapScreenBuffer[0] = MSB(currentMemoryLocation) | NT_UPD_HORZ;
             mapScreenBuffer[1] = LSB(currentMemoryLocation);
-            mapScreenBuffer[2] = 65;
-            mapScreenBuffer[64 + NAMETABLE_UPDATE_PREFIX_LENGTH + 1] = NT_UPD_EOF;
+            mapScreenBuffer[2] = 64;
+            mapScreenBuffer[64 + NAMETABLE_UPDATE_PREFIX_LENGTH] = NT_UPD_EOF;
             set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
+            set_vram_update(NULL);
             if (xScrollPosition != -1) {
                 split_y(xScrollPosition, yScrollPosition);
             }
-            set_vram_update(NULL);
 
         }
     }
@@ -253,11 +259,11 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
     mapScreenBuffer[0x3b] = NT_UPD_EOF;
     set_vram_update(mapScreenBuffer);
     ppu_wait_nmi();
+    set_vram_update(NULL);
     if (xScrollPosition != -1) {
         split_y(xScrollPosition, yScrollPosition);
     }
 
-    set_vram_update(NULL);
     
 }
 
@@ -324,11 +330,11 @@ void draw_individual_row(int nametableAdr, int attributeTableAdr, char oliChange
 
             set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
+            set_vram_update(NULL);
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 + 48 + otherLoopIndex);
             }
-            set_vram_update(NULL);
 
         }
         ++i;
@@ -396,13 +402,11 @@ void draw_individual_row_offset_y(int nametableAdr, int attributeTableAdr, char 
             mapScreenBuffer[63 + NAMETABLE_UPDATE_PREFIX_LENGTH + 1] = NT_UPD_EOF;
             set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
+            set_vram_update(NULL);
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 - otherLoopIndex);
             }
-            set_vram_update(NULL);
-
-
         }
         ++i;
         if (i % 32 == 0) {
@@ -412,11 +416,11 @@ void draw_individual_row_offset_y(int nametableAdr, int attributeTableAdr, char 
 
             set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
+            set_vram_update(NULL);
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 - otherLoopIndex);
             }
-            set_vram_update(NULL);
 
             break;
         }
@@ -453,11 +457,11 @@ void draw_current_row_palette_only(int attributeTableAdr) {
 
             set_vram_update(mapScreenBuffer);
             ppu_wait_nmi();
+            set_vram_update(NULL);
             if (xScrollPosition != -1) {
                 scroll(0, 240 - HUD_PIXEL_HEIGHT);
                 split_y(256, 240 - otherLoopIndex);
             }
-            set_vram_update(NULL);
 
             break;
         }
@@ -532,6 +536,7 @@ void do_scroll_screen_transition(void) {
     
     // Draw a sprite into 0 to give us something to split on
     oam_spr(249, HUD_PIXEL_HEIGHT-NES_SPRITE_HEIGHT-0, HUD_SPRITE_ZERO_TILE_ID, 0x00, 0);
+    set_vram_update(NULL);
     ppu_wait_nmi();
 
     if (playerDirection == SPRITE_DIRECTION_RIGHT) {
