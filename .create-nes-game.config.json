@@ -21,17 +21,17 @@
     "console": "nes",
     "beforeStepActions": {
         "build": [
-            "tools/create-nes-game-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld"
+            "tools/nes-starter-kit-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld"
         ]
     },
     "afterStepActions": {
         "build": [
-            "tools/create-nes-game-tools/chr2img graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png",
-            "tools/create-nes-game-tools/sprite_def2img ./source/c/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png"
+            "tools/nes-starter-kit-tools/chr2img graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png",
+            "tools/nes-starter-kit-tools/sprite_def2img ./source/c/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png"
         ]
     },
     "extraDependencies": [{
-        "name": "create-nes-game-tools",
+        "name": "nes-starter-kit-tools",
         "win32-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/windows-x64.zip",
         "linux-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-x64.tar.gz",
         "linux-arm64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-arm64.tar.gz"
