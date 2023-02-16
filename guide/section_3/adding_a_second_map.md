@@ -42,7 +42,7 @@ with the `--help` parameter to find out. (Or just look at the output below)
 
 ```
 $ ./tools/create-nes-game-tools/tmx2c.exe --help
-[tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  tmx2c version 1.1.0
+[tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  tmx2c version 1.1.1
 [tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  Usage: tmx2c [bank number] [variable name] [file to convert] [file to save output to]
 [tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  Note that [bank number] must be a single hexadecimal digit, 0-F.
 ```

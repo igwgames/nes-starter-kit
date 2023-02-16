@@ -41,7 +41,7 @@ void initialize_variables(void) {
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
     bank_spr(1);
-}   
+}
 
 void main(void) {
     fade_out_instant();

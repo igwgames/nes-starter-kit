@@ -32,8 +32,8 @@
     },
     "extraDependencies": [{
         "name": "nes-starter-kit-tools",
-        "win32-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/windows-x64.zip",
-        "linux-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-x64.tar.gz",
-        "linux-arm64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.0/linux-arm64.tar.gz"
+        "win32-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.1/windows-x64.zip",
+        "linux-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.1/linux-x64.tar.gz",
+        "linux-arm64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.1/linux-arm64.tar.gz"
     }]
 }
