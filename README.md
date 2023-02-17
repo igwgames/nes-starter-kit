@@ -16,6 +16,16 @@ A Beginner's Guide and toolkit for NES game creation.
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
 
+## BREAKING CHANGE
+
+Version 2.0 is a major update to `nes-starter-kit`. The entire build process has been replaced. This
+should make starting new projects significantly easier, but the new build process makes it very hard to upgrade
+existing projects. The original tools will continue to be supported indefinitely. You can use tag `v1.0.8` 
+or the `master` branch.
+
+If you are interested in converting to 2.0, please reach out! It's possible, but the way to do it isn't
+straightforward, and will likely require a bit of collaboration. 
+
 ## What is this?
 
 It's a fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the 
