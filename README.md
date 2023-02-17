@@ -16,7 +16,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
 
-## BREAKING CHANGE
+## 2.0 BREAKING CHANGE
 
 Version 2.0 is a major update to `nes-starter-kit`. The entire build process has been replaced. This
 should make starting new projects significantly easier, but the new build process makes it very hard to upgrade
