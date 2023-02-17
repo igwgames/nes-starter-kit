@@ -71,10 +71,10 @@ Be aware that nes-c-bootstrap has not seen regular maintenance, and may be out o
 |------------------------|--------------------|--------------------|--------------------|--------------------|
 | Language               | C                  | 6502 Assembly      | C                  | C                  |
 | Gui Editing            | No                 | Yes                | Yes                | No                 |
-| Game Style             | Adventure only     | Many               | Puzzle only               | Platform           |
+| Game Style             | Adventure only     | Many               | Puzzle only        | Platform           |
 | Graphics editor        | external - nexxt   | Built-in           | Built-in           | external - nexxt   |
 | Map Editor             | external -tiled    | Built-in           | Built-in           | external - mappy   |   
-| Music Editor           | ext - famitracker  | Built-in           | Not ext - famitracker        | ext - famitracker  |     
+| Music Editor           | ext - famitracker  | Built-in           | ext - famitracker  | ext - famitracker  |     
 | Sound Editor           | ext - famitracker  | Built-in           | Not available      | ext - famitracker  |
 | Works on console       | Yes                | Yes                | Yes                | Yes                |               
 | Source available       | Yes, you write it! | Yes                | Yes                | Yes                |                  
