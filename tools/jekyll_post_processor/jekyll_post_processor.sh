@@ -11,6 +11,8 @@ echo "Starting Jekyll post-processor"
 # First, blow away the current docs folder; we want to replace it with anything new.
 rm -rf _docs/*
 # Build up the folder structure, so we can fill files into it in a few lines.
+mkdir -p _docs
+mkdir -p _data
 mkdir _docs/section_1
 mkdir _docs/section_2
 mkdir _docs/section_3
