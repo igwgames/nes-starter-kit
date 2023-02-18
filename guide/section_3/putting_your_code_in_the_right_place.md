@@ -1,4 +1,4 @@
-# Putting Your Code In the Right Place: A Brief Introduction to PRG Banking
+# A Brief Introduction to PRG Banking
 
 We've gotten through the basics of game creation, but up to this point it has been mainly editing existing code.
 In section 3, we are going to find ourselves writing a lot more of our own code. It's worth taking a little
