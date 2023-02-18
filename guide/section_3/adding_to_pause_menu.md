@@ -13,6 +13,10 @@ branch.
 You can also try the rom by downloading it from 
 [here](https://s3.amazonaws.com/nes-starter-kit/section3_pause_improvements/starter.latest.nes).
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/adding_to_pause_menu.html" data-emulator-branch="section3_pause_improvements">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Getting started: finding and modifying the existing code
 
 The code for the existing pause menu lives in `source/c/menus/pause.c` - it's actually quite simple right now, and

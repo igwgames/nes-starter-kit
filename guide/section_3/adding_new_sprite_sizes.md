@@ -24,6 +24,10 @@ Follow along with this example in the git branch named
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_sprite_size/starter.latest.nes)
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/adding_new_sprite_sizes.html" data-emulator-branch="section3_sprite_size">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Getting Started
 
 The first thing we have to do is create a new sprite. We can do one like normal to start - it will be very

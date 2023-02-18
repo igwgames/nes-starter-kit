@@ -14,6 +14,10 @@ You can follow along in the git branch named [section3_second_map](https://githu
 
 If you want to see what it looks like, try the [example rom](https://s3.amazonaws.com/nes-starter-kit/section3_second_map/starter.latest.nes).
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit/guide/section_3/adding_a_second_map.html" data-emulator-branch="section3_second_map">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Creating a new map
 
 Let's start with the fun part. You need a new map! Create a new copy of `levels/overworld.tmx` named something else

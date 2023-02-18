@@ -11,6 +11,10 @@ Follow along with this example in the git branch named
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_attract_repel/starter.latest.nes)
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/attract_repel.html" data-emulator-branch="section3_attract_repel">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Getting started
 
 First thing's first, let's add a new sprite! We've done this a few times before, but we will need to add a new line

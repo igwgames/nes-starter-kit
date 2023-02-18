@@ -5,7 +5,7 @@ don't show up for MMC1, but also enables some new features. If you're on this pa
 you want it. Note that in this branch, some features of the library won't work, or will need manual changes 
 (on your part!)
 
-The code for this is available in the `section5_mapper_30` git branch. Note that this builds off of the \
+The code for this is available in the `section5_mapper_30` git branch. Note that this builds off of the 
 `section4_chr_ram` branch.
 
 ## Pros/cons

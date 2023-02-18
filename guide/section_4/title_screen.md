@@ -2,10 +2,14 @@
 
 **Note**: _This change exists in a branch on Github. 
 [Click here](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title) 
-to view the changes in the branch, or do `git checkout custom_title` with a local
+to view the changes in the branch, or do `git checkout section4_custom_title` with a local
 copy of the repo to view the code._
 
 [Download the rom version of this example](https://s3.amazonaws.com/nes-starter-kit/section4_custom_title/starter.latest.nes)
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/title_screen.html" data-emulator-branch="section4_custom_title">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 Okay, you're getting pretty far with your game, but the text-based title screen
 isn't quite cutting it. There are better options if you have a bit of time, and some

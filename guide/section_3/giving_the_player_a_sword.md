@@ -10,6 +10,10 @@ broken into a few pieces, but the end result is available in the
 The rom is also available
 [here](https://s3.amazonaws.com/nes-starter-kit/section3_add_sword/starter.latest.nes).
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/giving_the_player_a_sword.html" data-emulator-branch="section3_add_sword">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Getting started: showing the sword
 
 Our first step is showing the sword when the player presses a button. We chose the A button.

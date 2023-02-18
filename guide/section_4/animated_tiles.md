@@ -16,6 +16,10 @@ You can find an example of this in the
 
 You can also try the [example rom](https://s3.amazonaws.com/nes-starter-kit/section4_animated_tiles/starter.latest.nes).
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/animated_tiles.html" data-emulator-branch="section4_animated_tiles">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
+
 ## Creating a set of animated Tiles
 
 The first step is creating a set of animated tiles. I am making the assumption that you have already used
