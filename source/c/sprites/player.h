@@ -52,13 +52,19 @@ ZEROPAGE_EXTERN(int, playerXPosition);
 ZEROPAGE_EXTERN(int, playerYPosition);
 ZEROPAGE_EXTERN(int, playerXVelocity);
 ZEROPAGE_EXTERN(int, playerYVelocity);
+ZEROPAGE_EXTERN(int, nextPlayerXPosition);
+ZEROPAGE_EXTERN(int, nextPlayerYPosition);
 ZEROPAGE_EXTERN(unsigned char, playerDirection);
 
 // Helper macro to convert the player's X and Y position into a position on the map
 #define PLAYER_MAP_POSITION(xPos, yPos) (xPos>>4) + (yPos & 0xf0)
 
-// Move the player around, and otherwise deal with controller input. (NOTE: Pause/etc are handled here too)
-void handle_player_movement(void);
+// Move variables for the player around, 
+// and otherwise deal with controller input. (NOTE: Pause/etc are handled here too)
+void prepare_player_movement(void);
+
+// Take the updated variables and re-apply them to the player, after any adjustments are made.
+void do_player_movement(void);
 
 // Update the player's sprite, and put it onto the screen as necessary
 void update_player_sprite(void);

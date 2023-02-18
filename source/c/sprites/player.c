@@ -20,6 +20,8 @@ ZEROPAGE_DEF(int, playerXPosition);
 ZEROPAGE_DEF(int, playerYPosition);
 ZEROPAGE_DEF(int, playerXVelocity);
 ZEROPAGE_DEF(int, playerYVelocity);
+ZEROPAGE_DEF(int, nextPlayerXPosition);
+ZEROPAGE_DEF(int, nextPlayerYPosition);
 ZEROPAGE_DEF(unsigned char, playerControlsLockTime);
 ZEROPAGE_DEF(unsigned char, playerInvulnerabilityTime);
 ZEROPAGE_DEF(unsigned char, playerDirection);
@@ -84,7 +86,7 @@ void update_player_sprite(void) {
 
 }
 
-void handle_player_movement(void) {
+void prepare_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;
@@ -171,9 +173,21 @@ void handle_player_movement(void) {
         playerInvulnerabilityTime--;
     }
 
+    nextPlayerXPosition = playerXPosition + playerXVelocity;
+    nextPlayerYPosition = playerYPosition + playerYVelocity;
+
+}
+
+void do_player_movement(void) {
+
     // This will knock out the player's speed if they hit anything.
     test_player_tile_collision();
+    // If the new player position hit any sprites, we'll find that out and knock it out here.
     handle_player_sprite_collision();
+
+    playerXPosition += playerXVelocity;
+    playerYPosition += playerYVelocity;
+
 
     rawXPosition = (playerXPosition >> PLAYER_POSITION_SHIFT);
     rawYPosition = (playerYPosition >> PLAYER_POSITION_SHIFT);
@@ -312,10 +326,6 @@ void test_player_tile_collision(void) {
             }
         }
     }
-
-    playerXPosition += playerXVelocity;
-    playerYPosition += playerYVelocity;
-
 }
 
 void handle_player_sprite_collision(void) {
@@ -405,25 +415,12 @@ void handle_player_sprite_collision(void) {
                     break;
                 }
                 // So you don't have a key...
-                // Okay, we collided with a door before we calculated the player's movement. After being moved, does the 
-                // new player position also collide? If so, stop it. Else, let it go.
+                // Okay, we collided with a door before we calculated the player's movement.
+                // So, let's cancel it out and move on.
+                playerXVelocity = 0;
+                playerYVelocity = 0;
+                playerControlsLockTime = 0;
 
-                // Calculate position...
-                tempSpriteCollisionX = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_X + 1]) << 8));
-                tempSpriteCollisionY = ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y]) + ((currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_Y + 1]) << 8));
-
-                // Are we colliding?
-                // NOTE: We take a bit of a shortcut here and assume all doors are 16x16 (the hard-coded 16 value below)
-                if (
-                    playerXPosition < tempSpriteCollisionX + (16 << PLAYER_POSITION_SHIFT) &&
-                    playerXPosition + PLAYER_WIDTH_EXTENDED > tempSpriteCollisionX &&
-                    playerYPosition < tempSpriteCollisionY + (16 << PLAYER_POSITION_SHIFT) &&
-                    playerYPosition + PLAYER_HEIGHT_EXTENDED > tempSpriteCollisionY
-                ) {
-                    playerXPosition -= playerXVelocity;
-                    playerYPosition -= playerYVelocity;
-                    playerControlsLockTime = 0;
-                }
                 break;
             case SPRITE_TYPE_ENDGAME:
                 gameState = GAME_STATE_CREDITS;

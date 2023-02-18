@@ -86,7 +86,7 @@ This method calls a method to change the chr bank used for background tiles ever
 ```c
 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
 banked_call(PRG_BANK_MAP_TILE_ANIMATION, animate_map_tiles);
-banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
+banked_call(PRG_BANK_PLAYER_SPRITE, do_player_movement);
 ```
 
 ## Extending this for more than 2 animation frames

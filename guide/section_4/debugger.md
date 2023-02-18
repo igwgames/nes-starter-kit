@@ -40,7 +40,7 @@ more useful to you at the time. Let's start with the C. Use the dropdown to open
 ![player.c](../images/open_player_dotc.png)
 
 Now you'll see the entire source for `player.c` laid out. This will allow us to investigate the code! Search the file
-(ctrl+f) and find the definition for `handle_player_movement`. We'll use this to pause the game without hitting start!
+(ctrl+f) and find the definition for `prepare_player_movement`. We'll use this to pause the game without hitting start!
 
 First, click to the far left of the screen next to the line that starts with `if (controllerState & PAD_START &&`. A red
 circle should appear. This is a breakpoint! It tells the emulator to stop running the code here, so we can investigate. 

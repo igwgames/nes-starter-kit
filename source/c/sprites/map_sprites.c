@@ -41,7 +41,6 @@ void do_sprite_movement_with_collision(void);
 void update_map_sprites(void) {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
 
-    // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
     for (i = 0; i < MAP_MAX_SPRITES; ++i) {
         currentMapSpriteIndex = i << MAP_SPRITE_DATA_SHIFT;
 
@@ -293,10 +292,10 @@ void update_map_sprites(void) {
             // Collision test... see here for a clear explanation: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
             // rect1=player position, rect2=sprite position
             if (
-                (playerXPosition + PLAYER_X_OFFSET_EXTENDED) < sprX + currentSpriteFullWidth &&
-                playerXPosition + (PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) > sprX &&
-                (playerYPosition + PLAYER_Y_OFFSET_EXTENDED) < sprY + currentSpriteFullHeight &&
-                playerYPosition + (PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED) > sprY
+                (nextPlayerXPosition + PLAYER_X_OFFSET_EXTENDED) < sprX + currentSpriteFullWidth &&
+                nextPlayerXPosition + (PLAYER_WIDTH_EXTENDED + PLAYER_X_OFFSET_EXTENDED) > sprX &&
+                (nextPlayerYPosition + PLAYER_Y_OFFSET_EXTENDED) < sprY + currentSpriteFullHeight &&
+                nextPlayerYPosition + (PLAYER_HEIGHT_EXTENDED + PLAYER_Y_OFFSET_EXTENDED) > sprY
             ) {
                 lastPlayerSpriteCollisionId = i;
             }

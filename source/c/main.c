@@ -91,8 +91,10 @@ void main(void) {
                 // TODO: Might be nice to have this only called when we have something to update, and maybe only update the piece we 
                 // care about. (For example, if you get a key, update the key count; not everything!
                 banked_call(PRG_BANK_HUD, update_hud);
+                banked_call(PRG_BANK_PLAYER_SPRITE, prepare_player_movement);
                 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
-                banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
+                banked_call(PRG_BANK_PLAYER_SPRITE, do_player_movement);
+
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
                 break;
             case GAME_STATE_SCREEN_SCROLL:

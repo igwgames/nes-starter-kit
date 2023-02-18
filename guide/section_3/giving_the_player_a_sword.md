@@ -101,7 +101,7 @@ Next, we need to start testing for collisions. We're going to make a lot of chan
 
 First, let's actually set our `swordPosition` variable whenever the player presses A. We include a little special
 logic to only trigger this if the sword button is initially pressed down by checking if the button was pressed
-the last time we checked. We add it at the beginning of the `handle_player_movement()` method.
+the last time we checked. We add it at the beginning of the `prepare_player_movement()` method.
 
 ```c
 if (swordPosition == 0 && controllerState & PAD_A && !(lastControllerState & PAD_A)) {

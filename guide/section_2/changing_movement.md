@@ -62,10 +62,10 @@ can be evenly divided by PLAYER_VELOCITY_ACCEL!
 ```
 
 Next up, we have to change how we use these constants a bit. Open up `source/c/sprites/player.c` and look for the 
-`handle_player_movement()` method. At the top of it, you should see a familiar constant being used. 
+`prepare_player_movement()` method. At the top of it, you should see a familiar constant being used. 
 
 ```c
-void handle_player_movement(void) {
+void prepare_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;
@@ -162,7 +162,7 @@ If you swap that last line to be:
 ```
 
 the player will no longer be confined to the grid. For the curious, the code this effects is in 
-[source/sprites/player.c](../../source/c/sprites/player.c) - search for `PlAYER_MOVEMENT_STYLE` to find it.
+[source/sprites/player.c](../../source/c/sprites/player.c) - search for `PLAYER_MOVEMENT_STYLE` to find it.
 
 
 With that, you've made it through chapter two! (Or at least this part of it.) Next up, we'll start adding some new

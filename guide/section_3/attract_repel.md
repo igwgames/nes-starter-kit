@@ -155,12 +155,21 @@ void update_map_sprites(void) {
 ```
 
 With that done, all we need to do is make the player move based off of this. The logic to do this isn't too complex. 
-Pop open `source/c/sprites/player.c` and let's add a little more logic to the `handle_player_movement()` method. This is
-actually only two lines, which we add after we have finished updating movement based on the player's input: 
+Pop open `source/c/sprites/player.c` and let's add a little more logic to the `prepare_player_movement()` method. This is
+actually only two lines, which we add after we have finished updating movement based on the player's input. It can be added right after we tick down invulnerability.
 
 ```c
+    // While we're at it, tick down the invulnerability timer if needed
+    if (playerInvulnerabilityTime) {
+        playerInvulnerabilityTime--;
+    }
+
     playerXVelocity += playerMagnetXAccel;
     playerYVelocity += playerMagnetYAccel;
+
+    nextPlayerXPosition = playerXPosition + playerXVelocity;
+    nextPlayerYPosition = playerYPosition + playerYVelocity;
+
 ```
 
 After adding this in, if you go to the tile you added the magnet to, you should see it start to pull you when the magnet

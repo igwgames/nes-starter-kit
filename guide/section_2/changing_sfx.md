@@ -79,7 +79,7 @@ with the lower priority number will play over the one with higher priority. (If 
 also just use `SFX_CHANNEL_1` for everything. Priority is nice to have, though.)
 
 Next, we need to use it somewhere. We are trying to add a pause sound effect, so let's find where we trigger
-the pause menu. This happens to be in `source/c/sprites/player.c`, in the `handle_player_movement()` method. 
+the pause menu. This happens to be in `source/c/sprites/player.c`, in the `prepare_player_movement()` method. 
 Right at the top, you should see some logic like this: 
 
 ```c
