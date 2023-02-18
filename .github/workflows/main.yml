@@ -1,7 +1,8 @@
 on: 
   push:
   # Run once a week to make sure nothing randomly breaks without us knowing
-  cron: '23 23 * * 0'
+  schedule:
+    - cron: '23 23 * * 0'
 
 jobs:
   build_rom:
