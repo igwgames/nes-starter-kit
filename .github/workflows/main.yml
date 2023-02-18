@@ -7,7 +7,7 @@ jobs:
     name: Compile rom
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Move things into the spots github CI expects them in
         run: "cp -a /root/. /github/home"
       - name: Install dependencies
