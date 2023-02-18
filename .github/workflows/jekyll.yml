@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  publish_to_jekyll:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    name: Publish documentation site
+    steps:
+      name: Update jekyll
+      - run:
+          name: Update jekyll documentation on a branch
+          command: |
+            git config user.email "automation@cpprograms.net"
+            git config user.name "Github Automation"
+            git config credential.helper 'cache --timeout=120'
+            git fetch && git checkout gh-pages && git merge origin/main -m "Automatic merge of main" && ./tools/jekyll_post_processor/jekyll_post_processor.sh && git add _docs && git commit -a --allow-empty -m "Automated documentation update" && git push
