@@ -20,7 +20,7 @@ mkdir _docs/section_4
 mkdir _docs/section_5
 # Copy the images folder to the top level, so image links work from the Jekyll Site.
 cp -R guide/images ./images
-# Copy a couple files from the master branch, so we don't try to maintain them in the gh-pages branch
+# Copy a couple files from the main branch, so we don't try to maintain them in the gh-pages branch
 cp tools/jekyll_post_processor/_config.yml _config.yml
 cp tools/jekyll_post_processor/index.html index.html
 cp tools/jekyll_post_processor/favicon.ico favicon.ico
