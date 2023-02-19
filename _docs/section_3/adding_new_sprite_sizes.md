@@ -14,7 +14,8 @@ We'll use a 24px by 8px snake sprite to test this out. The sprite is already in 
 
 Please note that _this is not the most wise size to use for sprites_. Remember that the NES can handle a maximum
 of 8 hardware sprites on one horizontal screen line at a time. A 24 px by 8px snake can take up 3 hardware
-sprites in a row, so putting just 3 of these on the same row can cause flicker. The game will still work,
+sprites in a row, so putting just 3 of these on the same row will cause flicker. That's without thinking about
+the player sprites. The game will still work,
 but it may not look pretty if levels are not designed very carefully. 
 
 Additionally, the engine assumes game sprites will contain a maximum of 4 hardware sprites. If you want to
@@ -22,10 +23,14 @@ use more, you will need to change `MAP_SPRITE_OAM_SHIFT` and reduce the number o
 screen at once by reducing `MAP_MAX_SPRITES`. Doing this is beyond the scope of this chapter.
 
 Follow along with this example in the git branch named
-[sprite_size](https://github.com/cppchriscpp/nes-starter-kit/compare/sprite_size).
+[section3_sprite_size](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_sprite_size).
 
 If you want to try it yourself, 
-[download the ROM](https://s3.amazonaws.com/nes-starter-kit/sprite_size/starter.latest.nes)
+[download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_sprite_size/starter.latest.nes)
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/adding_new_sprite_sizes.html" data-emulator-branch="section3_sprite_size">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Getting Started
 
@@ -33,7 +38,7 @@ The first thing we have to do is create a new sprite. We can do one like normal 
 broken, but we will at least be able to see the sprite. This will let us build the sprite in a few steps, and
 test along the way.
 
-Let's open `source/sprites/sprite_definitions.c` and add the following new sprite at the bottom of the array: 
+Let's open `source/c/sprites/sprite_definitions.c` and add the following new sprite at the bottom of the array: 
 
 ```c
     SPRITE_TYPE_NPC, 0x00, SPRITE_SIZE_16PX_16PX | SPRITE_PALETTE_1, SPRITE_ANIMATION_NONE, SPRITE_MOVEMENT_NONE, 0x01, 14, 0x00,
@@ -44,11 +49,11 @@ Let's open `source/sprites/sprite_definitions.c` and add the following new sprit
 ```
 
 Note that for now we're creating it as a 16px by 16px sprite. We'll change this in just a moment. After building the
-game with `make`, you can add the sprite in using tiled. 
+game with `create-nes-game build`, you can add the sprite in using tiled. 
 
 The image will be messy looking in tiled - just imagine 
 that the created sprite takes up 3 blocks. (You can change this by updating the export tool in 
-`tools/sprite_def2img`, but that is beyond the scope of this chapter.)
+`sprite_def2img`, but that is beyond the scope of this chapter.)
 
 ![snek_on_map](../images/snek_on_map.png)
 
@@ -58,7 +63,7 @@ If you run the game, you should see the (currently very messed up) snake sprite.
 
 Alright, you have some fancy graphics; how can we make them start working?
 
-The first thing we need is a new sprite type. These are defined in `source/sprites/sprite_definitions.h`. Here's
+The first thing we need is a new sprite type. These are defined in `source/c/sprites/sprite_definitions.h`. Here's
 what it should look like: 
 
 ```diff
@@ -69,9 +74,9 @@ what it should look like:
 + #define SPRITE_SIZE_24PX_8PX 0x02
 ```
 
-Don't forget to update `source/sprites/sprite_definitions.c` to use this new size.
+Don't forget to update `source/c/sprites/sprite_definitions.c` to use this new size.
 
-After this, we'll need to make a number of changes to `source/sprites/map_sprites.c` - this section will gloss over
+After this, we'll need to make a number of changes to `source/c/sprites/map_sprites.c` - this section will gloss over
 some of the smaller details, so be sure to check the `sprite_size` git branch to find all of the details.
 
 The first thing we need to do is update the `update_map_sprites` method to understand this new size. In order to do

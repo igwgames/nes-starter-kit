@@ -11,7 +11,7 @@ Let's do something really simple to start - let's change the title screen a bit.
 for your game now. (Don't stress over it; this will be easy to change later!) We are going to
 change the title screen to show it.
 
-First, use your IDE to open `source/configuration/game_info.c`. You should see a fairly simple file.
+First, use your IDE to open `source/c/configuration/game_info.c`. You should see a fairly simple file.
 In fact, it just has a few constant variables with details about your game. It should look something
 like this:
 
@@ -34,11 +34,11 @@ identified.
 The line after is a way to contact you - we used Twitter in our example, but change this to whatever
 you like! Or, set it to an empty string (`""`) to remove it entirely.
 
-_If you want to see the code that uses this, look at `source/menus/title.c`. No need to change
+_If you want to see the code that uses this, look at `source/c/menus/title.c`. No need to change
 it yet!_
 
 Now, compile and run the game again (Press `ctrl+shift+b` in Visual Studio Code, or run 
-`make clean && make && make run` in the Cygwin terminal). 
+`create-nes-game build && create-nes-game run` in the Cygwin terminal). 
 
 ![New title screen](../images/changed_title.png)
 

@@ -16,14 +16,18 @@ using many resources! We accomplish this by switching between two (or more) sets
 (chr banks) every few frames. 
 
 You can find an example of this in the 
-[animated_tiles branch](https://github.com/cppchriscpp/nes-starter-kit/compare/animated_tiles) on Github.
+[section4_animated_tiles branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_animated_tiles) on Github.
 
-You can also try the [example rom](https://s3.amazonaws.com/nes-starter-kit/animated_tiles/starter.latest.nes).
+You can also try the [example rom](https://s3.amazonaws.com/nes-starter-kit/section4_animated_tiles/starter.latest.nes).
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/animated_tiles.html" data-emulator-branch="section4_animated_tiles">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Creating a set of animated Tiles
 
 The first step is creating a set of animated tiles. I am making the assumption that you have already used
-NESST to update tiles before in one of the earlier sections. (If not, you may want go go back to that 
+NEXXT to update tiles before in one of the earlier sections. (If not, you may want go go back to that 
 chapter first!) Open NES Screen Tool (NESST) and open `graphics/tiles.chr`. Find the tile you want to 
 animate, and change the tile (in-place) to look like a second animation frame. 
 
@@ -31,7 +35,7 @@ In the example branch, I opted to animate the water tile. (Note that you can ani
 you want without cost!) **Do NOT save this to `graphics/tiles.chr`**! Instead, save it to a new file, 
 named something like `graphics/tiles_2.chr`. 
 
-If you want to see how it looks, you can load both `tiles.chr` and `tiles_2.chr` into NESST as Pattern
+If you want to see how it looks, you can load both `tiles.chr` and `tiles_2.chr` into NEXXT as Pattern
 tables A and B, then switch between them. 
 
 This chapter does not give code for showing more than two frames of animation, but adding more frames
@@ -42,8 +46,8 @@ should be fairly simple.
 Adding this to the game won't take very long we need to add the new graphics (.chr file) to the game,
 then add some C code to switch which chr file is shown every few frames. 
 
-First, open up `source/neslib_asm/crt0.asm`, and scroll towards the bottom. This file is kind of the
-main setup file for C, as well as a lot of the other things loaded by the game. (Including our chr files!)
+First, open up `graphics/graphics.config.asm`. This file maps the different chr banks
+for the game to files we have created.
 You should find something that looks vaguely like this: 
 
 ```asm
@@ -67,9 +71,9 @@ This will continue on to many more banks - take note of the first one to use our
 example). Then, add the new `tiles_2.chr` file to one of the other ones. In the example, we replaced `CHR_03`. 
 Also take note of this number; we'll use both of them soon. 
 
-Next, we need to write the code to do the switch. It's actually fairly simple. I'll skip over the boilerplate that
+Next, we need to write the code to do the switch. It's fairly simple. I'll skip over the boilerplate that
 sets up banking, but you can look at it in the git branch to fill it out. The example puts this into 
-`source/map/tile_animation.c` (with defines in the header file of the same name) Here's the method we care about: 
+`source/c/map/tile_animation.c` (with defines in the header file of the same name) Here's the method we care about: 
 
 ```c
 void animate_map_tiles(void) {
@@ -84,12 +88,13 @@ void animate_map_tiles(void) {
 
 This method calls a method to change the chr bank used for background tiles every frame - it changes which one every
 32 (`0x20`) frames. `CHR_ANIMATION_BANK_0` and `CHR_ANIMATION_BANK_1` are set to the two values we noted while editing
-`crt0.asm`. We call this from `source/main.c` when the game is running by using the `banked_call` method: 
+`graphics.config.asm`. We call this from `source/main.c` when the game is running by using the 
+`banked_call` method: 
 
 ```c
 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
 banked_call(PRG_BANK_MAP_TILE_ANIMATION, animate_map_tiles);
-banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
+banked_call(PRG_BANK_PLAYER_SPRITE, do_player_movement);
 ```
 
 ## Extending this for more than 2 animation frames

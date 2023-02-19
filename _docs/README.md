@@ -10,13 +10,13 @@ A Beginner's Guide and toolkit for NES game creation.
 
 [<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://cppchriscpp.github.io/nes-starter-kit/)
 
-**Current game version:** 1.0.8
+**Current game version:** 2.0.0
 
-**Current tool zip version:** 1.0.2
+**Minimum create-nes-game version:** 1.0.9
 
 [Click here](https://cppchriscpp.github.io/nes-starter-kit/) to try the example game!
 
-[Download the example rom](https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes)
+[Download the example rom](https://s3.amazonaws.com/nes-starter-kit/main/starter.latest.nes)
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
 
@@ -26,7 +26,7 @@ It's a fully-fledged starter kit for NES games. It is the source to a top-down a
 tools needed to change it. It also comes with a guide to changing everything about it, which could also be titled
 "The dummy's guide to creating an NES game".
 
-The idea is, download this (either via git or a zip file), set up the tools, run the game, then tweak it and make
+The idea is, copy this code using `create-nes-game`, run the game, then tweak it and make
 your own! With the right hardware, you can even play your game on your own NES.
 
 The only thing this is *not* is an introduction to programming - if you have never programmed anything before, I
@@ -36,45 +36,28 @@ very least, find out what a "hello world" program is, and write+run one successf
 One options is the [Learn C Tutorial](http://www.learn-c.org/) - it lets you write and run your code in the 
 browser, so you don't need to set anything up! 
 
+## 2.0 BREAKING CHANGE
 
-## Related projects
+Version 2.0 is a major update to `nes-starter-kit`. The entire build process has been replaced. This
+should make starting new projects significantly easier, but the new build process makes it very hard to upgrade
+existing projects. The original tools will continue to be supported indefinitely. You can use tag `v1.0.8` 
+or the `master` branch.
 
-There are a few other projects worth knowing about that might be a better fit for your task.
+If you are interested in converting to 2.0, please reach out! It's possible, but the way to do it isn't
+straightforward, and will likely require a bit of collaboration. 
 
-First off, there's the upcoming NESMaker project. This has not yet been released, but it is a full-blown
-gui for building games. Check out the [NESMaker website](http://www.thenew8bitheroes.com/)! This project is 
-a good fit if you don't quite want to get your hands dirty with code. You may be able to edit the resulting
-code, but it will likely be in assembly language, and a little harder to pick up if that is new to you.
+## What's new in 2.0?
 
-In a similar vein, if you'd like a way to do that with Gameboy games, look into my ClassicGB project. It's a 
-code-free web-based game builder. It also exports C source code, in case you want to extend it yourself! Check
-that out on [the ClassicGB website](http://game-builder.cpprograms.net)!
+Version 2.0 brings a number of long-needed changes, including greatly simplifying getting started.
+ Here's a summary of major changes:
 
-MK1_NES modular game engine could be found here [MK1-NES](https://github.com/mojontwins/MK1_NES).
+- Build moved away from cygwin and makefiles to [create-nes-game](https://cppchriscpp.github.io/create-nes-game) - a one-stop-shop for building NES games
+- Official linux support for build tools (including x86 and arm64! Wanna build on a newer raspberry pi?)
+- New games can be created automatically from create-nes-game's interactive guide
+- Full support for debugging in Mesen, with source code in both C and assembly language
+- Collision bug with doors finally fixed! They're now solid, and you won't get stuck in them. 
 
-Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
-project that you can use for more of a blank page. That project is elsewhere 
-[on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
-
-## Feature Comparison
-
-| Feature Name           | nes-c-starter-kit  | NESMaker           | gameboy-bootstrap  | MK1_NES            |
-|------------------------|--------------------|--------------------|--------------------|--------------------|
-| Language               | C                  | 6502 Assembly      | C                  | C                  |
-| Gui Editing            | No                 | Yes                | Yes                | No                 |
-| Game Style             | Adventure only     | Many               | Adventure only     | Platform           |
-| Graphics editor        | external - nesst   | Built-in           | Built-in           | external - nesst   |
-| Map Editor             | external -tiled    | Built-in           | Built-in           | external - mappy   |   
-| Music Editor           | ext - famitracker  | Built-in           | Not available      | ext - famitracker  |     
-| Sound Editor           | ext - famitracker  | Built-in           | Not available      | ext - famitracker  |
-| Works on console       | Yes                | Yes                | Yes                | Yes                |               
-| Source available       | Yes, you write it! | Demo only          | Yes                | Yes                |                  
-| Source easily editable | Yes, built for it  | Limited to Scripts | No                 | Yes                |                  
-| Code Editor available  | Yes, VS Code       | No                 | Not specialized    | No                 |                   
-| Programming required   | Yes                | No                 | No                 | Yes                |                  
-
-**Note**: NESMaker was not available at the time of this writing, so some of these details are based on
-          speculation. If something's wrong, submit a PR!
+If you tried to set this up before and got impatient, now is a good time to give it another try!
 
 # Table of Contents
 
@@ -145,6 +128,7 @@ matter if they interest you.
 31. [Making a full title screen](./guide/section_4/title_screen.html)
 32. [Animating tiles](./guide/section_4/animated_tiles.html)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.html)
+34. [Debugging with Mesen](./guide/section_4/debugging.html)
 
 ### Part 5: Advanced Topics
 
@@ -171,7 +155,10 @@ need these things for most games, but if you do, this is a place to learn!_
 
 [NESLib](http://shiru.untergrund.net/code.shtml) by [Shiru](http://shiru.untergrund.net/)
 
+[create-nes-game](https://cppchriscpp.github.io/create-nes-game) by [cppchriscpp](https://cpprograms.net)
+
 [NES Screen Tool](http://shiru.untergrund.net/software.shtml) by [Shiru](https://shiru.untergrund.net/)
+[NEXXT](https://frankengraphics.itch.io/nexxt) by [FrankenGraphics](https://frankengraphics.wordpress.com/)
 
 [NES Space Checker (nessc)](http://shiru.untergrund.net/software.shtml) by [Shiru](http://shiru.untergrund.net/)
 
@@ -196,6 +183,46 @@ by [Refresh Games](https://refreshgames.co.uk/)
 **Please credit these wonderful people in your own creations, if you don't replace their work!** 
 Technically all of the art and music is licensed as public domain, (CC0) but it'd be really nice to 
 give them credit.
+
+## Related projects
+
+There are a few other projects worth knowing about that might be a better fit for your task.
+
+First off, there's the upcoming NESMaker project. This has not yet been released, but it is a full-blown
+gui for building games. Check out the [NESMaker website](http://www.thenew8bitheroes.com/)! This project is 
+a good fit if you don't quite want to get your hands dirty with code. You may be able to edit the resulting
+code, but it will likely be in assembly language, and a little harder to pick up if that is new to you.
+
+If coding really isn't your thing and you like puzzle games, I have a puzzle game maker available: 
+[Retro Puzzle Maker](https://puzzle.nes.science). It's very user-friendly, and it
+can actually be extended with many of the same tools if you want to.
+
+Another option, the Mojon Twins' MK1_NES modular game engine can be found here:
+[MK1-NES](https://github.com/mojontwins/MK1_NES).
+
+Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
+project that you can use for more of a blank page. That project is elsewhere 
+[on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
+
+Be aware that nes-c-bootstrap has not seen regular maintenance, and may be out of date.
+
+## Feature Comparison
+
+| Feature Name           | nes-starter-kit    | NESMaker           | NES Puzzle Maker   | MK1_NES            |
+|------------------------|--------------------|--------------------|--------------------|--------------------|
+| Language               | C                  | 6502 Assembly      | C                  | C                  |
+| Gui Editing            | No                 | Yes                | Yes                | No                 |
+| Game Style             | Adventure only     | Many               | Puzzle only        | Platform           |
+| Graphics editor        | external - nexxt   | Built-in           | Built-in           | external - nexxt   |
+| Map Editor             | external -tiled    | Built-in           | Built-in           | external - mappy   |   
+| Music Editor           | ext - famitracker  | Built-in           | ext - famitracker  | ext - famitracker  |     
+| Sound Editor           | ext - famitracker  | Built-in           | Not available      | ext - famitracker  |
+| Works on console       | Yes                | Yes                | Yes                | Yes                |               
+| Source available       | Yes, you write it! | Yes                | Yes                | Yes                |                  
+| Source easily editable | Yes, built for it  | Limited to Scripts | No                 | Yes                |                  
+| Code Editor available  | Yes, VS Code       | No                 | Not specialized    | No                 |                   
+| Programming required   | Yes                | No                 | No                 | Yes                |                  
+
 
 # Contributing
 

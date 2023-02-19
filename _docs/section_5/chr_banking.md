@@ -4,7 +4,7 @@ permalink: guide/section_5/chr_banking.html
 ---
 # Extending the available graphics via CHR banking
 
-In looking at the graphics you are able to create in NES Screen Tool, you likely have realized they are very
+In looking at the graphics you are able to create in NEXXT, you likely have realized they are very
 limited. You have 256 8x8 tiles on each of the two maps available, and where our tiles/sprites are often 
 16x16, this leaves us with 64 actual tiles per map. You can fit a maximum of 7 full sprites on a single 
 map. (Including the player!) How can we work around these restrictions?
@@ -25,7 +25,7 @@ free to submit a PR to the project with a git branch demonstrating it; I'd be ha
 
 Adding more graphics to your rom is actually fairly easy - there is just a file that contains a list of
 chr files, and we can add ours to that list. First of course, you need to make a new chr file using NES
-Screen Tool. Creating graphics with NESST has been covered in other chapters, so I am not going to detail 
+Screen Tool. Creating graphics with NEXXT has been covered in other chapters, so I am not going to detail 
 that here. I will detail some things to keep in mind for background and sprite layers. These are meant for 
 regular gameplay; if you are creating a menu/splash screen/etc, these likely do not apply.
 
@@ -34,7 +34,7 @@ up duplicating a number of tiles for the HUD, main character, and the like. This
 _remember to update all chr files when you change these graphics_! This is extremely easy to forget, and can
 lead to confusing bugs. 
 
-In my personal projects, I tend to export all of my graphics from NES Screen Tool into bitmap files, then
+In my personal projects, I tend to export all of my graphics from NEXXT into bitmap files, then
 update those bitmap files and re-import them. Unfortunately this is time consuming and error-prone. There
 is likely a better way. (PRs and suggestions are welcome!)
 
@@ -61,7 +61,7 @@ recommended to keep the code simple.
 
 Once you have created new chr files for your tiles or sprites, it is a simple matter of adding these to the
 list of chr files available to the ROM. You can add up to 32 chr files - 3 are used by the engine by default.
-Open up `source/neslib_asm/crt0.asm` (The entrypoint for C) and scroll towards the bottom. You should see some
+Open up `source/graphics/graphics.config.asm`. You should see some
 code that looks like this: 
 
 ```asm
@@ -72,8 +72,7 @@ code that looks like this:
 	.incbin "graphics/tiles.chr"
 
 ; Note: You can put your own separate chr files here to use them... we only use 3 in the demo. This is to avoid warnings,
-; and make the rom a predictable size. Note that if you do this you'll have to tweak the engine to support it! There's
-; hopefully a guide on how to do this in the repo.
+; and make the rom a predictable size. Note that if you do this you'll have to tweak the engine to support it! 
 .segment "CHR_02"
 	.incbin "graphics/sprites.chr"
 .segment "CHR_03"
@@ -114,34 +113,25 @@ could build off of the [second map chapter/Github Branch](../section_3/adding_a_
 set of tiles for the different supported maps. 
 
 First, each map would need to generate its own png file to show map tiles. This should be pretty easily achievable
-by modifying the `makefile`. You would want to change two rules. First, the build-tiles rule should build two images:
+by modifying the `create-nes-game.config.json` file. You would need to duplicate the `afterStepActions`
+step that runs `chr2img`. You can probably guess how to update this.
 
-```makefile
-# Before: 
-build-tiles: graphics/generated/tiles.png
-# After:
-build-tiles graphics/generated/tiles-a.png graphics/generated/tiles-b.png
+```json
+    "afterStepActions": {
+        "build": [
+            "tools/create-nes-game-tools/chr2img graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png",
+            "tools/create-nes-game-tools/sprite_def2img ./source/c/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png"
+        ]
+    },
 ```
 
-The second makefile change is to the tile png generator itself: 
+Change the chr file and palette used, as well as the output png file. For sprite definitions, you could 
+also switch what file sprite definitions come from.
 
-```makefile
-# Before: 
-graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal
-	$(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
-# After: 
-graphics/generated/tiles-a.png: graphics/tiles-a.chr graphics/sprites.chr graphics/palettes/main_bg.pal
-	$(CHR2IMG) graphics/tiles-a.chr graphics/palettes/main_bg.pal graphics/generated/tiles-a.png
-graphics/generated/tiles-b.png: graphics/tiles-b.chr graphics/sprites.chr graphics/palettes/main_bg.pal
-	$(CHR2IMG) graphics/tiles-b.chr graphics/palettes/main_bg.pal graphics/generated/tiles-b.png
-``` 
-
-From there, you just have to update Tiled to look at `tiles-a.png` for the first map, and `tiles-b.png` 
-for the second map. (Note: You can also pass in a separate palette here; just be sure to also set the
-palette when you set the tiles in code.)
+Once you've done this, you can update Tiled to use the newly generated file(s) and it should look reasonable.
 
 Now you have your map editor showing the second tileset for your second map. We just have to update the
-C code to change to the new map whenever it loads a new map screen. This logic lives in `source/map/map.c`,
+C code to change to the new map whenever it loads a new map screen. This logic lives in `source/c/map/map.c`,
 in the `draw_current_map_to_nametable` method. We can sneak some new logic in here to pick a chr tile id
 based on the current map id. (The screen will be off when this method is called.) Here's an example
 of that code being added in: 
@@ -162,7 +152,7 @@ draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsigned 
 ```
 
 Note that if you are also using tile animation, you will have to update that logic to also know about
-both of these tiles. If you did this following the example, that logic lives in `source/map/load_map.c`. 
+both of these tiles. If you did this following the example, that logic lives in `source/c/map/load_map.c`. 
 
 ## Tips for using a second set of sprite tiles
 
@@ -175,6 +165,6 @@ then choose which chr file to use based on the map id. You could use the same ty
 to the `makefile` in the Background Tile section to make things look nicer in Tiled.
 
 To create completely separate sprites, I suspect you would need to have multiple copies of the methods
-in `source/sprites/map_sprites.c`, and multiple sets of `sprite_definitions` that would be read depending
+in `source/c/sprites/map_sprites.c`, and multiple sets of `sprite_definitions` that would be read depending
 on which set is loaded. If you manage to do this in an easily understandable way, please reach out! I'd
 be interested in documenting a good way to do this.

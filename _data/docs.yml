@@ -95,6 +95,9 @@
   - title: "33. Playing your game on a real NES"
     url: "/guide/section_4/real_nes.html"
 
+  - title: "34. Debugging with Mesen"
+    url: "/guide/section_4/debugging.html"
+
 - title: " Part 5: Advanced Topics"
   docs:
 

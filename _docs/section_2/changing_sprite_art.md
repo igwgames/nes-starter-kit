@@ -11,10 +11,10 @@ In the previous chapter, you learned how to edit map tiles. From doing that, you
 need to for updating sprites. There are a few differences to be aware of though, which this chapter will
 go over.
 
-To start, let's open the sprite chr file and palettes. Open `NES Screen Tool` (aka `nesst`, in the tools folder)
-and go to the `Patterns menu` and select `open chr`, and find `graphics/sprite.chr`. Next, open the `Palettes`
-menu and choose `Open Palette`, then open `graphics/palettes/main_sprite.pal`. You should see some familiar
-sprites. 
+To start, let's open the sprite chr file and palettes. Open `NEXXT`
+and go to the `Patterns submenu` under `File`, and select `open chr`, and find `graphics/sprite.chr`. 
+Next, open the `Palettes submenu` under `File` and choose `Open Palette`, then open 
+`graphics/palettes/main_sprite.pal`. You should see some familiar sprites. 
 
 ![nesst sprite](../images/nesst_sprite.png)
 
@@ -44,5 +44,5 @@ Sprites can be either 8x8 or 16x16 with the default engine. (You can modify the 
 8x8 sprites work the same way as 16x16 sprites, don't add any padding between the sprites. It should work the
 way you would expect.
 
-Exporting for Tiled also works almost the same way, just either build your game, or run `make build-sprites` 
-to get a Tiled-compatible png.
+Exporting for Tiled also works almost the same way, just build your game to get a Tiled-compatible png file
+built.

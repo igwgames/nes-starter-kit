@@ -14,9 +14,13 @@ dungeons/houses more believable.
 This is going to be one of the longer chapters, but it should be quite worth it in the end.
 We need to cover a lot. 
 
-You can follow along in the git branch named [second_map](https://github.com/cppchriscpp/nes-starter-kit/compare/second_map).
+You can follow along in the git branch named [section3_second_map](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_second_map).
 
-If you want to see what it looks like, try the [example rom](https://s3.amazonaws.com/nes-starter-kit/second_map/starter.latest.nes).
+If you want to see what it looks like, try the [example rom](https://s3.amazonaws.com/nes-starter-kit/section3_second_map/starter.latest.nes).
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit/guide/section_3/adding_a_second_map.html" data-emulator-branch="section3_second_map">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Creating a new map
 
@@ -24,55 +28,55 @@ Let's start with the fun part. You need a new map! Create a new copy of `levels/
 (I used `levels/underworld.tmx`, and change it around as much as you like, or just make it an entirely
 new world. If you want to jump ahead a little, we will also be adding some house-like buildings later.
 
-## Makefile changes
+You should probably also add these to your project in tiled, though this isn't strictly required. It just makes
+things easier for you.
 
-We also need to make some small adjustments to the makefile to start building this new map. The syntax
-may not be super familiar, but we'll walk through it. Open `makefile` in the root directory. 
+## Build changes
 
-If you need it, here is a very quick introduction/cheat sheet for makefiles: 
+We also need to make some small adjustments to the build to start building this new map. We'll copy what's
+already being done for the current map, and tweak it to what we need it to be. This is in the 
+`beforeStepActions` area in `.create-nes-game.config.json`. That currently looks like this: 
 
-```makefile
-    # A line starting with a # is a comment.
-
-    VARIABLE=/some/commmand # sets a variable for future to the text `/some/command/`
-
-    # The line below defines `result_file.output` as the result of compiling `file_to_build.sourcecode`.
-    file_to_build.sourcecode: result_file.output 
-        # Commands nested under this are used to build `file_to_build.sourcecode` into `result_file.output`
-        cat file_to_build.sourcecode > result_file.output # dumb example using unix commands
-    other_file: other_output
-        $(VARIABLE) > other_output # Runs /some/command above, and puts the output into other_output
+```json
+    "beforeStepActions": {
+        "build": [
+            "tools/create-nes-game-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld"
+        ]
+    },
 ```
 
-If this doesn't all make sense yet, that's ok. There are better tutorials online, and you probably
-don't need a deep understanding for this next part. Find the part that builds `temp/level_overworld.c`.
-It will look something like this: 
+This is a little bit dense, but we can figure it out. Let's start by understanding what tmx2c does. Run the program
+with the `--help` parameter to find out. (Or just look at the output below)
 
-```makefile
-temp/level_overworld.c: levels/overworld.tmx
-    $(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
+```
+$ ./tools/create-nes-game-tools/tmx2c.exe --help
+[tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  tmx2c version 1.1.1
+[tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  Usage: tmx2c [bank number] [variable name] [file to convert] [file to save output to]
+[tmx2c]  [Sat, 11 Feb 2023 05:01:09 GMT]  Note that [bank number] must be a single hexadecimal digit, 0-F.
 ```
 
-This is probably somewhat complex looking, and we don't need to understand everything. At a basic level,
-this is compiling the input file (`$<`) into PRG code bank 3 (Like doing `CODE_BANK(3)` in C) using the
-level name `overworld` and storing it into `levels/overworld.c` (the `patsubst` code). 
+So at a basic level,
+this is compiling the input file `levels/overworld.tmx` into PRG code bank 3 (Like doing `CODE_BANK(3)` 
+in C) using the level name `overworld` and storing it into 
+`source/c/generated/overworld`.
 
 We need to keep doing this, but also add a new one to generate your new map. We need to put it into a
-different empty PRG bank (these maps take up most of a code segment/PRG bank!) and use a different 
-name. We chose `underworld` and prg bank `5`. 
+different empty PRG bank (these maps take up an entire code segment/PRG bank!) and use a different 
+name. For this example, we chose `underworld` and prg bank `5`.
 
 Here's the end result: 
 
-```makefile
-temp/level_overworld.c: levels/overworld.tmx
-    $(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
-
-temp/level_underworld.c: levels/underworld.tmx
-    $(TMX2C) 5 underworld $< $(patsubst %.c, %, $@) 
+```json
+    "beforeStepActions": {
+        "build": [
+            "tools/nes-starter-kit-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld",
+            "tools/nes-starter-kit-tools/tmx2c 5 underworld levels/underworld.tmx source/c/generated/underworld"
+        ]
+    },
 ```
 
 If you rebuild your game, it should build successfully, and you should see this new file be 
-included. (But, it won't do anything yet. Soon!) You can also make a change to `source/main.c`
+included. (But, it won't do anything yet. Soon!) You can also make a change to `source/c/main.c`
 to change `currentWorldId` to start as the bank you used above (`5` in the example. We'll add
 a constant for that soon!) and see your new world render. Now, we need to make the game do that
 itself!
@@ -164,14 +168,14 @@ case SPRITE_TYPE_WARP_DOOR:
 
 This is a lot of logic, but hopefully the in-line comments help clear things up. At a high level, it checks to 
 see if the player sprite is fully contained within the door, and if so, it changes the map that we load (this
-logic lives in `source/map/load_map.c`) and places the player onto the correct map tile. 
+logic lives in `source/c/map/load_map.c`) and places the player onto the correct map tile. 
 
 There is a cooldown timer in this which prevents the player from immediately teleporting a second time after
-this teleport is complete. The value (set in `source/sprites/sprite_definitions.h`) is a couple seconds, which
+this teleport is complete. The value (set in `source/c/sprites/sprite_definitions.h`) is a couple seconds, which
 should be long enough for a player to move, but short enough that it won't block the player from entering another
 nearby door. Tweak this number as you see fit. 
 
-Make sure you also add the snippet of code that ticks down this timer to the beginning of the 
+Make sure you also add a snippet of code that ticks down this timer to the beginning of the 
 `handle_player_sprite_collision` method. Without this, the player will only ever be able to warp once. Here's the
 code: 
 
@@ -197,13 +201,13 @@ to send you to. We do this based off a variable we refer to as `playerOverworldP
 
 In our movement code, we keep track of a variable called `playerOverworldPosition`. This is the 
 map tile the player is currently on. If you move left or right a screen, we add/subtract 1 from this. The map is
-8 tiles wide by 8 long, so moving up and down adds/subtracts 8. (See: `source/sprites/player.c` for code.) The
+8 tiles wide by 8 long, so moving up and down adds/subtracts 8. (See: `source/c/sprites/player.c` for code.) The
 number thus can be 0-63. 
 
 The array mimics our map, such that we can use `playerOverworldPosition` as the index to our array of bytes. This
 array is called `overworld_warp_locations` for our main world, and `underworld_warp_locations` for the new underworld
-we added. These are created in `source/map/levels/` - there are header and c files, as usual. Here is an example
-from the `source/map/levels/overworld_warp_locations.c`:
+we added. These are created in `source/c/map/levels/` - there are header and c files, as usual. Here is an example
+from the `source/c/map/levels/overworld_warp_locations.c`:
 
 ```c
 // This array contains one entry for each map tile in our map. The one entry is the id of the map tile to teleport 
@@ -260,3 +264,20 @@ so there's nothing else to do.
 
 That was a long one, but that's it! If you build your game and run it, walking into your new warping door should
 transfer you to your other map, then let you go back again!
+
+## Potential Enhancement: Supporting 3+ worlds
+
+If you wanted more than two worlds, the code above would need some modification. There are many ways to do it,
+however if you're a bit stumped here are a few simple options:
+
+First, you could set the world number on the `sprite_definition` entry, and read it back from there. This would
+allow you to have different sprite images to point to different worlds too, if you wanted to.
+
+Second, the tile ids in `overworld_warp_locations` only span values from 0-63, leaving the top two bits open for
+use. You could use these two bits to decide on a world.
+
+A third simple option would be to have yet another array, something like `overworld_warp_map_ids`, which would
+just contain a map number. This isn't the most efficient use of prg, but it's easy enough to understand. Any of
+these will work. 
+
+Okay, you read the extra section, now you're really done! Good job!

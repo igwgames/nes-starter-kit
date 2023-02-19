@@ -5,58 +5,62 @@ permalink: guide/section_4/title_screen.html
 # Making a Full Title Screen
 
 **Note**: _This change exists in a branch on Github. 
-[Click here](https://github.com/cppchriscpp/nes-starter-kit/compare/custom_title) 
-to view the changes in the branch, or do `git checkout custom_title` with a local
+[Click here](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title) 
+to view the changes in the branch, or do `git checkout section4_custom_title` with a local
 copy of the repo to view the code._
 
-[Download the rom version of this example](https://s3.amazonaws.com/nes-starter-kit/custom_title/starter.latest.nes)
+[Download the rom version of this example](https://s3.amazonaws.com/nes-starter-kit/section4_custom_title/starter.latest.nes)
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/title_screen.html" data-emulator-branch="section4_custom_title">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 Okay, you're getting pretty far with your game, but the text-based title screen
 isn't quite cutting it. There are better options if you have a bit of time, and some
 artistic skill! 
 
 We will start by drawing a new title screen in a paint program, then import it into
-NES Screen Tool, then finally alter the code to draw the new screen.
+NEXXT, then finally alter the code to draw the new screen.
 
 ## Creating a new title screen
 
 There are a few ways you can go about this, all with their pros and cons. At the end of the day,
-our goal is to get an image into NES Screen Tool that it understands. 
+our goal is to get an image into NEXXT that it understands. 
 
-### Using NES Screen Tool by itself
+### Using NEXXT by itself
 
-The simplest way to do this is to simply use NES Screen Tool to create the entire image. This is
+The simplest way to do this is to simply use NEXXT to create the entire image. This is
 likely feasible for simple title screens - especially if you are going to reuse some of the tiles
 in another of your chr files. If you choose to do that, open the chr file you are interested in,
 and save it _to a new chr file before moving on_. In the example, I stored it in 
 `graphics/static/title.chr`. 
 
-Now, open NES Screen tool (if you haven't already), and create a few tiles on the left.
+Now, open NEXXT (if you haven't already), and create a few tiles on the left.
 
-![nes screen tool](../images/nes_screen_tool.png)
+![NEXXT](../images/nes_screen_tool.png)
 
 This time, we're going to focus on the left panel, also known as the `Nametable`. This is
 basically a screen on the NES, which we can directly place into your game with a little work.
 If you select a tile on the right, then click in the nametable, that tile will be placed in.
 
 It will also apply the selected palette to that tile on click - with one caveat. The "Tiles" in 
-NES Screen Tool are 8 pixels by 8 pixels, but the NES only supports showing one color every
+NEXXT are 8 pixels by 8 pixels, but the NES only supports showing one color every
 4 tiles. This is one of the reasons we use 16 pixel by 16 pixel tiles in our engine.
 
 **Tip**: You can select a larger section of your chr tiles to put onto the nametable by holding 
 shift and dragging the mouse around.
 
 Once you have a decent looking title, skip to the section below titled "Saving the files from
-NES Screen Tool". 
+NEXXT". 
 
 ### Using GIMP (or another image editor)
 
-If the stuff above sounds too complicated, you have another option. NES Screen Tool has the
+If the stuff above sounds too complicated, you have another option. NEXXT has the
 ability to import .bmp files, and break them up into tiles and a nametable for you! 
 
 Before you get too excited, keep in mind you are still restricted to NES limitations. In addition,
-NES Screen Tool is (sadly) only really capable of importing an image with **one four-color palette**.
-You can tweak the image further (and use the other 3 palettes) within NES Screen Tool.
+NEXXT is (sadly) only really capable of importing an image with **one four-color palette**.
+You can tweak the image further (and use the other 3 palettes) within NEXXT.
 
 To start, open your image editor (I am using GIMP) and create a new image that is `256x240` pixels
 in size. If you are using GIMP, you also may want to import 
@@ -64,7 +68,7 @@ in size. If you are using GIMP, you also may want to import
 by right-clicking on the palette panel and choosing "Import Palette". 
 
 Now, just create your image using 4 colors. An example .bmp file is in the `graphics/static` folder
-in the `custom_title` git branch. Once you're reasonably happy with it, export it as a 16 color
+in the `section4_custom_title` git branch. Once you're reasonably happy with it, export it as a 16 color
 bitmap. 
 
 In GIMP, you can do this by going to the "Image" menu, and selecting "mode -> indexed...". From there,
@@ -76,41 +80,43 @@ Here's the image I created for this (available in the branch as `graphics/static
 
 ![Potato Quest??](../images/potato.png)
 
-### Converting an image with NES Screen Tool
+### Converting an image with NEXXT
 
-Open NES Screen Tool back up, using a new window if you have any work in progress. (This will destroy
-your palettes, tiles, and nametable) Go to the "Import" menu, and select "BMP File as Nametable".
+Open NEXXT back up, using a new window if you have any work in progress. (This will replace
+the loaded palettes, tiles, and nametable) Go to the "Import" menu under "File", and select "BMP File as Nametable".
 Now, find the file you saved in the last section. Open it up and...
 
 ![Potato oh noes??](../images/potato_corruption.png)
 
-Well, that's not quite right! You may notice that your colors are off slightly - NES Screen Tool seems
-to have a bug where it mixes up the first color in your palette with a later one. Click the far left
-color in your palettes, and set it to the correct color. This should fix things.
+Well, that's not quite right! You may notice that your colors are off slightly - some versions of NEXXT 
+and/or Nes Screen Tool have a bug where it mixes up the first color in your palette with a later one. 
+Click the far left color in your palettes, and set it to the correct color. This should fix things.
 
 ![Potato sans bug](../images/potato_uncorrupt.png)
 
-### Saving the files from NES Screen Tool
+### Saving the files from NEXXT
 
 Now, we just need to save everything that makes it up. That is, we need to save the palette, the chr
 tiles, and the nametable itself. I found it easiest to save them all to one folder, and did this in the
 example.
 
-First, save the chr tiles by going to the Patterns menu, then choosing Save -> "4K (Current Bank)". 
+First, save the chr tiles by going to the Patterns submenu under "File", then choosing Save -> "4K (Current Bank)". 
 I saved mine to `graphics/static/title.chr`. 
 
-Next, save the palette by going to the Palettes menu, then choosing "Save Palettes". I saved mine
+Next, save the palette by going to the Palettes submenu under file, then choosing "Save Palettes". I saved mine
 to `graphics/static/title.pal`.
 
-Finally, save the nametable by going to the Nametable menu and choosing "Save Nametable and Attributes".
-When the file selector shows up, _select **RLE packed Binary (*.rle)** from the "Save as Type" thing_.
-I saved mine to `graphics/static/title.rle`.
+Finally, save the nametable by going to the Nametable submenu of "File" and choosing "Save Nametable and Attributes".
+For now save this file without rle compression. 
+I saved mine to `graphics/static/title.nam`.
+
+It will automatically be run-length encoded into `title.rle.nam` when the game is built.
 
 ## Adding the title to your game
 
 Alright, we managed to get together an image. Just need to code up the solution to draw them. Thankfully,
 this part isn't super crazy. I strongly suggest looking at the code in 
-[the branch](https://github.com/cppchriscpp/nes-starter-kit/compare/custom_title) to follow along.
+[the branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title) to follow along.
 
 First, we need to create a couple files to make this data accessible to the game. (Note: yes, you're
 technically going to touch two assembly files here. I promise I'll explain it carefully, and you
@@ -122,22 +128,22 @@ our C code where it lives. Further detail is in the code. Of special note, we de
 in here, like we do with `CODE_BANK()` in C code. If you change the value in the .h file, you will
 need to change it here too.
 
-Next, we need to tell the game to load this file. This is done in our crt0 file, which is the entry
-point for our C code. It does a bunch of system setup. Open `source/neslib_asm/crt0.asm` - towards
+Next, we need to tell the game to load this file. This is done in our system-runtime file, which is the entry
+point for our C code. It does a bunch of system setup. Open `source/assembly/system-runtime.asm` - towards
 the bottom you should see a bunch of `.include` statements. Like this: 
 
 ```asm
-    .include "source/library/bank_helpers.asm"
- 	.include "source/neslib_asm/neslib.asm"
- 	.include "source/graphics/palettes.asm"
+    .include "source/assembly/library/bank_helpers.asm"
+ 	.include "source/assembly/neslib.asm"
+ 	.include "source/graphics/palettes.config.asm"
 ```
 Add a reference to our new file after this: 
 ```asm
 +	.include "source/graphics/static/custom_title_assets.asm" 
 ```
 
-While we're in here, we also need to put our chr data somewhere. This is all done about 20 lines
-lower in our `crt0.asm` file. Look for some code like this: 
+While we're in here, we also need to put our chr data somewhere. This is all done 
+in `source/graphics/graphics.config.asm`. Look for some code like this: 
 
 ```asm
  .segment "CHR_00"
@@ -193,12 +199,12 @@ same as what is in `source/graphics/static/custom_title_assets.asm`. Similarly,
 Alright, that's done, now we need some code to draw the title, and also handle 
 input. This code should mostly look familiar, and as such I won't go over it. (There
 are still plentiful comments in-line. Create a file called 
-`source/graphics/static/custom_title.c` and fill it with the contents from the
+`source/c/graphics/static/custom_title.c` and fill it with the contents from the
 git branch.
 
 
 Okay, almost done! All that's left is hooking it into our game code. If you open
-`source/main.c`, you should be able to find where we draw the title now. Look
+`source/c/main.c`, you should be able to find where we draw the title now. Look
 for some code like this: 
 
 ```c
@@ -231,7 +237,7 @@ the very top of the file, you will see a large list of include files. We need
 to add ours, like this: 
 
 ```c
-#include "source/graphics/static/custom_title.h"
+#include "source/c/graphics/static/custom_title.h"
 ```
 
 Okay, that's everything! Rebuild your game, and if everything went well, you
@@ -239,6 +245,6 @@ should be looking at your new title!
 
 ![potato title](../images/potato_title.png)
 
-[View the git branch](https://github.com/cppchriscpp/nes-starter-kit/compare/custom_title)
+[View the git branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title)
 
-[Download the test rom](https://s3.amazonaws.com/nes-starter-kit/custom_title/starter.latest.nes)
+[Download the test rom](https://s3.amazonaws.com/nes-starter-kit/section4_custom_title/starter.latest.nes)

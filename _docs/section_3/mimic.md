@@ -12,16 +12,19 @@ We will do this by adding a new enemy type, using one of our unused enemy sprite
 player's behavior.
 
 Follow along with this example in the git branch named
-[mimic_enemy](https://github.com/cppchriscpp/nes-starter-kit/compare/mimic_enemy).
+[section3_mimic_enemy](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_mimic_enemy).
 
 If you want to try it yourself, 
-[download the ROM](https://s3.amazonaws.com/nes-starter-kit/mimic_enemy/starter.latest.nes)
+[download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_mimic_enemy/starter.latest.nes)
 
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/mimic.html" data-emulator-branch="section3_mimic_enemy">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Getting started
 
 Once again, we need to add a new sprite. We've done this a few times before - we need to put a new line in
-`source/sprites/sprite_definitions.c` for our sprite. We also use a new movement type `SPRITE_MOVEMENT_MIMIC`, 
+`source/c/sprites/sprite_definitions.c` for our sprite. We also use a new movement type `SPRITE_MOVEMENT_MIMIC`, 
 which we define in the header file. 
 
 Here it is, at the bottom of the list:
@@ -40,7 +43,7 @@ Next, let's make it mimic our movement!
 ## Adding the new movement type
 
 In order to mimic the player's movement, we need to add code for our new `SPRITE_MOVEMENT_MIMIC` type. The code for the
-current movement types is in `source/sprites/map_sprites.c`, so we'll add it in there. We need to look at the 
+current movement types is in `source/c/sprites/map_sprites.c`, so we'll add it in there. We need to look at the 
 `update_map_sprites()` method, partway down. Look for the `case SPRITE_MOVEMENT_RANDOM_WANDER` text. Here's what
 we do for regular moving sprites: 
 
