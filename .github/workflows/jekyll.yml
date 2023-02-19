@@ -6,6 +6,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: Publish documentation site
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Update jekyll
         run: |
             git config user.email "automation@cpprograms.net"
