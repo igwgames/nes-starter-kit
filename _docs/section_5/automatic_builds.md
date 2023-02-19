@@ -1,8 +1,8 @@
 ---
-title: Automatic Builds with CircleCI
+title: Automatic Builds with Github Actions
 permalink: guide/section_5/automatic_builds.html
 ---
-# Automatic Builds with CircleCI
+# Automatic Builds with Github Actions
 
 Okay, so you've got a game you're constantly changing, and you want to put it on the web for everyone to see. Awesome!
 
