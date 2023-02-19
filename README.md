@@ -122,7 +122,7 @@ matter if they interest you.
 31. [Making a full title screen](./guide/section_4/title_screen.md)
 32. [Animating tiles](./guide/section_4/animated_tiles.md)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.md)
-34. [Debugging with Mesen](./guide/section_4/debugging.md)
+34. [Debugging with Mesen](./guide/section_4/debugger.md)
 
 ### Part 5: Advanced Topics
 
