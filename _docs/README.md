@@ -126,7 +126,7 @@ matter if they interest you.
 31. [Making a full title screen](./guide/section_4/title_screen.html)
 32. [Animating tiles](./guide/section_4/animated_tiles.html)
 33. [Playing your game on a real NES](./guide/section_4/real_nes.html)
-34. [Debugging with Mesen](./guide/section_4/debugging.html)
+34. [Debugging with Mesen](./guide/section_4/debugger.html)
 
 ### Part 5: Advanced Topics
 
@@ -140,7 +140,7 @@ need these things for most games, but if you do, this is a place to learn!_
 44. [Expanding available graphics using CHR banking](./guide/section_5/chr_banking.html)
 45. [Getting finer control over graphics with chr ram](./guide/section_5/chr_ram.html)
 46. [Writing Functions in Assembly](./guide/section_5/writing_assembly_functions.html)
-47. [Automatic builds with CircleCI](./guide/section_5/automatic_builds.html)
+47. [Automatic builds with GH Actions](./guide/section_5/automatic_builds.html)
 48. [Switching to unrom 512 for advanced features](./guide/section_5/unrom_512.html)
 
 <!-- TOC END -->

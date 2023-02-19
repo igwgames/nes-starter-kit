@@ -96,7 +96,7 @@
     url: "/guide/section_4/real_nes.html"
 
   - title: "34. Debugging with Mesen"
-    url: "/guide/section_4/debugging.html"
+    url: "/guide/section_4/debugger.html"
 
 - title: " Part 5: Advanced Topics"
   docs:
@@ -122,7 +122,7 @@
   - title: "46. Writing Functions in Assembly"
     url: "/guide/section_5/writing_assembly_functions.html"
 
-  - title: "47. Automatic builds with CircleCI"
+  - title: "47. Automatic builds with GH Actions"
     url: "/guide/section_5/automatic_builds.html"
 
   - title: "48. Switching to unrom 512 for advanced features"
