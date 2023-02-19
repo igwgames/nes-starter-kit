@@ -1,5 +1,3 @@
-<div style="float: right; align: right;"><a href="https://circleci.com/gh/cppchriscpp/nes-starter-kit"><img align="right" alt="Build Status" src="https://circleci.com/gh/cppchriscpp/nes-starter-kit.svg?style=shield"></a></div>
-
 # NES Starter Kit 
 
 A Beginner's Guide and toolkit for NES game creation.
