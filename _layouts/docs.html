@@ -30,3 +30,16 @@ layout: default
 
     </div>
 </div>
+
+<script type="text/javascript">
+  function replaceImages() {
+      document.querySelectorAll('[data-emulator-branch]').forEach(node => {
+          const div = document.createElement('div');
+          div.innerHTML = `<iframe src="https://cpprograms.net/devnull/nez_hosted/index_nes_starter_kit_v2.php?branch=${node.getAttribute('data-emulator-branch')}" style="width: 550px; height: 540px"></iframe>`
+          node.replaceWith(div.firstChild)
+      });
+  }
+
+  window.addEventListener('load', replaceImages);
+  replaceImages();
+</script>
