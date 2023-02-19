@@ -65,9 +65,8 @@ Here's the end result:
 ```json
     "beforeStepActions": {
         "build": [
-            "tools/create-nes-game-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld",
-            "tools/create-nes-game-tools/tmx2c 5 overworld levels/underworld.tmx source/c/generated/underworld"
-
+            "tools/nes-starter-kit-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld",
+            "tools/nes-starter-kit-tools/tmx2c 5 underworld levels/underworld.tmx source/c/generated/underworld"
         ]
     },
 ```
