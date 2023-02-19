@@ -41,14 +41,14 @@ layout: default
             <h3 class="text-center">Try it now!</h3>
 
             <div class="text-center">
-                <iframe id="tryit" src="https://cpprograms.net/devnull/nez_hosted/index_nes_starter_kit.html" style="width: 550px; height: 540px"></iframe>
+                <iframe id="tryit" src="https://cpprograms.net/devnull/nez_hosted/index_nes_starter_kit_v2.php?branch=main" style="width: 550px; height: 540px"></iframe>
             </div>
             <p>
             Try it out for yourself; there should be an emulator with the starter game in it just above this!
             </p>
             <p>
             If that's not working, (or you just prefer a better/faster emulator) 
-            <a href="https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes">download the rom</a>!
+            <a href="https://s3.amazonaws.com/nes-starter-kit/main/starter.latest.nes">download the rom</a>!
             </p>
         </div>
     </div>
@@ -61,3 +61,17 @@ layout: default
 <meta name="twitter:title" content="NES Starter Kit" />
 <meta name="twitter:description" content="Make your own game for the NES using C!" />
 <meta name="twitter:image" content="https://cppchriscpp.github.io/nes-starter-kit//guide/images/its_a_game.png" />
+
+<script type="text/javascript">
+    function replaceImages() {
+        document.querySelectorAll('[data-emulator-branch]').forEach(node => {
+            console.info('found ze node', node);
+            const div = document.createElement('div');
+            div.innerHTML = `<iframe src="https://cpprograms.net/devnull/nez_hosted/index_nes_starter_kit_v2.php?branch=${node.getAttribute('data-emulator-branch')}" style="width: 550px; height: 540px"></iframe>`
+            node.replaceWith(div.firstChild)
+        });
+    }
+
+    window.addEventListener('load', replaceImages);
+    replaceImages();
+</script>

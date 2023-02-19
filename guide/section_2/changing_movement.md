@@ -7,7 +7,7 @@ certain circumstances -- such as when you press a button or get a powerup. This 
 ## Adjusting the player's base speed
 
 Your player's speed is mainly controlled by a few constants, as well as some logic in the player sprite file. 
-To adjust your base speed, we simply have to tweak these constants. To start, open up `source/sprites/player.h`.
+To adjust your base speed, we simply have to tweak these constants. To start, open up `source/c/sprites/player.h`.
 About halfway through the file, you should see something like this: 
 
 ```c
@@ -52,7 +52,7 @@ Next, let's adjust some of these things during gameplay! As an example, we are g
 is pressed. That said, you should be able to tweak this code to run in other cases, such as when a powerup is picked up 
 for a short time.
 
-Let's start by adding a second max speed constant to `source/sprites/player.h` for run speed. Make sure that both speeds
+Let's start by adding a second max speed constant to `source/c/sprites/player.h` for run speed. Make sure that both speeds
 can be evenly divided by PLAYER_VELOCITY_ACCEL! 
 
 ```c
@@ -61,11 +61,11 @@ can be evenly divided by PLAYER_VELOCITY_ACCEL!
 #define PLAYER_VELOCITY_ACCEL 2 // How quickly do we get up to max velocity? 
 ```
 
-Next up, we have to change how we use these constants a bit. Open up `source/sprites/player.c` and look for the 
-`handle_player_movement()` method. At the top of it, you should see a familiar constant being used. 
+Next up, we have to change how we use these constants a bit. Open up `source/c/sprites/player.c` and look for the 
+`prepare_player_movement()` method. At the top of it, you should see a familiar constant being used. 
 
 ```c
-void handle_player_movement(void) {
+void prepare_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;
@@ -108,7 +108,7 @@ We use larger numbers to make movement more fluid - so you can move 1.5 pixels p
 the main sprite is 256 units wide, and 256 units tall. The screen is actually 4096 units by 3840 units. 
 
 Here are the values that make up the hitbox of the main character - we cut a number of units off on all 4 sides, just
-to make collisions feel more accurate. The constants for this are in `source/sprites/player.h`. Look for the following:
+to make collisions feel more accurate. The constants for this are in `source/c/sprites/player.h`. Look for the following:
 
 ```c
 // This is the width and height of player as used in collisions. This is shifted by 4 to allow for sub-pixel
@@ -143,7 +143,7 @@ By default, the engine guides the player onto an 8px grid when moving. This allo
 objects more consistently. A similar tactic is used in the original Legend of Zelda. If you change the size of the
 main sprite, or otherwise tweak the hitbox in the above section, this might not work.
 
-We make this configurable with a piece of configuration named `PLAYER_MOVEMENT_STYLE` in `source/sprites/player.h`:
+We make this configurable with a piece of configuration named `PLAYER_MOVEMENT_STYLE` in `source/c/sprites/player.h`:
 
 ```c
 // This is simple movement style that leaves everything up to the player.
@@ -162,8 +162,17 @@ If you swap that last line to be:
 ```
 
 the player will no longer be confined to the grid. For the curious, the code this effects is in 
-[source/sprites/player.c](../../source/sprites/player.c) - search for `PlAYER_MOVEMENT_STYLE` to find it.
+[source/sprites/player.c](../../source/c/sprites/player.c) - search for `PLAYER_MOVEMENT_STYLE` to find it.
 
 
 With that, you've made it through chapter two! (Or at least this part of it.) Next up, we'll start adding some new
 features in. 
+
+## Advanced Topic: Multiple hitboxes
+
+If you're making a game that depends on combat, you may wish to create a second hitbox, and separate the collisions with
+enemies and bad things from collisions with walls and powerups. This gives the player a bit more leeway, and makes the game
+feel a bit more fair. 
+
+To make the project simpler to understand, the engine does not have code for this. If you want this feature, you will have
+to write it yourself.

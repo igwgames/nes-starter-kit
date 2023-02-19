@@ -13,8 +13,8 @@ First, we'll start with the basics. Create a new header file to put your functio
 to call it from C code. Next, figure out what your function is going to look like. To demonstrate, here 
 are two functions we will define further down.
 
-**NOTE**: These example functions are not useful; there are features built into neslib for these. They are
-simply examples!
+**NOTE**: These example functions are not useful; there are features built into neslib for these. The focus is
+on how to interact between assembly and C!
 
 ```c
 unsigned char __fastcall__ get_current_frame(void);
@@ -22,12 +22,12 @@ void __fastcall__ set_random_seed(int seed);
 ```
 
 These are almost normal function definitions, except for the `__fastcall__` annotation. Don't miss this! It
-tells the compiler how your function will use the registers. Also, don't use `__fastcall__` with C functions.
-This will confuse the compiler.
+tells the compiler how your function will use the registers. Also, don't use `__fastcall__` with C functions,
+unless you know what you are doing. This can confuse the compiler.
 
 ## Create assembly code
 
-Next, we'll need to make assembly file and start filling it with content. I'm not going to spend much time 
+Next, we'll need to create an assembly file and start filling it with content. I'm not going to spend much time 
 on the actual assembly code, but I'll highlight a few key points.
 
 ```asm
@@ -60,7 +60,7 @@ of how you call the function - just call it like you wrote it in the header file
 
 Now we have both a header file with function definitions, and the code to go with. But, the code isn't
 actually part of your rom! You will need to add this to your `source/neslib_asm/crt0.asm` file. Look for
-where we include `source/graphics/palettes.asm` and add yours right after. 
+where we include `source/graphics/palettes.config.asm` and add yours right after. 
 
 ## Okay, now how do I use it?
 

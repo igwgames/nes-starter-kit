@@ -1,13 +1,13 @@
 # Site settings
 title: NES Starter Kit
-email: admin@cpprograms.net
+email: chris@cpprograms.net
 description: >
   Quickstart guide for making NES games from scratch in C.
 
 baseurl: "/nes-starter-kit/" # the subpath of your site, e.g. /blog/
 url: https://cppchriscpp.github.io/nes-starter-kit # the base hostname & protocol for your site
 git_address: https://github.com/cppchriscpp/nes-starter-kit
-git_edit_address: https://github.com/cppchriscpp/nes-starter-kit/blob/master
+git_edit_address: https://github.com/cppchriscpp/nes-starter-kit/blob/main
 
 # theme options from https://bootswatch.com/
 # comment out this to use default Bootstrap

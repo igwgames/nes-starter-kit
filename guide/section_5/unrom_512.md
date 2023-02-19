@@ -5,7 +5,8 @@ don't show up for MMC1, but also enables some new features. If you're on this pa
 you want it. Note that in this branch, some features of the library won't work, or will need manual changes 
 (on your part!)
 
-The code for this is available in the `mapper_30` git branch. Note that this builds off of the `chr_ram` branch.
+The code for this is available in the `section5_mapper_30` git branch. Note that this builds off of the 
+`section4_chr_ram` branch.
 
 ## Pros/cons
 
@@ -28,7 +29,8 @@ chr ram also apply here, so be sure to read that chapter!
 ## What do I have to know to start using it?
 
 Not much - I would strongly recommend reading the chr ram chapter first, since that is a requirement here. Otherwise, 
-the branch should get you up and running!
+check out the git branch, build it, and get coding! There are some changes to the engine, which you can
+see in the branch, but other than that and the advantages/disadvantages above, it will work as expected.
 
 ## What extra helpers are available?
 

@@ -6,7 +6,7 @@ in.
 
 ## Composing music
 
-All music should be composed using a program called Famitracker, which should have been installed as part
+All music should be composed using a program called Famitracker, you may have installed as part
 of chapter 1. If not, go get it from the [Famitracker website](http://famitracker.org).
 
 ![famitracker](../images/famitracker.png)
@@ -21,7 +21,7 @@ If you open the example music provided with the library, don't be overwhelmed by
 You can create something much more simple to start - the tutorial is a good start, and you can find many more
 examples online. (If you decide to use one for your game, be sure to get the author's permission!)
 
-Music for your game can be saved into `sound/music/music.ftm` - this is where we keep the music for the example
+Music for your game can be saved into `sound/music.ftm` - this is where we keep the music for the example
 game.
 
 A few things you should know specific to this engine: 
@@ -37,14 +37,14 @@ Once you have a song you like in famitracker, getting it into your game is a sim
 note that this process is _manual_ - so you have to remember to do this any time you want your game's music
 to update. 
 
-You're likely already editing `sound/music/music.ftm` in famitracker - we need to save this into a format
+You're likely already editing `sound/music.ftm` in famitracker - we need to save this into a format
 our game recognizes, as it does not understand .ftm files. In the famitracker ui, go to the `File` menu,
 and choose `Create nsf...` You should see a screen like this: 
 
 ![create nsf](../images/create_nsf.png)
 
 From the dropdown, select "BIN - Raw music data". You can also enter some information about your game on this
-screen. Next, hit "Export" and you will get a file save dialog. Save this file as `sound/music/music.bin`. 
+screen. Next, hit "Export" and you will get a file save dialog. Save this file as `sound/music.bin`. 
 
 That should be all there is to it. If you rebuild your game, it should have your new music available. If you
 replaced one of the two built-in songs, you will be able to hear it immediately. If not, read on...
@@ -57,7 +57,7 @@ we will let you change songs by pressing the `A` and `B` buttons on the controll
 logic anywhere though.
 
 First, we need to tell the engine how to find our new song. Songs are currently defined in 
-`source/configuration/system_constants.h`. Look for some definitions like this: 
+`source/c/configuration/system_constants.h`. Look for some definitions like this: 
 
 ```c
 // Constants for songs we play in the game
@@ -74,11 +74,11 @@ a new song, you can define `SONG_MY_NEW_SONG` as `0` to reuse the title song.)
 ```
 
 Now, we just have to use it somewhere. We decided we want to change songs on input. We read player input once
-per frame. The code that does this lives with the player sprite code in `source/sprites/player.c`. If you find
-the `handle_player_movement()` method, you can see the code that does this. 
+per frame. The code that does this lives with the player sprite code in `source/c/sprites/player.c`. If you find
+the `prepare_player_movement()` method, you can see the code that does this. 
 
 ```c
-void handle_player_movement(void) {
+void prepare_player_movement(void) {
     // Using a variable, so we can change the velocity based on pressing a button, having a special item,
     // or whatever you like!
     int maxVelocity = PLAYER_MAX_VELOCITY;

@@ -4,12 +4,13 @@ Okay, you've spent a bunch of effort making a game for an old console; wouldn't 
 it on that console? Well, you can! It's not free, but you can probably do it for about $50 if you
 have a little patience to learn.
 
-Two simple options for this are catridges from InfiniteNesLives, and the PowerPak by retroUSB.
+A few simple options for this are catridges from InfiniteNesLives, and a flash cartridge such as the 
+PowerPak by retroUSB. There are other suppliers available as well, though more work will be required. 
+These are detailed at the bottom of this chapter.
 
-The INL cartridge is cheaper and actually closer to real NES hardware - however you likely will
-not be able to use it for a lot of other NES Games.
+The INL cartridge is cheaper and essentially real NES hardware - however it will only work for games with the same mapper as yours. (MMC1 by default)
 
-In contrast, the PowerPak is a lot more expensive (about double the price) and a little further
+In contrast, a flash cartridge is a lot more expensive (about double the price) and a little further
 from real hardware. That said, this is a flash cartridge that will be capable of playing almost
 any NES game. (Including commercial NES titles, if you have dumped the rom legally.) This will
 also be compatible if you decide to change things like the mapper for your game. Finally, the
@@ -18,6 +19,19 @@ PowerPak is a lot easier to work with.
 Both are fantastic pieces of hardware; choose whichever one better suits what you want to do.
 
 ## InfiniteNesLives Cartridge
+
+#### Important Note on INL Cartridges
+
+Unfortunately, since the writing of this guide, Paul has taken down the InfiniteNesLives cartridge 
+parts from his store. You may have luck reaching out to him directly for help, however
+you may also need to resort to other options. His contact information is available on
+the store website.
+
+The way to flash cartridges has also changed significantly, though I think the old
+flashing tool is likely still around. The new tool works well, but as cartridges are
+a bit hard to come by, I haven't taken time to document how to use it yet.
+
+#### Using INL Cartridges
 
 The engine is built to be compatible with the MMC1 mapper, and by default uses 128k of PRG rom, 
 and up to 128k of chr rom. This makes it a perfect match for the 
@@ -40,7 +54,7 @@ Once you have these, you will need two pieces of software to do it: a rom splitt
 a flash program. Here are the two I use: 
 
 Rom Splitter: 
-- http://kevinselwyn.com/ReadNES/ (online)
+- http://kevinselwyn.com/ReadNES.js/ (online)
 - https://www.romhacking.net/?page=utilities&action=images&id=683&imageid=title (windows)
 
 Flasher: 
@@ -58,7 +72,7 @@ have the split files. Either rename the files from .chr and .prg to .bin, or cho
 from the file selector in INL-Retro Prog. Otherwise, the steps there should hopefully be clear enough.
 
 
-## PowerPak
+## PowerPak (or Everdrive)
 
 The engine is completely compatible with the PowerPak, as most NES games are. You can get your
 hands on the hardware from [RetroUSB](https://www.retrousb.com/product_info.php?products_id=34).
@@ -70,3 +84,24 @@ Once you have them, take the CompactFlash card out of your PowerPak, and plug it
 card reader. from Windows explorer, copy the rom from the `rom/` folder onto the CompactFlash
 card. Now plug the CompactFlash card back into your NES, and turn it on. Just pick your rom
 file from the menu, and you're good. Enjoy!
+
+There is also another option called the Everdrive - I don't have the NES one myself, however I have had 
+great luck with their cartridges for other consoles. It's worth checking out.
+[Everdrive retailer](https://krikzz.com/)
+
+## Other Cartridge hardware retailers
+
+It is also very possible to create a NES cart using more raw hardware. You probably won't have the
+same reflashing abilities as the InfiniteNesLives cartridges, but you can build a cartridge. Some
+people also find this kind of fun!
+
+You want to build an `MMC1 SKROM` cartridge, unless you have changed the mapper at some point.
+
+[Here's a guide](https://mousebitelabs.com/2021/01/27/nes-reproduction-board-guide-mmc1/) on how to assemble an MMC1 cartridge from MouseBiteLabs. 
+They also have the circuit board available 
+[on their Etsy page](https://www.etsy.com/shop/MouseBiteLabs). 
+You will need to buy the other components used for the cartridge and solder them, however.
+
+[Muramasa Entertainment](https://www.muramasaentertainment.com/product/nes-txsxrom-advanced-mmc1/)
+also has circuit boards, though these do not have an associated guide. (MouseBiteLabs' guide may work,
+but this author has not tested it.)

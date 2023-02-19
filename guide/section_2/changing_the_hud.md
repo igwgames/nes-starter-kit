@@ -2,7 +2,7 @@
 
 The HUD is the thing that shows you information about your player. As it is set up, it will
 show you the player's health, and the number of keys you hold. This is mainly handled in a 
-file named `source/graphics/hud.c`. There are two methods we care about: `draw_hud()` and
+file named `source/c/graphics/hud.c`. There are two methods we care about: `draw_hud()` and
 `update_hud()`.
 
 ![HUD](../images/hud_before.png) 
@@ -23,14 +23,14 @@ things, this is where to do it.
 ## Making a Change
 
 Okay, now you've seen this code; let's make a change! If you pop open our tile editor
-(NESST) and look at `graphics/tiles.chr` - towards the bottom you should see some text
+(NEXXT) and look at `graphics/tiles.chr` - towards the bottom you should see some text
 that says "Player" - why don't we put that on the hud?
 
 ![hud text](../images/nesst_player_text.png)
 
 First, we need to find out how to reference these tiles. If you hover over the `P`, the
 tile number should appear at the bottom of the tool. In this case it is `$ea`. We can
-put this into a constant in `source/graphics/hud.h`. If you open this file, you will 
+put this into a constant in `source/c/graphics/hud.h`. If you open this file, you will 
 see a list of constants, like this:
 
 ```c
@@ -45,7 +45,7 @@ If we add our new one under this:
 #define HUD_TILE_PLAYER_TEXT 0xea
 ```
 
-We can then reference it from the code in `source/graphics/hud.c`. If we look at the
+We can then reference it from the code in `source/c/graphics/hud.c`. If we look at the
 existing code, it seems to put a bunch of tiles onto the map using vram_put. We can
 simply add to the end of this by picking a new address, and writing our "Player" text.
 
@@ -54,7 +54,7 @@ method, we can see we already have a constant for the starting position of the H
 further down at the `update_hud()` method, there are positions for keys and hearts. We can 
 probably figure out a good position for this text.
 
-If we look back to `source/graphics/hud.h` again, we can see positions for the things in the HUD:
+If we look back to `source/c/graphics/hud.h` again, we can see positions for the things in the HUD:
 ```c
 #define HUD_POSITION_START 0x0300
 #define HUD_HEART_START 0x0361
@@ -65,7 +65,7 @@ If we look back to `source/graphics/hud.h` again, we can see positions for the t
 Why don't we try adding a new constant for `HUD_POSITION_PLAYER_TEXT_START`. We know that rows
 of tiles are 32 tiles (0x20 tiles, in hex) long. If we wanted to put our text on the next row
 after we show hearts, we might add 0x20 to that address, and get 0x381. Add this to 
-`source/graphics/hud.h`
+`source/c/graphics/hud.h`
 ```c
 #define HUD_POSITION_PLAYER_TEXT_START 0x0381
 ```
@@ -110,9 +110,9 @@ we wanted to show another value here? We can do that too!
 As an example we will show the current frame count on-screen. This is a number that is updated by the engine
 once every time the NES redraws the screen. We are also going to take a shortcut, and show the number as 
 hexidecimal, rather than converting it to an integer. This will result in us showing other tiles when a 
-digit is between `0xa` and `0xf`
+digit after `9`, when the digit is between `0xa` and `0xf`
 
-Let's do it! Open up `source/graphics/hud.c` and take a look at the `update_hud` method. You should see
+Let's do it! Open up `source/c/graphics/hud.c` and take a look at the `update_hud` method. You should see
 a bunch of updates to an array called screenBuffer. They seem to update the player's health, max health, 
 and number of keys. It looks kinda like this: 
 
@@ -140,11 +140,11 @@ set_vram_update(screenBuffer);
 
 The first thing we want to think about is - will the `screenBuffer` variable hold our new value? It
 looks like right now we use about 14 bytes, from adding up all of the places we increment i. (Including
-the for loops); If we look at the definition in `source/globals.c`, it reserves 0x20 (32) bytes. So, we
+the for loops); If we look at the definition in `source/c/globals.c`, it reserves 0x20 (32) bytes. So, we
 will be okay as long as we add less than 18 additional bytes.
 
 Next, we need to find a place to put it. We see the code is using variables like `HUD_KEY_START` in
-it. If we look around, we find out this variable is defined in `source/graphics/hud.h`, so let's add a
+it. If we look around, we find out this variable is defined in `source/c/graphics/hud.h`, so let's add a
 new constant for our thing. I want to put it above the keys, by two rows, so I'll subtract two rows (0x40)
 from that value. Here's the new constant: 
 

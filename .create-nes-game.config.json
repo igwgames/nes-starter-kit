@@ -1,0 +1,39 @@
+{
+    "configVersion": 10000,
+    "configVersionString": "1.0.0",
+    "name": "nes-starter-kit-example",
+    "mapper": "mmc1 (skrom)",
+    "mirroring": "horizontal",
+    "useChrRam": false,
+    "useSram": true,
+    "sramSize": 8,
+    "chrBanks": 16,
+    "prgBanks": 8,
+    "includeC": true,
+    "ciProvider": "github",
+    "testProvider": "nes-test",
+    "installEmulator": "mesen",
+    "includeCLibrary": "neslib with famitracker",
+    "neslibNtscPal": "both",
+    "useTutorial": false,
+    "tutorialGroup": null,
+    "tutorialId": null,
+    "console": "nes",
+    "beforeStepActions": {
+        "build": [
+            "tools/nes-starter-kit-tools/tmx2c 3 overworld levels/overworld.tmx source/c/generated/overworld"
+        ]
+    },
+    "afterStepActions": {
+        "build": [
+            "tools/nes-starter-kit-tools/chr2img graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png",
+            "tools/nes-starter-kit-tools/sprite_def2img ./source/c/sprites/sprite_definitions.c ./graphics/sprites.chr ./graphics/palettes/main_sprite.pal graphics/generated/sprites.png"
+        ]
+    },
+    "extraDependencies": [{
+        "name": "nes-starter-kit-tools",
+        "win32-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.2/windows-x64.zip",
+        "linux-x64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.2/linux-x64.tar.gz",
+        "linux-arm64": "https://github.com/cppchriscpp/nes-starter-kit-tools/releases/download/1.1.2/linux-arm64.tar.gz"
+    }]
+}

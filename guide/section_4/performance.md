@@ -159,7 +159,7 @@ The built-in engine actually does this for sprite collisions - we test for colli
 even frame, then test the other half every odd frame. If you have slow code that could work well every other frame, or
 even less often, this is a good option. 
 
-Here's how we do it for sprite collisions - you can follow along in `source/sprites/map_sprites.c` in the 
+Here's how we do it for sprite collisions - you can follow along in `source/c/sprites/map_sprites.c` in the 
 `update_map_sprites()` method. We've ommitted a bunch of the action code to make this understandable. 
 
 ```c
@@ -201,7 +201,8 @@ The first thing you'll have to do is pick an engine. The path of least resistanc
 the library alongside C bindings for it on [the Author's website](https://shiru.untergrund.net/code.shtml). If you grab
 the copy of `neslib` that _doesn't_ use the Famitracker library, there is a version of `neslib.asm` that supports 
 famitone2 natively. The problem is, we've made changes to `neslib.asm` in `nes-starter-kit`, so you will have to merge
-the two files. You will also likely have to merge some changes from `crt0.asm`. (variable definitions, mainly)
+the two files. You will also likely have to merge some changes from `system-runtime.asm` into
+`ctr0.asm`. (variable definitions, mainly)
 
 If you are using another engine, you will need to figure out what the engine requires, and replace all famitracker code
 with the code for that library. This is unfortunately very complex, so it will not be detailed here. 
@@ -209,3 +210,13 @@ with the code for that library. This is unfortunately very complex, so it will n
 Most NES music engines require you to structure your songs in a certain way, so that they are compatible with the
 engine. You may need to go through your music to make it compatible. You also may need to run the output of Famitracker
 through a converter program, or even save things from Famitracker differently.
+
+### Other engines to consider
+
+There is no example code, and this author has no experience with integrating these libraries into nes-starter-kit, 
+however these libraries have all been used successfully in NES games, and are available for you to try.
+
+[famitone2](https://shiru.untergrund.net/code.shtml)
+[famitone5 (unofficial fork)](https://github.com/nesdoug/famitone5.0)
+[Pently](https://github.com/pinobatch/pently)
+[ggsound](https://github.com/gradualgames/ggsound)

@@ -14,10 +14,11 @@ There's [a whole chapter about this](../section_4/real_nes.md) in section 4!
 
 #### Can I use this for Game Jams/Coding competitions?
 
-As far as I'm concerned, definitely! I plan to use this for a Ludum Dare at some point myself to see
-how it fares.
+As far as I'm concerned, definitely! I have used this for multiple Ludum Dare games. Multiple of the games
+on [my site](https://cpprograms.net) were started off this repository. (Though an older version that does not
+use create-nes-game.)
 
-If the contest allows "base code", or "engine code" or something similar, I believe this qualifies.
+If the contest allows "base code", or "engine code" or something similar, this should qualify.
 
 This does include some basic music and sprites and levels - if you are required to create
 all of your content as part of the Jam, you should be sure to remove this content before the end
@@ -42,7 +43,7 @@ Hey, we all forget to hit `ctrl+s` sometimes!
 ##### 2. Clean up generated files, and rebuild from scratch
 
 This is the equivalent to turning it off and on again. In your cygwin terminal in the base of `nes-starter-kit`,
-run `make clean`, then build it again. This will get rid of all temporary files on your system, forcing us to
+run `create-nes-game clean`, then build it again. This will get rid of all temporary files on your system, forcing us to
 re-generate all files. If you find yourself doing this often, you may want to open a ticket with
 `nes-starter-kit` on GitHub so we can fix this in the project itself.
 

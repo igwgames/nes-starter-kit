@@ -1,95 +1,43 @@
 # Understanding and Tweaking the build tools
 
-There are a number of tools used to build this game, and they can be tweaked in many ways to improve your game.
-The key tool to be aware of is the `makefile` in the root direcotory, but we also have a number of other tools
+There are a number of tools used to build this game, and they can be tweaked to improve your game.
+The key tool to be aware of is `create-nes-game`, which you may have installed,
+ but we also have a number of other tools
 that are worth mentioning. This chapter will try to briefly cover all of them.
 
-## The root of everything: the makefile
+## The root of everything: the `.create-nes-game.config.json` file
 
-The keystone for building your game is the file named `makefile` in the root directory of the game. 
+The keystone for building your game is the file named `.create-nes-game.config.json` in the root directory 
+of the game. 
 This file contains instructions for building all of the little pieces of the game, and to put those
-things together. It also knows how to do this without rebuilding everything. (Which makes builds much faster!)
+things together. It is used by `create-nes-game` to understand what we need.
 
-This chapter is not going to be an introduction to makefiles - if you need that, there is a great
-one available [here](https://www3.nd.edu/~zxu2/acms60212-40212/Makefile.pdf). 
+Most of what you will want to change relates to actions.
 
-The file starts with a small set of user-editable settings, the most notable being the name of the ROM.
-These can be changed without risk. They are pretty self-explanatory. 
+See the 
+[create-nes-game documentation](https://cppchriscpp.github.io/create-nes-game/#/?id=available-actions)
+for details on things you can do. 
 
-Next up is a bunch of macros for running our various programs. They generally look like this: 
+We'll take a closer look at the actions we use for this project below.
 
-```makefile
-MAIN_COMPILER=./tools/cc65/bin/cc65
-```
-
-We reference thse guys later on. Of special note are the three javascript tools in here: `CHR2IMG`,
-`TMX2C` and `SPRITE_DEF2IMG`. These are referenced later in the guide, and you can change how they
-run to skip the executable versions here. 
-
-We also define a bunch of files that we will user later to build the game. We build them up by reading
-the directory structure, which protects us from having to add every file we create to this makefile
-manually. (Not a fun task.) That looks more like this:
-
-```makefile
-SOURCE_LEVELS_TMX=$(strip $(call rwildcard, levels/, *.tmx))
-```
-`rwildcard` is a macro that finds all files in a directory matching a filename, in a recursive way. This
-allows us to match things nested into directories automatically too.
-
-Further down the file, we see a couple shortcut methods that are used to build the rom itself. They look
-like this: 
-
-```makefile
-build: rom/$(ROM_NAME).nes graphics/generated/tiles.png graphics/generated/sprites.png
-
-build-tiles: graphics/generated/tiles.png
-build-sprites: graphics/generated/sprites.png
-```
-
-That first one is what runs every time we build the rom. This basically tells our makefile to build
-everything it knows about. This is our rom, as well as the two images used by Tiled. It's meant
-as a catch-all.
-
-Below this, there are rules for building the various parts of our game. You basically put the file
-you want to build on the left, then all files that go into it on the right. That way, if a file on
-the right changes, the files on the left are rebuilt. Of note, `crt0.o` has a special rule - this
-is the entry point to our game in C. Basically any assembly code you write will end up here. (If it
-does not go into its own bank, anyway.)
-
-There are special rules for levels, the tile/sprite images Tiled uses, and sound effect conversion.
-Generally intermediate files are stored in the `temp` directory to not mix them with real code files.
-Code is compiled using cc65 - it is first converted to assembly language, (.s files) then this assembly is
-converted to raw object files.
-
-The `clean` command is used to clean up all temporary and output files, so that we can rebuild the game
-from scratch. If you add temporary files in a new location, you should add things to the clean method to 
-make sure those are cleaned up.
-
-## Other custom build tools
+## Custom build tools
 
 There are a number of small javascript utilities we use to build the rom and some other useful things. 
-Each of them has its own section below. They are built using nodejs version 8 (later should also be 
-fine.) 
+Each of them has its own section below. They are built using nodejs version 12 (later should also be 
+fine.)
+
+The tools have [their own repository](https://cppchriscpp.github.io/nes-starter-kit-tools).
 
 To make life easier, each of these utilities is compiled into a single executable file that is 
-distributed in the tool zip file. This means users don't have to install nodejs unless they want to 
+automatically downloaded by create-nes-game. This means users don't have to install nodejs unless they want to 
 edit these tools. These executables are built using a tool called 
-[pkg](https://github.com/zeit/pkg). The exact instructions are shared in the `README.md` files in
-each tool's directory. 
+[pkg](https://github.com/zeit/pkg). The exact instructions are in the README for the repo.
 
-If you want to edit these tools, you will need to install nodejs 8.x or later onto your machine.
-You will also need to tweak your makefile to use node to run the tools directly. Look for some
-lines like this to uncomment: 
+If you want to edit these tools, you will need to install nodejs 12.x or later onto your machine.
+You will also need to tweak your `.create-nes-game.config.json` to use node to run the tools directly.
 
-```makefile
-# Javascript versions of built-in tools: (Uncomment these if you're working on the tools)
-# CHR2IMG=node tools/chr2img/src/index.js
-# TMX2C=node tools/tmx2c/src/index.js
-# SPRITE_DEF2IMG=node tools/sprite_def2img/src/index.js
-```
-
-You can just use them in place with javascript if you have it installed; there's no reason not
-to. Distributing the executables was only meant to make the tools easier to install and use.
+Instructions are in the 
+[nes-starter-kit-tools repository README](https://cppchriscpp.github.io/nes-starter-kit-tools)
 
 ### CHR2IMG
 
@@ -98,7 +46,7 @@ our tile editor can understand. It prints out a png containing a copy of the til
 palettes in whatever palette file is passed in. The program will print out its command line
 arguments if you pass in the `--help` parameter. 
 
-All of its code is in the `index.js` file in its `tools/chr2img` folder. It is unfortunately
+All of its code is in the `index.js` file in its folder. It is unfortunately
 not well documented, and right now that is unlikely to change. It works for our purposes, so
 for now that is deemed "good enough."
 
@@ -147,8 +95,7 @@ the first is the 16x16 tile index to start the sprite on. The second is the inde
 `sprites/sprite_definitions.c`. A value of `255` is used for sprites that are offscreen. The final
 32 bytes are currently unused, and could be filled out with whatever data you want. 
 
-The tool itself writes these extra bits like this, if you want to search `tools/tmx2c/src/index.js` for
-it:
+The tool itself writes these extra bits like this, if you want to search for it:
 
 ```javascript
 // Lastly, we want things to line up perfectly so we have 256 per map tile (makes math easier)
@@ -168,6 +115,6 @@ alongside a chr file of your sprites, and converts this into a `.png` image that
 read.  The program will print out its command line arguments if you pass in the `--help` parameter. A
 large amount of the code is shared with `chr2img`.
 
-All of its code is in the `index.js` file in its `tools/sprite_def2png` folder. It is unfortunately
+All of its code is in the `index.js`. It is unfortunately
 not well documented, and right now that is unlikely to change. It works for our purposes, so
 for now that is deemed "good enough."

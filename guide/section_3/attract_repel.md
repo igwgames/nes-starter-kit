@@ -6,15 +6,19 @@ sprite that pulls the player in - we'll make it strong enough for the player to 
 ability to break free of the pull.
 
 Follow along with this example in the git branch named
-[attract_repel](https://github.com/cppchriscpp/nes-starter-kit/compare/attract_repel).
+[section3_attract_repel](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_attract_repel).
 
 If you want to try it yourself, 
-[download the ROM](https://s3.amazonaws.com/nes-starter-kit/attract_repel/starter.latest.nes)
+[download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_attract_repel/starter.latest.nes)
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/attract_repel.html" data-emulator-branch="section3_attract_repel">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Getting started
 
 First thing's first, let's add a new sprite! We've done this a few times before, but we will need to add a new line
-to `source/sprites/sprite_definitions.c` for our sprite. We also use a new type: `SPRITE_TYPE_MAGNET`, which we define
+to `source/c/sprites/sprite_definitions.c` for our sprite. We also use a new type: `SPRITE_TYPE_MAGNET`, which we define
 in the header file. There is a magnet sprite at 0xe0 that we will use for this. 
 
 Here it is, at the bottom of the list:
@@ -37,7 +41,7 @@ Next, we need to actually make it do something!
 
 We need to do a little special logic with magnets to make them work the way we want. Right now we don't have a great
 place that we loop through all sprite types, but we do loop through all sprites for a few things in 
-`source/sprites/map_sprites.c`, so we'll piggyback off of that to update the player's acceleration. We also put 
+`source/c/sprites/map_sprites.c`, so we'll piggyback off of that to update the player's acceleration. We also put 
 this into a section that only runs every other frame to save ourselves some time. This code lives in the 
 update_map_sprites()` method. Here's the updated code: 
 
@@ -71,14 +75,14 @@ if ((i & 0x01) == everyOtherCycle) {
 
 If you add this code in and rebuild the game, you will see the magnet switch on and off on a regular interval. If you
 felt so inclined, you could also do this based off the player's distnace from the sprite, or have it move around by
-using a different `SPRITE_MOVEMENT_TYPE` in `sprites/sprite_definitions.c`. 
+using a different `SPRITE_MOVEMENT_TYPE` in `source/c/sprites/sprite_definitions.c`. 
 
 Next, let's actually move the play around a bit.
 
 ## Affecting player movement
 
 This is the main bit of this feature; we need to affect player movement whenever any magnets are active. For this we
-need a couple new variables. we'll add two new variables in `source/sprites/player.c`: `playerMagnetXAccel` and
+need a couple new variables. we'll add two new variables in `source/c/sprites/player.c`: `playerMagnetXAccel` and
 `playerMagnetYAccel` - we will update these with each magnet on the map, then apply it to the player's speed in
 `player.c`. Here are the variable definitions:
 
@@ -87,7 +91,7 @@ int playerMagnetXAccel;
 int playerMagnetYAccel;
 ```
 
-We'll need to also expose these variables in `source/sprites/player.h`, and also define some constants around how much
+We'll need to also expose these variables in `source/c/sprites/player.h`, and also define some constants around how much
 magnets affect us. We can do this by adding the following: 
 
 ```c
@@ -99,7 +103,7 @@ extern int playerMagnetYAccel;
 
 Next, we need to get some data into them. We'll try to calculate how much to move the player. You will be able to tweak
 the speed as needed. We'll update the code we used before to update these new variables, then apply them to the 
-player's movement. First, let's go back to `source/sprites/map_sprites.c` and update our logic: 
+player's movement. First, let's go back to `source/c/sprites/map_sprites.c` and update our logic: 
 
 ```c
 // Special case for magnet to do movement and more.
@@ -155,12 +159,21 @@ void update_map_sprites(void) {
 ```
 
 With that done, all we need to do is make the player move based off of this. The logic to do this isn't too complex. 
-Pop open `source/sprites/player.c` and let's add a little more logic to the `handle_player_movement()` method. This is
-actually only two lines, which we add after we have finished updating movement based on the player's input: 
+Pop open `source/c/sprites/player.c` and let's add a little more logic to the `prepare_player_movement()` method. This is
+actually only two lines, which we add after we have finished updating movement based on the player's input. It can be added right after we tick down invulnerability.
 
 ```c
+    // While we're at it, tick down the invulnerability timer if needed
+    if (playerInvulnerabilityTime) {
+        playerInvulnerabilityTime--;
+    }
+
     playerXVelocity += playerMagnetXAccel;
     playerYVelocity += playerMagnetYAccel;
+
+    nextPlayerXPosition = playerXPosition + playerXVelocity;
+    nextPlayerYPosition = playerYPosition + playerYVelocity;
+
 ```
 
 After adding this in, if you go to the tile you added the magnet to, you should see it start to pull you when the magnet
@@ -184,7 +197,7 @@ value of this dictates how hard the magnet pulls the player. Higher values mean 
 ### Make the magnet repel the player instead
 
 The magnet looks at the player's location, and pulls the player closer based on the difference between their two
-positions. If we simply reverse the if statements in `source/sprites/map_sprites.c` to check if 
+positions. If we simply reverse the if statements in `source/c/sprites/map_sprites.c` to check if 
 `playerXPosition > sprX` instead of `playerXPosition < sprX` (and the same with `sprY`) we can reverse the direction.
 
 ### Only pull the player when close to the magnet
@@ -210,7 +223,7 @@ if (ABS(sprX - playerXPosition) < 180 && ABS(sprY - playerYPosition) < 180) {
 
 The magnet is a regular sprite; there is no reason not to make it move like some of our other sprites. You can change
 `SPRITE_MOVEMENT_NONE` to `SPRITE_MOVEMENT_LEFT_RIGHT` or even `SPRITE_MOVEMENT_RANDOM_WANDER` in the sprite's 
-definition. (`source/sprites/sprite_definitions.c`)
+definition. (`source/c/sprites/sprite_definitions.c`)
 
 ### Make the magnet into an enemy
 
@@ -219,5 +232,6 @@ With a few changes, you could also make the magnet into an enemy. You would need
 
 ### Add a sound effect when the magnet is on
 
-This is covered in other chapters, but adding a little sound when the magnet kicks off should give the player an extra
+This is covered in the [Changing Sound Effects Chapter](../section_2/changing_sfx.md), 
+but adding a little sound when the magnet kicks off should give the player an extra
 notification that something is happening.

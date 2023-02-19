@@ -11,6 +11,8 @@ echo "Starting Jekyll post-processor"
 # First, blow away the current docs folder; we want to replace it with anything new.
 rm -rf _docs/*
 # Build up the folder structure, so we can fill files into it in a few lines.
+mkdir -p _docs
+mkdir -p _data
 mkdir _docs/section_1
 mkdir _docs/section_2
 mkdir _docs/section_3
@@ -18,7 +20,7 @@ mkdir _docs/section_4
 mkdir _docs/section_5
 # Copy the images folder to the top level, so image links work from the Jekyll Site.
 cp -R guide/images ./images
-# Copy a couple files from the master branch, so we don't try to maintain them in the gh-pages branch
+# Copy a couple files from the main branch, so we don't try to maintain them in the gh-pages branch
 cp tools/jekyll_post_processor/_config.yml _config.yml
 cp tools/jekyll_post_processor/index.html index.html
 cp tools/jekyll_post_processor/favicon.ico favicon.ico
@@ -34,20 +36,20 @@ permalink: /home.html
 
 # For every single markdown file in our guide...
 for i in guide/**/*.md; do
-	# Parse the name from the first line starting with a #
-	TITLE=`grep "^#" $i | head -n1`
-	# And take out the # and the space.
-	TITLE=`echo ${TITLE:2}`
-	
-	# Find the location for the new file in our _docs folder.
-	NEWFILE="${i/guide/_docs}"
+    # Parse the name from the first line starting with a #
+    TITLE=`grep "^#" $i | head -n1`
+    # And take out the # and the space.
+    TITLE=`echo ${TITLE:2}`
+    
+    # Find the location for the new file in our _docs folder.
+    NEWFILE="${i/guide/_docs}"
 
-	# And also what to name the file such that our links to it work.
-	FILEURL="${NEWFILE/.md/.html}"
-	FILEURL=${FILEURL/_docs/guide}
+    # And also what to name the file such that our links to it work.
+    FILEURL="${NEWFILE/.md/.html}"
+    FILEURL=${FILEURL/_docs/guide}
 
-	# Create the pre-text for this chapter too.
-	FULLHEAD="---
+    # Create the pre-text for this chapter too.
+    FULLHEAD="---
 title: $TITLE
 permalink: $FILEURL
 ---"
@@ -55,7 +57,7 @@ permalink: $FILEURL
 echo "Parsed $i as (title: $TITLE; link: $NEWFILE)"
 
 # Output the file alongside its header text.
-	(echo "$FULLHEAD"; cat $i) > $NEWFILE
+    (echo "$FULLHEAD"; cat $i) > $NEWFILE
 
 done
 

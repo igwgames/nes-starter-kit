@@ -7,15 +7,19 @@ Some games have more features, such as restarting the level, or even quitting th
 how we can add those things.
 
 The code for this branch lives in the 
-[pause_improvements](https://github.com/cppchriscpp/nes-starter-kit/compare/pause_improvements)
+[section3_pause_improvements](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_pause_improvements)
 branch. 
 
 You can also try the rom by downloading it from 
-[here](https://s3.amazonaws.com/nes-starter-kit/pause_improvements/starter.latest.nes).
+[here](https://s3.amazonaws.com/nes-starter-kit/section3_pause_improvements/starter.latest.nes).
+
+<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/adding_to_pause_menu.html" data-emulator-branch="section3_pause_improvements">
+    <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
+</a>
 
 ## Getting started: finding and modifying the existing code
 
-The code for the existing pause menu lives in `source/menus/pause.c` - it's actually quite simple right now, and
+The code for the existing pause menu lives in `source/c/menus/pause.c` - it's actually quite simple right now, and
 consists of two methods: a `draw_pause_screen()` method that draws the tiles to the screen, and a 
 `handle_pause_input()` method that simply waits for the user to press start. 
 
@@ -68,9 +72,9 @@ redraw them.)
 
 For this, we'll need to work on the `handle_pause_input()` method a bit. Right now it calls a helper method called
 `wait_for_start()` to  wait for the start button to be pressed. That has the right idea, but we need to add a lot
-of new logic to it. If we open `source/menus/input_helpers.c` we can see the full `wait_for_start()` method - let's
-grab all that code, copy it into our `handle_pause_input()` method, and start hacking on it to do what we need.
-Replace your `handle_pause_input()` code with this, to start:
+of new logic to it. If we open `source/c/menus/input_helpers.c` we can see the full `wait_for_start()` method - 
+let's grab all that code, copy it into our `handle_pause_input()` method, and start hacking on it to do what 
+we need. Replace your `handle_pause_input()` code with this, to start:
 
 ```c
 void handle_pause_input(void) {
@@ -90,8 +94,8 @@ void handle_pause_input(void) {
 }
 ```
 
-This method runs a while loop that looks to see if `PAD_START` has been pressed once per frame. We want to do
-two more things: 
+This method runs a while loop that looks to see if `PAD_START` has been pressed once per frame. Just like what was
+done in the helper method. We want to do two more things though: 
 1. Track which menu option is selected
 2. Draw an arrow over the selected item
 
@@ -135,7 +139,7 @@ to update the screen 1x/frame. We will opt to draw things in a vertical (up-and-
 update 5 tiles. (Including the two blank ones)
 
 First, we need to figure out what tile we'll use for this. There is an arrow tile at `0xe2` in `graphics/ascii.chr`, so
-we'll use that. We also have to have a blank tile to use. Add these to `source/menus/pause.h`: 
+we'll use that. We also have to have a blank tile to use. Add these to `source/c/menus/pause.h`: 
 
 ```c
 // The tile to draw for the selected menu item.
@@ -208,7 +212,7 @@ then figure out which value `currentMenuItem` is set to, and do that option. Her
 
 ```c
 if (controllerState & PAD_A && !(lastControllerState & PAD_A)) {
-    if (currentMenuItem == 0) { // Resume game
+    if (currentMenuItem == 0) { // Resume game by exiting the game loop.
         break;
     } else if (currentMenuItem == 1) { // Game over!
 
