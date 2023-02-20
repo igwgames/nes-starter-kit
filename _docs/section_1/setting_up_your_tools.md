@@ -32,7 +32,7 @@ reopen any terminals you had open after installation.
 **REQUIRED**
 
 The easiest way to get a copy of the code is to run `create-nes-game` in a terminal. Choose to install using a 
-tutorial or base code, then `NES Starter Kit` should appear in the list. (Be sure to use at least version 1.0.9!)
+tutorial, then `nes-starter-kit` should appear in the list. (Be sure to use at least version 1.0.10!)
 
 Choose that, give your game/test a name, and pick the base version of the game. Some later chapters require large
 numbers of code modifications, and can be copied separately using the tool, if desired. 
