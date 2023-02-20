@@ -6,7 +6,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 **Current game version:** 2.0.0
 
-**Minimum create-nes-game version:** 1.0.9
+**Minimum create-nes-game version:** 1.0.10
 
 [Click here](https://cppchriscpp.github.io/nes-starter-kit/) to try the example game!
 
