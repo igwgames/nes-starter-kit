@@ -110,4 +110,6 @@ echo "$OUTFILE" > _data/docs.yml
 # Hat tip: https://stackoverflow.com/questions/28402181/replace-many-arbitrary-markdown-links-with-grep-sed
 find ./_docs -type f -exec sed -ri 's/([[]*]\(\S+).md\)/\1.html)/ig' {} \;
 
+echo "create-nes-game.nes.science" > CNAME
+
 echo "Jekyll post-processor completed"
