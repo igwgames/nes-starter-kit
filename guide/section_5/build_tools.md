@@ -15,7 +15,7 @@ things together. It is used by `create-nes-game` to understand what we need.
 Most of what you will want to change relates to actions.
 
 See the 
-[create-nes-game documentation](https://cppchriscpp.github.io/create-nes-game/#/?id=available-actions)
+[create-nes-game documentation](https://create-nes-game.nes.science/#/?id=available-actions)
 for details on things you can do. 
 
 We'll take a closer look at the actions we use for this project below.
@@ -26,7 +26,7 @@ There are a number of small javascript utilities we use to build the rom and som
 Each of them has its own section below. They are built using nodejs version 12 (later should also be 
 fine.)
 
-The tools have [their own repository](https://cppchriscpp.github.io/nes-starter-kit-tools).
+The tools have [their own repository](https://gh.nes.science/nes-starter-kit-tools).
 
 To make life easier, each of these utilities is compiled into a single executable file that is 
 automatically downloaded by create-nes-game. This means users don't have to install nodejs unless they want to 
@@ -37,7 +37,7 @@ If you want to edit these tools, you will need to install nodejs 12.x or later o
 You will also need to tweak your `.create-nes-game.config.json` to use node to run the tools directly.
 
 Instructions are in the 
-[nes-starter-kit-tools repository README](https://cppchriscpp.github.io/nes-starter-kit-tools)
+[nes-starter-kit-tools repository README](https://gh.nes.science/nes-starter-kit-tools)
 
 ### CHR2IMG
 

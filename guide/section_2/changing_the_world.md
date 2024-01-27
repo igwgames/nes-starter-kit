@@ -57,7 +57,7 @@ adding to your map!
 
 Unfortunately, right now the size of the map is fixed at 128x96 tiles. If you want to change this, you would have
 to change a few pieces of code in [map.c](../../source/c/map/map.c), as well as some of the logic in the map conversion
-tool [tmx2c](https://github.com/cppchriscpp/nes-starter-kit-tools/tree/main/tmx2c). 
+tool [tmx2c](https://gh.nes.science/nes-starter-kit-tools/tree/main/tmx2c). 
 This is a rather advanced topic, and there is no guide on how to go about this yet. 
 
 If you want a smaller map, your easiest solution is to build your map within the 128x96 tile grid. If you want something

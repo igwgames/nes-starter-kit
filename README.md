@@ -2,17 +2,17 @@
 
 A Beginner's Guide and toolkit for NES game creation.
 
-[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://cppchriscpp.github.io/nes-starter-kit/)
+[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://nes-starter-kit.nes.science/)
 
 **Current game version:** 2.0.0
 
 **Minimum create-nes-game version:** 1.0.10
 
-[Click here](https://cppchriscpp.github.io/nes-starter-kit/) to try the example game!
+[Click here](https://nes-starter-kit.nes.science/) to try the example game!
 
 [Download the example rom](https://s3.amazonaws.com/nes-starter-kit/main/starter.latest.nes)
 
-_Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
+_Looking at this in Github's code editor? Check out the [documentation site](https://nes-starter-kit.nes.science/)!_
 
 ## OUTDATED
 
@@ -51,7 +51,7 @@ straightforward, and will likely require a bit of collaboration.
 Version 2.0 brings a number of long-needed changes, including greatly simplifying getting started.
  Here's a summary of major changes:
 
-- Build moved away from cygwin and makefiles to [create-nes-game](https://cppchriscpp.github.io/create-nes-game) - a one-stop-shop for building NES games
+- Build moved away from cygwin and makefiles to [create-nes-game](https://create-nes-game.nes.science) - a one-stop-shop for building NES games
 - Official linux support for build tools (including x86 and arm64! Wanna build on a newer raspberry pi?)
 - New games can be created automatically from create-nes-game's interactive guide
 - Full support for debugging in Mesen, with source code in both C and assembly language
@@ -155,7 +155,7 @@ need these things for most games, but if you do, this is a place to learn!_
 
 [NESLib](http://shiru.untergrund.net/code.shtml) by [Shiru](http://shiru.untergrund.net/)
 
-[create-nes-game](https://cppchriscpp.github.io/create-nes-game) by [cppchriscpp](https://cpprograms.net)
+[create-nes-game](https://create-nes-game.nes.science)
 
 [NES Screen Tool](http://shiru.untergrund.net/software.shtml) by [Shiru](https://shiru.untergrund.net/)
 
@@ -203,7 +203,7 @@ Another option, the Mojon Twins' MK1_NES modular game engine can be found here:
 
 Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
 project that you can use for more of a blank page. That project is elsewhere 
-[on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
+[on Github](https://gh.nes.science/nes-c-boilerplate).
 
 Be aware that nes-c-bootstrap has not seen regular maintenance, and may be out of date.
 
@@ -234,5 +234,5 @@ If you've got something you'd like to add, just send over a pull request, and I'
 Just try to follow the existing code style as best you can.
 
 If you run into issues or have feature suggestions, please submit them through the 
-[Github "Issues" tab](https://github.com/cppchriscpp/nes-starter-kit/issues).
+[Github "Issues" tab](https://gh.nes.science/nes-starter-kit/issues).
 

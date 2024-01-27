@@ -11,7 +11,7 @@
 // 060414 - many fixes and improvements, including sequental VRAM updates
 // previous versions were created since mid-2011, there were many updates
 
-// Edits for nes-starter-kit by cppchriscpp
+// Edits for nes-starter-kit
 // - Added split_y method that supports y splits based on na_th_an's NESDev code.
 // - Added reset method to reset the console to startup state.
 
@@ -255,7 +255,7 @@ void __fastcall__ memfill(void *dst,unsigned char value,unsigned int len);
 void __fastcall__ delay(unsigned char frames);
 
 // Reset the console to its power-on state
-// Added by @cppchriscpp
+// Added by @igwgames
 void __fastcall__ reset(void);
 
 // Wait for a sprite0 hit, to allow for changing chr, and other fun stuff.

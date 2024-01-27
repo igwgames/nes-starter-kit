@@ -50,7 +50,7 @@ images to display in its ui.
 
 You can make them show up by rebuilding your game. 
 This works off a program called `chr2img`, which is installed with 
-[the nes-starter-kit tools](https://github.com/cppchriscpp/nes-starter-kit-tools/tree/main/chr2img)
+[the nes-starter-kit tools](https://gh.nes.science/nes-starter-kit-tools/tree/main/chr2img)
 
 After you do this, you should be able to see your new tiles in Tiled!
 

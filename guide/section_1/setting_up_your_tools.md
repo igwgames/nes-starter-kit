@@ -16,7 +16,7 @@ graphics, etc if you use an operating system other than Windows.
 **REQUIRED**
 
 This library expects to use a tool called 
-[create-nes-game](https://cppchriscpp.github.io/create-nes-game/#/)
+[create-nes-game](https://create-nes-game.nes.science/#/)
 to build the rom. This tool knows how to build C and assembly code, as well as do graphics conversions, and
 a few other useful things. It can also install a copy of the code for this project.
 

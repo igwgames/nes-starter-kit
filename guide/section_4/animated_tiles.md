@@ -12,11 +12,11 @@ using many resources! We accomplish this by switching between two (or more) sets
 (chr banks) every few frames. 
 
 You can find an example of this in the 
-[section4_animated_tiles branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_animated_tiles) on Github.
+[section4_animated_tiles branch](https://gh.nes.science/nes-starter-kit/compare/section4_animated_tiles) on Github.
 
 You can also try the [example rom](https://s3.amazonaws.com/nes-starter-kit/section4_animated_tiles/starter.latest.nes).
 
-<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/animated_tiles.html" data-emulator-branch="section4_animated_tiles">
+<a href="https://nes-starter-kit.nes.science/guide/section_4/animated_tiles.html" data-emulator-branch="section4_animated_tiles">
     <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
 </a>
 
