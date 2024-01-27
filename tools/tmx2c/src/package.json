@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"no tests. Better panic.\""
   },
-  "author": "cppchriscpp (admin@cpprograms.net)",
   "license": "MIT",
   "dependencies": {
     "tmx-parser": "^1.5.0"

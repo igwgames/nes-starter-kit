@@ -6,7 +6,7 @@ sprite that pulls the player in - we'll make it strong enough for the player to 
 ability to break free of the pull.
 
 Follow along with this example in the git branch named
-[attract_repel](https://github.com/cppchriscpp/nes-starter-kit/compare/attract_repel).
+[attract_repel](https://gh.nes.science/nes-starter-kit/compare/attract_repel).
 
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/attract_repel/starter.latest.nes)

@@ -40,7 +40,7 @@ been scared off yet, read on!
 
 ## Making the switch
 
-The code behind this is available in the [chr_ram](https://github.com/cppchriscpp/nes-starter-kit/compare/chr_ram)
+The code behind this is available in the [chr_ram](https://gh.nes.science/nes-starter-kit/compare/chr_ram)
 branch in github. Feel free to use it to follow along! The completed rom is also available 
 [here](https://s3.amazonaws.com/nes-starter-kit/chr_ram/starter.latest.nes).
 

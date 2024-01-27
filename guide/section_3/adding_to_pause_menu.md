@@ -7,7 +7,7 @@ Some games have more features, such as restarting the level, or even quitting th
 how we can add those things.
 
 The code for this branch lives in the 
-[pause_improvements](https://github.com/cppchriscpp/nes-starter-kit/compare/pause_improvements)
+[pause_improvements](https://gh.nes.science/nes-starter-kit/compare/pause_improvements)
 branch. 
 
 You can also try the rom by downloading it from 

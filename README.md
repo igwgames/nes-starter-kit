@@ -1,26 +1,24 @@
-<div style="float: right; align: right;"><a href="https://circleci.com/gh/cppchriscpp/nes-starter-kit"><img align="right" alt="Build Status" src="https://circleci.com/gh/cppchriscpp/nes-starter-kit.svg?style=shield"></a></div>
-
 # NES Starter Kit 
 
 A Beginner's Guide and toolkit for NES game creation.
 
-[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://cppchriscpp.github.io/nes-starter-kit/)
+[<img alt="It's a game!" src="guide/images/its_a_game.png" style="width: 480px" width="480">](https://nes-starter-kit.nes.science/)
 
 **Current game version:** 1.0.8
 
 **Current tool zip version:** 1.0.2
 
-[Click here](https://cppchriscpp.github.io/nes-starter-kit/) to try the example game!
+[Click here](https://nes-starter-kit.nes.science/) to try the example game!
 
 [Download the example rom](https://s3.amazonaws.com/nes-starter-kit/master/starter.latest.nes)
 
-_Looking at this in Github's code editor? Check out the [documentation site](https://cppchriscpp.github.io/nes-starter-kit/)!_
+_Looking at this in Github's code editor? Check out the [documentation site](https://nes-starter-kit.nes.science/)!_
 
 ## OUTDATED
 
 Please note that this is version 1.x, and version 2.0 is now available. Check out the main branch to see it!
 
-[Latest Version](https://github.com/cppchriscpp/nes-starter-kit)
+[Latest Version](https://gh.nes.science/nes-starter-kit)
 
 ## What is this?
 
@@ -56,7 +54,7 @@ MK1_NES modular game engine could be found here [MK1-NES](https://github.com/moj
 
 Lastly, if you want something more barebones, I also have nes-c-bootstrap - it is a simpler "Hello World"
 project that you can use for more of a blank page. That project is elsewhere 
-[on Github](https://github.com/cppchriscpp/nes-c-boilerplate).
+[on Github](https://gh.nes.science/nes-c-boilerplate).
 
 ## Feature Comparison
 
@@ -208,5 +206,5 @@ If you've got something you'd like to add, just send over a pull request, and I'
 Just try to follow the existing code style as best you can.
 
 If you run into issues or have feature suggestions, please submit them through the 
-[Github "Issues" tab](https://github.com/cppchriscpp/nes-starter-kit/issues).
+[Github "Issues" tab](https://gh.nes.science/nes-starter-kit/issues).
 

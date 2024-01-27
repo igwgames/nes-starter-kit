@@ -46,7 +46,7 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 
                                 "Hope you're having fun!       "
                                 "                              "
-                                "- Chris";
+                                "- The Developer";
 const unsigned char* movedText = 
                                 "Hey, you put me on another    "
                                 "screen! Cool!";

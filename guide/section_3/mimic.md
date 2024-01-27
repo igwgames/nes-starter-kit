@@ -8,7 +8,7 @@ We will do this by adding a new enemy type, using one of our unused enemy sprite
 player's behavior.
 
 Follow along with this example in the git branch named
-[mimic_enemy](https://github.com/cppchriscpp/nes-starter-kit/compare/mimic_enemy).
+[mimic_enemy](https://gh.nes.science/nes-starter-kit/compare/mimic_enemy).
 
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/mimic_enemy/starter.latest.nes)

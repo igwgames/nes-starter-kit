@@ -18,7 +18,7 @@ use more, you will need to change `MAP_SPRITE_OAM_SHIFT` and reduce the number o
 screen at once by reducing `MAP_MAX_SPRITES`. Doing this is beyond the scope of this chapter.
 
 Follow along with this example in the git branch named
-[sprite_size](https://github.com/cppchriscpp/nes-starter-kit/compare/sprite_size).
+[sprite_size](https://gh.nes.science/nes-starter-kit/compare/sprite_size).
 
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/sprite_size/starter.latest.nes)

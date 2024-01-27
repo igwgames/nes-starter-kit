@@ -63,7 +63,7 @@ defined:
 
                                 "Hope you're having fun!       "
                                 "                              "
-                                "- Chris";
+                                "- The Developer";
 const unsigned char* movedText = 
                                 "Hey, you put me on another    "
                                 "screen! Cool!";
