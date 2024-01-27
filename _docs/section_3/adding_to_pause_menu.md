@@ -11,13 +11,13 @@ Some games have more features, such as restarting the level, or even quitting th
 how we can add those things.
 
 The code for this branch lives in the 
-[section3_pause_improvements](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_pause_improvements)
+[section3_pause_improvements](https://gh.nes.science/nes-starter-kit/compare/section3_pause_improvements)
 branch. 
 
 You can also try the rom by downloading it from 
 [here](https://s3.amazonaws.com/nes-starter-kit/section3_pause_improvements/starter.latest.nes).
 
-<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/adding_to_pause_menu.html" data-emulator-branch="section3_pause_improvements">
+<a href="https://nes-starter-kit.nes.science/guide/section_3/adding_to_pause_menu.html" data-emulator-branch="section3_pause_improvements">
     <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
 </a>
 

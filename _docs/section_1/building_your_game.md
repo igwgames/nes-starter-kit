@@ -26,7 +26,7 @@ Read the section below to understand how it works, or how to compile it without 
 3. Type the following command to build your game: `create-nes-game build`. This should not produce any errors. 
     
     If there are errors, look back at the first chapter and make sure all tools are installed. If you are 
-    still having trouble, open a github issue with [nes-starter-kit](https://github.com/cppchriscpp/nes-starter-kit),
+    still having trouble, open a github issue with [nes-starter-kit](https://gh.nes.science/nes-starter-kit),
     or otherwise reach out for help!
 
 4. Use the command `create-nes-game run` to start the rom with your preferred emulator.

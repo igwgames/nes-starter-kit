@@ -10,12 +10,12 @@ sprite that pulls the player in - we'll make it strong enough for the player to 
 ability to break free of the pull.
 
 Follow along with this example in the git branch named
-[section3_attract_repel](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_attract_repel).
+[section3_attract_repel](https://gh.nes.science/nes-starter-kit/compare/section3_attract_repel).
 
 If you want to try it yourself, 
 [download the ROM](https://s3.amazonaws.com/nes-starter-kit/section3_attract_repel/starter.latest.nes)
 
-<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/attract_repel.html" data-emulator-branch="section3_attract_repel">
+<a href="https://nes-starget-kit.nes.science/guide/section_3/attract_repel.html" data-emulator-branch="section3_attract_repel">
     <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
 </a>
 
