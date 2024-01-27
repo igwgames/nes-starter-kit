@@ -5,12 +5,12 @@
 Up to this point, our main character has been completely defenseless. It's probably time to change that, 
 huh? This chapter will help you create a weapon for your main character and start using it. This chapter is
 broken into a few pieces, but the end result is available in the 
-[section3_add_sword branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section3_add_sword).
+[section3_add_sword branch](https://gh.nes.science/nes-starter-kit/compare/section3_add_sword).
 
 The rom is also available
 [here](https://s3.amazonaws.com/nes-starter-kit/section3_add_sword/starter.latest.nes).
 
-<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_3/giving_the_player_a_sword.html" data-emulator-branch="section3_add_sword">
+<a href="https://nes-starter-kit.nes.science/guide/section_3/giving_the_player_a_sword.html" data-emulator-branch="section3_add_sword">
     <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
 </a>
 

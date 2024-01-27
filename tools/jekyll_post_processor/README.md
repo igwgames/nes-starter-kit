@@ -7,4 +7,4 @@ There are some comments in-line - I will leave it to those to explain exactly wh
 
 There are also a few other files in this directory - they are deployed into various places in the 
 jekyll build. They are files that are specific to our documentation. Everything else is committed
-onto the `gh-pages` branch, which is deployed to https://cppchriscpp.github.io/nes-starter-kit/
+onto the `gh-pages` branch, which is deployed to https://nes-starter-kit.nes.science/

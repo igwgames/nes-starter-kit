@@ -1,13 +1,13 @@
 # Making a Full Title Screen
 
 **Note**: _This change exists in a branch on Github. 
-[Click here](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title) 
+[Click here](https://gh.nes.science/nes-starter-kit/compare/section4_custom_title) 
 to view the changes in the branch, or do `git checkout section4_custom_title` with a local
 copy of the repo to view the code._
 
 [Download the rom version of this example](https://s3.amazonaws.com/nes-starter-kit/section4_custom_title/starter.latest.nes)
 
-<a href="https://cppchriscpp.github.io/nes-starter-kit//guide/section_4/title_screen.html" data-emulator-branch="section4_custom_title">
+<a href="https://nes-starter-kit.nes.science/guide/section_4/title_screen.html" data-emulator-branch="section4_custom_title">
     <img alt="Test Game" src="../images/button_test-rom.png" style="margin:auto; display: block;" >
 </a>
 
@@ -112,7 +112,7 @@ It will automatically be run-length encoded into `title.rle.nam` when the game i
 
 Alright, we managed to get together an image. Just need to code up the solution to draw them. Thankfully,
 this part isn't super crazy. I strongly suggest looking at the code in 
-[the branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title) to follow along.
+[the branch](https://gh.nes.science/nes-starter-kit/compare/section4_custom_title) to follow along.
 
 First, we need to create a couple files to make this data accessible to the game. (Note: yes, you're
 technically going to touch two assembly files here. I promise I'll explain it carefully, and you
@@ -241,6 +241,6 @@ should be looking at your new title!
 
 ![potato title](../images/potato_title.png)
 
-[View the git branch](https://github.com/cppchriscpp/nes-starter-kit/compare/section4_custom_title)
+[View the git branch](https://gh.nes.science/nes-starter-kit/compare/section4_custom_title)
 
 [Download the test rom](https://s3.amazonaws.com/nes-starter-kit/section4_custom_title/starter.latest.nes)
