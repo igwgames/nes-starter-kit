@@ -25,7 +25,7 @@ jobs:
       - name: Clean up xvfb
         uses: bcomnes/cleanup-xvfb@v1
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Game Download
           path: rom
