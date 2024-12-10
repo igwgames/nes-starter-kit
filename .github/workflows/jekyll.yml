@@ -1,5 +1,6 @@
 on: [push]
-
+permissions:
+  contents: write
 jobs:
   publish_to_jekyll:
     runs-on: ubuntu-latest
