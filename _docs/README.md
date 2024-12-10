@@ -18,6 +18,7 @@ A Beginner's Guide and toolkit for NES game creation.
 
 _Looking at this in Github's code editor? Check out the [documentation site](https://nes-starter-kit.nes.science/)!_
 
+
 ## What is this?
 
 It's a fully-fledged starter kit for NES games. It is the source to a top-down adventure game, alongside all of the 
